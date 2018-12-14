@@ -57,7 +57,7 @@
                     <span id="drop-zone-text">Drop files here...</span>
                     <div id="clickHere">
                         or click here..
-                        <input type="file" name="upload" id="file" />
+                        {{Form::file('upload', ['id' => 'file'])}}
                     </div>
                 </div>
                 <hr>
@@ -68,6 +68,10 @@
                 <div class="form-group">
                     {{Form::label('description', 'Description')}}
                     {{Form::textarea('description', '', ['class' => 'form-control', 'placeholder' => 'No description provided'])}}
+                </div>
+                <div class="form-group">
+                    {{Form::label('image', 'Add an image for your video')}}
+                    {{Form::file('image', ['class' => 'form-control'])}}
                 </div>
             </div>
             {{Form::submit('Share!', ['class' => 'btn btn-primary'])}}

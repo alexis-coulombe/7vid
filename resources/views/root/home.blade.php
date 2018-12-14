@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <a href="/video/{{$v->id}}"><h5 class="card-title">{{$v->title}}</h5>
                             <div class="card-body" style="padding: 0px">
-                                <img class="card-img-top" src="http://placehold.it/400x300" alt="Card image cap">
+                                <img class="card-img-top" width="400px" height="300px" src="http://dev.test/{{$v->thumbnail}}">
                             </div>
                         </a>
                         <p class="card-text">{{$v->description}}</p>

@@ -49,7 +49,7 @@ $(function () {
     }, true);
 });
 
-$('input:file').change(
+$('#file').change(
     function(e){
         let fname = e.target.files[0].name;
         let fsize = e.target.files[0].size;

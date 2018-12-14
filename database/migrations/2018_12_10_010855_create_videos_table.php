@@ -18,7 +18,8 @@ class CreateVideosTable extends Migration
             $table->string('title');
             $table->mediumText('description');
             $table->string('extension', 4);
-            $table->mediumText('location');
+            $table->text('location');
+            $table->text('thumbnail');
             $table->timestamps();
         });
     }
