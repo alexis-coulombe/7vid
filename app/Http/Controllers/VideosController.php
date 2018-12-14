@@ -53,7 +53,7 @@ class VideosController extends Controller
         $extension = null;
         if($request->hasFile('upload')) {
             $file = $request->file('upload');
-            $destinationPath = public_path().'\\videos';
+            $destinationPath = 'videos';
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '_' . uniqid() . '_v.' . $extension;
             $allowedExtensions = ['avi', 'flv', 'wmv', 'mov', 'mp4'];

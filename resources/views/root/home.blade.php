@@ -1,6 +1,8 @@
 @extends('shared.template')
 
 @section('content')
+    @include('shared.banner')
+
     <div class="container">
     <h1 class="my-4 text-center text-lg-left">Videos</h1>
 
