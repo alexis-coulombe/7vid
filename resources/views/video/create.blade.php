@@ -11,6 +11,7 @@
             line-height: 180px;
             font-size: 20px;
             color: rgba(0,0,0,.3);
+            background: #52575C;
         }
 
         #drop-zone input {

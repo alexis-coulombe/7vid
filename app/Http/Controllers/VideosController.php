@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class VideosController extends Controller
@@ -45,6 +46,7 @@ class VideosController extends Controller
         ], $this->messages());
 
         $video = new Video;
+        $video->author_id = Auth::id();
 
         if(trim($request->input('description')) == null){
             $request->merge(['description' => 'No description provided']);

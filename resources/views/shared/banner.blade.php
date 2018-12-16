@@ -2,7 +2,7 @@
     header {
         position: relative;
         background-color: black;
-        height: 75vh;
+        height: 50vh;
         min-height: 25rem;
         width: 100%;
         overflow: hidden;
@@ -10,8 +10,8 @@
 
     header video {
         position: absolute;
-        top: 50%;
-        left: 50%;
+        top: 40%;
+        left: 60%;
         min-width: 100%;
         min-height: 100%;
         width: auto;
