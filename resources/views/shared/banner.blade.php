@@ -10,8 +10,8 @@
 
     header video {
         position: absolute;
-        top: 40%;
-        left: 60%;
+        top: 50%;
+        left: 50%;
         min-width: 100%;
         min-height: 100%;
         width: auto;

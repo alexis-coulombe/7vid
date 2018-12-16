@@ -55,7 +55,7 @@
         {!! Form::open(array('action' => 'VideosController@store', 'enctype' => 'multipart/form-data')) !!}
             <div class="form-group">
                 <div id="drop-zone">
-                    <span id="drop-zone-text">Drop files here...</span>
+                    <span id="drop-zone-text">Drop your video here...</span>
                     <div id="clickHere">
                         or click here..
                         {{Form::file('upload', ['id' => 'file'])}}
@@ -64,15 +64,15 @@
                 <hr>
                 <div class="form-group">
                     {{Form::label('title', 'Name your video')}}
-                    {{Form::text('title', '', ['class' => 'form-control', 'placeholder' => 'placeholder', 'id' => 'video-title'])}}
+                    {{Form::text('title', '', ['class' => 'form-control', 'placeholder' => '', 'id' => 'video-title'])}}
                 </div>
                 <div class="form-group">
                     {{Form::label('description', 'Description')}}
                     {{Form::textarea('description', '', ['class' => 'form-control', 'placeholder' => 'No description provided'])}}
                 </div>
                 <div class="form-group">
-                    {{Form::label('image', 'Add an image for your video')}}
-                    {{Form::file('image', ['class' => 'form-control'])}}
+                    {{Form::label('image', 'Add an image for your video')}}<br>
+                    {{Form::file('image')}}
                 </div>
             </div>
             {{Form::submit('Share!', ['class' => 'btn btn-primary'])}}
