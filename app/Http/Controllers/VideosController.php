@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -142,8 +143,9 @@ class VideosController extends Controller
     public function show($id)
     {
         $video = Video::find($id);
+        $author = User::find($video->author_id);
 
-        return view('video.show')->with('video', $video);
+        return view('video.show')->with('video', $video)->with('author', $author);
     }
 
     /**

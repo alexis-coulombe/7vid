@@ -14,6 +14,11 @@
         <link href="{{ asset('css/nucleo-icons.css') }}" rel="stylesheet" />
 
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+        <script type="text/javascript" src="{{ asset('js/core/jquery.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/core/popper.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/blk-design-system.js') }}"></script>
         @yield('header')
     </head>
     <body class=@yield('body-class')>
@@ -23,10 +28,5 @@
             @yield('content')
             @include('shared.footer')
         </div>
-
-        <script type="text/javascript" src="{{ asset('js/core/jquery.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/core/popper.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/blk-design-system.js') }}"></script>
     </body>
 </html>

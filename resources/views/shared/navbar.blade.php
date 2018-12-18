@@ -87,32 +87,52 @@
                     </button>
                     {!! Form::close() !!}
                 </li>
-                <li class="dropdown nav-item">
-                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                        <i class="fa fa-cogs d-lg-none d-xl-none"></i> Get started!
-                    </a>
-                    <div class="dropdown-menu dropdown-with-icons">
-                        <a href="{{ route('login') }}" class="dropdown-item">
-                            <i class="fas fa-sign-in-alt"></i>Login
+                @if (Auth::check())
+                    <li class="dropdown nav-item">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                            <i class="fa fa-cogs d-lg-none d-xl-none"></i> Account
                         </a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="dropdown-item">
-                                <i class="fas fa-user-plus"></i>Register
+                        <div class="dropdown-menu dropdown-with-icons">
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-sign-in-alt"></i>View your channel
                             </a>
-                        @endif
-                        <a href="examples/landing-page.html" class="dropdown-item">
-                            <i class="fas fa-info"></i>About
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();">
+                                <i class="fas fa-sign-out-alt"></i>Logout
+                            </a>
+                            <a href="examples/landing-page.html" class="dropdown-item">
+                                <i class="fas fa-info"></i>About
+                            </a>
+                            <a href="examples/profile-page.html" class="dropdown-item">
+                                <i class="fas fa-code"></i>Dev API
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/video/create">+ Share a video</a>
+                    </li>
+                @else
+                    <li class="dropdown nav-item">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                            <i class="fa fa-cogs d-lg-none d-xl-none"></i> Get started!
                         </a>
-                        <a href="examples/profile-page.html" class="dropdown-item">
-                            <i class="fas fa-code"></i>Dev API
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-default d-none d-lg-block" href="javascript:void(0)" onclick="scrollToDownload()">
-                        <i class="tim-icons icon-cloud-download-93"></i> Download
-                    </a>
-                </li>
+                        <div class="dropdown-menu dropdown-with-icons">
+                            <a href="{{ route('login') }}" class="dropdown-item">
+                                <i class="fas fa-sign-in-alt"></i>Login
+                            </a>
+                            @if (Route::has('register'))
+                                <a href="{{ route('register') }}" class="dropdown-item">
+                                    <i class="fas fa-user-plus"></i>Register
+                                </a>
+                            @endif
+                            <a href="examples/landing-page.html" class="dropdown-item">
+                                <i class="fas fa-info"></i>About
+                            </a>
+                            <a href="examples/profile-page.html" class="dropdown-item">
+                                <i class="fas fa-code"></i>Dev API
+                            </a>
+                        </div>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>
