@@ -6,6 +6,7 @@
 
 @section('content')
     <br><br><br>
+    @include('shared.message')
     <div class="container">
         <h1>{{$video->title}}</h1>
 
@@ -40,7 +41,7 @@
                     <div class="tab-pane active" id="link1">
                         <p>Shared by <b>{{ $author->name }}</b> on {{date('Y-m-d', strtotime($video->created_at))}}
                             <br />
-                            <br/> {{$video->description}}</p>
+                            <br/> {{ $video->description }}</p>
                     </div>
                     <div class="tab-pane" id="link2">
                         <p>About the author:</p>
@@ -68,6 +69,12 @@
                 </div>
             </div>
         </div>
+
+        @if(\Illuminate\Support\Facades\Auth::check())
+             @include('comment.comment-form', $data = ['video_id' => $video->id])
+        @endif
+
+        @include('comment.show', $data = ['comments' => $comments])
     </div>
 
     <script src="{{ URL::asset('js/plyr.js') }}"></script>

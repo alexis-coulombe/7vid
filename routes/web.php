@@ -17,4 +17,7 @@ Route::get('term', 'RootController@term');
 Route::get('video/search', 'VideosController@search');
 Route::resource('video', 'VideosController');
 
+Route::resource('comment', 'CommentsController');
+
+
 Auth::routes();

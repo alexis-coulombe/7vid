@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\User;
 use App\Video;
 use Illuminate\Http\Request;
@@ -144,8 +145,9 @@ class VideosController extends Controller
     {
         $video = Video::find($id);
         $author = User::find($video->author_id);
+        $comments = Comment::where('video_id', '=', $video->id)->get();
 
-        return view('video.show')->with('video', $video)->with('author', $author);
+        return view('video.show')->with('video', $video)->with('author', $author)->with('comments', $comments);
     }
 
     /**
