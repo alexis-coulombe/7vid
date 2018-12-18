@@ -1,5 +1,9 @@
 @extends('shared.template')
 
+@section('body-class')
+    "index-page"
+@endsection
+
 @section('content')
     @include('shared.banner')
 

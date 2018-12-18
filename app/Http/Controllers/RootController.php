@@ -11,4 +11,8 @@ class RootController extends Controller
         $videos = Video::all();
         return view('root.home')->with('videos', $videos);
     }
+
+    public function term(){
+        return view('root.term');
+    }
 }
