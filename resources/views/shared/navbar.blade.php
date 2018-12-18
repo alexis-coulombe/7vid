@@ -13,10 +13,10 @@
                 <a class="nav-link" href="/video/create">+ Share a video</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-0" type="text" placeholder="Search">
-            <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        {!! Form::open(['url' => 'video/search', 'class' => 'form-inline my-2 my-lg-0', 'method' => 'GET']) !!}
+            {{Form::text('search', '', ['placeholder' => 'Search', 'class' => 'form-control mr-sm-0'])}}
+            {{Form::submit('Search', ['class' => 'btn btn-success my-2 my-sm-0'])}}
+        {!! Form::close() !!}
         <ul class="navbar-nav mr-0">
             @guest
                 <li class="nav-item">

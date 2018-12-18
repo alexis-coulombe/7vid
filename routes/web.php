@@ -13,5 +13,7 @@
 
 Route::get('/', 'RootController@index');
 
+Route::get('video/search', 'VideosController@search');
 Route::resource('video', 'VideosController');
+
 Auth::routes();

@@ -1,7 +1,7 @@
 @if(count($errors) > 0)
     @foreach($errors->all() as $error)
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{$error}}
+            {!! html_entity_decode($error) !!}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -11,7 +11,7 @@
 
 @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show">
-        {{session('success')}}
+        {!! html_entity_decode(session('success')) !!}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -20,7 +20,7 @@
 
 @if(session('error'))
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        {{session('error')}}
+        {!! html_entity_decode(session('error')) !!}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>

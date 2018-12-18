@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class VideosController extends Controller
 {
@@ -18,6 +17,17 @@ class VideosController extends Controller
     {
         $rootController = new RootController();
         return $rootController->index();
+    }
+
+    public function search(Request $request){
+
+        $videos = Video::where('title', 'LIKE', '%'.$request['search'].'%')->get();
+        if($videos->count()){
+            return view('root.home')->with('videos', $videos);
+        }else {
+            return redirect('/')->with('videos', $videos)->with('error', 'No match found for <b>'.$request['search'].'</b>');
+        }
+
     }
 
     /**
@@ -132,6 +142,7 @@ class VideosController extends Controller
     public function show($id)
     {
         $video = Video::find($id);
+
         return view('video.show')->with('video', $video);
     }
 
