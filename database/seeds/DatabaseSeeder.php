@@ -11,6 +11,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        DB::table('categories')->insert([
+            'title' => 'Art & Design'
+        ]);
+        DB::table('categories')->insert([
+            'title' => 'Comedy'
+        ]);
+        DB::table('categories')->insert([
+            'title' => 'Instructional'
+        ]);
+        DB::table('categories')->insert([
+            'title' => 'Food'
+        ]);
+        DB::table('categories')->insert([
+            'title' => 'Music'
+        ]);
+        DB::table('categories')->insert([
+            'title' => 'Sports'
+        ]);
+        DB::table('categories')->insert([
+            'title' => 'Gaming'
+        ]);
     }
 }

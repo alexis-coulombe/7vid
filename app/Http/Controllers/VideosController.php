@@ -7,6 +7,7 @@ use App\User;
 use App\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class VideosController extends Controller
 {
@@ -24,10 +25,13 @@ class VideosController extends Controller
     public function search(Request $request){
 
         $videos = Video::where('title', 'LIKE', '%'.$request['search'].'%')->get();
+        $categories = DB::select('SELECT title FROM categories WHERE 1=1');
+
+
         if($videos->count()){
-            return view('root.home')->with('videos', $videos);
+            return view('root.home')->with('videos', $videos)->with('categories', $categories);
         }else {
-            return redirect('/')->with('videos', $videos)->with('error', 'No match found for <b>'.$request['search'].'</b>');
+            return redirect('/')->with('videos', $videos)->with('categories', $categories)->with('error', 'No match found for <b>'.$request['search'].'</b>');
         }
 
     }
@@ -39,7 +43,9 @@ class VideosController extends Controller
      */
     public function create()
     {
-        return view('video.create');
+        $categories = DB::select('SELECT * FROM categories WHERE 1=1');
+
+        return view('video.create')->with('categories', $categories);
     }
 
     /**
@@ -96,6 +102,7 @@ class VideosController extends Controller
 
         $video->title = $request->input('title');
         $video->description = $request->input('description');
+        $video->category_id = $request->input('category');
         $video->extension = $extension;
         $video->location = $destinationPath.'\\'.$filename;
 

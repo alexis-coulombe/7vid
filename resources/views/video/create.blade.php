@@ -28,6 +28,16 @@
                 </div>
                 <br>
 
+                <div class="form-group">
+                    {{Form::label('category', 'Video category')}}
+                    <select class="form-control" name="category" style="background:#1D1F43">
+                        @foreach($categories as $c)
+                        <option value="{{$c->id}}">{{$c->title}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <br>
+
             {{Form::label('image', 'Add an image for your video')}}<br>
             {{Form::file('image', ['id' => 'image'])}}
                 <br><br>

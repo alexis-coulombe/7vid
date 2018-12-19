@@ -17,6 +17,7 @@ class CreateVideosTable extends Migration
             $table->primary('id');
             $table->uuid('id');
             $table->integer('author_id');
+            $table->integer('category_id');
             $table->string('title');
             $table->mediumText('description');
             $table->string('extension', 4);
