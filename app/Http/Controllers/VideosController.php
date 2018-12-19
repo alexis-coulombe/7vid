@@ -25,6 +25,8 @@ class VideosController extends Controller
     public function search(Request $request){
 
         $videos = Video::where('title', 'LIKE', '%'.$request['search'].'%')->get();
+        $rootController = new RootController();
+        return $rootController->index($request);
         $categories = DB::select('SELECT title FROM categories WHERE 1=1');
 
 

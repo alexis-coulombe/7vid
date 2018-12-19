@@ -10,11 +10,18 @@
     <nav class="navbar navbar-expand-lg ">
         <span class="navbar-brand" href="#">Filter by categories: </span>
             <ul class="navbar-nav">
-                @foreach($categories as $c)
                 <li class="nav-item">
-                    <a class="nav-link" href="#">{{$c->title}}</a>
+                    {!! Form::open(['url' => '/', 'class' => 'form-inline my-2 my-lg-0', 'method' => 'GET']) !!}
+                    <select class="form-control" name="category" style="background:#1D1F43">
+                        @foreach($categories as $c)
+                        <option value="{{$c->id}}">{{$c->title}}</option>
+                        @endforeach
+                    </select>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-search"></i>
+                    </button>
+                    {!! Form::close() !!}
                 </li>
-                @endforeach
             </ul>
     </nav>
 

@@ -27,7 +27,7 @@
             </div>
             <ul class="navbar-nav">
                 <li class="nav-item p-0">
-                    {!! Form::open(['url' => 'video/search', 'class' => 'form-inline my-2 my-lg-0', 'method' => 'GET']) !!}
+                    {!! Form::open(['url' => '/', 'class' => 'form-inline my-2 my-lg-0', 'method' => 'GET']) !!}
                     {{Form::text('search', '', ['placeholder' => 'Search', 'class' => 'form-control'])}}
                     <button type="submit" class="btn btn-success">
                         <i class="fa fa-search"></i>
