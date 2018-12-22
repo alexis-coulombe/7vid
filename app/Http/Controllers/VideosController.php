@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Comment;
 use App\User;
 use App\Video;
@@ -27,12 +28,12 @@ class VideosController extends Controller
         $videos = Video::where('title', 'LIKE', '%'.$request['search'].'%')->get();
         $rootController = new RootController();
         return $rootController->index($request);
-        $categories = DB::select('SELECT title FROM categories WHERE 1=1');
+        $categories = Category::all();
 
 
         if($videos->count()){
             return view('root.home')->with('videos', $videos)->with('categories', $categories);
-        }else {
+        } else {
             return redirect('/')->with('videos', $videos)->with('categories', $categories)->with('error', 'No match found for <b>'.$request['search'].'</b>');
         }
 

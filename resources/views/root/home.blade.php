@@ -8,21 +8,16 @@
     @include('shared.banner')
 
     <nav class="navbar navbar-expand-lg ">
-        <span class="navbar-brand" href="#">Filter by categories: </span>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    {!! Form::open(['url' => '/', 'class' => 'form-inline my-2 my-lg-0', 'method' => 'GET']) !!}
-                    <select class="form-control" name="category" style="background:#1D1F43">
-                        @foreach($categories as $c)
-                        <option value="{{$c->id}}">{{$c->title}}</option>
-                        @endforeach
-                    </select>
-                    <button type="submit" class="btn btn-success">
-                        <i class="fa fa-search"></i>
-                    </button>
-                    {!! Form::close() !!}
-                </li>
-            </ul>
+        <span class="navbar-brand" href="#">
+        @if(request()->get('search') != null)
+            Result for <b>{{request()->get('search')}}</b>
+                @if (request()->get('category') != null)
+                filtered by <b>{{$categories[request()->get('category')-1]->title}}</b>
+                @endif
+        @else
+            Videos
+        @endif
+        </span>
     </nav>
 
     <div class="container">
@@ -42,8 +37,6 @@
                         <hr>
                         <div class="card-text">
                             <p>{{strlen($v->description) > 100 ? substr($v->description,0,100)."..." : $v->description}}</p>
-                            <br>
-                            <p>Category: {{$categories[$v->category_id-1]->title}}</p>
                         </div>
                     </div>
                 </div>

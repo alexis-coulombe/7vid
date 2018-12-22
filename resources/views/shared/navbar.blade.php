@@ -27,8 +27,14 @@
             </div>
             <ul class="navbar-nav">
                 <li class="nav-item p-0">
-                    {!! Form::open(['url' => '/', 'class' => 'form-inline my-2 my-lg-0', 'method' => 'GET']) !!}
-                    {{Form::text('search', '', ['placeholder' => 'Search', 'class' => 'form-control'])}}
+                    {!! Form::open(['url' => '/', 'class' => 'form-inline my-2 my-lg-0', 'method' => 'GET', 'id' => 'filter-form']) !!}
+                    <select class="form-control" name="category" style="background:#1D1F43">
+                        <option value="" @php echo(request()->get('category') != null ? '' : 'selected'); @endphp disabled>Choose here</option>
+                        @foreach($categories as $c)
+                            <option value="{{$c->id}}" @php echo(request()->get('category') == $c->id ? 'selected' : ''); @endphp>{{$c->title}}</option>
+                        @endforeach
+                    </select>
+                    {{Form::text('search', request()->get('search'), ['placeholder' => 'Search', 'class' => 'form-control'])}}
                     <button type="submit" class="btn btn-success">
                         <i class="fa fa-search"></i>
                     </button>
