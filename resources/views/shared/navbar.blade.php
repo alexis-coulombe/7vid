@@ -30,7 +30,7 @@
                     {!! Form::open(['url' => '/', 'class' => 'form-inline my-2 my-lg-0', 'method' => 'GET', 'id' => 'filter-form']) !!}
                     <select class="form-control" name="category" style="background:#1D1F43">
                         <option value="" @php echo(request()->get('category') != null ? '' : 'selected'); @endphp disabled>Choose here</option>
-                        @foreach($categories as $c)
+                        @foreach(\App\Category::all() as $c)
                             <option value="{{$c->id}}" @php echo(request()->get('category') == $c->id ? 'selected' : ''); @endphp>{{$c->title}}</option>
                         @endforeach
                     </select>

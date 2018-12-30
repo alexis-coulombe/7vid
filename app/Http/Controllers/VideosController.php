@@ -6,9 +6,11 @@ use App\Category;
 use App\Comment;
 use App\User;
 use App\Video;
+use App\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 
 class VideosController extends Controller
 {
@@ -23,20 +25,10 @@ class VideosController extends Controller
         return $rootController->index();
     }
 
-    public function search(Request $request){
-
-        $videos = Video::where('title', 'LIKE', '%'.$request['search'].'%')->get();
+    public function search(Request $request)
+    {
         $rootController = new RootController();
         return $rootController->index($request);
-        $categories = Category::all();
-
-
-        if($videos->count()){
-            return view('root.home')->with('videos', $videos)->with('categories', $categories);
-        } else {
-            return redirect('/')->with('videos', $videos)->with('categories', $categories)->with('error', 'No match found for <b>'.$request['search'].'</b>');
-        }
-
     }
 
     /**
@@ -49,6 +41,39 @@ class VideosController extends Controller
         $categories = DB::select('SELECT * FROM categories WHERE 1=1');
 
         return view('video.create')->with('categories', $categories);
+    }
+
+    public static function vote(){
+        $userId = Auth::id();
+        $value = Input::post('value');
+        $videoId = Input::post('video_id');
+
+        $hasAlreadyVoted = DB::table('votes')->select('id')->where('author_id', '=', $userId)->exists();
+
+        if($hasAlreadyVoted) {
+            $voteValue = DB::table('votes')->select('value')->where('author_id', '=', $userId)->where('video_id', '=', $videoId)->get();
+            if($voteValue != $value){
+                $vote = Vote::where('author_id', '=', $userId)->where('video_id', '=', $videoId);
+                $vote->update(['value' => $value]);
+            }
+        } else {
+            $vote = new Vote();
+            $vote->video_id = $videoId;
+            $vote->author_id = $userId;
+            $vote->value = $value;
+            $vote->save();
+        }
+
+        return response(200);
+    }
+
+    public static function hasVoted(){
+        $userId = Auth::id();
+        return DB::table('votes')->select('id')->where('value', '=', '1')->where('author_id', '=', $userId)->exists();
+    }
+
+    public static function GetVoteByValue($value){
+        return DB::table('votes')->where('value', '=', $value)->count();
     }
 
     /**
@@ -154,6 +179,10 @@ class VideosController extends Controller
     public function show($id)
     {
         $video = Video::find($id);
+        if($video == null){
+            abort(404);
+        }
+
         $author = User::find($video->author_id);
         $comments = Comment::where('video_id', '=', $video->id)->get();
 

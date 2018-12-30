@@ -1,6 +1,7 @@
 @extends('shared.template')
 
 @section('header')
+    <meta name="csrf-token" content="{{csrf_token()}}">
     <link rel="stylesheet" href="{{ URL::asset('css/plyr.css') }}">
 @endsection
 
@@ -33,6 +34,17 @@
                             <i class="fas fa-plus-square"></i> Follow this user
                         </button>
                     </li>
+                    <li class="nav-item ml-auto">
+                        @if(Auth::check())
+                        <a href="#" onclick="voteup();"><i class="fas fa-thumbs-up" style="margin:20px;@php \App\Http\Controllers\VideosController::hasVoted() ? e('color: #82007d;'): e(''); @endphp"></i></a>
+                        @endif
+                        <span id="upcount" style="color:#70ff7e">{{\App\Http\Controllers\VideosController::GetVoteByValue(1)}}</span>
+                        /
+                        <span id="downcount" style="color:#ff7070">{{\App\Http\Controllers\VideosController::GetVoteByValue(0)}}</span>
+                        @if(Auth::check())
+                        <a href="#" onclick="votedown();"><i class="fas fa-thumbs-down" style="margin:20px;@php !\App\Http\Controllers\VideosController::hasVoted() ? e('color: #82007d;'): e(''); @endphp"></i></a>
+                        @endif
+                    </li>
                 </ul>
             </div>
             <div class="card-body">
@@ -61,11 +73,6 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="tab-pane" id="link3">
-                        <p>Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas.
-                            <br />
-                            <br/> Dramatically maintain clicks-and-mortar solutions without functional solutions.</p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -79,4 +86,37 @@
 
     <script src="{{ URL::asset('js/plyr.js') }}"></script>
     <script>const player = new Plyr('#player');</script>
+    <script>
+        let voteup = function(){
+            $('.fa-thumbs-up').css('color', '#82007d');
+            $('.fa-thumbs-down').css('color', '#B855F5');
+
+           $.ajax({
+                url: '/video/vote',
+                type: 'POST',
+                data: {_token: '<?php echo csrf_token() ?>', value: 1, video_id: '{{$video->id}}'},
+                dataType: 'JSON',
+               success: function(){
+                   location.reload();
+               }
+            });
+
+
+        };
+
+        let votedown = function(){
+            $('.fa-thumbs-up').css('color', '#B855F5');
+            $('.fa-thumbs-down').css('color', '#82007d');
+
+            $.ajax({
+                url: '/video/vote',
+                type: 'POST',
+                data: {_token: '<?php echo csrf_token() ?>', value: 0, video_id: '{{$video->id}}'},
+                dataType: 'JSON',
+                success: function(){
+                   location.reload();
+                }
+            });
+        };
+    </script>
 @endsection

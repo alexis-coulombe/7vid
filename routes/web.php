@@ -14,10 +14,10 @@
 Route::get('/', 'RootController@index');
 Route::get('term', 'RootController@term');
 
-Route::get('video/search', 'VideosController@search');
+Route::get('video/search', 'VideosController@search')->name('video.search');
+Route::post('video/vote', 'VideosController@vote')->name('video.vote');
 Route::resource('video', 'VideosController');
 
 Route::resource('comment', 'CommentsController');
-
 
 Auth::routes();
