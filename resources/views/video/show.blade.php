@@ -36,13 +36,13 @@
                     </li>
                     <li class="nav-item ml-auto">
                         @if(Auth::check())
-                        <a href="#" onclick="voteup();"><i class="fas fa-thumbs-up" style="margin:20px;@php \App\Http\Controllers\VideosController::hasVoted() ? e('color: #82007d;'): e(''); @endphp"></i></a>
+                        <a href="#" onclick="voteup();"><i class="fas fa-thumbs-up tu" style="margin:20px;{{\App\Http\Controllers\VideosController::hasVoted($video->id) == 1 ? ($a = 'color: #82007d;'): ($a = '')}}"></i></a>
                         @endif
                         <span id="upcount" style="color:#70ff7e">{{\App\Http\Controllers\VideosController::GetVoteByValue(1)}}</span>
                         /
                         <span id="downcount" style="color:#ff7070">{{\App\Http\Controllers\VideosController::GetVoteByValue(0)}}</span>
                         @if(Auth::check())
-                        <a href="#" onclick="votedown();"><i class="fas fa-thumbs-down" style="margin:20px;@php !\App\Http\Controllers\VideosController::hasVoted() ? e('color: #82007d;'): e(''); @endphp"></i></a>
+                        <a href="#" onclick="votedown();"><i class="fas fa-thumbs-down td" style="margin:20px;{{\App\Http\Controllers\VideosController::hasVoted($video->id) == 0 ? ($a = 'color: #82007d;'): ($a = '')}}"></i></a>
                         @endif
                     </li>
                 </ul>
@@ -85,11 +85,11 @@
     </div>
 
     <script src="{{ URL::asset('js/plyr.js') }}"></script>
-    <script>const player = new Plyr('#player');</script>
+    <script>new Plyr('#player');</script>
     <script>
         let voteup = function(){
-            $('.fa-thumbs-up').css('color', '#82007d');
-            $('.fa-thumbs-down').css('color', '#B855F5');
+            $('.tu').css('color', '#82007d');
+            $('.td').css('color', '#B855F5');
 
            $.ajax({
                 url: '/video/vote',
@@ -105,8 +105,8 @@
         };
 
         let votedown = function(){
-            $('.fa-thumbs-up').css('color', '#B855F5');
-            $('.fa-thumbs-down').css('color', '#82007d');
+            $('.tu').css('color', '#B855F5');
+            $('.td').css('color', '#82007d');
 
             $.ajax({
                 url: '/video/vote',

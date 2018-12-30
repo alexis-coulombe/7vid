@@ -38,7 +38,7 @@ class VideosController extends Controller
      */
     public function create()
     {
-        $categories = DB::select('SELECT * FROM categories WHERE 1=1');
+        $categories = Category::all();
 
         return view('video.create')->with('categories', $categories);
     }
@@ -48,13 +48,16 @@ class VideosController extends Controller
         $value = Input::post('value');
         $videoId = Input::post('video_id');
 
-        $hasAlreadyVoted = DB::table('votes')->select('id')->where('author_id', '=', $userId)->exists();
+        $hasAlreadyVoted = Vote::where('author_id', '=', $userId)->where('video_id', '=', $videoId)->exists();
 
         if($hasAlreadyVoted) {
-            $voteValue = DB::table('votes')->select('value')->where('author_id', '=', $userId)->where('video_id', '=', $videoId)->get();
+            $voteValue = Vote::where('author_id', '=', $userId)->where('video_id', '=', $videoId)->first()->value;
             if($voteValue != $value){
                 $vote = Vote::where('author_id', '=', $userId)->where('video_id', '=', $videoId);
                 $vote->update(['value' => $value]);
+            } else {
+                $vote = Vote::where('author_id', '=', $userId)->where('video_id', '=', $videoId);
+                $vote->delete();
             }
         } else {
             $vote = new Vote();
@@ -67,9 +70,16 @@ class VideosController extends Controller
         return response(200);
     }
 
-    public static function hasVoted(){
+    public static function hasVoted($video_id){
         $userId = Auth::id();
-        return DB::table('votes')->select('id')->where('value', '=', '1')->where('author_id', '=', $userId)->exists();
+        $value = -1;
+        $vote = Vote::where([['value', '=', '1'],
+            ['author_id', '=', $userId],
+            ['video_id', '=', $video_id]])->first();
+
+        if($vote != null)
+            $value = $vote->value;
+        return $value;
     }
 
     public static function GetVoteByValue($value){
