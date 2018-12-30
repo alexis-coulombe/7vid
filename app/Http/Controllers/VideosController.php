@@ -51,12 +51,13 @@ class VideosController extends Controller
         $hasAlreadyVoted = Vote::where('author_id', '=', $userId)->where('video_id', '=', $videoId)->exists();
 
         if($hasAlreadyVoted) {
-            $voteValue = Vote::where('author_id', '=', $userId)->where('video_id', '=', $videoId)->first()->value;
+            $vq = Vote::where('author_id', '=', $userId)->where('video_id', '=', $videoId);
+            $voteValue = $vq->first()->value;
             if($voteValue != $value){
-                $vote = Vote::where('author_id', '=', $userId)->where('video_id', '=', $videoId);
+                $vote = $vq;
                 $vote->update(['value' => $value]);
             } else {
-                $vote = Vote::where('author_id', '=', $userId)->where('video_id', '=', $videoId);
+                $vote = $vq;
                 $vote->delete();
             }
         } else {
