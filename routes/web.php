@@ -20,4 +20,6 @@ Route::resource('video', 'VideosController');
 
 Route::resource('comment', 'CommentsController');
 
+Route::get('channel/{userId}', 'ChannelController@index');
+
 Auth::routes();

@@ -6,6 +6,7 @@
 
 @section('content')
     @include('shared.banner')
+    @include('shared.message')
 
     <nav class="navbar navbar-expand-lg ">
         <span class="navbar-brand" href="#">
