@@ -5,10 +5,6 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
 </p>
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within VidMock, please send a pull request. All security vulnerabilities will be promptly addressed.
-
 ## License
 
 VidMock is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
