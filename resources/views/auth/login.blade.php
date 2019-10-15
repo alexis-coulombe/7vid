@@ -20,7 +20,7 @@
                         </div>
                         <div class="card-body">
                             <form method="POST" action="{{ route('login') }}">
-                                @csrf
+                                {{ csrf_field() }}
 
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -31,8 +31,8 @@
                                     <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="Your email" value="{{ old('email') }}" required autofocus>
                                     @if ($errors->has('email'))
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                                 <div class="input-group">
@@ -44,8 +44,8 @@
                                     <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Password" required>
                                     @if ($errors->has('password'))
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                                 <div class="form-check text-left">

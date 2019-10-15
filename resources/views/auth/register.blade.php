@@ -20,7 +20,7 @@
                         </div>
                         <div class="card-body">
                             <form method="POST" action="{{ route('register') }}">
-                                @csrf
+                                {{ csrf_field() }}
 
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -31,8 +31,8 @@
                                     <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" placeholder="Your username" required autofocus>
                                     @if ($errors->has('name'))
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('name') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                                 <div class="input-group">
@@ -44,8 +44,8 @@
                                     <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="Your email" value="{{ old('email') }}" required>
                                     @if ($errors->has('email'))
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                                 <div class="input-group">
@@ -57,8 +57,8 @@
                                     <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Password" name="password" required>
                                     @if ($errors->has('password'))
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                                 <div class="input-group">
@@ -70,14 +70,14 @@
                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm your password" required>
 
                                 </div>
-                                <div class="form-check text-left">
+                                <!--<div class="form-check text-left">
                                     <label class="form-check-label">
                                         <input class="form-check-input" type="checkbox">
                                         <span class="form-check-sign"></span>
                                         I agree to the
                                         <a href="/term">terms and conditions</a>.
                                     </label>
-                                </div>
+                                </div>-->
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('Register') }}

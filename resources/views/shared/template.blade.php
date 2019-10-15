@@ -15,10 +15,6 @@
 
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
-        <script type="text/javascript" src="{{ asset('js/core/jquery.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/core/popper.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/blk-design-system.js') }}"></script>
         @yield('header')
     </head>
     <body class=@yield('body-class')>
@@ -28,5 +24,9 @@
             @yield('content')
             @include('shared.footer')
         </div>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/blk-design-system.js') }}"></script>
     </body>
 </html>
