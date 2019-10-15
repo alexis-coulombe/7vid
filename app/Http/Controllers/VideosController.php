@@ -21,13 +21,12 @@ class VideosController extends Controller
      */
     public function index()
     {
-        $rootController = new RootController();
-        return $rootController->index();
+        redirect('/');
     }
 
     public function search(Request $request)
     {
-        $rootController = new RootController();
+        $rootController = new HomeController();
         return $rootController->index($request);
     }
 
@@ -43,17 +42,18 @@ class VideosController extends Controller
         return view('video.create')->with('categories', $categories);
     }
 
-    public static function vote(){
+    public static function vote()
+    {
         $userId = Auth::id();
         $value = Input::post('value');
         $videoId = Input::post('video_id');
 
         $hasAlreadyVoted = Vote::where('author_id', '=', $userId)->where('video_id', '=', $videoId)->exists();
 
-        if($hasAlreadyVoted) {
+        if ($hasAlreadyVoted) {
             $vq = Vote::where('author_id', '=', $userId)->where('video_id', '=', $videoId);
             $voteValue = $vq->first()->value;
-            if($voteValue != $value){
+            if ($voteValue != $value) {
                 $vote = $vq;
                 $vote->update(['value' => $value]);
             } else {
@@ -71,31 +71,36 @@ class VideosController extends Controller
         return response(200);
     }
 
-    public static function hasVoted($video_id){
+    public static function hasVoted($video_id)
+    {
         $userId = Auth::id();
         $value = -1;
-        $vote = Vote::where([['value', '=', '1'],
+        $vote = Vote::where([
+            ['value', '=', '1'],
             ['author_id', '=', $userId],
-            ['video_id', '=', $video_id]])->first();
+            ['video_id', '=', $video_id]
+        ])->first();
 
-        if($vote != null)
+        if ($vote != null) {
             $value = $vote->value;
+        }
         return $value;
     }
 
-    public static function GetVoteByValue($value){
+    public static function GetVoteByValue($value)
+    {
         return DB::table('votes')->where('value', '=', $value)->count();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'title' => 'required|max:64',
             'upload' => 'file|required',
             'image' => 'file|required',
@@ -105,15 +110,15 @@ class VideosController extends Controller
         $video = new Video;
         $video->author_id = Auth::id();
 
-        if(trim($request->input('description')) == null){
+        if (trim($request->input('description')) == null) {
             $request->merge(['description' => 'No description provided']);
         }
 
-        if($request->hasFile('upload')) {
+        if ($request->hasFile('upload')) {
             $this->saveVideo($request->file('upload'), $request, $video);
         }
 
-        if($request->hasFile('upload')) {
+        if ($request->hasFile('upload')) {
             $this->saveImage($request->file('image'), $video);
         }
 
@@ -122,7 +127,8 @@ class VideosController extends Controller
         return redirect('/video')->with('success', 'Your video as been shared.');
     }
 
-    private function saveVideo($file, $request, $video){
+    private function saveVideo($file, $request, $video)
+    {
         $destinationPath = 'videos';
         $extension = $file->getClientOriginalExtension();
         $filename = time() . '_' . uniqid() . '_v.' . $extension;
@@ -132,7 +138,7 @@ class VideosController extends Controller
             redirect('/video')->with('error', 'Wrong format. Must be: avi, flv, wmv, mov, mp4');
         }
 
-        if($file == null) {
+        if ($file == null) {
             redirect('/video')->with('error', 'There was an error when uploading your video.');
         }
 
@@ -143,11 +149,12 @@ class VideosController extends Controller
         $video->description = $request->input('description');
         $video->category_id = $request->input('category');
         $video->extension = $extension;
-        $video->location = $destinationPath.'\\'.$filename;
+        $video->location = $destinationPath . '\\' . $filename;
 
     }
 
-    private function saveImage($file, $video){
+    private function saveImage($file, $video)
+    {
         $destinationPath = 'images';
         $extension = $file->getClientOriginalExtension();
         $filename = time() . '_' . uniqid() . '_v.' . $extension;
@@ -157,14 +164,14 @@ class VideosController extends Controller
             redirect('/video/create')->with('error', 'Wrong format. Must be: jpeg, jpg, bmp, png, gif');
         }
 
-        if($file == null) {
+        if ($file == null) {
             redirect('/video/create')->with('error', 'There was an error when uploading your image.');
         }
 
         $file->move($destinationPath, $filename);
 
 
-        $video->thumbnail = $destinationPath.'\\'.$filename;
+        $video->thumbnail = $destinationPath . '\\' . $filename;
     }
 
     /**
@@ -176,7 +183,7 @@ class VideosController extends Controller
     {
         return [
             'title.required' => 'A title is required for your video.',
-            'upload.required'  => 'You must choose your video to upload.',
+            'upload.required' => 'You must choose your video to upload.',
             'upload.file' => 'Your uploaded file must be a video.'
         ];
     }
@@ -184,13 +191,13 @@ class VideosController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         $video = Video::find($id);
-        if($video == null){
+        if ($video == null) {
             abort(404);
         }
 
@@ -203,7 +210,7 @@ class VideosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -214,8 +221,8 @@ class VideosController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -226,7 +233,7 @@ class VideosController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

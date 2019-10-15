@@ -7,13 +7,9 @@ use Webpatser\Uuid\Uuid;
 
 class Video extends Model
 {
+    // Using UUID instead
     public $incrementing = false;
 
-    /**
-     * The "booting" method of the model.
-     *
-     * @return void
-     */
     protected static function boot()
     {
         parent::boot();
@@ -28,11 +24,14 @@ class Video extends Model
         });
     }
 
-    /**
-     * Get a new version 4 (random) UUID.
-     */
     public function generateNewId()
     {
-        return Uuid::generate();
+        try {
+            /** @var \Ramsey\Uuid\Uuid $uuid */
+            $uuid = Uuid::generate();
+        } catch (\Exception $e) {
+            var_dump($e->getMessage());
+        }
+        return $uuid;
     }
 }

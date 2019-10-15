@@ -19,7 +19,7 @@ class CommentsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -30,14 +30,14 @@ class CommentsController extends Controller
         $comment->body = $request->input('comment');
         $comment->save();
 
-        return redirect('/video/'.$request->input('video_id'))->with('success', 'Your comment has been uploaded!');
+        return redirect('/video/' . $request->input('video_id'))->with('success', 'Your comment has been uploaded!');
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -48,14 +48,14 @@ class CommentsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $comment = Comment::find($id);
 
-        if($comment == null){
+        if ($comment == null) {
             return redirect()->back()->with('error', 'There was an error while trying to delete your comment!');
         }
 
