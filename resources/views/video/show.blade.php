@@ -36,13 +36,13 @@
                     </li>
                     <li class="nav-item ml-auto">
                         @if(Auth::check())
-                        <a href="#" onclick="voteup();"><i class="fas fa-thumbs-up tu" style="margin:20px;{{\App\Http\Controllers\VideosController::hasVoted($video->id) == 1 ? ($a = 'color: #82007d;'): ($a = '')}}"></i></a>
+                        <span onclick="voteup();"><i class="fas fa-thumbs-up tu" style="margin:20px;{{\App\Http\Controllers\VideosController::hasVoted($video->id) == 1 ? ($a = 'color: #82007d;'): ($a = '')}}"></i></span>
                         @endif
                         <span id="upcount" style="color:#70ff7e">{{\App\Http\Controllers\VideosController::GetVoteByValue(1, $video->id)}}</span>
                         /
                         <span id="downcount" style="color:#ff7070">{{\App\Http\Controllers\VideosController::GetVoteByValue(0, $video->id)}}</span>
                         @if(Auth::check())
-                        <a href="#" onclick="votedown();"><i class="fas fa-thumbs-down td" style="margin:20px;{{\App\Http\Controllers\VideosController::hasVoted($video->id) == 0 ? ($a = 'color: #82007d;'): ($a = '')}}"></i></a>
+                        <span onclick="votedown();"><i class="fas fa-thumbs-down td" style="margin:20px;{{\App\Http\Controllers\VideosController::hasVoted($video->id) == 0 ? ($a = 'color: #82007d;'): ($a = '')}}"></i></span>
                         @endif
                     </li>
                 </ul>
@@ -90,33 +90,33 @@
         let voteup = function(){
             $('.tu').css('color', '#82007d');
             $('.td').css('color', '#B855F5');
-
-           $.ajax({
+            $.ajax({
                 url: '/video/vote',
                 type: 'POST',
                 data: {_token: '<?php echo csrf_token() ?>', value: 1, video_id: '{{$video->id}}'},
                 dataType: 'JSON',
-               success: function(){
-                   location.reload();
-               }
+                success: function(){
+                    location.reload();
+                }
             });
-
-
         };
 
         let votedown = function(){
             $('.tu').css('color', '#B855F5');
             $('.td').css('color', '#82007d');
-
             $.ajax({
                 url: '/video/vote',
                 type: 'POST',
                 data: {_token: '<?php echo csrf_token() ?>', value: 0, video_id: '{{$video->id}}'},
                 dataType: 'JSON',
-                success: function(){
-                   location.reload();
+                success: function () {
+                    location.reload();
                 }
             });
         };
+
+        function unlock () {
+            locked = false;
+        }
     </script>
 @endsection

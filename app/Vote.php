@@ -14,4 +14,10 @@ use Illuminate\Database\Eloquent\Model;
 class Vote extends Model
 {
     public $timestamps = false;
+
+    protected $fillable = [
+        'video_id',
+        'author_id',
+        'value'
+    ];
 }
