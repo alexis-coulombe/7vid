@@ -17,6 +17,7 @@ class CreateVotesTable extends Migration
             $table->increments('id');
             $table->uuid('video_id');
             $table->unsignedInteger('author_id');
+            $table->boolean('value');
         });
     }
 

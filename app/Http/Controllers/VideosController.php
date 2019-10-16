@@ -44,15 +44,17 @@ class VideosController extends Controller
 
     public static function vote()
     {
-        $userId = Auth::id();
         $value = Input::post('value');
         $videoId = Input::post('video_id');
 
-        $hasAlreadyVoted = Vote::where('author_id', '=', $userId)->where('video_id', '=', $videoId)->exists();
+        /** @var boolean $hasAlreadyVoted */
+        $hasAlreadyVoted = VideosController::hasVoted($videoId);
 
         if ($hasAlreadyVoted) {
-            $vq = Vote::where('author_id', '=', $userId)->where('video_id', '=', $videoId);
-            $voteValue = $vq->first()->value;
+            /** @var Vote $vq */
+            $vq = Vote::where([['author_id', '=', Auth::id(), 'video_id', '=', $videoId]])->first();
+            $voteValue = $vq->value;
+
             if ($voteValue != $value) {
                 $vote = $vq;
                 $vote->update(['value' => $value]);
@@ -63,7 +65,7 @@ class VideosController extends Controller
         } else {
             $vote = new Vote();
             $vote->video_id = $videoId;
-            $vote->author_id = $userId;
+            $vote->author_id = Auth::id();
             $vote->value = $value;
             $vote->save();
         }
@@ -71,25 +73,14 @@ class VideosController extends Controller
         return response(200);
     }
 
-    public static function hasVoted($video_id)
+    public static function hasVoted($videoId)
     {
-        $userId = Auth::id();
-        $value = -1;
-        $vote = Vote::where([
-            ['value', '=', '1'],
-            ['author_id', '=', $userId],
-            ['video_id', '=', $video_id]
-        ])->first();
-
-        if ($vote != null) {
-            $value = $vote->value;
-        }
-        return $value;
+        return Vote::where([['author_id', '=', Auth::id()], ['video_id', '=', $videoId]])->exists();
     }
 
-    public static function GetVoteByValue($value)
+    public static function GetVoteByValue($value, $videoId)
     {
-        return DB::table('votes')->where('value', '=', $value)->count();
+        return Vote::where([['value', '=', $value], ['video_id', '=', $videoId]])->count();
     }
 
     /**
