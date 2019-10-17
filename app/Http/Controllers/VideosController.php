@@ -92,7 +92,7 @@ class VideosController extends Controller
             'title' => 'required|max:64',
             'upload' => 'file|required',
             'image' => 'file|required',
-            //'description' => 'max:100000'
+            'description' => 'max:100000'
         ], $this->messages());
 
         $video = new Video;
@@ -135,7 +135,7 @@ class VideosController extends Controller
 
         $video->title = $request->input('title');
         $video->description = $request->input('description');
-        $video->category_id = 1;//$request->input('category');
+        $video->category_id = $request->input('category');
         $video->extension = $extension;
         $video->location = $destinationPath . '\\' . $filename;
 

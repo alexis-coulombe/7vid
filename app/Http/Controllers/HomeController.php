@@ -12,16 +12,16 @@ class HomeController extends Controller
     {
         $videos = null;
 
-        if ($request != null) {
-            if ($request->input('search') != null) {
-                if ($request->input('category') != null) {
+        if ($request !== null) {
+            if ($request->input('search') !== null) {
+                if ($request->input('category') !== null) {
                     $videos = Video::where('title', 'LIKE', '%' . $request->input('search') . '%')
                         ->where('category_id', '=', $request->input('category'))->get();
                 } else {
                     $videos = Video::where('title', 'LIKE', '%' . $request->input('search') . '%')->get();
                 }
             } else {
-                if ($request->input('category') != null) {
+                if ($request->input('category') !== null) {
                     $videos = Video::where('category_id', '=', $request->input('category'))->get();
                 } else {
                     $videos = Video::paginate(2);
