@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-transparent " color-on-scroll="100">
     <div class="container">
         <div class="navbar-translate">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="{{ route('home') }}">
                 <span>VidMock</span> Video sharing
             </a>
             <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,8 +46,8 @@
                             <i class="fa fa-cogs d-lg-none d-xl-none"></i> Account
                         </a>
                         <div class="dropdown-menu dropdown-with-icons">
-                            <a href="#" class="dropdown-item">
-                                <i class="fas fa-sign-in-alt"></i>View your channel
+                            <a href="{{ route('channel.index', ['userId' => Auth::id()]) }}" class="dropdown-item">
+                                <i class="fa fa-video-camera"></i>View your channel
                             </a>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();">
                                 <i class="fas fa-sign-out-alt"></i>Logout
@@ -64,7 +64,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/video/create">+ Share a video</a>
+                        <a class="nav-link" href="{{ route('video.create') }}/video/create">+ Share a video</a>
                     </li>
                 @else
                     <li class="dropdown nav-item">

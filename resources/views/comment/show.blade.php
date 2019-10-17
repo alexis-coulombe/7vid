@@ -17,7 +17,7 @@
                     {{ $comment->body }}
                     <br>
                     <small>
-                        <b>- {{$author->name}}</b>
+                        <b>- <a href="{{ route('channel.index', ['userId' => $author->id]) }}">{{$author->name}}</a></b>
                     </small>
                 </p>
             </blockquote>
