@@ -1,32 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name') }}</title>
 
-        <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
-        <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-        <<link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" >
-        <link href="{{ asset('css/blk-design-system.css') }}" rel="stylesheet" />
-        <link href="{{ asset('css/nucleo-icons.css') }}" rel="stylesheet" />
-
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.2.0/css/all.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css">
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" >
         @yield('header')
     </head>
-    <body class=@yield('body-class')>
-        @include('shared.navbar')
+    <body>
+        @if(\Route::current()->getName() !== 'login' && \Route::current()->getName() !== 'register' && \Route::current()->getName() !== 'password.request')
+            @include('shared.navbar')
+        @endif
 
-        <div class="wrapper">
-            @yield('content')
-            @include('shared.footer')
-        </div>
+        @if(\Route::current()->getName() !== 'login' && \Route::current()->getName() !== 'register' && \Route::current()->getName() !== 'password.request')
+            <div id="wrapper">
+                @include('shared.sidenav')
+                <div id="content-wrapper">
+        @endif
 
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+                @include('shared.message')
+                @yield('content')
+                @include('shared.footer')
+
+            @if(\Route::current()->getName() !== 'login' && \Route::current()->getName() !== 'register' && \Route::current()->getName() !== 'password.request')
+                </div>
+            </div>
+        @endif
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
         <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/blk-design-system.js') }}"></script>
     </body>
 </html>
