@@ -28,7 +28,7 @@ class HomeController extends Controller
                 }
             }
         } else {
-            $videos = Video::paginate(2);
+            $videos = Video::paginate(4);
         }
 
         return view('home.home')->with('videos', $videos);

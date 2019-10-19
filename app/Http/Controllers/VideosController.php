@@ -112,7 +112,7 @@ class VideosController extends Controller
 
         $video->save();
 
-        return redirect('/video')->with('success', 'Your video as been shared.');
+        return redirect('/video/' . $video->ìd)->with('success', 'Your video as been shared.');
     }
 
     private function saveVideo($file, $request, $video)
@@ -135,7 +135,7 @@ class VideosController extends Controller
 
         $video->title = $request->input('title');
         $video->description = $request->input('description');
-        $video->category_id = $request->input('category');
+        $video->category_id = 1;//$request->input('category');
         $video->extension = $extension;
         $video->location = $destinationPath . '\\' . $filename;
 
