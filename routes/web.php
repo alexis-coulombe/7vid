@@ -16,16 +16,14 @@ Route::get('/', 'HomeController@index')->name('home');
 // Video routes
 Route::get('video/search', 'VideosController@search')->name('video.search');
 Route::post('video/vote', 'VideosController@vote')->name('video.vote')->middleware('auth');
-Route::post('video', 'VideosController@store')->name('video.store')->middleware('auth');
-Route::get('video', 'VideosController@index')->name('video.index');
-Route::get('video/create', 'VideosController@create')->name('video.create')->middleware('auth');
-Route::delete('video/{video}', 'VideosController@destroy')->name('video.destroy')->middleware('auth');
-Route::get('video/{video}', 'VideosController@show')->name('video.show');
-Route::put('video/{video}', 'VideosController@update')->name('video.update')->middleware('auth');
-Route::get('video/{video}/edit', 'VideosController@edit')->name('video.edit')->middleware('auth');
+Route::group(['middleware' => 'auth'], function() {
+    Route::resource('video', 'VideosController', ['except' => 'index,show']);
+});
 
 // Comment routes
-Route::resource('comment', 'CommentsController');
+Route::group(['middleware' => 'auth'], function() {
+    Route::resource('comment', 'CommentsController', ['except' => 'index,show']);
+});
 
 // Channel routes
 Route::get('channel/{userId}', 'ChannelController@index')->name('channel.index');

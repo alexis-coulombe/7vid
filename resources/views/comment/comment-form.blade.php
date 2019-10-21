@@ -1,15 +1,11 @@
-<div class="card">
-    <div class="card-header">
-        <p>Comment that video</p>
-    </div>
-    <div class="card-body">
-        {!! Form::open(array('action' => 'CommentsController@store')) !!}
-        @csrf
+<div class="single-video-info-content box mb-3">
+    <p>Comment that video</p>
+    <form action="/comment" method="POST">
+        {{ csrf_field() }}
         <div class="form-group">
-            {{Form::hidden('video_id', $data['video_id'])}}
-            {{Form::textarea('comment', '', ['class' => 'form-control', 'placeholder' => 'Enter your comment'])}}
+            <input type="hidden" name="video_id" value="{{ $video_id }}">
+            <textarea name="comment" class="form-control" placeholder="Enter your comment"></textarea>
         </div>
-        {{Form::submit('Comment', ['class' => 'btn btn-primary'])}}
-        {!! Form::close() !!}
-    </div>
+        <button type="submit" class="btn btn-primary">Send comment</button>
+    </form>
 </div>

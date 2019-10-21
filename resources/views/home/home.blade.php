@@ -181,7 +181,7 @@
                                     Education  <a title="" data-placement="top" data-toggle="tooltip" href="#" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></a>
                                 </div>
                                 <div class="video-view">
-                                    1.8M views &nbsp;<i class="fas fa-calendar-alt"></i> 11 Months ago
+                                    1.8M views &nbsp;<i class="fas fa-calendar-alt"></i> {{ time_elapsed_string($video->created_at) }}
                                 </div>
                             </div>
                         </div>
