@@ -16,14 +16,12 @@ Route::get('/', 'HomeController@index')->name('home');
 // Video routes
 Route::get('video/search', 'VideosController@search')->name('video.search');
 Route::post('video/vote', 'VideosController@vote')->name('video.vote')->middleware('auth');
-Route::group(['middleware' => 'auth'], function() {
-    Route::resource('video', 'VideosController', ['except' => 'index,show']);
-});
+Route::resource('video', 'VideosController', ['except' => ['index','show']])->middleware('auth');
+Route::resource('video', 'VideosController', ['only' => ['index','show']]);
 
 // Comment routes
-Route::group(['middleware' => 'auth'], function() {
-    Route::resource('comment', 'CommentsController', ['except' => 'index,show']);
-});
+Route::resource('comment', 'CommentsController', ['except' => ['index','show']])->middleware('auth');
+Route::resource('comment', 'CommentsController', ['only' => ['index','show']]);
 
 // Channel routes
 Route::get('channel/{userId}', 'ChannelController@index')->name('channel.index');
