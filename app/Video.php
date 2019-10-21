@@ -34,4 +34,14 @@ class Video extends Model
         }
         return $uuid;
     }
+
+    public function category()
+    {
+        return $this->hasOne('App\Category', 'id', 'category_id');
+    }
+
+    public function author()
+    {
+        return $this->belongsTo('App\User', 'author_id');
+    }
 }
