@@ -21,7 +21,7 @@ class VideosController extends Controller
      */
     public function index()
     {
-        redirect('/');
+        return redirect('/');
     }
 
     public function search(Request $request)
@@ -92,7 +92,7 @@ class VideosController extends Controller
             'title' => 'required|max:64',
             'upload' => 'file|required',
             'image' => 'file|required',
-            'description' => 'max:100000'
+            'description' => 'max:255'
         ], $this->messages());
 
         $video = new Video;
@@ -135,7 +135,7 @@ class VideosController extends Controller
 
         $video->title = $request->input('title');
         $video->description = $request->input('description');
-        $video->category_id = 1;//$request->input('category');
+        $video->category_id = $request->input('category');
         $video->extension = $extension;
         $video->location = $destinationPath . '\\' . $filename;
 
@@ -185,7 +185,7 @@ class VideosController extends Controller
     public function show($id)
     {
         $video = Video::find($id);
-        if ($video == null) {
+        if ($video === null) {
             abort(404);
         }
 

@@ -25,12 +25,13 @@
                 @include('shared.sidenav')
                 <div id="content-wrapper">
         @endif
+                <div class="container-fluid">
+                    @include('shared.message')
+                    @yield('content')
+                    @include('shared.footer')
+                </div>
 
-                @include('shared.message')
-                @yield('content')
-                @include('shared.footer')
-
-            @if(\Route::current()->getName() !== 'login' && \Route::current()->getName() !== 'register' && \Route::current()->getName() !== 'password.request')
+        @if(\Route::current()->getName() !== 'login' && \Route::current()->getName() !== 'register' && \Route::current()->getName() !== 'password.request')
                 </div>
             </div>
         @endif
