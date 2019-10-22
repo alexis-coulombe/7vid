@@ -182,7 +182,6 @@
                     {{$newVideos->links()}}
             @endif
         </div>
-        </div>
     </div>
     <hr class="mt-0">
     <div class="video-block section-padding">
@@ -267,4 +266,5 @@
                 </div>
             </div>
         </div>
+    </div>
 @endsection

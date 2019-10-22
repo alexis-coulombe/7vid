@@ -25,33 +25,42 @@ Version: 1.0
     });
 
     // Category Owl Carousel
-    var objowlcarousel = $(".owl-carousel-category");
+    const objowlcarousel = $('.owl-carousel-category');
     if (objowlcarousel.length > 0) {
         objowlcarousel.owlCarousel({
-            items: 8,
-            lazyLoad: true,
-            pagination: false,
+            responsive: {
+                1000: {
+                    items: 4,
+                },
+                1200: {
+                    items: 6,
+                },
+            },
             loop: true,
-            autoPlay: 2000,
-            navigation: true,
-            stopOnHover: true,
-            navigationText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"]
+            lazyLoad: true,
+            autoplay: true,
+            autoplaySpeed: 1000,
+            autoplayTimeout: 2000,
+            autoplayHoverPause: true,
+            nav: true,
+            navText: [
+                "",
+                "",
+            ],
         });
     }
 
     // Login Owl Carousel
-    var mainslider = $(".owl-carousel-login");
+    const mainslider = $('.owl-carousel-login');
     if (mainslider.length > 0) {
         mainslider.owlCarousel({
             items: 1,
             lazyLoad: true,
-            pagination: true,
-            autoPlay: 4000,
             loop: true,
-            singleItem: true,
-            navigation: false,
-            stopOnHover: true,
-            navigationText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"]
+            autoplay: true,
+            autoplaySpeed: 1000,
+            autoplayTimeout: 2000,
+            autoplayHoverPause: true
         });
     }
 
