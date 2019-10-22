@@ -21,6 +21,7 @@ class CreateVideosTable extends Migration
             $table->string('title');
             $table->mediumText('description');
             $table->string('extension');
+            $table->unsignedBigInteger('duration');
             $table->text('location');
             $table->text('thumbnail');
             $table->timestamps();

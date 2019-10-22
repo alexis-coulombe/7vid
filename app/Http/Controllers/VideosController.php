@@ -9,7 +9,6 @@ use App\Video;
 use App\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
 class VideosController extends Controller
@@ -137,7 +136,11 @@ class VideosController extends Controller
         $video->description = $request->input('description');
         $video->category_id = $request->input('category');
         $video->extension = $extension;
-        $video->location = $destinationPath . '\\' . $filename;
+        $video->location = $destinationPath . '/' . $filename;
+
+        $getID3 = new \getID3();
+        $file = $getID3->analyze(public_path() . '/' . $video->location);
+        $video->duration = $file['playtime_seconds'];
 
     }
 
