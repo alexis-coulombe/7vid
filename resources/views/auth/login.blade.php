@@ -1,4 +1,4 @@
-@extends('shared.template')
+@extends('auth.template')
 
 @section('content')
     <section class="login-main-wrapper">
