@@ -16,7 +16,9 @@
                         <p class="mb-0"><i class="fas fa-eye"></i> 2,729,347 views</p>
                     </div>
                     <div class="single-video-author box mb-3">
-                        <div class="float-right"><button class="btn btn-danger" type="button">Subscribe <strong>1.4M</strong></button> <button class="btn btn btn-outline-danger" type="button"><i class="fas fa-bell"></i></button></div>
+                        @if(Auth::check() && $video->author->id !== Auth::id())
+                            <div class="float-right"><button class="btn btn-danger" type="button">Subscribe <strong>1.4M</strong></button></div>
+                        @endif
                         <img class="img-fluid" src="img/s4.png" alt="">
                         <p><a href="#"><strong>{{ $author->name }}</strong></a> <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></span></p>
                         <small>Published on {{date('Y-m-d', strtotime($video->created_at))}}</small>
