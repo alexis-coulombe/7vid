@@ -31,13 +31,13 @@
                     </div>
                     <div class="single-video-info-content box mb-3">
                         @if(Auth::check())
-                            <span onclick="voteup();"><i class="fas fa-thumbs-up tu" style="margin:20px;{{\App\Http\Controllers\VideosController::hasVoted($video->id) == 1 ? ($a = 'color: #82007d;'): ($a = '')}}"></i></span>
+                            <span><i class="fas fa-thumbs-up tu" style="margin:20px; cursor:pointer;"></i></span>
                         @endif
-                        <span id="upcount" style="color:#70ff7e">{{\App\Http\Controllers\VideosController::GetVoteByValue(1, $video->id)}}</span>
+                        <span id="upcount">{{\App\Vote::GetVotesByValue(1, $video->id)}}</span>
                         /
-                        <span id="downcount" style="color:#ff7070">{{\App\Http\Controllers\VideosController::GetVoteByValue(0, $video->id)}}</span>
+                        <span id="downcount">{{\App\Vote::GetVotesByValue(0, $video->id)}}</span>
                         @if(Auth::check())
-                            <span onclick="votedown();"><i class="fas fa-thumbs-down td" style="margin:20px;{{\App\Http\Controllers\VideosController::hasVoted($video->id) == 0 ? ($a = 'color: #82007d;'): ($a = '')}}"></i></span>
+                            <span><i class="fas fa-thumbs-down td" style="margin:20px; cursor:pointer;"></i></span>
                         @endif
                         <p>{{ $video->description }}</p>
                         <p class="tags mb-0">

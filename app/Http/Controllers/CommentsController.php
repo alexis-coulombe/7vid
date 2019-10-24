@@ -55,12 +55,12 @@ class CommentsController extends Controller
     {
         $comment = Comment::find($id);
 
-        if ($comment == null) {
-            return redirect()->back()->with('error', 'There was an error while trying to delete your comment!');
+        if ($comment === null) {
+            return back()->with('error', 'There was an error while trying to delete your comment!');
         }
 
         $comment->delete();
 
-        return redirect()->back()->with('success', 'Your comment has been removed!');
+        return back()->with('success', 'Your comment has been removed!');
     }
 }

@@ -16,8 +16,13 @@ class CreateVideosTable extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->primary('id');
             $table->uuid('id');
+
             $table->unsignedInteger('author_id');
+            $table->foreign('author_id')->references('id')->on('users');
+
             $table->unsignedInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
+
             $table->string('title');
             $table->mediumText('description');
             $table->string('extension');

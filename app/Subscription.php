@@ -10,6 +10,7 @@ namespace App;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Subscription extends Model
 {
@@ -19,4 +20,15 @@ class Subscription extends Model
         'author_id',
         'user_id'
     ];
+
+    /**
+     * Check if the logged user is subscribed to the other user
+     *
+     * @param $authorId
+     * @return boolean
+     */
+    public static function isSubscribed($authorId)
+    {
+        return Subscription::where([['author_id', '=', $authorId], ['user_id', '=', Auth::id()]])->exists();
+    }
 }

@@ -47,10 +47,7 @@ class VideosController extends Controller
         $value = Input::post('value');
         $videoId = Input::post('video_id');
 
-        /** @var boolean $hasAlreadyVoted */
-        $hasAlreadyVoted = VideosController::hasVoted($videoId);
-
-        if ($hasAlreadyVoted) {
+        if (Vote::hasVoted($videoId)) {
             /** @var Vote $vq */
             $vq = Vote::where([['author_id', '=', Auth::id()], ['video_id', '=', $videoId]])->first();
 
@@ -70,20 +67,16 @@ class VideosController extends Controller
         return response(200);
     }
 
-    public static function hasVoted($videoId)
+    /**
+     * Subscribe a user to another user
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function subscribe()
     {
-        return Vote::where([['author_id', '=', Auth::id()], ['video_id', '=', $videoId]])->exists();
-    }
-
-    public static function GetVoteByValue($value, $videoId)
-    {
-        return Vote::where([['value', '=', $value], ['video_id', '=', $videoId]])->count();
-    }
-
-    public function subscribe() {
         $authorId = Input::post('author_id');
 
-        if(!$this->isSubscribed($authorId)) {
+        if (!Subscription::isSubscribed($authorId)) {
             $subscription = new Subscription();
             $subscription->author_id = $authorId;
             $subscription->user_id = Auth::id();
@@ -93,10 +86,6 @@ class VideosController extends Controller
         }
 
         return back();
-    }
-
-    public function isSubscribed($authorId) {
-        return Subscription::where([['author_id', '=', $authorId], ['user_id', '=', Auth::id()]])->exists();
     }
 
     /**
@@ -130,7 +119,7 @@ class VideosController extends Controller
         }
 
         if ($request->hasFile('upload')) {
-            $this->saveImage($request->file('image'), $video);
+            $this->savethumbnail($request->file('image'), $video);
         }
 
         $video->save();
@@ -138,7 +127,7 @@ class VideosController extends Controller
         return redirect('/video/' . $video->ìd)->with('success', 'Your video as been shared.');
     }
 
-    private function saveVideo($file, $request, $video)
+    private function saveVideo($file, $request, &$video)
     {
         $destinationPath = 'videos';
         $extension = $file->getClientOriginalExtension();
@@ -155,7 +144,6 @@ class VideosController extends Controller
 
         $file->move($destinationPath, $filename);
 
-
         $video->title = $request->input('title');
         $video->description = $request->input('description');
         $video->category_id = $request->input('category');
@@ -165,10 +153,9 @@ class VideosController extends Controller
         $getID3 = new \getID3();
         $file = $getID3->analyze(public_path() . '/' . $video->location);
         $video->duration = $file['playtime_seconds'];
-
     }
 
-    private function saveImage($file, $video)
+    private function savethumbnail($file, &$video)
     {
         $destinationPath = 'images';
         $extension = $file->getClientOriginalExtension();
