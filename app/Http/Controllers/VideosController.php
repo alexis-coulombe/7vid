@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Comment;
+use App\Subscription;
 use App\User;
 use App\Video;
 use App\Vote;
@@ -79,6 +80,25 @@ class VideosController extends Controller
         return Vote::where([['value', '=', $value], ['video_id', '=', $videoId]])->count();
     }
 
+    public function subscribe() {
+        $authorId = Input::post('author_id');
+
+        if(!$this->isSubscribed($authorId)) {
+            $subscription = new Subscription();
+            $subscription->author_id = $authorId;
+            $subscription->user_id = Auth::id();
+            $subscription->save();
+        } else {
+            Subscription::where([['author_id', '=', $authorId], ['user_id', '=', Auth::id()]])->delete();
+        }
+
+        return back();
+    }
+
+    public function isSubscribed($authorId) {
+        return Subscription::where([['author_id', '=', $authorId], ['user_id', '=', Auth::id()]])->exists();
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -92,7 +112,11 @@ class VideosController extends Controller
             'upload' => 'file|required',
             'image' => 'file|required',
             'description' => 'max:255'
-        ], $this->messages());
+        ], [
+            'title.required' => 'A title is required for your video.',
+            'upload.required' => 'You must choose your video to upload.',
+            'upload.file' => 'Your uploaded file must be a video.'
+        ]);
 
         $video = new Video;
         $video->author_id = Auth::id();
@@ -166,20 +190,6 @@ class VideosController extends Controller
     }
 
     /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array
-     */
-    private function messages()
-    {
-        return [
-            'title.required' => 'A title is required for your video.',
-            'upload.required' => 'You must choose your video to upload.',
-            'upload.file' => 'Your uploaded file must be a video.'
-        ];
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param int $id
@@ -192,10 +202,13 @@ class VideosController extends Controller
             abort(404);
         }
 
-        $author = User::find($video->author_id);
         $comments = Comment::where('video_id', '=', $video->id)->get();
+        $subscriptionCount = Subscription::where('author_id', '=', $video->author->id)->count();
 
-        return view('video.show')->with('video', $video)->with('author', $author)->with('comments', $comments);
+        return view('video.show')
+            ->with('video', $video)
+            ->with('comments', $comments)
+            ->with('subscriptionCount', $subscriptionCount);
     }
 
     /**

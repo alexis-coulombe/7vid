@@ -17,10 +17,16 @@
                     </div>
                     <div class="single-video-author box mb-3">
                         @if(Auth::check() && $video->author->id !== Auth::id())
-                            <div class="float-right"><button class="btn btn-danger" type="button">Subscribe <strong>1.4M</strong></button></div>
+                            <div class="float-right">
+                                <form action="{{ route('video.subscribe') }}" method="POST">
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="author_id" value="{{ $video->author->id }}">
+                                    <button class="btn btn-danger" type="submit">Subscribe | <strong>{{ $subscriptionCount }}</strong></button>
+                                </form>
+                            </div>
                         @endif
                         <img class="img-fluid" src="img/s4.png" alt="">
-                        <p><a href="#"><strong>{{ $author->name }}</strong></a> <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></span></p>
+                        <p><a href="#"><strong>{{ $video->author->name }}</strong></a> <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></span></p>
                         <small>Published on {{date('Y-m-d', strtotime($video->created_at))}}</small>
                     </div>
                     <div class="single-video-info-content box mb-3">

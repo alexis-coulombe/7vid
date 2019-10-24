@@ -16,6 +16,7 @@ Route::get('/', 'HomeController@index')->name('home');
 // Video routes
 Route::get('video/search', 'VideosController@search')->name('video.search');
 Route::post('video/vote', 'VideosController@vote')->name('video.vote')->middleware('auth');
+Route::post('video/subscribe', 'VideosController@subscribe')->name('video.subscribe')->middleware('auth');
 Route::resource('video', 'VideosController', ['except' => ['index','show']])->middleware('auth');
 Route::resource('video', 'VideosController', ['only' => ['index','show']]);
 
