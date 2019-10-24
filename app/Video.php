@@ -19,7 +19,6 @@ class Video extends Model
          * for the `id` field (provided by $model->getKeyName())
          */
         Video::creating(function ($model) {
-            echo "Creating Uuid Model...\n";
             $model->{$model->getKeyName()} = (string)$model->generateNewId();
         });
     }

@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $maxCategoryCount = 10;
         $maxUserCount = 100;
         $maxCommentsCount = 200;
+        $maxVotesCount = 1000;
 
         $faker = Faker\Factory::create();
 
@@ -57,6 +58,15 @@ class DatabaseSeeder extends Seeder
             $comment->author_id = $faker->numberBetween(1, $maxUserCount);
             $comment->body = $faker->text;
             $comment->save();
+        }
+
+        // Votes
+        for ($i = 0; $i < $maxVotesCount; $i++) {
+            $vote = new \App\Vote();
+            $vote->video_id = \App\Video::inRandomOrder()->first()->id;
+            $vote->author_id = $faker->numberBetween(1, $maxUserCount);
+            $vote->value = $faker->boolean();
+            $vote->save();
         }
 
     }
