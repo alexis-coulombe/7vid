@@ -18,10 +18,11 @@ class CreateVotesTable extends Migration
 
             $table->uuid('video_id');
             $table->foreign('video_id')->references('id')->on('videos');
-
+            $table->index('video_id');
 
             $table->unsignedInteger('author_id');
             $table->foreign('author_id')->references('id')->on('users');
+            $table->index('author_id');
 
             $table->boolean('value');
         });
