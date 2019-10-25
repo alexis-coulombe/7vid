@@ -10,7 +10,7 @@
 
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" >
         <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" >
-        @yield('header')
+        @yield('head')
     </head>
     <body>
         @if(\Route::current()->getName() !== 'login' && \Route::current()->getName() !== 'register' && \Route::current()->getName() !== 'password.request')
@@ -33,7 +33,7 @@
         @endif
 
         @include('shared.footer')
-
+        @yield('footer')
 
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>

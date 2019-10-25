@@ -1,5 +1,6 @@
 <?php
 
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use \Illuminate\Support\Facades\Hash;
@@ -13,13 +14,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $faker = Faker\Factory::create();
+
         $maxVideosCount = 100;
         $maxCategoryCount = 10;
         $maxUserCount = 100;
         $maxCommentsCount = 200;
         $maxVotesCount = 1000;
-
-        $faker = Faker\Factory::create();
+        $maxSubCount = $faker->numberBetween($maxUserCount / 2, $maxUserCount);
 
         // Categories
         for ($i = 0; $i < $maxCategoryCount; $i++) {
@@ -69,5 +71,11 @@ class DatabaseSeeder extends Seeder
             $vote->save();
         }
 
+        for ($i = 0; $i < $maxSubCount; $i++) {
+            $sub = new \App\Subscription();
+            $sub->author_id = \App\User::inRandomOrder()->first()->id;
+            $sub->user_id = \App\User::inRandomOrder()->first()->id;
+            $sub->save();
+        }
     }
 }

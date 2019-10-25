@@ -6,9 +6,12 @@
             <div class="col-md-8">
                 <div class="single-video-left">
                     <div class="single-video">
-                        <video id="player" width="100%" controls preload="auto" poster="">
+                        <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' controls preload='auto' width="100%" controls preload="auto" poster="{{ $video->thumbnail }}" data-setup="{}">
                             <source src="/{{$video->location}}" type="video/{{$video->extension}}">
-                            To view this video please enable JavaScript, or consider upgrading to a web browser that supports HTML5 video
+                            <p class='vjs-no-js'>
+                                To view this video please enable JavaScript, and consider upgrading to a web browser that
+                                <a href='https://videojs.com/html5-video-support/' target='_blank'>supports HTML5 video</a>
+                            </p>
                         </video>
                     </div>
                     <div class="single-video-title box mb-3">
@@ -316,4 +319,9 @@
             });
         };
     </script>
+@endsection
+
+@section('footer')
+    <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+    <script src='https://vjs.zencdn.net/7.6.5/video.js'></script>
 @endsection
