@@ -1,3 +1,5 @@
+@php if(isset($video)) $authorId = $video->author->id; @endphp
+
 <form action="{{ route('video.subscribe') }}" method="POST">
     {{ csrf_field() }}
     <input type="hidden" name="author_id" value="{{ $authorId }}">

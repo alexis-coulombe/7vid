@@ -20,8 +20,6 @@
                     </div>
                     <div class="single-video-author box mb-3">
                         @if(Auth::check() && $video->author->id !== Auth::id())
-                            @php $authorId = $video->author->id @endphp
-
                             <div class="float-right">
                                 @include('shared.video.subscribe')
                             </div>
