@@ -31,4 +31,15 @@ class Subscription extends Model
     {
         return Subscription::where([['author_id', '=', $authorId], ['user_id', '=', Auth::id()]])->exists();
     }
+
+    /**
+     * Get subscription count for authorId
+     *
+     * @param $author_id
+     * @return integer
+     */
+    public static function getSubscriptionCount($authorId)
+    {
+        return Subscription::where('author_id', '=', $authorId)->count();
+    }
 }

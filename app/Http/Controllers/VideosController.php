@@ -24,10 +24,22 @@ class VideosController extends Controller
         return redirect('/');
     }
 
+    /**
+     * Search for videos that fits filters
+     *
+     * @param Request $request
+     * @return HomeController
+     */
     public function search(Request $request)
     {
-        $rootController = new HomeController();
-        return $rootController->index($request);
+        $search = Input::get('search');
+
+        $videos = Video::where('title', 'like', '%' . $search . '%')->orWhere('description', 'like', '% ' . $search . ' %')->paginate(20);
+        $authors = User::where('name', 'like', '%' . $search . '%')->paginate(12);
+
+
+        return view('video.search')->with('videos', $videos)
+            ->with('authors', $authors);
     }
 
     /**

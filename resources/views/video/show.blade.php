@@ -17,12 +17,10 @@
                     </div>
                     <div class="single-video-author box mb-3">
                         @if(Auth::check() && $video->author->id !== Auth::id())
+                            @php $authorId = $video->author->id @endphp
+
                             <div class="float-right">
-                                <form action="{{ route('video.subscribe') }}" method="POST">
-                                    {{ csrf_field() }}
-                                    <input type="hidden" name="author_id" value="{{ $video->author->id }}">
-                                    <button class="btn btn-danger" type="submit">Subscribe | <strong>{{ $subscriptionCount }}</strong></button>
-                                </form>
+                                @include('shared.video.subscribe')
                             </div>
                         @endif
                         <img class="img-fluid" src="img/s4.png" alt="">
