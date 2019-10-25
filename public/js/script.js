@@ -50,6 +50,33 @@ Version: 1.0
         });
     }
 
+    // Video cards Owl Carousel
+    const videoSlider = $('.owl-carousel-video-card');
+    if (videoSlider.length > 0) {
+        videoSlider.owlCarousel({
+            responsive: {
+                1000: {
+                    items: 4,
+                },
+                1200: {
+                    items: 4,
+                },
+            },
+            loop: true,
+            margin:10,
+            lazyLoad: true,
+            autoplay: true,
+            autoplaySpeed: 1000,
+            autoplayTimeout: 4000,
+            autoplayHoverPause: true,
+            nav: true,
+            navText: [
+                "",
+                "",
+            ],
+        });
+    }
+
     // Login Owl Carousel
     const mainslider = $('.owl-carousel-login');
     if (mainslider.length > 0) {

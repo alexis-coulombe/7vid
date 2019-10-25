@@ -203,10 +203,14 @@ class VideosController extends Controller
         $comments = Comment::where('video_id', '=', $video->id)->get();
         $subscriptionCount = Subscription::where('author_id', '=', $video->author->id)->count();
 
+        $relatedVideos = Video::where('title', 'like', '%'.$video->title.'%')
+            ->orWhere('category_id', '=', $video->category_id)->limit(10)->get();
+
         return view('video.show')
             ->with('video', $video)
             ->with('comments', $comments)
-            ->with('subscriptionCount', $subscriptionCount);
+            ->with('subscriptionCount', $subscriptionCount)
+            ->with('relatedVideos', $relatedVideos);
     }
 
     /**

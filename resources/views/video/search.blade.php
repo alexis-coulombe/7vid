@@ -52,21 +52,8 @@
             @if(count($authors) > 0)
                 @foreach($authors as $author)
                     <div class="col-xl-3 col-sm-6 mb-3">
-                <div class="channels-card">
-                    @if(Auth::check())
-                        @php $authorId = $author->id @endphp
-
-                        <div class="channels-card-image">
-                            @include('shared.video.subscribe')
-                        </div>
-                    @endif
-                    <div class="channels-card-body">
-                        <div class="channels-title">
-                            <a href="{{ route('channel.index', ['id' => $author->id]) }}">{{ $author->name }}</a>
-                        </div>
+                        @include('shared.channel.card')
                     </div>
-                </div>
-            </div>
                 @endforeach
             @endif
         </div>
