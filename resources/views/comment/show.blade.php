@@ -1,30 +1,21 @@
-<div class="card">
-    <div class="card-header">
-        <p>Comments</p>
-    </div>
-    <div class="card-body">
-        @foreach($data['comments'] as $comment)
-           @php $author = \App\User::find($comment->author_id); @endphp
-
-            @if(Auth::user()->id == $author->id)
-
+@foreach($comments as $comment)
+    <div class="single-video-author box mb-3">
+        <div class="float-right">
+            @if(Auth::check() && Auth::id() === $comment->author_id)
+                <span><i class="trash fas fa-trash-alt" onclick="document.getElementById('destroy-form').submit()"></i></span>
             @endif
-
-
-            <blockquote>
-                <p class="blockquote blockquote-primary">
-                    <a><i class="fas fa-trash-alt" onclick="document.getElementById('destroy-form').submit()"></i></a>
-                    <br>
-                    {{ $comment->body }}
-                    <br>
-                    <small>
-                        <b>- {{$author->name}}</b>
-                    </small>
-                </p>
-            </blockquote>
-            {!! Form::open(['action' => ['CommentsController@destroy', $comment->id], 'id' => 'destroy-form']) !!}
-            {{Form::hidden('_method', 'DELETE')}}
-            {!! Form::close() !!}
-        @endforeach
+        </div>
+        <img class="img-fluid" src="img/s4.png" alt="">
+        <p><a href="{{ route('channel.index', ['userId' => $comment->author_id]) }}"><strong>{{ $comment->author->name }}</strong></a> <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></span></p>
+        <p>{{ $comment->body }}</p>
+        <br>
+        <small>Published on {{date('Y-m-d', strtotime($video->created_at))}}</small>
     </div>
-</div>
+
+    @if(Auth::check() && Auth::id() === $comment->author_id)
+        <form action="{{ route('comment.destroy', ['comment' => $comment->id]) }}" method="POST" id="destroy-form">
+            {{ csrf_field() }}
+            {{ method_field('delete') }}
+        </form>
+    @endif
+@endforeach

@@ -11,15 +11,20 @@
 |
 */
 
-Route::get('/', 'RootController@index');
-Route::get('term', 'RootController@term');
+Route::get('/', 'HomeController@index')->name('home');
 
+// Video routes
 Route::get('video/search', 'VideosController@search')->name('video.search');
-Route::post('video/vote', 'VideosController@vote')->name('video.vote');
-Route::resource('video', 'VideosController');
+Route::post('video/vote', 'VideosController@vote')->name('video.vote')->middleware('auth');
+Route::post('video/subscribe', 'VideosController@subscribe')->name('video.subscribe')->middleware('auth');
+Route::resource('video', 'VideosController', ['except' => ['index','show']])->middleware('auth');
+Route::resource('video', 'VideosController', ['only' => ['index','show']]);
 
-Route::resource('comment', 'CommentsController');
+// Comment routes
+Route::resource('comment', 'CommentsController', ['except' => ['index','show']])->middleware('auth');
+Route::resource('comment', 'CommentsController', ['only' => ['index','show']]);
 
-Route::get('channel/{userId}', 'ChannelController@index');
+// Channel routes
+Route::get('channel/{userId}', 'ChannelController@index')->name('channel.index');
 
 Auth::routes();

@@ -16,11 +16,19 @@ class CreateVideosTable extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->primary('id');
             $table->uuid('id');
-            $table->integer('author_id');
-            $table->integer('category_id');
+
+            $table->unsignedInteger('author_id');
+            $table->foreign('author_id')->references('id')->on('users');
+            $table->index('author_id');
+
+            $table->unsignedInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->index('category_id');
+
             $table->string('title');
             $table->mediumText('description');
-            $table->string('extension', 4);
+            $table->string('extension');
+            $table->unsignedBigInteger('duration');
             $table->text('location');
             $table->text('thumbnail');
             $table->timestamps();
