@@ -50,6 +50,8 @@ class DatabaseSeeder extends Seeder
             $video->extension = 'mp4';
             $video->location = 'videos/seed.mp4';
             $video->thumbnail = 'images/seed.jpg';
+            $video->frame_rate = 15;
+            $video->mime_type = 'video/mp4';
             $video->save();
         }
 

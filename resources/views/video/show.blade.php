@@ -7,7 +7,7 @@
                 <div class="single-video-left">
                     <div class="single-video">
                         <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' controls preload='auto' width="100%" controls preload="auto" poster="{{ $video->thumbnail }}" data-setup="{}">
-                            <source src="/{{$video->location}}" type="video/{{$video->extension}}">
+                            <source src="/{{ $video->location }}" type="{{ $video->mime_type }}">
                             <p class='vjs-no-js'>
                                 To view this video please enable JavaScript, and consider upgrading to a web browser that
                                 <a href='https://videojs.com/html5-video-support/' aria-label="Support html5" target='_blank'>supports HTML5 video</a>
@@ -15,7 +15,7 @@
                         </video>
                     </div>
                     <div class="single-video-title box mb-3">
-                        <h2>{{$video->title}}</h2>
+                        <h2>{{ $video->title }}</h2>
                         <p class="mb-0"><i class="fas fa-eye"></i> 2,729,347 views</p>
                     </div>
                     <div class="single-video-author box mb-3">
@@ -26,15 +26,15 @@
                         @endif
                         <img class="img-fluid" loading="lazy" src="img/s4.png" alt="">
                         <p><a href="{{ route('channel.index', ['id' => $video->author->id]) }}" aria-label="View channel"><strong>{{ $video->author->name }}</strong></a> <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></span></p>
-                        <small>Published on {{date('Y-m-d', strtotime($video->created_at))}}</small>
+                        <small>Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
                     </div>
                     <div class="single-video-info-content box mb-3">
                         @if(Auth::check())
                             <span><i class="fas fa-thumbs-up tu" style="margin:20px; cursor:pointer;"></i></span>
                         @endif
-                        <span id="upcount">{{\App\Vote::GetVotesByValue(1, $video->id)}}</span>
+                        <span id="upcount">{{ \App\Vote::GetVotesByValue(1, $video->id) }}</span>
                         /
-                        <span id="downcount">{{\App\Vote::GetVotesByValue(0, $video->id)}}</span>
+                        <span id="downcount">{{ \App\Vote::GetVotesByValue(0, $video->id) }}</span>
                         @if(Auth::check())
                             <span><i class="fas fa-thumbs-down td" style="margin:20px; cursor:pointer;"></i></span>
                         @endif

@@ -9,13 +9,13 @@
             </div>
             <div class="col-lg-6 col-sm-6 text-right">
                 <div class="app">
-                    <a href="#"><img alt="" src="img/google.png"></a>
-                    <a href="#"><img alt="" src="img/apple.png"></a>
+                    <a href="#" aria-label="Google"><img alt="" src="img/google.png"></a>
+                    <a href="#" aria-label="Apple"><img alt="" src="img/apple.png"></a>
                 </div>
             </div>
         </div>
     </div>
 </footer>
-<a class="scroll-to-top rounded" href="#page-top">
+<a class="scroll-to-top rounded" aria-label="Scroll to top" href="#page-top">
     <i class="fas fa-angle-up"></i>
 </a>

@@ -8,6 +8,7 @@ use App\Subscription;
 use App\User;
 use App\Video;
 use App\Vote;
+use Faker\Provider\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -111,7 +112,8 @@ class VideosController extends Controller
             'title' => 'required|max:64',
             'upload' => 'file|required',
             'image' => 'file|required',
-            'description' => 'max:255'
+            'description' => 'max:255',
+            'recaptcha' => 'required|recaptcha'
         ], [
             'title.required' => 'A title is required for your video.',
             'upload.required' => 'You must choose your video to upload.',
@@ -130,7 +132,7 @@ class VideosController extends Controller
         }
 
         if ($request->hasFile('upload')) {
-            $this->savethumbnail($request->file('image'), $video);
+            $this->saveThumbnail($request->file('image'), $video);
         }
 
         $video->save();
@@ -138,21 +140,28 @@ class VideosController extends Controller
         return redirect('/video/' . $video->ìd)->with('success', 'Your video as been shared.');
     }
 
+    /**
+     * @param \Illuminate\Http\File $file
+     * @param Request $request
+     * @param Video $video
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \getid3_exception
+     */
     private function saveVideo($file, $request, &$video)
     {
         $destinationPath = 'videos';
         $extension = $file->getClientOriginalExtension();
-        $filename = time() . '_' . uniqid() . '_v.' . $extension;
-        $allowedExtensions = ['avi', 'flv', 'wmv', 'mov', 'mp4'];
+        $allowedExtensions = ['avi', 'flv', 'mov', 'mp4'];
 
         if (!in_array(strtolower($extension), $allowedExtensions)) {
-            redirect('/video')->with('error', 'Wrong format. Must be: avi, flv, wmv, mov, mp4');
+            return redirect('/video')->with('error', 'Wrong format. Must be: avi, flv, wmv, mov, mp4');
         }
 
         if ($file == null) {
-            redirect('/video')->with('error', 'There was an error when uploading your video.');
+            return redirect('/video')->with('error', 'There was an error when uploading your video.');
         }
 
+        $filename = time() . '_' . uniqid() . '.' . $extension;
         $file->move($destinationPath, $filename);
 
         $video->title = $request->input('title');
@@ -164,17 +173,23 @@ class VideosController extends Controller
         $getID3 = new \getID3();
         $file = $getID3->analyze(public_path() . '/' . $video->location);
         $video->duration = $file['playtime_seconds'];
+        $video->frame_rate = $file['frame_rate'];
+        $video->mime_type= $file['mime_type'];
     }
 
-    private function savethumbnail($file, &$video)
+    /**
+     * @param \Illuminate\Http\File $file
+     * @param Video $video
+     */
+    private function saveThumbnail($file, &$video)
     {
         $destinationPath = 'images';
         $extension = $file->getClientOriginalExtension();
-        $filename = time() . '_' . uniqid() . '_v.' . $extension;
-        $allowedExtensions = ['jpeg', 'jpg', 'bmp', 'png', 'gif'];
+        $filename = time() . '_' . uniqid() . '.' . $extension;
+        $allowedExtensions = ['jpeg', 'jpg', 'png'];
 
         if (!in_array(strtolower($extension), $allowedExtensions)) {
-            redirect('/video/create')->with('error', 'Wrong format. Must be: jpeg, jpg, bmp, png, gif');
+            redirect('/video/create')->with('error', 'Wrong format. Must be: jpeg, jpg, png');
         }
 
         if ($file == null) {
@@ -182,7 +197,6 @@ class VideosController extends Controller
         }
 
         $file->move($destinationPath, $filename);
-
 
         $video->thumbnail = $destinationPath . '\\' . $filename;
     }

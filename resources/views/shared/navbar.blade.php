@@ -3,7 +3,7 @@
     <button aria-label="Minimize sidebar" class="btn btn-link btn-sm text-secondary order-1 order-sm-0" id="sidebarToggle">
         <i class="fas fa-bars"></i>
     </button> &nbsp;&nbsp;
-    <a class="navbar-brand mr-1" href="{{ route('home') }}"><img class="img-fluid" loading="lazy" alt="" src="img/logo.png"></a>
+    <a class="navbar-brand mr-1" aria-label="homepage" href="{{ route('home') }}"><img class="img-fluid" loading="lazy" alt="" src="img/logo.png"></a>
     <!-- Navbar Search -->
     <form action="{{ route('video.search') }}" method="GET" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-5 my-2 my-md-0 osahan-navbar-search">
         <div class="input-group">
@@ -28,7 +28,7 @@
                 </a>
             </li>
             <li class="nav-item dropdown no-arrow mx-1">
-                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" aria-label="dropdown" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-bell fa-fw"></i>
                     <span class="badge badge-danger">9+</span>
                 </a>
@@ -45,7 +45,7 @@
         @endif
         <li class="nav-item dropdown no-arrow osahan-right-navbar-user">
             @if(Auth::check())
-                <a class="nav-link dropdown-toggle user-dropdown-link" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle user-dropdown-link" href="#" aria-label="dropdown" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img alt="Avatar" loading="lazy" src="img/user.png">
                     {{ Auth::user()->name }}
                 </a>
@@ -57,7 +57,7 @@
                     <a class="dropdown-item" href="{{ route('logout') }}" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-fw fa-sign-out-alt"></i> &nbsp; Logout</a>
                 </div>
             @else
-                <a class="nav-link dropdown-toggle user-dropdown-link" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle user-dropdown-link" aria-label="dropdown" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Create an account / Login
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
