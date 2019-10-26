@@ -50,6 +50,7 @@
                                 </label>
                             </div>
                             <div class="card-footer">
+                                @include('shared.captcha.recaptcha')
                                 <button type="submit" class="btn btn-outline-primary btn-block btn-lg">
                                     {{ __('Register') }}
                                 </button>
