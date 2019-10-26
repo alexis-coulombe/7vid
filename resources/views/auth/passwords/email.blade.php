@@ -36,7 +36,7 @@
                             </div>
                         </form>
                         <div class="text-center mt-5">
-                            <p class="light-gray">Don’t have an account? <a href="{{ route('register') }}">Sign Up</a></p>
+                            <p class="light-gray">Don’t have an account? <a href="{{ route('register') }}" aria-label="Sign Up">Sign Up</a></p>
                         </div>
                     </div>
                 </div>

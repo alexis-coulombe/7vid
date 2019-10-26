@@ -11,7 +11,7 @@
     </div>
     <div class="channels-card-body">
         <div class="channels-title">
-            <a href="{{ route('channel.index', ['id' => $channel->id]) }}">{{ $channel->name }}</a>
+            <a href="{{ route('channel.index', ['id' => $channel->id]) }}" aria-label="View channel">{{ $channel->name }}</a>
         </div>
     </div>
 </div>

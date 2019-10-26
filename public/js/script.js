@@ -7,6 +7,23 @@ Version: 1.0
 (function($) {
     "use strict"; // Start of use strict
 
+    // Temporarly fix Passive Event Listeners
+    // https://stackoverflow.com/questions/39152877/consider-marking-event-handler-as-passive-to-make-the-page-more-responsive
+    jQuery.event.special.touchstart = 
+    {
+      setup: function( _, ns, handle )
+      {
+        if ( ns.includes("noPreventDefault") ) 
+        {
+          this.addEventListener("touchstart", handle, { passive: false });
+        } 
+        else 
+        {
+          this.addEventListener("touchstart", handle, { passive: true });
+        }
+      }
+    };
+
     // Toggle the side navigation
     $(document).on('click', '#sidebarToggle', function(e) {
         e.preventDefault();
@@ -112,5 +129,15 @@ Version: 1.0
         }, 1000, 'easeInOutExpo');
         event.preventDefault();
     });
+
+//Go through each carousel on the page
+// https://stackoverflow.com/questions/41818880/owl-carousel-2-2-dots-with-aria-label
+$('.owl-carousel').each(function() {
+    //Find each set of dots in this carousel
+  $(this).find('.owl-dot').each(function(index) {
+    //Add one to index so it starts from 1
+    $(this).attr('aria-label', index + 1);
+  });
+});
 
 })(jQuery); // End of use strict

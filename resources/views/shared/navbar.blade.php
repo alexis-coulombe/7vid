@@ -1,16 +1,18 @@
 <nav class="navbar navbar-expand navbar-light bg-white static-top osahan-nav sticky-top">
     &nbsp;&nbsp;
-    <button class="btn btn-link btn-sm text-secondary order-1 order-sm-0" id="sidebarToggle">
+    <button aria-label="Minimize sidebar" class="btn btn-link btn-sm text-secondary order-1 order-sm-0" id="sidebarToggle">
         <i class="fas fa-bars"></i>
     </button> &nbsp;&nbsp;
-    <a class="navbar-brand mr-1" href="{{ route('home') }}"><img class="img-fluid" alt="" src="img/logo.png"></a>
+    <a class="navbar-brand mr-1" href="{{ route('home') }}"><img class="img-fluid" loading="lazy" alt="" src="img/logo.png"></a>
     <!-- Navbar Search -->
     <form action="{{ route('video.search') }}" method="GET" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-5 my-2 my-md-0 osahan-navbar-search">
         <div class="input-group">
             {{ csrf_field() }}
-            <input type="text" name="search" class="form-control" placeholder="Search for...">
+	    <label for="search"> Search 
+                <input type="text" name="search" class="form-control" placeholder="Video id, Author, Category ...">
+	    </label>
             <div class="input-group-append">
-                <button class="btn btn-light" type="submit">
+                <button class="btn btn-light" aria-label="Search" type="submit">
                     <i class="fas fa-search"></i>
                 </button>
             </div>
@@ -44,7 +46,7 @@
         <li class="nav-item dropdown no-arrow osahan-right-navbar-user">
             @if(Auth::check())
                 <a class="nav-link dropdown-toggle user-dropdown-link" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img alt="Avatar" src="img/user.png">
+                    <img alt="Avatar" loading="lazy" src="img/user.png">
                     {{ Auth::user()->name }}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">

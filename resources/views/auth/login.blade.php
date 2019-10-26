@@ -42,14 +42,14 @@
                                     {{ __('Login') }}
                                 </button>
                                 @if (Route::has('password.request'))
-                                    <a href="{{ route('password.request') }}">
+                                    <a href="{{ route('password.request') }}" aria-label="Request password">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
                             </div>
                         </form>
                         <div class="text-center mt-5">
-                            <p class="light-gray">Don’t have an account? <a href="{{ route('register') }}">Sign Up</a></p>
+                            <p class="light-gray">Don’t have an account? <a href="{{ route('register') }}" aria-label="Sign up">Sign Up</a></p>
                         </div>
                     </div>
                 </div>

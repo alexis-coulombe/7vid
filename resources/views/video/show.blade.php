@@ -10,7 +10,7 @@
                             <source src="/{{$video->location}}" type="video/{{$video->extension}}">
                             <p class='vjs-no-js'>
                                 To view this video please enable JavaScript, and consider upgrading to a web browser that
-                                <a href='https://videojs.com/html5-video-support/' target='_blank'>supports HTML5 video</a>
+                                <a href='https://videojs.com/html5-video-support/' aria-label="Support html5" target='_blank'>supports HTML5 video</a>
                             </p>
                         </video>
                     </div>
@@ -24,8 +24,8 @@
                                 @include('shared.video.subscribe')
                             </div>
                         @endif
-                        <img class="img-fluid" src="img/s4.png" alt="">
-                        <p><a href="{{ route('channel.index', ['id' => $video->author->id]) }}"><strong>{{ $video->author->name }}</strong></a> <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></span></p>
+                        <img class="img-fluid" loading="lazy" src="img/s4.png" alt="">
+                        <p><a href="{{ route('channel.index', ['id' => $video->author->id]) }}" aria-label="View channel"><strong>{{ $video->author->name }}</strong></a> <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></span></p>
                         <small>Published on {{date('Y-m-d', strtotime($video->created_at))}}</small>
                     </div>
                     <div class="single-video-info-content box mb-3">
@@ -60,7 +60,7 @@
                         <div class="col-md-12">
                             <div class="main-title">
                                 <div class="btn-group float-right right-action">
-                                    <a href="#" class="right-action-link text-gray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a href="#" aria-label="filter" class="right-action-link text-gray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Sort by <i class="fa fa-caret-down" aria-hidden="true"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">

@@ -709,6 +709,7 @@ body.sidebar-toggled footer.sticky-footer {
     text-decoration: none;
 }
 .form-control, .form-control:focus {
+    color: white;
     background: #1c1c1c none repeat scroll 0 0;
     border-color: #303030;
     border-radius: 2px;

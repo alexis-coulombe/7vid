@@ -3,7 +3,7 @@
         <div class="row no-gutters">
             <div class="col-lg-6 col-sm-6">
                 <p class="mt-1 mb-0"><strong class="text-dark">Vidoe</strong>.
-                    <small class="mt-0 mb-0"><a class="text-primary" target="_blank" href="https://www.templatespoint.net/">Templates Point</a>
+                    <small class="mt-0 mb-0">
                     </small>
                 </p>
             </div>

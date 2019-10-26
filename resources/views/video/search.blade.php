@@ -8,7 +8,7 @@
                     <div class="input-group">
                         <input type="text" placeholder="Search for..." class="form-control">
                         <div class="input-group-append">
-                            <button type="button" class="btn btn-dark"><i class="fas fa-search"></i></button>
+                            <button type="button" aria-label="Search" class="btn btn-dark"><i class="fas fa-search"></i></button>
                         </div>
                     </div>
                 </form>
@@ -37,7 +37,7 @@
             <div class="col-md-12">
                 <div class="main-title">
                     <div class="btn-group float-right right-action">
-                        <a href="#" class="right-action-link text-gray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a href="#" aria-label="filter" class="right-action-link text-gray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Sort by <i class="fa fa-caret-down" aria-hidden="true"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
