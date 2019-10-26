@@ -1,6 +1,6 @@
 <div class="video-card video-card-list">
     <div class="video-card-image">
-        <a class="play-icon" href="{{ route('video.show', ['video' => $video->id]) }}" aria-label="View video"><i class="fas fa-play-circle"></i></a>
+        <a class="play-icon" aria-label="Play video" href="{{ route('video.show', ['video' => $video->id]) }}"><i class="fas fa-play-circle"></i></a>
         <a href="{{ route('video.show', ['video' => $video->id]) }}" aria-label="View video"><img class="img-fluid" loading="lazy" src="/{{ $video->thumbnail }}" alt=""></a>
         <div class="time">{{ gmdate("H:i:s",$video->duration) }}</div>
     </div>
