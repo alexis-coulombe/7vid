@@ -7,7 +7,7 @@
                 <div class="col-md-5 p-5 bg-white full-height">
                     <div class="login-main-left">
                         <div class="text-center mb-5 login-main-left-header pt-4">
-                            <img src="img/favicon.png" class="img-fluid" alt="LOGO">
+                            <img src="{{ asset('assets/img/logo.png') }}" width="50px" height="50px" class="img-fluid" alt="LOGO">
                             <h5 class="mt-3 mb-3">Welcome to Vidoe</h5>
                             <p>It is a long established fact that a reader <br> will be distracted by the readable.</p>
                         </div>
@@ -15,7 +15,9 @@
                             {{ csrf_field() }}
 
                             <div class="input-group">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" placeholder="Your username" required autofocus>
+                                <label for="name">Your username
+                                    <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" placeholder="Your username" required autofocus>
+                                </label>
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('name') }}</strong>
@@ -23,7 +25,9 @@
                                 @endif
                             </div>
                             <div class="input-group">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="Your email" value="{{ old('email') }}" required>
+                                <label for="email">Your email
+                                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="Your email" value="{{ old('email') }}" required>
+                                </label>
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('email') }}</strong>
@@ -31,7 +35,9 @@
                                 @endif
                             </div>
                             <div class="input-group">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Password" name="password" required>
+                                <label for="password">Your password
+                                    <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Password" name="password" required>
+                                </label>
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('password') }}</strong>
@@ -39,7 +45,9 @@
                                 @endif
                             </div>
                             <div class="input-group">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm your password" required>
+                                <label for="password_confirmation">Confirm your password
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm your password" required>
+                                </label>
                             </div>
                             <div class="form-check text-left">
                                 <label class="form-check-label">
@@ -61,33 +69,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-7">
-                    <div class="login-main-right bg-white p-5 mt-5 mb-5">
-                        <div class="owl-carousel owl-carousel-login">
-                            <div class="item">
-                                <div class="carousel-login-card text-center">
-                                    <img src="img/login.png" class="img-fluid" alt="LOGO">
-                                    <h5 class="mt-5 mb-3">Watch videos offline</h5>
-                                    <p class="mb-4">when an unknown printer took a galley of type and scrambled<br> it to make a type specimen book. It has survived not <br>only five centuries</p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="carousel-login-card text-center">
-                                    <img src="img/login.png" class="img-fluid" alt="LOGO">
-                                    <h5 class="mt-5 mb-3">Download videos effortlessly</h5>
-                                    <p class="mb-4">when an unknown printer took a galley of type and scrambled<br> it to make a type specimen book. It has survived not <br>only five centuries</p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="carousel-login-card text-center">
-                                    <img src="img/login.png" class="img-fluid" alt="LOGO">
-                                    <h5 class="mt-5 mb-3">Create GIFs</h5>
-                                    <p class="mb-4">when an unknown printer took a galley of type and scrambled<br> it to make a type specimen book. It has survived not <br>only five centuries</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @include('auth.features')
             </div>
         </div>
     </section>

@@ -734,6 +734,7 @@ label {
     font-size: 12px;
     font-weight: 600;
     margin: 0 0 5px;
+    width: 100%;
 }
 a {
     color: #ff0000;
@@ -1003,6 +1004,34 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     margin: 3px 0 7px;
 }
 /* Login Pages */
+.login-main-wrapper {
+    background: #ff0005;
+    /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #ff0000 0%, #ff6f6d 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, #ff0000 0%,#ff6f6d 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, #ff0000 0%,#ff6f6d 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff516b', endColorstr='#826cfd',GradientType=1 );
+    /* IE6-9 fallback on horizontal gradient */
+    height: calc(100vh - 0rem);
+}
+.full-height {
+    height: calc(100vh - 0rem);
+}
+.login-main-left {
+    margin: auto;
+    max-width: 335px;
+}
+.login-main-right.bg-white {
+    border-radius: 2px;
+    margin: auto;
+    max-width: 561px;
+}
+.carousel-login-card h5 {
+    font-size: 18px;
+}
 .login-main-right .owl-carousel .owl-dots {
     text-align: center;
 }
