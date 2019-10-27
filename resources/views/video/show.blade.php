@@ -16,7 +16,11 @@
                     </div>
                     <div class="single-video-title box mb-3">
                         <h2>{{ $video->title }}</h2>
-                        <p class="mb-0"><i class="fas fa-eye"></i> {{ $video->getFormatedViewsCount() }} views</p>
+                        <p class="mb-0"><i class="fas fa-eye"></i> {{ $video->getFormatedViewsCount() }} views
+                            <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Views are based on unique active users that landed on this page">
+                                <i class="far fa-question-circle"></i>
+                            </span>
+                        </p>
                     </div>
                     <div class="single-video-author box mb-3">
                         @if(Auth::check() && $video->author->id !== Auth::id())

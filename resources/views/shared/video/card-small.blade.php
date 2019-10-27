@@ -22,7 +22,7 @@
             {{ $video->category->title }}
         </div>
         <div class="video-view">
-            {{ $video->getFormatedViewsCount() }} views &nbsp;<i class="fas fa-calendar-alt"></i> {{ time_elapsed_string($video->created_at) }}
+            {{ $video->getFormatedViewsCount() }} views <br>
         </div>
     </div>
 </div>
