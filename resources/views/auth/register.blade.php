@@ -1,5 +1,9 @@
 @extends('auth.template')
 
+@section('title')
+    Register
+@endsection
+
 @section('content')
     <section class="login-main-wrapper">
         <div class="container-fluid pl-0 pr-0">
@@ -7,7 +11,9 @@
                 <div class="col-md-5 p-5 bg-white full-height">
                     <div class="login-main-left">
                         <div class="text-center mb-5 login-main-left-header pt-4">
-                            <img src="{{ asset('assets/img/logo.png') }}" width="50px" height="50px" class="img-fluid" alt="LOGO">
+                            <a href="{{ route('home') }}" aria-label="Home">
+                                <img src="{{ asset('assets/img/logo.png') }}" width="50px" height="50px" class="img-fluid" alt="Logo">
+                            </a>
                             <h5 class="mt-3 mb-3">Welcome to Vidoe</h5>
                             <p>It is a long established fact that a reader <br> will be distracted by the readable.</p>
                         </div>

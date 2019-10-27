@@ -8,9 +8,8 @@
     <form action="{{ route('video.search') }}" method="GET" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-5 my-2 my-md-0 osahan-navbar-search">
         <div class="input-group">
             {{ csrf_field() }}
-	    <label for="search"> Search 
-                <input type="text" name="search" class="form-control" placeholder="Video id, Author, Category ...">
-	    </label>
+
+            <input type="text" name="search" class="form-control" placeholder="Video id, Author, Category ...">
             <div class="input-group-append">
                 <button class="btn btn-light" aria-label="Search" type="submit">
                     <i class="fas fa-search"></i>

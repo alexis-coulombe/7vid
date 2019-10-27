@@ -102,8 +102,8 @@ Version: 1.0
             lazyLoad: true,
             loop: true,
             autoplay: true,
-            autoplaySpeed: 1000,
-            autoplayTimeout: 2000,
+            autoplaySpeed: 2000,
+            autoplayTimeout: 6000,
             autoplayHoverPause: true
         });
     }
