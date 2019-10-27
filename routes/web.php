@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/privacy', 'HomeController@privacy')->name('home.privacy');
 
 // Video routes
 Route::get('video/search', 'VideosController@search')->name('video.search');

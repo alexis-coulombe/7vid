@@ -57,10 +57,16 @@
                             </div>
                             <div class="form-check text-left">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox">
+                                    <input class="form-check-input" type="checkbox" required>
                                     <span class="form-check-sign"></span>
                                     I agree to the
-                                    <a href="/term">terms and conditions</a>.
+                                    <a href="/terms">terms and conditions</a>.
+                                </label>
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" required>
+                                    <span class="form-check-sign"></span>
+                                    I agree to the
+                                    <a href="{{ route('home.privacy') }}">Privacy Policy</a>.
                                 </label>
                             </div>
                             <div class="card-footer">

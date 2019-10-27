@@ -16,4 +16,8 @@ class HomeController extends Controller
 
         return view('home.home')->with('newVideos', $newVideos)->with('newChannels', $newChannels);
     }
+
+    public function privacy(){
+        return view('home.privacy');
+    }
 }
