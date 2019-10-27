@@ -3,10 +3,11 @@
 
 <div class="channels-card">
     <div class="channels-card-image">
+        <a href="{{ route('channel.index', ['id' => $channel->id]) }}">
+            <img src="{{ $channel->avatar }}">
+        </a>
         @if(Auth::check())
-            <div class="channels-card-image">
-                @include('shared.video.subscribe')
-            </div>
+            @include('shared.video.subscribe')
         @endif
     </div>
     <div class="channels-card-body">

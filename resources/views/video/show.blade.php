@@ -28,7 +28,7 @@
                                 @include('shared.video.subscribe')
                             </div>
                         @endif
-                        <img class="img-fluid" loading="lazy" src="img/s4.png" alt="">
+                        <img class="img-fluid" loading="lazy" src="/{{ $video->author->avatar }}" alt="">
                         <p><a href="{{ route('channel.index', ['id' => $video->author->id]) }}" aria-label="View channel"><strong>{{ $video->author->name }}</strong></a> <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></span></p>
                         <small>Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
                     </div>

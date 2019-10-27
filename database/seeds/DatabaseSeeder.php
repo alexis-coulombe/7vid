@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             $user->name = $faker->name;
             $user->email = $faker->email;
             $user->password = Hash::make($faker->password);
+            $user->avatar = 'images/avatars/seed.webp';
             $user->save();
         }
 

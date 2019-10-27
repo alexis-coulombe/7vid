@@ -26,8 +26,8 @@
                                 </label>
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('name') }}</strong>
-                                        </span>
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                             <div class="input-group">
@@ -36,8 +36,8 @@
                                 </label>
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('email') }}</strong>
-                                        </span>
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                             <div class="input-group">
@@ -46,14 +46,24 @@
                                 </label>
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('password') }}</strong>
-                                        </span>
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                             <div class="input-group">
                                 <label for="password_confirmation">Confirm your password
                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm your password" required>
                                 </label>
+                            </div>
+                            <div class="input-group">
+                                <label for="avatar">Choose an avatar
+                                    <input id="avatar" type="file" class="form-control{{ $errors->has('avatar') ? ' is-invalid' : '' }}" name="avatar">
+                                </label>
+                                @if ($errors->has('avatar'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('avatar') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                             <div class="form-check text-left">
                                 <label class="form-check-label">
