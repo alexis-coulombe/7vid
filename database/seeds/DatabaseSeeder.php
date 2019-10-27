@@ -52,6 +52,7 @@ class DatabaseSeeder extends Seeder
             $video->thumbnail = 'images/seed.jpg';
             $video->frame_rate = 15;
             $video->mime_type = 'video/mp4';
+            $video->views_count = $faker->numberBetween(1, 1000000);
             $video->save();
         }
 

@@ -20,6 +20,7 @@ Route::post('video/vote', 'VideosController@vote')->name('video.vote')->middlewa
 Route::post('video/subscribe', 'VideosController@subscribe')->name('video.subscribe')->middleware('auth');
 Route::resource('video', 'VideosController', ['except' => ['index','show']])->middleware('auth');
 Route::resource('video', 'VideosController', ['only' => ['index','show']]);
+Route::resource('video', 'VideosController', ['only' => ['show']])->middleware('viewsCounter');
 
 // Comment routes
 Route::resource('comment', 'CommentsController', ['except' => ['index','show']])->middleware('auth');

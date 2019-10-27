@@ -43,4 +43,14 @@ class Video extends Model
     {
         return $this->belongsTo('App\User', 'author_id');
     }
+
+    /**
+     * Return formated views count to X,XXX,XXX
+     *
+     * @return string
+     */
+    public function getFormatedViewsCount()
+    {
+        return number_format($this->views_count);
+    }
 }

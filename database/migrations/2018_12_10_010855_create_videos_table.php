@@ -35,6 +35,7 @@ class CreateVideosTable extends Migration
             $table->string('mime_type');
             $table->text('location');
             $table->text('thumbnail');
+            $table->unsignedInteger('views_count')->default(0);
             $table->timestamps();
         });
     }

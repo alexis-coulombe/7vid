@@ -14,7 +14,7 @@
                             <a href="{{ route('home') }}" aria-label="Home">
                                 <img src="{{ asset('assets/img/logo.png') }}" width="50px" height="50px" class="img-fluid" alt="Logo">
                             </a>
-                            <h5 class="mt-3 mb-3">Welcome to Vidoe</h5>
+                            <h5 class="mt-3 mb-3">Welcome to 7-Vid</h5>
                             <p>It is a long established fact that a reader <br> will be distracted by the readable.</p>
                         </div>
                         <form method="POST" action="{{ route('register') }}">
