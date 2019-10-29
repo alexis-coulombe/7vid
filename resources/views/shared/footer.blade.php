@@ -7,12 +7,6 @@
                     </small>
                 </p>
             </div>
-            <div class="col-lg-6 col-sm-6 text-right">
-                <div class="app">
-                    <a href="#" aria-label="Google"><img alt="" src="img/google.png"></a>
-                    <a href="#" aria-label="Apple"><img alt="" src="img/apple.png"></a>
-                </div>
-            </div>
         </div>
     </div>
 </footer>

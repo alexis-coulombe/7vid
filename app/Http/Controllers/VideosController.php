@@ -35,8 +35,9 @@ class VideosController extends Controller
     {
         $search = Input::get('search');
 
-        $videos = Video::where('title', 'like', '%' . $search . '%')->orWhere('description', 'like', '% ' . $search . ' %')->paginate(20);
-        $authors = User::where('name', 'like', '%' . $search . '%')->paginate(12);
+        $videos = Video::where('title', 'like', '%' . $search . '%')->orWhere('description', 'like', '% ' . $search . ' %')->paginate(20, ['*'], 'video_page');
+        $authors = User::where('name', 'like', '%' . $search . '%')->paginate(12, ['*'], 'author_page');
+
 
         return view('video.search')->with('videos', $videos)
             ->with('authors', $authors);
