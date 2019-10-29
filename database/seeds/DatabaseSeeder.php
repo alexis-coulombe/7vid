@@ -23,10 +23,24 @@ class DatabaseSeeder extends Seeder
         $maxVotesCount = 1000;
         $maxSubCount = $faker->numberBetween($maxUserCount / 2, $maxUserCount);
 
+        $icons = [
+            "fas fa-air-freshener",
+            "fas fa-adjust",
+            "fab fa-algolia",
+            "fas fa-allergies",
+            "fas fa-american-sign-language-interpreting",
+            "fab fa-android",
+            "fas fa-archive",
+            "fab fa-artstation",
+            "fas fa-atom",
+            "fas fa-baby",
+            ];
+
         // Categories
         for ($i = 0; $i < $maxCategoryCount; $i++) {
             $category = new \App\Category();
             $category->title = $faker->word;
+            $category->icon = $icons[$i];
             $category->save();
         }
 

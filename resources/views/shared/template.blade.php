@@ -13,25 +13,19 @@
         <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" >
         @yield('head')
     </head>
-    <body>
-        @if(\Route::current()->getName() !== 'login' && \Route::current()->getName() !== 'register' && \Route::current()->getName() !== 'password.request')
+    <body class="sidebar-toggled">
             @include('shared.navbar')
-        @endif
 
-        @if(\Route::current()->getName() !== 'login' && \Route::current()->getName() !== 'register' && \Route::current()->getName() !== 'password.request')
             <div id="wrapper">
                 @include('shared.sidenav')
                 <div id="content-wrapper">
-        @endif
-                <div class="container-fluid">
-                    @include('shared.message')
-                    @yield('content')
-                </div>
-
-                @if(\Route::current()->getName() !== 'login' && \Route::current()->getName() !== 'register' && \Route::current()->getName() !== 'password.request')
+                    <div class="container-fluid">
+                        @include('shared.navbar.mobile-search')
+                        @include('shared.message')
+                        @yield('content')
+                    </div>
                 </div>
             </div>
-        @endif
 
         @include('shared.footer')
         @yield('footer')

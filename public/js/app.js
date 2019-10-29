@@ -943,7 +943,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "./node_modules/process/browser.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node-libs-browser/node_modules/process/browser.js */ "./node_modules/node-libs-browser/node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -18826,10 +18826,10 @@ module.exports = function isBuffer (obj) {
 
 /***/ }),
 
-/***/ "./node_modules/process/browser.js":
-/*!*****************************************!*\
-  !*** ./node_modules/process/browser.js ***!
-  \*****************************************/
+/***/ "./node_modules/node-libs-browser/node_modules/process/browser.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/node-libs-browser/node_modules/process/browser.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -19151,8 +19151,8 @@ if (token) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/acoulombe/code/VidMock/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/acoulombe/code/VidMock/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\VidMock\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\VidMock\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

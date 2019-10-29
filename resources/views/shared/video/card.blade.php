@@ -14,7 +14,9 @@
         <div class="video-view">
             {{ $video->category->title }}
             <br>
-            <i class="fas fa-eye"></i> {{ $video->getFormatedViewsCount() }} views&nbsp;<i class="far fa-clock"></i> {{ time_elapsed_string($video->created_at) }}
+            <i class="fas fa-eye"></i> {{ $video->getFormatedViewsCount() }} views
+            <br>
+            <i class="far fa-clock"></i> {{ time_elapsed_string($video->created_at) }}
         </div>
     </div>
 </div>

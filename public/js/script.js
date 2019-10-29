@@ -9,15 +9,15 @@ Version: 1.0
 
     // Temporarly fix Passive Event Listeners
     // https://stackoverflow.com/questions/39152877/consider-marking-event-handler-as-passive-to-make-the-page-more-responsive
-    jQuery.event.special.touchstart = 
+    jQuery.event.special.touchstart =
     {
       setup: function( _, ns, handle )
       {
-        if ( ns.includes("noPreventDefault") ) 
+        if ( ns.includes("noPreventDefault") )
         {
           this.addEventListener("touchstart", handle, { passive: false });
-        } 
-        else 
+        }
+        else
         {
           this.addEventListener("touchstart", handle, { passive: true });
         }

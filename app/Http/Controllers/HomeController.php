@@ -12,15 +12,17 @@ class HomeController extends Controller
     public function index(Request $request = null)
     {
         $newVideos = Video::orderBy('created_at', 'DESC')->limit(16)->get();
-        $newChannels = User::inRandomOrder()->limit(4)->get();
+        $randomChannels = User::inRandomOrder()->limit(4)->get();
         $categories = Category::all();
 
         return view('home.home')->with('newVideos', $newVideos)
-            ->with('newChannels', $newChannels)
+            ->with('randomChannels', $randomChannels)
             ->with('categories', $categories);
     }
 
-    public function privacy(){
+
+    public function privacy()
+    {
         return view('home.privacy');
     }
 }
