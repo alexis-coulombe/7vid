@@ -32,4 +32,5 @@ Route::get('channel/{userId}', 'ChannelController@index')->name('channel.index')
 Auth::routes();
 
 //OAuth routes
-Route::get('/register/google', 'RegisterController@googleAuth')->name('register.google');
+Route::get('/register/google', 'Auth\RegisterController@googleAuth')->name('register.google');
+Route::get('/register/google', 'Auth\RegisterController@googleAuthCallBack')->name('register.google.callback');
