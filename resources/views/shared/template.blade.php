@@ -13,7 +13,7 @@
         <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" >
         @yield('head')
     </head>
-    <body class="sidebar-toggled">
+    <body>
             @include('shared.navbar')
 
             <div id="wrapper">

@@ -3,7 +3,7 @@
 @section('content')
     <div class="video-block section-padding">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="single-video-left">
                     <div class="single-video">
                         <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' controls preload='auto' width="100%" controls preload="auto" poster="{{ $video->thumbnail }}" data-setup="{}">
@@ -14,14 +14,6 @@
                             </p>
                         </video>
                     </div>
-                    <div class="single-video-title box mb-3">
-                        <h2>{{ $video->title }}</h2>
-                        <p class="mb-0"><i class="fas fa-eye"></i> {{ $video->getFormatedViewsCount() }} views
-                            <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Views are based on unique active users that landed on this page">
-                                <i class="far fa-question-circle"></i>
-                            </span>
-                        </p>
-                    </div>
                     <div class="single-video-author box mb-3">
                         @if(Auth::check() && $video->author->id !== Auth::id())
                             <div class="float-right">
@@ -29,20 +21,24 @@
                             </div>
                         @endif
                         <img class="img-fluid" loading="lazy" src="/{{ $video->author->avatar }}" alt="">
-                        <p><a href="{{ route('channel.index', ['id' => $video->author->id]) }}" aria-label="View channel"><strong>{{ $video->author->name }}</strong></a> <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></span></p>
+                        <p><a href="{{ route('channel.index', ['id' => $video->author->id]) }}" aria-label="View channel"><strong>{{ $video->author->name }}</strong></a></p>
                         <small>Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
                     </div>
-                    <div class="single-video-info-content box mb-3">
-                        @if(Auth::check())
-                            <span><i class="fas fa-thumbs-up tu" style="margin:20px; cursor:pointer;"></i></span>
+                    <div class="single-video-title box mb-3">
+                        @if(Auth::check() && $video->author->id !== Auth::id())
+                            <div class="float-right">
+                                <a href="{{ route('video.edit', ['id' => $video->id]) }}"><i class="fas fa-cog"></i></a>
+                            </div>
                         @endif
-                        <span id="upcount">{{ \App\Vote::GetVotesByValue(1, $video->id) }}</span>
-                        /
-                        <span id="downcount">{{ \App\Vote::GetVotesByValue(0, $video->id) }}</span>
-                        @if(Auth::check())
-                            <span><i class="fas fa-thumbs-down td" style="margin:20px; cursor:pointer;"></i></span>
-                        @endif
+                        <h2>{{ $video->title }}</h2>
+                        <p class="mb-0"><i class="fas fa-eye"></i> {{ $video->getFormatedViewsCount() }} views
+                            <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Views are based on unique active users that landed on this page">
+                                <i class="far fa-question-circle"></i>
+                            </span>
+                        </p>
+                        <hr>
                         <p>{{ $video->description }}</p>
+                        <br>
                         <p class="tags mb-0">
                             <span><a href="#">Uncharted 4</a></span>
                             <span><a href="#">Playstation 4</a></span>
@@ -58,7 +54,7 @@
                     @include('comment.show', $data = ['comments' => $comments])
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="single-video-right">
                     <div class="row">
                         <div class="col-md-12">

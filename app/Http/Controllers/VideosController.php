@@ -109,17 +109,7 @@ class VideosController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'title' => 'required|max:64',
-            'upload' => 'file|required',
-            'image' => 'file|required',
-            'description' => 'max:255',
-            'recaptcha' => 'required|recaptcha'
-        ], [
-            'title.required' => 'A title is required for your video.',
-            'upload.required' => 'You must choose your video to upload.',
-            'upload.file' => 'Your uploaded file must be a video.'
-        ]);
+        $this->validateVideoInputs($request);
 
         $video = new Video;
         $video->author_id = Auth::id();
@@ -236,7 +226,8 @@ class VideosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $video = Video::find($id);
+        return view('video.settings')->with('video', $video);
     }
 
     /**
@@ -248,7 +239,12 @@ class VideosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //$this->validateVideoInputs($request);
+
+        $video = Video::find($id);
+        $video->update($request->except(['_token', '_method']));
+
+        return redirect()->back()->with('video', $video);
     }
 
     /**
@@ -260,5 +256,19 @@ class VideosController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function validateVideoInputs($request){
+        $this->validate($request, [
+            'title' => 'required|max:64',
+            'upload' => 'file|required',
+            'image' => 'file|required',
+            'description' => 'max:255',
+            'recaptcha' => 'required|recaptcha'
+        ], [
+            'title.required' => 'A title is required for your video.',
+            'upload.required' => 'You must choose your video to upload.',
+            'upload.file' => 'Your uploaded file must be a video.'
+        ]);
     }
 }

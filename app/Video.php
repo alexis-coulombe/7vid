@@ -10,6 +10,13 @@ class Video extends Model
     // Using UUID instead
     public $incrementing = false;
 
+    public $fillable = [
+        'category_id',
+        'title',
+        'description',
+        'thumbnail'
+    ];
+
     protected static function boot()
     {
         parent::boot();

@@ -8,8 +8,8 @@
         <div class="video-title">
             <a href="{{ route('video.show', ['video' => $video->id]) }}" aria-label="View video">{{strlen($video->title) > 50 ? substr($video->title,0,50)."..." : $video->title}}</a>
         </div>
-        <div class="video-page text-success">
-            {{ $video->author->name }}  <a title="{{ route('channel.index', ['userId' => $video->author->id]) }}" data-placement="top" data-toggle="tooltip" href="#" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></a>
+        <div class="video-page">
+            <u><a href="{{ route('channel.index', ['userId' => $video->author->ìd]) }}">{{ $video->author->name }}</a></u>
         </div>
         <div class="video-view">
             {{ $video->category->title }}
