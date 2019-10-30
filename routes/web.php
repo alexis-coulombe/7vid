@@ -30,3 +30,6 @@ Route::resource('comment', 'CommentsController', ['only' => ['index','show']]);
 Route::get('channel/{userId}', 'ChannelController@index')->name('channel.index');
 
 Auth::routes();
+
+//OAuth routes
+Route::get('/register/google', 'RegisterController@googleAuth')->name('register.google');
