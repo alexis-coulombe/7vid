@@ -17,17 +17,12 @@ class ChannelController extends Controller
 
     public function index($userId)
     {
-        $user = User::find($userId);
-        if ($user == null) {
-            $videos = [];
-            return view('channel.index')->with('videos', $videos)->with('errors', ['This user does\'nt exist!']);
+        $author = User::find($userId);
+        if ($author == null) {
+            abort(404);
         }
 
-        $videos = Video::where('author_id', '=', $userId)->paginate(5);
-        if ($videos == null) {
-            $videos = [];
-        }
-        return view('channel.index')->with('videos', $videos);
+        return view('channel.index')->with('author', $author);
     }
 
 }

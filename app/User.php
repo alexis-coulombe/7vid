@@ -20,4 +20,8 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function videos(){
+        return $this->hasMany('App\Video', 'author_id');
+    }
 }
