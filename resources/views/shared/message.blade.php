@@ -1,5 +1,5 @@
-@if(count($errors) > 0)
-    @foreach($errors as $error)
+@if ($errors->any())
+    @foreach ($errors->all() as $error)
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             {!! html_entity_decode($error) !!}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">

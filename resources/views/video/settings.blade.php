@@ -65,9 +65,13 @@
                                 </span>
                             </label>
                             <input type="checkbox">
+
+                            <label>thumbnail</label>
+                            <input type="file" name="thumbnail">
                             <hr>
                         </div>
                     </div>
+                    @include('shared.captcha.recaptcha')
                     <button type="submit" class="float-right btn btn-success border-none"> Save Changes or CTRL+S</button>
                 </form>
             </div>

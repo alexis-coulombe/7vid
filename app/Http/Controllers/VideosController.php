@@ -239,7 +239,7 @@ class VideosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //$this->validateVideoInputs($request);
+        $this->validateVideoInputs($request, '', '');
 
         $video = Video::find($id);
         $video->update($request->except(['_token', '_method']));
@@ -258,11 +258,11 @@ class VideosController extends Controller
         //
     }
 
-    public function validateVideoInputs($request){
+    public function validateVideoInputs($request, $imageRequired = 'required', $uploadRequired = 'required'){
         $this->validate($request, [
             'title' => 'required|max:64',
-            'upload' => 'file|required',
-            'image' => 'file|required',
+            'upload' => 'file|'.$uploadRequired,
+            'image' => 'file|'.$imageRequired,
             'description' => 'max:255',
             'recaptcha' => 'required|recaptcha'
         ], [
