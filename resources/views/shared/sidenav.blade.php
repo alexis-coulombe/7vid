@@ -9,23 +9,23 @@
         <h6>SUBSCRIPTIONS</h6>
         <ul>
             <li>
-                <a href="subscriptions.html">
-                    <img class="img-fluid" alt="" src="img/s1.png"> Your Life
+                <a href="#">
+                    <img class="img-fluid" alt="" src="#"> Your Life
                 </a>
             </li>
             <li>
-                <a href="subscriptions.html">
-                    <img class="img-fluid" alt="" src="img/s2.png"> Unboxing  <span class="badge badge-warning">2</span>
+                <a href="#">
+                    <img class="img-fluid" alt="" src="#"> Unboxing  <span class="badge badge-warning">2</span>
                 </a>
             </li>
             <li>
-                <a href="subscriptions.html">
-                    <img class="img-fluid" alt="" src="img/s3.png"> Product / Service
+                <a href="#">
+                    <img class="img-fluid" alt="" src="#"> Product / Service
                 </a>
             </li>
             <li>
-                <a href="subscriptions.html">
-                    <img class="img-fluid" alt="" src="img/s4.png">  Gaming
+                <a href="#">
+                    <img class="img-fluid" alt="" src="#">  Gaming
                 </a>
             </li>
         </ul>

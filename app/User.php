@@ -24,4 +24,8 @@ class User extends Authenticatable
     public function videos(){
         return $this->hasMany('App\Video', 'author_id');
     }
+
+    public function subscriptions(){
+        return $this->hasMany('App\Subscription', 'user_id');
+    }
 }

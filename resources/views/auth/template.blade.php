@@ -5,6 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="description" content="A free video-hosting website that allows members to store and serve video content. Share unlimited video all around the world.">
+        <link rel="canonical" href="{{ url()->current() }}">
 
         <title>@yield('title') - {{ env('APP_NAME') }}</title>
 

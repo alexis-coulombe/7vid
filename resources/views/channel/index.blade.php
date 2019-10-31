@@ -1,7 +1,7 @@
 @extends('shared.template')
 
 @section('content')
-    <div class="single-channel-page" id="content-wrapper">
+    <div class="single-channel-page">
         <div class="single-channel-image">
             <img class="img-fluid" alt="" src="{{ asset('assets/img/channel-banner.png') }}">
             <div class="channel-profile">

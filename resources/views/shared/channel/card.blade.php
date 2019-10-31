@@ -4,7 +4,7 @@
 <div class="channels-card">
     <div class="channels-card-image">
         <a href="{{ route('channel.index', ['id' => $channel->id]) }}">
-            <img src="{{ $channel->avatar }}">
+            <img src="{{ $channel->avatar }}" alt="Avatar">
         </a>
         @if(Auth::check())
             @include('shared.video.subscribe')
