@@ -9,16 +9,20 @@ use App\User;
 use App\Video;
 use App\Vote;
 use Faker\Provider\File;
+use getid3_exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Validation\ValidationException;
 
 class VideosController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -46,7 +50,7 @@ class VideosController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -83,7 +87,7 @@ class VideosController extends Controller
     /**
      * Subscribe a user to another user
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function subscribe()
     {
@@ -104,8 +108,10 @@ class VideosController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
+     * @throws ValidationException
+     * @throws getid3_exception
      */
     public function store(Request $request)
     {
@@ -135,8 +141,8 @@ class VideosController extends Controller
      * @param \Illuminate\Http\File $file
      * @param Request $request
      * @param Video $video
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \getid3_exception
+     * @return RedirectResponse
+     * @throws getid3_exception
      */
     private function saveVideo($file, $request, &$video)
     {
@@ -165,7 +171,7 @@ class VideosController extends Controller
         $file = $getID3->analyze(public_path() . '/' . $video->location);
         $video->duration = $file['playtime_seconds'];
         $video->frame_rate = $file['frame_rate'];
-        $video->mime_type= $file['mime_type'];
+        $video->mime_type = $file['mime_type'];
     }
 
     /**
@@ -196,7 +202,7 @@ class VideosController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -208,7 +214,7 @@ class VideosController extends Controller
         $comments = Comment::where('video_id', '=', $video->id)->orderBy('created_at', 'DESC')->get();
         $subscriptionCount = Subscription::where('author_id', '=', $video->author->id)->count();
 
-        $relatedVideos = Video::where('title', 'like', '%'.$video->title.'%')
+        $relatedVideos = Video::where('title', 'like', '%' . $video->title . '%')
             ->orWhere('category_id', '=', $video->category_id)->limit(10)->get();
 
         return view('video.show')
@@ -222,7 +228,7 @@ class VideosController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -233,9 +239,10 @@ class VideosController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
+     * @throws ValidationException
      */
     public function update(Request $request, $id)
     {
@@ -251,18 +258,27 @@ class VideosController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function destroy($id)
     {
         //
     }
 
-    public function validateVideoInputs($request, $imageRequired = 'required', $uploadRequired = 'required'){
+    /**
+     * Check if form inputs on creating / updating a video are all valid
+     *
+     * @param $request
+     * @param string $imageRequired
+     * @param string $uploadRequired
+     * @throws ValidationException
+     */
+    public function validateVideoInputs($request, $imageRequired = 'required', $uploadRequired = 'required')
+    {
         $this->validate($request, [
             'title' => 'required|max:64',
-            'upload' => 'file|'.$uploadRequired,
-            'image' => 'file|'.$imageRequired,
+            'upload' => 'file|' . $uploadRequired,
+            'image' => 'file|' . $imageRequired,
             'description' => 'max:255',
             'recaptcha' => 'required|recaptcha'
         ], [

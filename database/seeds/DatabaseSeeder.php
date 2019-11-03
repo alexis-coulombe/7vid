@@ -44,6 +44,13 @@ class DatabaseSeeder extends Seeder
             $category->save();
         }
 
+        $user = new \App\User();
+        $user->name = 'test123';
+        $user->email = 'test@123.com';
+        $user->password = Hash::make('123123');
+        $user->avatar = 'images/avatars/seed.webp';
+        $user->save();
+
         // Users
         for ($i = 0; $i < $maxUserCount; $i++) {
             $user = new \App\User();
