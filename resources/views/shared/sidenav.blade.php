@@ -13,7 +13,7 @@
                 <ul>
                     @foreach($subscriptions as $sub)
                         <li>
-                            <a href="{{ route('channel.index', ['id' => $sub->author->ìd]) }}">
+                            <a href="{{ route('channel.index', ['userId' => $sub->author->id]) }}">
                                 <img class="img-fluid" alt="" src="/{{ $sub->author->avatar }}"> {{ $sub->author->name }}
                             </a>
                         </li>
