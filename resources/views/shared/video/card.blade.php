@@ -7,6 +7,8 @@
     <div class="video-card-body">
         <div class="video-title">
             <a href="{{ route('video.show', ['video' => $video->id]) }}" aria-label="View video">{{strlen($video->title) > 50 ? substr($video->title,0,50)."..." : $video->title}}</a>
+            @include('shared.video.edit-button')
+            @include('shared.video.delete-button')
         </div>
         <div class="video-page">
             <u><a href="{{ route('channel.index', ['userId' => $video->author->ìd]) }}">{{ $video->author->name }}</a></u>

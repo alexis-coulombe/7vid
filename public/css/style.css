@@ -1000,6 +1000,10 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 }
 
 /* Video Card */
+.video-setting-button {
+    margin-left: 5px;
+}
+
 .video-block .mb-3 {
     margin-bottom: 30px !important;
 }
@@ -1450,10 +1454,6 @@ a:hover, h1, h2, h3, h4, h5, h6 {
         padding-left: 15px;
     }
 
-    .single-channel-page {
-        padding: 0 0 0 90px !important;
-    }
-
     .sidebar-toggled .single-channel-page {
         padding: 0 !important;
     }
@@ -1617,10 +1617,6 @@ a:hover, h1, h2, h3, h4, h5, h6 {
         padding-left: 15px;
     }
 
-    .single-channel-page {
-        padding: 0 0 0 90px !important;
-    }
-
     .sidebar-toggled .single-channel-page {
         padding: 0 !important;
     }
@@ -1754,7 +1750,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 }
 
 /* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) and (max-width: 991.98px) {
+@media (min-width: 768px) and (max-width: 992px) {
     #wrapper #content-wrapper .container-fluid {
         padding-bottom: 15px !important;
         padding-left: 243px;
@@ -1768,14 +1764,6 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 
     .sidebar-toggled #wrapper #content-wrapper .container-fluid {
         padding-left: 105px;
-    }
-
-    .single-channel-page {
-        padding: 0 0 0 225px !important;
-    }
-
-    .sidebar-toggled .single-channel-page {
-        padding: 0 0 0 90px !important;
     }
 
     .single-channel-page .container-fluid {
@@ -1867,14 +1855,6 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 
     .sidebar-toggled #wrapper #content-wrapper .container-fluid {
         padding-left: 105px;
-    }
-
-    .single-channel-page {
-        padding: 0 0 0 225px !important;
-    }
-
-    .sidebar-toggled .single-channel-page {
-        padding: 0 0 0 90px !important;
     }
 
     .single-channel-page .container-fluid {

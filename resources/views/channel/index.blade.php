@@ -14,48 +14,7 @@
             </div>
         </div>
         <div class="single-channel-nav">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="channel-brand" href="#">{{ $author->name }}</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Videos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Playlist</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Discussion</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Donate
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </li>
-                    </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control form-control-sm mr-sm-1" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success btn-sm my-2 my-sm-0" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button> &nbsp;&nbsp;&nbsp;
-                        @if(Auth::check())
-                            @include('shared.video.subscribe-small')
-                        @endif
-                    </form>
-                </div>
-            </nav>
+            @include('shared.channel.navbar')
         </div>
         <div class="container-fluid">
             <div class="video-block section-padding">
@@ -82,8 +41,8 @@
                             </div>
                         @endforeach
                     @else
-                        <div class="col-md-2"></div>
-                        <div class="col-md-3">
+                        <div class="col-sm-1 col-md-2"></div>
+                        <div class="col-sm-3 col-md-3">
                             <svg width="380px" height="500px" viewBox="0 0 837 1045" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
                                 <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
                                     <path d="M353,9 L626.664028,170 L626.664028,487 L353,642 L79.3359724,487 L79.3359724,170 L353,9 Z" id="Polygon-1" stroke="#FF0000" stroke-width="6" sketch:type="MSShapeGroup"></path>
@@ -94,7 +53,7 @@
                                 </g>
                             </svg>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-sm-7 col-md-7">
                             <h2>Empty !</h2>
                             <p>This author does not have any content !</p>
                         </div>

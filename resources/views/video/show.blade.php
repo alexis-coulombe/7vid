@@ -25,11 +25,7 @@
                         <small>Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
                     </div>
                     <div class="single-video-title box mb-3">
-                        @if(Auth::check() && $video->author->id !== Auth::id())
-                            <div class="float-right">
-                                <a href="{{ route('video.edit', ['id' => $video->id]) }}"><i class="fas fa-cog"></i></a>
-                            </div>
-                        @endif
+                        @include('shared.video.edit-button')
                         <h2>{{ $video->title }}</h2>
                         <p class="mb-0"><i class="fas fa-eye"></i> {{ $video->getFormatedViewsCount() }} views
                             <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Views are based on unique active users that landed on this page">

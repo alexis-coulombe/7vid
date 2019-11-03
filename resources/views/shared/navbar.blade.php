@@ -23,7 +23,7 @@
             <li class="nav-item mx-1">
                 <a class="nav-link" href="{{ route('video.create') }}">
                     <i class="fas fa-plus-circle fa-fw"></i>
-                    Upload Video
+                    Upload
                 </a>
             </li>
             <li class="nav-item dropdown no-arrow mx-1">

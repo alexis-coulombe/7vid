@@ -262,7 +262,9 @@ class VideosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Video::find($id)->delete();
+
+        return redirect()->back();
     }
 
     /**
