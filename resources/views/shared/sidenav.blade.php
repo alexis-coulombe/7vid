@@ -5,29 +5,21 @@
             <span>Home</span>
         </a>
     </li>
-    <li class="nav-item channel-sidebar-list">
-        <h6>SUBSCRIPTIONS</h6>
-        <ul>
-            <li>
-                <a href="#">
-                    <img class="img-fluid" alt="" src="#"> Your Life
-                </a>
+    @if(Auth::check())
+        @php $subscriptions = Auth::user()->subscriptions; @endphp
+        @if(count($subscriptions) > 0)
+            <li class="nav-item channel-sidebar-list">
+                <h6>SUBSCRIPTIONS</h6>
+                <ul>
+                    @foreach($subscriptions as $sub)
+                        <li>
+                            <a href="{{ route('channel.index', ['id' => $sub->author->ìd]) }}">
+                                <img class="img-fluid" alt="" src="/{{ $sub->author->avatar }}"> {{ $sub->author->name }}
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
             </li>
-            <li>
-                <a href="#">
-                    <img class="img-fluid" alt="" src="#"> Unboxing  <span class="badge badge-warning">2</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img class="img-fluid" alt="" src="#"> Product / Service
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img class="img-fluid" alt="" src="#">  Gaming
-                </a>
-            </li>
-        </ul>
-    </li>
+        @endif
+    @endif
 </ul>

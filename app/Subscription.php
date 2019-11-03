@@ -21,6 +21,10 @@ class Subscription extends Model
         'user_id'
     ];
 
+    public function author(){
+        return $this->hasOne('App\User', 'id', 'author_id');
+    }
+
     /**
      * Check if the logged user is subscribed to the other user
      *
