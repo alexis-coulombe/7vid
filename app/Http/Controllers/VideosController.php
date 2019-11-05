@@ -93,16 +93,22 @@ class VideosController extends Controller
     {
         $channelId = Input::post('channel_id');
 
-        if (!Auth::user()->isSubscribed($channelId)) {
-            $subscription = new Subscription();
-            $subscription->author_id = $channelId;
-            $subscription->user_id = Auth::id();
-            $subscription->save();
-        } else {
-            Auth::user()->subscriptions()->where(['author_id', '=', $channelId])->delete();
+        if (!isset($channelId) || $channelId <= 0 || !is_numeric($channelId)) {
+            return back();
         }
 
-        return back();
+        /** @var User $channel */
+        $channel = User::find($channelId);
+
+        if (!Auth::user()->isSubscribed($channelId)) {
+            Auth::user()->subscribe($channelId);
+            $text = 'You have successfuly subscribed to <b>' . $channel->name . '</b>';
+        } else {
+            Auth::user()->unsubscribe($channelId);
+            $text = 'You have successfuly unsubscribed from <b>' . $channel->name . '</b>';
+        }
+
+        return back()->with('success', $text);
     }
 
     /**

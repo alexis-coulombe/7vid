@@ -39,6 +39,19 @@ class User extends Authenticatable
 
     public function isSubscribed($author_id)
     {
-        return $this->subscriptions()->where([['author_id', '=', $author_id], ['user_id', '=', Auth::id()]]);
+        return $this->subscriptions()->where([['author_id', '=', $author_id], ['user_id', '=', $this->id]])->exists();
+    }
+
+    public function subscribe($channelId)
+    {
+        $subscription = new Subscription();
+        $subscription->author_id = $channelId;
+        $subscription->user_id = Auth::id();
+        $subscription->save();
+    }
+
+    public function unsubscribe($channelId)
+    {
+        $this->subscriptions()->where([['author_id', '=', $channelId], ['user_id', '=', $this->id]])->delete();
     }
 }

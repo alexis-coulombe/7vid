@@ -5,7 +5,7 @@
                 <span><i class="trash fas fa-trash-alt" onclick="document.getElementById('destroy-form').submit()"></i></span>
             @endif
         </div>
-        <img class="img-fluid" loading="lazy" src="/{{ $video->author->avatar }}" alt="">
+        <a href="{{ route('channel.index', ['userId' => $comment->author_id]) }}"><img class="img-fluid" loading="lazy" src="/{{ $video->author->avatar }}" alt=""></a>
         <p><a href="{{ route('channel.index', ['userId' => $comment->author_id]) }}"><strong>{{ $comment->author->name }}</strong></a> <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></span></p>
         <p>{{ $comment->body }}</p>
         <br>
