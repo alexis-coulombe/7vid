@@ -13,11 +13,11 @@ class HomeController extends Controller
     {
         $newVideos = Video::orderBy('created_at', 'DESC')->limit(16)->get();
         $randomChannels = User::inRandomOrder()->limit(4)->get();
-        $categories = Category::all();
+        $popularCategories = Category::withCount('videos')->latest('videos_count')->take(3)->get();
 
         return view('home.home')->with('newVideos', $newVideos)
             ->with('randomChannels', $randomChannels)
-            ->with('categories', $categories);
+            ->with('categories', $popularCategories);
     }
 
 

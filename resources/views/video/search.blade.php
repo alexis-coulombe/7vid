@@ -1,7 +1,6 @@
 @extends('shared.template')
 
 @section('content')
-    <hr>
     @if(count($videos) > 0)
         <div class="video-block section-padding">
             <div class="row">

@@ -61,7 +61,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="main-title">
-                    <h6>4 random channels</h6>
+                    <h6>Random channels</h6>
                 </div>
             </div>
             @if(count($randomChannels) > 0)
@@ -80,16 +80,14 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="main-title">
-                            <h6>Most popular videos in {{ $category->title  }} - <a href="#">View all</a></h6>
+                            <h6>Most popular videos in <b>{{ $category->title  }}</b> - <a href="#">View all</a></h6>
                         </div>
                     </div>
-                    <div class="owl-carousel owl-carousel-video-card">
-                        @foreach($category->getVideos(16, 'views_count') as $video)
-                            <div class="item">
-                                @include('shared.video.card')
-                            </div>
-                        @endforeach
-                    </div>
+                    @foreach($category->getVideos(12, 'views_count') as $video)
+                        <div class="col-sm-12 col-md-4 col-lg-2">
+                            @include('shared.video.card')
+                        </div>
+                    @endforeach
                 </div>
             </div>
         @endforeach

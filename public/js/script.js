@@ -46,6 +46,14 @@ Version: 1.0
     if (objowlcarousel.length > 0) {
         objowlcarousel.owlCarousel({
             responsive: {
+                0:{
+                    items:3,
+                    nav:true
+                },
+                600:{
+                    items:3,
+                    nav:false
+                },
                 1000: {
                     items: 4,
                 },
@@ -72,6 +80,14 @@ Version: 1.0
     if (videoSlider.length > 0) {
         videoSlider.owlCarousel({
             responsive: {
+                0:{
+                    items:1,
+                    nav:true
+                },
+                600:{
+                    items:3,
+                    nav:false
+                },
                 1000: {
                     items: 4,
                 },
