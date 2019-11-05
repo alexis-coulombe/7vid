@@ -17,7 +17,7 @@ class Category extends Model
 
     public function videos()
     {
-        return $this->hasMany('App\Video');
+        return $this->hasMany(Video::class, 'category_id', 'id');
     }
 
     public function getVideosCount()

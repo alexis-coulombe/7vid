@@ -19,4 +19,14 @@ class Views extends Model
         'video_id',
         'author_id'
     ];
+
+    public function video()
+    {
+        return $this->hasOne(Video::class, 'id', 'video_id');
+    }
+
+    public function author()
+    {
+        return $this->hasOne(User::class, 'id', 'author_id');
+    }
 }

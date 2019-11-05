@@ -1,8 +1,8 @@
-@php if(isset($video)) $authorId = $video->author->id; @endphp
-@php if(isset($author)) $authorId = $author->id; @endphp
+@php if(isset($video)) $author = $video; @endphp
+@php if(isset($channel)) $author = $channel; @endphp
 
 <form action="{{ route('video.subscribe') }}" method="POST">
     {{ csrf_field() }}
-    <input type="hidden" name="author_id" value="{{ $authorId }}">
-    <button class="btn btn-danger" type="submit">Subscribe | <strong>{{ \App\Subscription::getSubscriptionCount($authorId) }}</strong></button>
+    <input type="hidden" name="author_id" value="{{ $author->id }}">
+    <button class="btn btn-danger" type="submit">Subscribe | <strong>{{ \App\Subscription::getSubscriptionCount($author->id) }}</strong></button>
 </form>

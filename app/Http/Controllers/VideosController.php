@@ -91,15 +91,15 @@ class VideosController extends Controller
      */
     public function subscribe()
     {
-        $authorId = Input::post('author_id');
+        $channelId = Input::post('channel_id');
 
-        if (!Subscription::isSubscribed($authorId)) {
+        if (!Auth::user()->isSubscribed($channelId)) {
             $subscription = new Subscription();
-            $subscription->author_id = $authorId;
+            $subscription->author_id = $channelId;
             $subscription->user_id = Auth::id();
             $subscription->save();
         } else {
-            Subscription::where([['author_id', '=', $authorId], ['user_id', '=', Auth::id()]])->delete();
+            Auth::user()->subscriptions()->where(['author_id', '=', $channelId])->delete();
         }
 
         return back();

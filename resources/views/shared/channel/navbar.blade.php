@@ -26,7 +26,7 @@
                 </div>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
+        <form action="{{ route('video.subscribe') }}" method="POST" class="form-inline my-2 my-lg-0">
             <input class="form-control form-control-sm mr-sm-1" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success btn-sm my-2 my-sm-0" type="submit">
                 <i class="fas fa-search"></i>

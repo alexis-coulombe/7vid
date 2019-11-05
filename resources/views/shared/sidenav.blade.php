@@ -11,10 +11,10 @@
             <li class="nav-item channel-sidebar-list">
                 <h6>SUBSCRIPTIONS</h6>
                 <ul>
-                    @foreach($subscriptions as $sub)
+                    @foreach($subscriptions as $subscription)
                         <li>
-                            <a href="{{ route('channel.index', ['userId' => $sub->author->id]) }}">
-                                <img class="img-fluid" alt="" src="/{{ $sub->author->avatar }}"> {{ $sub->author->name }}
+                            <a href="{{ route('channel.index', ['userId' => $subscription->channel->id]) }}">
+                                <img class="img-fluid" alt="" src="/{{ $subscription->channel->avatar }}"> {{ $subscription->channel->name }}
                             </a>
                         </li>
                     @endforeach

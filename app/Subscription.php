@@ -21,8 +21,14 @@ class Subscription extends Model
         'user_id'
     ];
 
-    public function author(){
-        return $this->hasOne('App\User', 'id', 'author_id');
+    public function channel()
+    {
+        return $this->belongsTo(User::class, 'author_id', 'id');
+    }
+
+    public function subscribers()
+    {
+        return $this->hasMany(User::class, 'id', 'user_id');
     }
 
     /**
@@ -31,9 +37,9 @@ class Subscription extends Model
      * @param $authorId
      * @return boolean
      */
-    public static function isSubscribed($authorId)
+    public function isSubscribed($authorId)
     {
-        return Subscription::where([['author_id', '=', $authorId], ['user_id', '=', Auth::id()]])->exists();
+        return 0;//$this->subscribers()->where([['author_id', '=', $authorId], ['user_id', '=', Auth::id()]])->exists();
     }
 
     /**
