@@ -26,7 +26,7 @@ class VideosController extends Controller
      */
     public function index()
     {
-        return redirect('/');
+        return redirect(route('home'));
     }
 
     /**
@@ -85,7 +85,7 @@ class VideosController extends Controller
     }
 
     /**
-     * Subscribe a user to another user
+     * Subscribe to another user
      *
      * @return RedirectResponse
      */
@@ -93,6 +93,7 @@ class VideosController extends Controller
     {
         $channelId = Input::post('channel_id');
 
+        // TODO: Setup real error handling
         if (!isset($channelId) || $channelId <= 0 || !is_numeric($channelId)) {
             return back();
         }
@@ -124,9 +125,9 @@ class VideosController extends Controller
         $this->validateVideoInputs($request);
 
         $video = new Video;
-        $video->author_id = Auth::id();
+        $video->author_id = Auth::user()->id;
 
-        if (trim($request->input('description')) == null) {
+        if (strlen($request->input('description')) > 0 && strlen(trim($request->input('description'))) === 0) {
             $request->merge(['description' => 'No description provided']);
         }
 
@@ -140,7 +141,7 @@ class VideosController extends Controller
 
         $video->save();
 
-        return redirect('/video/' . $video->ìd)->with('success', 'Your video as been shared.');
+        return redirect(route('video.show', ['video' => $video->ìd]))->with('success', 'Your video as been shared.');
     }
 
     /**
@@ -192,11 +193,11 @@ class VideosController extends Controller
         $allowedExtensions = ['jpeg', 'jpg', 'png'];
 
         if (!in_array(strtolower($extension), $allowedExtensions)) {
-            redirect('/video/create')->with('error', 'Wrong format. Must be: jpeg, jpg, png');
+            redirect(route('video.create'))->with('error', 'Wrong format. Must be: jpeg, jpg, png');
         }
 
         if ($file == null) {
-            redirect('/video/create')->with('error', 'There was an error when uploading your image.');
+            redirect(route('video.create'))->with('error', 'There was an error when uploading your image.');
         }
 
         $file->move($destinationPath, $filename);
@@ -239,6 +240,11 @@ class VideosController extends Controller
     public function edit($id)
     {
         $video = Video::find($id);
+
+        if ($video === null) {
+            abort(404);
+        }
+
         return view('video.settings')->with('video', $video);
     }
 
@@ -255,9 +261,14 @@ class VideosController extends Controller
         $this->validateVideoInputs($request, '', '');
 
         $video = Video::find($id);
+
+        if ($video === null) {
+            abort(404);
+        }
+
         $video->update($request->except(['_token', '_method']));
 
-        return redirect()->back()->with('video', $video);
+        return back()->with('video', $video);
     }
 
     /**
@@ -268,9 +279,15 @@ class VideosController extends Controller
      */
     public function destroy($id)
     {
-        Video::find($id)->delete();
+        $video = Video::find($id);
 
-        return redirect()->back();
+        if ($video === null) {
+            abort(404);
+        }
+
+        $video->delete();
+
+        return back();
     }
 
     /**

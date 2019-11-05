@@ -9,7 +9,7 @@
         <div class="input-group">
             {{ csrf_field() }}
 
-            <input type="text" name="search" class="form-control" placeholder="Video id, Author, Category ...">
+            <input type="text" name="search" class="form-control" placeholder="Video id, Author, Category ..." required>
             <div class="input-group-append">
                 <button class="btn btn-light" aria-label="Search" type="submit">
                     <i class="fas fa-search"></i>
