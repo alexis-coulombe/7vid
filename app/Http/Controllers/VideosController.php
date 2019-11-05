@@ -93,9 +93,8 @@ class VideosController extends Controller
     {
         $channelId = Input::post('channel_id');
 
-        // TODO: Setup real error handling
         if (!isset($channelId) || $channelId <= 0 || !is_numeric($channelId)) {
-            return back();
+            return back()->with('error', 'There was an error! Please try again later.');;
         }
 
         /** @var User $channel */
@@ -282,7 +281,7 @@ class VideosController extends Controller
         $video = Video::find($id);
 
         if ($video === null) {
-            abort(404);
+            return back()->with('error', 'There was an error while trying to delete your video!');
         }
 
         $video->delete();

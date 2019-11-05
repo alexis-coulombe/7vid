@@ -1,17 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Alexi
- * Date: 2018-12-18
- * Time: 14:26
- */
 
 namespace App\Http\Controllers;
 
-
 use App\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class CommentsController extends Controller
 {
@@ -19,11 +14,17 @@ class CommentsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
+     * @throws ValidationException
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'video_id' => 'required|min:1',
+            'comment' => 'required|min:1|max:255'
+        ]);
+
         $comment = new Comment();
         $comment->video_id = $request->input('video_id');
         $comment->author_id = Auth::user()->id;
@@ -36,9 +37,9 @@ class CommentsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -49,7 +50,7 @@ class CommentsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

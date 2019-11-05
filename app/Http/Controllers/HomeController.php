@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index(Request $request = null)
+    public function index()
     {
         $newVideos = Video::orderBy('created_at', 'DESC')->limit(16)->get();
         $randomChannels = User::inRandomOrder()->limit(4)->get();
