@@ -19,22 +19,22 @@
             </div>
         </div>
     @endif
+    @if(count($authors) > 0)
     <hr class="mt-0">
-    <div class="video-block section-padding">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="main-title">
-                    <h6>Results for Channels</h6>
+        <div class="video-block section-padding">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main-title">
+                        <h6>Results for Channels</h6>
+                    </div>
                 </div>
-            </div>
-            @if(count($authors) > 0)
                 @foreach($authors as $author)
                     <div class="col-xl-3 col-sm-6 mb-3">
                         @include('shared.channel.card')
                     </div>
                 @endforeach
-                    {{ $authors->appends(['video_page' => $videos->currentPage(), 'author_page' => $authors->currentPage()])->links() }}
-            @endif
+                {{ $authors->appends(['video_page' => $videos->currentPage(), 'author_page' => $authors->currentPage()])->links() }}
+            </div>
         </div>
-    </div>
+    @endif
 @endsection
