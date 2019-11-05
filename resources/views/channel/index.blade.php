@@ -1,5 +1,9 @@
 @extends('shared.template')
 
+@section('title')
+    channel of {{ $author->name }}
+@endsection
+
 @section('content')
     <div class="single-channel-page">
         <div class="single-channel-image">

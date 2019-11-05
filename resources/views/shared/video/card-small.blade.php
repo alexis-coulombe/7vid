@@ -16,7 +16,9 @@
             </div>
         </div>
         <div class="video-title">
-            <a href="{{ route('video.show', ['video' => $video->id]) }}" aria-label="View video">{{strlen($video->title) > 30 ? substr($video->title,0,30)."..." : $video->title}}</a>
+            <a href="{{ route('video.show', ['video' => $video->id]) }}" aria-label="View video">
+                <h3 class="h4">{{strlen($video->title) > 30 ? substr($video->title,0,30)."..." : $video->title}}</h3>
+            </a>
         </div>
         <div class="video-page text-success">
             {{ $video->category->title }}

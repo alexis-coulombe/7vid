@@ -22,6 +22,7 @@
 	-- Footer
 
 	-- Empty author page
+	-- Custom h1, h6
 */
 /* Body */
 html {
@@ -1954,3 +1955,29 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 }
 @media (max-width: 450px) {}
 
+/* Custom h1, h6 */
+
+.h1 {
+    display: block;
+    font-size: 2em;
+}
+.h2 {
+    display: block;
+    font-size: 1.5em;
+}
+.h3 {
+    display: block;
+    font-size: 1.17em;
+}
+.h4 {
+    display: block;
+    font-size: 1em;
+}
+.h5 {
+    display: block;
+    font-size: .83em;
+}
+.h6 {
+    display: block;
+    font-size: .67em;
+}

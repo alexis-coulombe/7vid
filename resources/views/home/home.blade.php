@@ -1,5 +1,9 @@
 @extends('shared.template')
 
+@section('title')
+    home
+@endsection
+
 @section('content')
     <div class="top-category section-padding mb-4">
         <div class="row">

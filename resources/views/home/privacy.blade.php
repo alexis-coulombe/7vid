@@ -1,5 +1,9 @@
 @extends('shared.template')
 
+@section('title')
+    privacy
+@endsection
+
 @section('content')
     <div class="container">
         <h1>Privacy Policy</h1>

@@ -1,5 +1,9 @@
 @extends('shared.template')
 
+@section('title')
+    {{ $video->title }}
+@endsection
+
 @section('content')
     <div class="video-block section-padding">
         <div class="row">
@@ -26,7 +30,7 @@
                     </div>
                     <div class="single-video-title box mb-3">
                         @include('shared.video.edit-button')
-                        <h2>{{ $video->title }}</h2>
+                        <h1 class="h2">{{ $video->title }}</h1>
                         <p class="mb-0"><i class="fas fa-eye"></i> {{ $video->getFormatedViewsCount() }} views
                             <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Views are based on unique active users that landed on this page">
                                 <i class="far fa-question-circle"></i>
