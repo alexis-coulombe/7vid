@@ -1012,6 +1012,20 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     position: relative;
 }
 
+.video-card-image img {
+    height: 150px;
+    width: auto;
+    background-color: #333;
+    object-fit: cover;
+}
+
+.video-card-image-small img {
+    height: 120px;
+    width: auto;
+    background-color: #333;
+    object-fit: cover;
+}
+
 .time {
     background: #f5234a none repeat scroll 0 0;
     border-radius: 2px;
@@ -1185,7 +1199,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     border-radius: 50px;
     height: 80px;
     margin: 1px 0 8px;
-    object-fit: scale-down;
+    object-fit: cover;
     transform: scale(1);
     width: 80px;
 }
@@ -1362,6 +1376,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     border-radius: 50px;
     height: 90px;
     width: 90px;
+    object-fit: cover;
 }
 
 .social {
