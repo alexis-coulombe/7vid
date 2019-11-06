@@ -45,7 +45,7 @@
         <li class="nav-item dropdown no-arrow osahan-right-navbar-user">
             @if(Auth::check())
                 <a class="nav-link dropdown-toggle user-dropdown-link" href="#" aria-label="dropdown" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img alt="Avatar" loading="lazy" src="img/user.png">
+                    <img alt="Avatar" loading="lazy" src="/{{ Auth::user()->avatar }}">
                     {{ Auth::user()->name }}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
