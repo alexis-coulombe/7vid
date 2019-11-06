@@ -1,5 +1,9 @@
 @extends('shared.template')
 
+@section('title')
+    Reset password
+@endsection
+
 @section('content')
     <section class="login-main-wrapper">
         <div class="container-fluid pl-0 pr-0">
@@ -8,7 +12,7 @@
                     <div class="login-main-left">
                         <div class="text-center mb-5 login-main-left-header pt-4">
                             <img src="img/favicon.png" class="img-fluid" alt="LOGO">
-                            <h5 class="mt-3 mb-3">{{ __('Reset Password') }}</h5>
+                            <h1 class="h3 mt-3 mb-3">{{ __('Reset Password') }}</h1>
                         </div>
                         <form method="POST" action="{{ route('login') }}">
                             {{ csrf_field() }}

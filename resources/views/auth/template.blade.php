@@ -8,7 +8,7 @@
         <meta name="description" content="A free video-hosting website that allows members to store and serve video content. Share unlimited video all around the world.">
         <link rel="canonical" href="{{ url()->current() }}">
 
-        <title>@yield('title') - {{ env('APP_NAME') }}</title>
+        <title>{{ env('APP_NAME') }} - @yield('title')</title>
 
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
