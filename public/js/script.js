@@ -48,11 +48,9 @@ Version: 1.0
             responsive: {
                 0:{
                     items:3,
-                    nav:true
                 },
                 600:{
                     items:3,
-                    nav:false
                 },
                 1000: {
                     items: 4,
@@ -67,11 +65,6 @@ Version: 1.0
             autoplaySpeed: 1000,
             autoplayTimeout: 2000,
             autoplayHoverPause: true,
-            nav: true,
-            navText: [
-                "",
-                "",
-            ],
         });
     }
 
@@ -82,21 +75,19 @@ Version: 1.0
             responsive: {
                 0:{
                     items:1,
-                    nav:true
                 },
                 600:{
                     items:3,
-                    nav:false
                 },
                 1000: {
                     items: 4,
                 },
                 1200: {
-                    items: 4,
+                    items: 5,
                 },
             },
             loop: true,
-            margin:10,
+            margin: 15,
             lazyLoad: true,
             autoplay: true,
             autoplaySpeed: 1000,
@@ -104,8 +95,8 @@ Version: 1.0
             autoplayHoverPause: true,
             nav: true,
             navText: [
-                "",
-                "",
+                "<i class=\"fas fa-arrow-left\"></i>",
+                "<i class=\"fas fa-arrow-right\"></i>",
             ],
         });
     }
@@ -163,6 +154,23 @@ Version: 1.0
                 return false;
             }
         });
+    }
+
+    $('.channels-card').each(function(){
+        generateAbstractBackground($(this));
+    });
+
+    function generateAbstractBackground(element)
+    {
+        let pattern = Trianglify({
+            width: element.width() * 2,
+            height: element.height() * 2,
+            seed: Math.random()
+        });
+
+        let image = pattern.canvas().toDataURL('image/png');
+
+        element.css('background-image', 'url("' + image + '")');
     }
 
 })(jQuery); // End of use strict

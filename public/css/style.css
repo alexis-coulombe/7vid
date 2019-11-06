@@ -1143,6 +1143,11 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     transition-duration: 0.4s;
 }
 
+.channels-card p {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #fff;
+}
+
 .channels-card::after {
     background: #333333 none repeat scroll 0 0;
     border-radius: 0 0 5px 6px;
