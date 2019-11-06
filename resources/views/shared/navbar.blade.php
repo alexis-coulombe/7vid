@@ -5,7 +5,7 @@
     </button> &nbsp;&nbsp;
     <a class="navbar-brand mr-1" aria-label="homepage" href="{{ route('home') }}"><img class="img-fluid" loading="lazy" alt="logo" width="50px" height="50px" src="{{ asset('assets/img/logo.png') }}"></a>
     <!-- Navbar Search -->
-    <form action="{{ route('video.search') }}" method="GET" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-5 my-2 my-md-0 osahan-navbar-search">
+    <form action="{{ route('video.search') }}" method="GET" class="d-none d-md-inline-block form-inline mr-0 mr-md-5 my-2 my-md-0 osahan-navbar-search">
         <div class="input-group">
             {{ csrf_field() }}
 

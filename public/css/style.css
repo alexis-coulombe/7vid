@@ -500,7 +500,7 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 .osahan-navbar-search {
-    margin-right: 84px !important;
+    margin-right: auto !important;
 }
 
 .osahan-navbar-search .btn {
@@ -559,6 +559,12 @@ body.sidebar-toggled footer.sticky-footer {
     border-top: 1px solid #2e2e2e;
     margin: 6px 0 0;
     padding: 7px 14px;
+}
+
+.separator {
+    border-top: 1px solid #2e2e2e;
+    margin: 6px 0 0;
+    padding: 10px 0px 0px 0px;
 }
 
 .channel-sidebar-list h6 {
@@ -842,7 +848,7 @@ body.sidebar-toggled footer.sticky-footer {
     color: white;
     background: #1c1c1c none repeat scroll 0 0;
     border-color: #303030;
-    border-radius: 2px;
+    border-radius: 2px;.sidebar .nav-item .nav-lin
     font-size: 13px;
 }
 
@@ -1846,7 +1852,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     }
 
     .osahan-navbar-search {
-        margin-right: 15px !important;
+        margin-right: auto !important;
     }
 
     .imgplace {
@@ -1941,7 +1947,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     }
 
     .osahan-navbar-search {
-        margin-right: 15px !important;
+        margin-right: auto !important;
     }
 }
 
