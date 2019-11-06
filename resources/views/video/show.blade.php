@@ -1,46 +1,44 @@
 @extends('shared.template')
 
+@section('title')
+    {{ $video->title }} | {{ $video->author->name }}
+@endsection
+
 @section('content')
     <div class="video-block section-padding">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="single-video-left">
                     <div class="single-video">
-                        <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' controls preload='auto' width="100%" controls preload="auto" poster="{{ $video->thumbnail }}" data-setup="{}">
-                            <source src="/{{$video->location}}" type="video/{{$video->extension}}">
+                        <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' width="100%" controls preload="auto" poster="/{{ $video->thumbnail }}" data-setup="{}">
+                            <source src="/{{ $video->location }}" type="{{ $video->mime_type }}">
                             <p class='vjs-no-js'>
                                 To view this video please enable JavaScript, and consider upgrading to a web browser that
-                                <a href='https://videojs.com/html5-video-support/' target='_blank'>supports HTML5 video</a>
+                                <a href='https://videojs.com/html5-video-support/' aria-label="Support html5" target='_blank'>supports HTML5 video</a>
                             </p>
                         </video>
                     </div>
-                    <div class="single-video-title box mb-3">
-                        <h2>{{$video->title}}</h2>
-                        <p class="mb-0"><i class="fas fa-eye"></i> 2,729,347 views</p>
-                    </div>
                     <div class="single-video-author box mb-3">
                         @if(Auth::check() && $video->author->id !== Auth::id())
-                            @php $authorId = $video->author->id @endphp
-
                             <div class="float-right">
                                 @include('shared.video.subscribe')
                             </div>
                         @endif
-                        <img class="img-fluid" src="img/s4.png" alt="">
-                        <p><a href="{{ route('channel.index', ['id' => $video->author->id]) }}"><strong>{{ $video->author->name }}</strong></a> <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></span></p>
-                        <small>Published on {{date('Y-m-d', strtotime($video->created_at))}}</small>
+                        <img class="img-fluid" loading="lazy" src="/{{ $video->author->avatar }}" alt="">
+                        <p><a href="{{ route('channel.index', ['id' => $video->author->id]) }}" aria-label="View channel"><strong>{{ $video->author->name }}</strong></a></p>
+                        <small>Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
                     </div>
-                    <div class="single-video-info-content box mb-3">
-                        @if(Auth::check())
-                            <span><i class="fas fa-thumbs-up tu" style="margin:20px; cursor:pointer;"></i></span>
-                        @endif
-                        <span id="upcount">{{\App\Vote::GetVotesByValue(1, $video->id)}}</span>
-                        /
-                        <span id="downcount">{{\App\Vote::GetVotesByValue(0, $video->id)}}</span>
-                        @if(Auth::check())
-                            <span><i class="fas fa-thumbs-down td" style="margin:20px; cursor:pointer;"></i></span>
-                        @endif
+                    <div class="single-video-title box mb-3">
+                        @include('shared.video.edit-button')
+                        <h1 class="h2">{{ $video->title }}</h1>
+                        <p class="mb-0"><i class="fas fa-eye"></i> {{ $video->getFormatedViewsCount() }} views
+                            <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Views are based on unique active users that landed on this page">
+                                <i class="far fa-question-circle"></i>
+                            </span>
+                        </p>
+                        <hr>
                         <p>{{ $video->description }}</p>
+                        <br>
                         <p class="tags mb-0">
                             <span><a href="#">Uncharted 4</a></span>
                             <span><a href="#">Playstation 4</a></span>
@@ -56,13 +54,13 @@
                     @include('comment.show', $data = ['comments' => $comments])
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="single-video-right">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="main-title">
                                 <div class="btn-group float-right right-action">
-                                    <a href="#" class="right-action-link text-gray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a href="#" aria-label="filter" class="right-action-link text-gray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Sort by <i class="fa fa-caret-down" aria-hidden="true"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">

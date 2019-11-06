@@ -26,11 +26,16 @@ class CreateVideosTable extends Migration
             $table->index('category_id');
 
             $table->string('title');
+            $table->index('title');
+
             $table->mediumText('description');
             $table->string('extension');
             $table->unsignedBigInteger('duration');
+            $table->unsignedInteger('frame_rate');
+            $table->string('mime_type');
             $table->text('location');
             $table->text('thumbnail');
+            $table->unsignedInteger('views_count')->default(0);
             $table->timestamps();
         });
     }

@@ -10,6 +10,13 @@ class Video extends Model
     // Using UUID instead
     public $incrementing = false;
 
+    public $fillable = [
+        'category_id',
+        'title',
+        'description',
+        'thumbnail'
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -36,11 +43,21 @@ class Video extends Model
 
     public function category()
     {
-        return $this->hasOne('App\Category', 'id', 'category_id');
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
     public function author()
     {
-        return $this->belongsTo('App\User', 'author_id');
+        return $this->belongsTo(User::class, 'author_id');
+    }
+
+    /**
+     * Return formated views count to X,XXX,XXX
+     *
+     * @return string
+     */
+    public function getFormatedViewsCount()
+    {
+        return number_format($this->views_count);
     }
 }

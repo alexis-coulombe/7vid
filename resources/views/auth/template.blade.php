@@ -5,18 +5,19 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="description" content="A free video-hosting website that allows members to store and serve video content. Share unlimited video all around the world.">
+        <link rel="canonical" href="{{ url()->current() }}">
 
-        <title>{{ config('app.name') }}</title>
+        <title>{{ env('APP_NAME') }} - @yield('title')</title>
 
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
         @yield('header')
     </head>
-    <body>
+    <body class="login-main-body">
 
         @include('shared.message')
         @yield('content')
-        @include('shared.footer')
 
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>

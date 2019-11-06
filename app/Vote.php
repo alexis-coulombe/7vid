@@ -21,6 +21,16 @@ class Vote extends Model
         'value'
     ];
 
+    public function author()
+    {
+        return $this->hasOne(User::class, 'id', 'author_id');
+    }
+
+    public function video()
+    {
+        return $this->hasOne(Video::class, 'id', 'video_id');
+    }
+
     /**
      * Check if the logged user has voted for the video
      *

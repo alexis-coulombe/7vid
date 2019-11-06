@@ -1,5 +1,9 @@
 @extends('auth.template')
 
+@section('title')
+    Register
+@endsection
+
 @section('content')
     <section class="login-main-wrapper">
         <div class="container-fluid pl-0 pr-0">
@@ -7,86 +11,87 @@
                 <div class="col-md-5 p-5 bg-white full-height">
                     <div class="login-main-left">
                         <div class="text-center mb-5 login-main-left-header pt-4">
-                            <img src="img/favicon.png" class="img-fluid" alt="LOGO">
-                            <h5 class="mt-3 mb-3">Welcome to Vidoe</h5>
+                            <a href="{{ route('home') }}" aria-label="Home">
+                                <img src="{{ asset('assets/img/logo.png') }}" width="50px" height="50px" class="img-fluid" alt="Logo">
+                            </a>
+                            <h1 class="h4 mt-3 mb-3">Welcome to 7-Vid</h1>
                             <p>It is a long established fact that a reader <br> will be distracted by the readable.</p>
                         </div>
                         <form method="POST" action="{{ route('register') }}">
                             {{ csrf_field() }}
 
                             <div class="input-group">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" placeholder="Your username" required autofocus>
+                                <label for="name">Your username
+                                    <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" placeholder="Your username" required autofocus>
+                                </label>
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('name') }}</strong>
-                                        </span>
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                             <div class="input-group">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="Your email" value="{{ old('email') }}" required>
+                                <label for="email">Your email
+                                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="Your email" value="{{ old('email') }}" required>
+                                </label>
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('email') }}</strong>
-                                        </span>
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                             <div class="input-group">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Password" name="password" required>
+                                <label for="password">Your password
+                                    <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Password" name="password" required>
+                                </label>
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('password') }}</strong>
-                                        </span>
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                             <div class="input-group">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm your password" required>
+                                <label for="password_confirmation">Confirm your password
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm your password" required>
+                                </label>
+                            </div>
+                            <div class="input-group">
+                                <label for="avatar">Choose an avatar
+                                    <input id="avatar" type="file" class="form-control{{ $errors->has('avatar') ? ' is-invalid' : '' }}" name="avatar">
+                                </label>
+                                @if ($errors->has('avatar'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('avatar') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                             <div class="form-check text-left">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox">
+                                    <input class="form-check-input" type="checkbox" required>
                                     <span class="form-check-sign"></span>
                                     I agree to the
-                                    <a href="/term">terms and conditions</a>.
+                                    <a href="/terms">terms and conditions</a>.
+                                </label>
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" required>
+                                    <span class="form-check-sign"></span>
+                                    I agree to the
+                                    <a href="{{ route('home.privacy') }}">Privacy Policy</a>.
                                 </label>
                             </div>
                             <div class="card-footer">
+                                @include('shared.captcha.recaptcha')
                                 <button type="submit" class="btn btn-outline-primary btn-block btn-lg">
                                     {{ __('Register') }}
                                 </button>
                             </div>
                         </form>
                         <div class="text-center mt-5">
-                            <p class="light-gray">Already have an account? <a href="{{ route('login') }}">Sign In</a></p>
+                            <p class="light-gray">Already have an account? <a href="{{ route('login') }}" aria-label="Sign In">Sign In</a></p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-7">
-                    <div class="login-main-right bg-white p-5 mt-5 mb-5">
-                        <div class="owl-carousel owl-carousel-login">
-                            <div class="item">
-                                <div class="carousel-login-card text-center">
-                                    <img src="img/login.png" class="img-fluid" alt="LOGO">
-                                    <h5 class="mt-5 mb-3">Watch videos offline</h5>
-                                    <p class="mb-4">when an unknown printer took a galley of type and scrambled<br> it to make a type specimen book. It has survived not <br>only five centuries</p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="carousel-login-card text-center">
-                                    <img src="img/login.png" class="img-fluid" alt="LOGO">
-                                    <h5 class="mt-5 mb-3">Download videos effortlessly</h5>
-                                    <p class="mb-4">when an unknown printer took a galley of type and scrambled<br> it to make a type specimen book. It has survived not <br>only five centuries</p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="carousel-login-card text-center">
-                                    <img src="img/login.png" class="img-fluid" alt="LOGO">
-                                    <h5 class="mt-5 mb-3">Create GIFs</h5>
-                                    <p class="mb-4">when an unknown printer took a galley of type and scrambled<br> it to make a type specimen book. It has survived not <br>only five centuries</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @include('auth.features')
             </div>
         </div>
     </section>
