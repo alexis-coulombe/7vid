@@ -36,9 +36,6 @@ body {
     height: 100%;
 }
 
-.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
-}
-
 .trash {
     cursor: pointer;
 }
@@ -1933,9 +1930,6 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     }
 }
 
-/* Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {  }
-
 /* Empty author page content */
 #Polygon-1 , #Polygon-2 , #Polygon-3 , #Polygon-4 , #Polygon-4, #Polygon-5 {
     animation: float 1s infinite ease-in-out alternate;
@@ -1958,7 +1952,6 @@ a:hover, h1, h2, h3, h4, h5, h6 {
         transform: translateY(20px);
     }
 }
-@media (max-width: 450px) {}
 
 /* Custom h1, h6 */
 

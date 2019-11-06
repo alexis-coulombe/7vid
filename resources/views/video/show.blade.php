@@ -1,7 +1,7 @@
 @extends('shared.template')
 
 @section('title')
-    {{ $video->title }}
+    {{ $video->title }} | {{ $video->author->name }}
 @endsection
 
 @section('content')

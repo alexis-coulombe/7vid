@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+    <h1 style="display: none">Home</h1>
     <div class="top-category section-padding mb-4">
         <div class="row">
             <div class="col-md-12">
