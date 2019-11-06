@@ -2,8 +2,7 @@
     <i class="fas fa-cog"></i>
 </a>
 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-    <a class="dropdown-item" href="{{ route('channel.index', ['userId' => Auth::id()]) }}"><i class="far fa-newspaper"></i> &nbsp; View your channel</a>
-    <a class="dropdown-item" href="#"><i class="fas fa-fw fa-headphones-alt "></i> &nbsp; Another action</a>
+    <a class="dropdown-item" href="#"><i class="fas fa-fw fa-cogs "></i> &nbsp; Your settings</a>
     <div class="dropdown-divider"></div>
     <a class="dropdown-item" href="#" onclick="$('.logout-form').submit();"><i class="fas fa-sign-out-alt"></i> &nbsp; Logout</a>
 

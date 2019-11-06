@@ -165,7 +165,7 @@ Version: 1.0
         let pattern = Trianglify({
             width: element.width() * 2,
             height: element.height() * 2,
-            seed: Math.random()
+            seed: Math.random() + 1
         });
 
         let image = pattern.canvas().toDataURL('image/png');
