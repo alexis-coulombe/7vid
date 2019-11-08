@@ -31,6 +31,12 @@ class HomeController extends Controller
             $exclude = request()->input('exclude') ?: [];
             $users = User::withCount('videos')->latest('videos_count')->take(3)->whereNotIn('id', $exclude)->get();
 
+            foreach($users as $user){
+                if(!count($user->videos) > 0){
+                    return 'Done';
+                }
+            }
+
             return view('shared.video.scroll.result')->with('channels', $users);
         }
 
