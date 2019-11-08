@@ -11,8 +11,10 @@
 |
 */
 
+// Home routes
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/privacy', 'HomeController@privacy')->name('home.privacy');
+Route::post('/', 'HomeController@scroll')->name('home.scroll');
 
 // Video routes
 Route::get('video/search', 'VideosController@search')->name('video.search');

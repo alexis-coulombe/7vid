@@ -10,16 +10,6 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="main-title">
-                    <div class="btn-group float-right right-action">
-                        <a href="#" aria-label="filter" class="right-action-link text-gray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#"><i class="fas fa-fw fa-star"></i> &nbsp; Top Rated</a>
-                            <a class="dropdown-item" href="#"><i class="fas fa-fw fa-signal"></i> &nbsp; Viewed</a>
-                            <a class="dropdown-item" href="#"><i class="fas fa-fw fa-times-circle"></i> &nbsp; Close</a>
-                        </div>
-                    </div>
                     <h6>Categories</h6>
                 </div>
             </div>
@@ -61,7 +51,7 @@
             @endif
         </div>
     </div>
-    <hr class="mt-0">
+    <hr>
     <div class="video-block section-padding">
         <div class="row">
             <div class="col-md-12">
@@ -78,9 +68,9 @@
             @endif
         </div>
     </div>
-    <hr class="mt-0">
     @if(count($categories) > 0)
         @foreach($categories as $category)
+            <hr>
             <div class="video-block section-padding">
                 <div class="row">
                     <div class="col-md-12">
@@ -97,4 +87,5 @@
             </div>
         @endforeach
     @endif
+    <div id="scrolling" data-url="{{ route('home.scroll') }}"></div>
 @endsection

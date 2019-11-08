@@ -27,6 +27,6 @@ class Category extends Model
 
     public function getVideos($limit = 16, $order)
     {
-        return $this->videos()->where('category_id', '=', $this->id)->limit($limit)->orderBy($order, 'ASC')->get();
+        return $this->videos()->where('category_id', '=', $this->id)->limit($limit)->orderBy($order, 'DESC')->get();
     }
 }

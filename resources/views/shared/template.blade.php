@@ -31,6 +31,8 @@
         @include('shared.footer')
         @yield('footer')
 
+        <script src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js" integrity="sha384-KMv6bBTABABhv0NI+rVWly6PIRvdippFEgjpKyxUcpEmDWZTkDOiueL5xW+cztZZ" crossorigin="anonymous"></script>
+        <script> Sentry.init({ dsn:  '{{ env('SENTRY_LARAVEL_DSN') }}' });</script>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" defer></script>
@@ -39,5 +41,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/2.0.0/trianglify.min.js" defer></script>
         <script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>
         <script type="text/javascript" src="{{ asset('js/script.js') }}" defer></script>
+        <script type="text/javascript" src="{{ asset('js/infiniteScrolling.js') }}" defer></script>
     </body>
 </html>

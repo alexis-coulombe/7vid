@@ -20,9 +20,20 @@ class HomeController extends Controller
             ->with('categories', $popularCategories);
     }
 
-
     public function privacy()
     {
         return view('home.privacy');
+    }
+
+    public function scroll(Request $request)
+    {
+        if (request()->ajax()) {
+            $exclude = request()->input('exclude') ?: [];
+            $users = User::withCount('videos')->latest('videos_count')->take(3)->whereNotIn('id', $exclude)->get();
+
+            return view('shared.video.scroll.result')->with('channels', $users);
+        }
+
+        App::abort(405);
     }
 }
