@@ -29,4 +29,7 @@ Route::resource('comment', 'CommentsController', ['only' => ['index','show']]);
 Route::get('channel/{userId}', 'ChannelController@index')->name('channel.index');
 Route::post('channel/subscribe', 'ChannelController@subscribe')->name('channel.subscribe')->middleware('auth');
 
+// category routes
+Route::get('category/{name}', 'CategoryController@index')->name('category.index');
+
 Auth::routes();

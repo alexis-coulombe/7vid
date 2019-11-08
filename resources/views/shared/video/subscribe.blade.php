@@ -1,4 +1,4 @@
-@php if(isset($video)) $author = $video; @endphp
+@php if(isset($video)) $author = $video->author; @endphp
 @php if(isset($channel)) $author = $channel; @endphp
 
 <form action="{{ route('channel.subscribe') }}" method="POST">

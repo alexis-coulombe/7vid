@@ -26,17 +26,17 @@
             <div class="col-md-12">
                 <div class="owl-carousel owl-carousel-category">
                     @foreach($categories as $category)
-                        <div class="item">
-                            <div class="category-item text-center">
-                                <h3>
-                                    <i class="{{ $category->icon }}"></i>
-                                </h3>
-                                <a href="#">
+                        <a href="{{ route('category.index', ['name' => $category->title]) }}">
+                            <div class="item">
+                                <div class="category-item text-center">
+                                    <h3>
+                                        <i class="{{ $category->icon }}"></i>
+                                    </h3>
                                     <h6>{{ $category->title }}</h6>
                                     <p>{{ $category->getVideosCount() }} videos</p>
-                                </a>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     @endforeach
                 </div>
             </div>
@@ -85,7 +85,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="main-title">
-                            <h6>Most popular videos in <b>{{ $category->title  }}</b> - <a href="#">View all</a></h6>
+                            <h6>Most popular videos in <b>{{ $category->title  }}</b> - <a href="{{ route('category.index', ['name' => $category->title]) }}">View all</a></h6>
                         </div>
                     </div>
                     @foreach($category->getVideos(12, 'views_count') as $video)
