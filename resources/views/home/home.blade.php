@@ -88,4 +88,11 @@
         @endforeach
     @endif
     <div id="scrolling" data-url="{{ route('home.scroll') }}"></div>
+    <div id="loading-spinner" style="display: none;">
+        <div class="row">
+            <div class="col text-center">
+                @include('shared.misc.loading-spinner')
+            </div>
+        </div>
+    </div>
 @endsection

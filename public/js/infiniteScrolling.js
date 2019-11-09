@@ -10,6 +10,8 @@ if(!disable) {
                 })
             };
 
+            $('#loading-spinner').show();
+
             $.ajax({
                 url: $('#scrolling').data('url'),
                 headers: {
@@ -18,6 +20,7 @@ if(!disable) {
                 data: data,
                 type: 'POST',
                 success: (result) => {
+                    $('#loading-spinner').hide();
                     if (result === 'Done') {
                         disable = true;
                         return;
@@ -26,6 +29,7 @@ if(!disable) {
                     $('#scrolling').append(result);
                 },
                 error: (result) => {
+                    $('#loading-spinner').hide();
                     throw result;
                 }
             });
