@@ -1,7 +1,7 @@
 let disable = false;
 
-if(!disable) {
-    $(window).scroll(function () {
+$(window).scroll(function () {
+    if (disable === false) {
         if ($(window).scrollTop() + $(window).height() === $(document).height()) {
             // Exclude already fetched channels
             let data = {
@@ -34,5 +34,5 @@ if(!disable) {
                 }
             });
         }
-    });
-}
+    }
+});
