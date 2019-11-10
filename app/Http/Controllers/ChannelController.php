@@ -34,10 +34,16 @@ class ChannelController extends Controller
 
     /**
      * Show history of connected user
+     * @param $userId
+     * @return Factory|View
      */
-    public function history()
+    public function history($userId)
     {
-        $videos_id = Views::where('author_id', '=', Auth::user()->id)->limit(50)->orderBy('updated_at', 'DESC')->get();
+        if(intval($userId) !== Auth::user()->id) {
+            return redirect(route('channel.history', ['userId' => Auth::user()->id]));
+        }
+
+        $videos_id = Views::where('author_id', '=', $userId)->limit(50)->orderBy('updated_at', 'DESC')->get();
         $videos = [];
 
         if(count($videos_id) > 0) {

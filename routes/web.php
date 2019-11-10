@@ -29,8 +29,8 @@ Route::resource('comment', 'CommentsController', ['except' => ['index','show']])
 
 // Channel routes
 Route::post('channel/', 'ChannelController@scroll')->name('channel.scroll');
-Route::get('channel/{userId}', 'ChannelController@index')->name('channel.index');
-Route::get('channel/{userId}/history', 'ChannelController@history')->name('channel.history')->middleware('auth');
+Route::get('channel/{userId}', 'ChannelController@index')->where('userId', '[0-9]+')->name('channel.index');
+Route::get('channel/{userId}/history', 'ChannelController@history')->where('userId', '[0-9]+')->name('channel.history')->middleware('auth');
 Route::post('channel/subscribe', 'ChannelController@subscribe')->name('channel.subscribe')->middleware('auth');
 
 // category routes

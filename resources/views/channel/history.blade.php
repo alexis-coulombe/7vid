@@ -28,6 +28,12 @@
                         @include('shared.video.card')
                     </div>
                 @endforeach
+            @else
+                <div class="col-sm-3 col-md-3">
+                    <h2>Empty!</h2>
+                    <p>You have not watched any video yet !</p>
+                </div>
+                @include('shared.misc.floating-hex')
             @endif
         </div>
     </div>
