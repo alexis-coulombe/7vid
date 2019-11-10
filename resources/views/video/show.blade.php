@@ -30,6 +30,14 @@
                     </div>
                     <div class="single-video-title box mb-3">
                         @include('shared.video.edit-button')
+                        <div class="float-right">
+                            <div id="vote" data-url="{{ route('video.vote') }}"></div>
+                            <button type="button" class="btn btn-primary vote" data-value="1" data-video-id="{{ $video->id }}"><i class="fas fa-thumbs-up"></i></button>
+                            <button type="button" class="btn btn-primary vote" data-value="0" data-video-id="{{ $video->id }}"><i class="fas fa-thumbs-down"></i></button>
+                            <div class="progress" style="height: 5px; margin-top: 10px;">
+                                <div class="progress-bar" role="progressbar" style="width: 5px"></div>
+                            </div>
+                        </div>
                         <h1 class="h2">{{ $video->title }}</h1>
                         <p class="mb-0"><i class="fas fa-eye"></i> {{ $video->getFormatedViewsCount() }} views
                             <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Views are based on unique active users that landed on this page">
@@ -79,4 +87,5 @@
 @section('footer')
     <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
     <script src='https://vjs.zencdn.net/7.6.5/video.js'></script>
+    <script src='{{ asset('js/videoVote.js') }}'></script>
 @endsection

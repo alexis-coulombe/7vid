@@ -28,8 +28,10 @@ class ViewsCounter
 
             if ($viewed->wasRecentlyCreated) {
                 $video = Video::find($videoId);
-                $video->views_count += 1;
-                $video->save();
+                if ($video) {
+                    $video->views_count += 1;
+                    $video->save();
+                }
             } else {
                 $viewed->updated_at = new \DateTime();
                 $viewed->save();
