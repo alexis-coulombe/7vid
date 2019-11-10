@@ -1,7 +1,7 @@
 @extends('shared.template')
 
 @section('title')
-    history
+    history of {{ Auth::user()->name }}
 @endsection
 
 @section('content')
@@ -19,7 +19,7 @@
                             <a class="dropdown-item" href="#"><i class="fas fa-fw fa-times-circle"></i> &nbsp; Close</a>
                         </div>
                     </div>
-                    <h6>Watch History</h6>
+                    <h1 class="h2">Watch History</h1>
                 </div>
             </div>
             @if(count($videos) > 0)
