@@ -24,7 +24,7 @@ class CreateVotesTable extends Migration
             $table->foreign('author_id')->references('id')->on('users');
             $table->index('author_id');
 
-            $table->boolean('value');
+            $table->boolean('value')->default(1);
         });
     }
 

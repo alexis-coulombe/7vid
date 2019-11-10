@@ -44,17 +44,10 @@
         @endif
         <li class="nav-item dropdown no-arrow osahan-right-navbar-user">
             @if(Auth::check())
-                <a class="nav-link dropdown-toggle user-dropdown-link" href="#" aria-label="dropdown" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img alt="Avatar" loading="lazy" src="img/user.png">
+                <a class="nav-link dropdown-toggle user-dropdown-link" href="{{ route('channel.index', ['userId' => Auth::user()->id]) }}">
+                    <img alt="Avatar" loading="lazy" src="/{{ Auth::user()->avatar }}">
                     {{ Auth::user()->name }}
                 </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="{{ route('channel.index', ['userId' => Auth::user()->id]) }}"><i class="fas fa-fw fa-user-circle"></i> &nbsp; My channel</a>
-                    <a class="dropdown-item" href="subscriptions.html"><i class="fas fa-fw fa-video"></i> &nbsp; Subscriptions</a>
-                    <a class="dropdown-item" href="settings.html"><i class="fas fa-fw fa-cog"></i> &nbsp; Settings</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ route('logout') }}" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-fw fa-sign-out-alt"></i> &nbsp; Logout</a>
-                </div>
             @else
                 <a class="nav-link dropdown-toggle user-dropdown-link" aria-label="dropdown" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Create an account / Login

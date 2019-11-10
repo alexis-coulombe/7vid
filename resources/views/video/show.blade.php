@@ -30,6 +30,14 @@
                     </div>
                     <div class="single-video-title box mb-3">
                         @include('shared.video.edit-button')
+                        <div class="float-right">
+                            <div id="vote" data-url="{{ route('video.vote') }}"></div>
+                            <button type="button" class="btn btn-primary vote" data-value="1" data-video-id="{{ $video->id }}"><i class="fas fa-thumbs-up"></i></button>
+                            <button type="button" class="btn btn-primary vote" data-value="0" data-video-id="{{ $video->id }}"><i class="fas fa-thumbs-down"></i></button>
+                            <div class="progress" style="height: 5px; margin-top: 10px;">
+                                <div class="progress-bar" role="progressbar" style="width: 5px"></div>
+                            </div>
+                        </div>
                         <h1 class="h2">{{ $video->title }}</h1>
                         <p class="mb-0"><i class="fas fa-eye"></i> {{ $video->getFormatedViewsCount() }} views
                             <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Views are based on unique active users that landed on this page">
@@ -59,16 +67,6 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="main-title">
-                                <div class="btn-group float-right right-action">
-                                    <a href="#" aria-label="filter" class="right-action-link text-gray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Sort by <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="#"><i class="fas fa-fw fa-star"></i> &nbsp; Top Rated</a>
-                                        <a class="dropdown-item" href="#"><i class="fas fa-fw fa-signal"></i> &nbsp; Viewed</a>
-                                        <a class="dropdown-item" href="#"><i class="fas fa-fw fa-times-circle"></i> &nbsp; Close</a>
-                                    </div>
-                                </div>
                                 <h6>Up Next</h6>
                             </div>
                         </div>
@@ -84,39 +82,10 @@
             </div>
         </div>
     </div>
-
-    <!--<script>
-        let voteup = function(){
-            $('.tu').css('color', '#82007d');
-            $('.td').css('color', '#B855F5');
-            $.ajax({
-                url: '/video/vote',
-                type: 'POST',
-                data: {_token: '<?php echo csrf_token() ?>', value: 1, video_id: '{{$video->id}}'},
-                dataType: 'JSON',
-                success: function(){
-                    location.reload();
-                }
-            });
-        };
-
-        let votedown = function(){
-            $('.tu').css('color', '#B855F5');
-            $('.td').css('color', '#82007d');
-            $.ajax({
-                url: '/video/vote',
-                type: 'POST',
-                data: {_token: '<?php echo csrf_token() ?>', value: 0, video_id: '{{$video->id}}'},
-                dataType: 'JSON',
-                success: function () {
-                    location.reload();
-                }
-            });
-        };
-    </script>-->
 @endsection
 
 @section('footer')
     <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
     <script src='https://vjs.zencdn.net/7.6.5/video.js'></script>
+    <script src='{{ asset('js/videoVote.js') }}'></script>
 @endsection

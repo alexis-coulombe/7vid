@@ -23,6 +23,8 @@ class CreateViewsTable extends Migration
             $table->unsignedInteger('author_id');
             $table->foreign('author_id')->references('id')->on('users');
             $table->index('author_id');
+
+            $table->timestamps();
         });
     }
 
