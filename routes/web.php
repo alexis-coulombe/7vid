@@ -13,22 +13,24 @@
 
 // Home routes
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/privacy', 'HomeController@privacy')->name('home.privacy');
 Route::post('/', 'HomeController@scroll')->name('home.scroll');
+Route::get('/privacy', 'HomeController@privacy')->name('home.privacy');
 
 // Video routes
 Route::get('video/search', 'VideosController@search')->name('video.search');
 Route::post('video/vote', 'VideosController@vote')->name('video.vote')->middleware('auth');
-Route::resource('video', 'VideosController', ['except' => ['index','show', 'edit', 'update']])->middleware('auth');
 Route::resource('video', 'VideosController', ['only' => ['index','show', 'edit', 'update']]);
 Route::resource('video', 'VideosController', ['only' => ['show']])->middleware('viewsCounter');
+Route::resource('video', 'VideosController', ['except' => ['index','show', 'edit', 'update']])->middleware('auth');
 
 // Comment routes
-Route::resource('comment', 'CommentsController', ['except' => ['index','show']])->middleware('auth');
 Route::resource('comment', 'CommentsController', ['only' => ['index','show']]);
+Route::resource('comment', 'CommentsController', ['except' => ['index','show']])->middleware('auth');
 
 // Channel routes
+Route::post('channel/', 'ChannelController@scroll')->name('channel.scroll');
 Route::get('channel/{userId}', 'ChannelController@index')->name('channel.index');
+Route::get('channel/{userId}/history', 'ChannelController@history')->name('channel.history')->middleware('auth');
 Route::post('channel/subscribe', 'ChannelController@subscribe')->name('channel.subscribe')->middleware('auth');
 
 // category routes

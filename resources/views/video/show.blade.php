@@ -59,16 +59,6 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="main-title">
-                                <div class="btn-group float-right right-action">
-                                    <a href="#" aria-label="filter" class="right-action-link text-gray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Sort by <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="#"><i class="fas fa-fw fa-star"></i> &nbsp; Top Rated</a>
-                                        <a class="dropdown-item" href="#"><i class="fas fa-fw fa-signal"></i> &nbsp; Viewed</a>
-                                        <a class="dropdown-item" href="#"><i class="fas fa-fw fa-times-circle"></i> &nbsp; Close</a>
-                                    </div>
-                                </div>
                                 <h6>Up Next</h6>
                             </div>
                         </div>
@@ -84,36 +74,6 @@
             </div>
         </div>
     </div>
-
-    <!--<script>
-        let voteup = function(){
-            $('.tu').css('color', '#82007d');
-            $('.td').css('color', '#B855F5');
-            $.ajax({
-                url: '/video/vote',
-                type: 'POST',
-                data: {_token: '<?php echo csrf_token() ?>', value: 1, video_id: '{{$video->id}}'},
-                dataType: 'JSON',
-                success: function(){
-                    location.reload();
-                }
-            });
-        };
-
-        let votedown = function(){
-            $('.tu').css('color', '#B855F5');
-            $('.td').css('color', '#82007d');
-            $.ajax({
-                url: '/video/vote',
-                type: 'POST',
-                data: {_token: '<?php echo csrf_token() ?>', value: 0, video_id: '{{$video->id}}'},
-                dataType: 'JSON',
-                success: function () {
-                    location.reload();
-                }
-            });
-        };
-    </script>-->
 @endsection
 
 @section('footer')

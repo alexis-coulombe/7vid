@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Views extends Model
 {
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'video_id',

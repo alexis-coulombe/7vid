@@ -4,13 +4,23 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Video;
+use App\Views;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\View\View;
 
 class ChannelController extends Controller
 {
 
+    /**
+     * Channel index
+     *
+     * @param $userId
+     * @return Factory|View
+     */
     public function index($userId)
     {
         $author = User::find($userId);
@@ -20,6 +30,47 @@ class ChannelController extends Controller
         }
 
         return view('channel.index')->with('author', $author);
+    }
+
+    /**
+     * Show history of connected user
+     */
+    public function history()
+    {
+        $videos_id = Views::where('author_id', '=', Auth::user()->id)->limit(50)->orderBy('updated_at', 'DESC')->get();
+        $videos = [];
+
+        if(count($videos_id) > 0) {
+            foreach ($videos_id as $video) {
+                $videos[] = Video::where('id', '=', $video->video_id)->first();
+            }
+        }
+
+        return view('channel.history')->with('videos', $videos);
+    }
+
+    /**
+     * Infinite scroll for history page
+     *
+     * @param Request $request
+     * @return Factory|View|string
+     */
+    public function scroll(Request $request)
+    {
+        if (request()->ajax()) {
+            $exclude = request()->input('exclude') ?: [];
+            $users = User::withCount('videos')->latest('videos_count')->take(3)->whereNotIn('id', $exclude)->get();
+
+            foreach($users as $user){
+                if(!count($user->videos) > 0){
+                    return 'Done';
+                }
+            }
+
+            return view('shared.video.scroll.result')->with('channels', $users);
+        }
+
+        App::abort(405);
     }
 
     /**

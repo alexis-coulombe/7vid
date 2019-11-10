@@ -4,17 +4,21 @@ namespace App\Http\Middleware;
 
 use App\Video;
 use App\Views;
+use Cassandra\Date;
 use Closure;
+use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ViewsCounter
 {
     /**
-     * Handle an incoming request.
+     * Increase the view count on video or update the view date for history.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
+     * @param Request $request
+     * @param Closure $next
      * @return mixed
+     * @throws Exception
      */
     public function handle($request, Closure $next)
     {
@@ -26,6 +30,9 @@ class ViewsCounter
                 $video = Video::find($videoId);
                 $video->views_count += 1;
                 $video->save();
+            } else {
+                $viewed->updated_at = new \DateTime();
+                $viewed->save();
             }
         }
 

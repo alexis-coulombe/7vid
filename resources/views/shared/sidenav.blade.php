@@ -16,6 +16,12 @@
         </a>
     </li>
     @if(Auth::check())
+            <li class="nav-item {{ \Illuminate\Support\Facades\Route::currentRouteName() === 'channel.history' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('channel.history', ['userId' => Auth::user()->id]) }}">
+                    <i class="fas fa-book-open"></i>
+                    <span>Your history</span>
+                </a>
+            </li>
         @php $subscriptions = Auth::user()->subscriptions; @endphp
         @if(count($subscriptions) > 0)
             <li class="nav-item channel-sidebar-list">
