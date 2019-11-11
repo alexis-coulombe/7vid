@@ -79,7 +79,7 @@ class DatabaseSeeder extends Seeder
         $user->name = 'test123';
         $user->email = 'test@123.com';
         $user->password = Hash::make('123123');
-        $user->avatar = 'images/seed/ZAk2WOxbLD4';
+        $user->avatar = 'images/seed/ZAk2WOxbLD4.jpg';
         $user->save();
 
         // Users
@@ -99,7 +99,7 @@ class DatabaseSeeder extends Seeder
             $video->category_id = $faker->numberBetween(1, $maxCategoryCount);
             $video->title = $faker->word;
             $video->description = $faker->text;
-            $video->duration = 600;
+            $video->duration = $faker->numberBetween(1, 6000);
             $video->extension = 'mp4';
             $video->location = 'videos/seed.mp4';
             $video->thumbnail = 'images/seed/' . $images[$faker->numberBetween(0, count($images) - 1)];

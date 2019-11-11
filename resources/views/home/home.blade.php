@@ -10,33 +10,23 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="main-title">
-                    <div class="btn-group float-right right-action">
-                        <a href="#" aria-label="filter" class="right-action-link text-gray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#"><i class="fas fa-fw fa-star"></i> &nbsp; Top Rated</a>
-                            <a class="dropdown-item" href="#"><i class="fas fa-fw fa-signal"></i> &nbsp; Viewed</a>
-                            <a class="dropdown-item" href="#"><i class="fas fa-fw fa-times-circle"></i> &nbsp; Close</a>
-                        </div>
-                    </div>
                     <h6>Categories</h6>
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="owl-carousel owl-carousel-category">
                     @foreach($categories as $category)
-                        <div class="item">
-                            <div class="category-item text-center">
-                                <h3>
-                                    <i class="{{ $category->icon }}"></i>
-                                </h3>
-                                <a href="#">
+                        <a href="{{ route('category.index', ['name' => $category->title]) }}">
+                            <div class="item">
+                                <div class="category-item text-center">
+                                    <h3>
+                                        <i class="{{ $category->icon }}"></i>
+                                    </h3>
                                     <h6>{{ $category->title }}</h6>
                                     <p>{{ $category->getVideosCount() }} videos</p>
-                                </a>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     @endforeach
                 </div>
             </div>
@@ -61,7 +51,7 @@
             @endif
         </div>
     </div>
-    <hr class="mt-0">
+    <hr>
     <div class="video-block section-padding">
         <div class="row">
             <div class="col-md-12">
@@ -78,14 +68,14 @@
             @endif
         </div>
     </div>
-    <hr class="mt-0">
     @if(count($categories) > 0)
         @foreach($categories as $category)
+            <hr>
             <div class="video-block section-padding">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="main-title">
-                            <h6>Most popular videos in <b>{{ $category->title  }}</b> - <a href="#">View all</a></h6>
+                            <h6>Most popular videos in <b>{{ $category->title  }}</b> - <a href="{{ route('category.index', ['name' => $category->title]) }}">View all</a></h6>
                         </div>
                     </div>
                     @foreach($category->getVideos(12, 'views_count') as $video)
@@ -97,4 +87,12 @@
             </div>
         @endforeach
     @endif
+    <div id="scrolling" data-url="{{ route('home.scroll') }}"></div>
+    <div id="loading-spinner" style="display: none;">
+        <div class="row">
+            <div class="col text-center">
+                @include('shared.misc.loading-spinner')
+            </div>
+        </div>
+    </div>
 @endsection

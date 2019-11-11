@@ -10,6 +10,7 @@ use App\Video;
 use App\Vote;
 use Faker\Provider\File;
 use getid3_exception;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -59,56 +60,48 @@ class VideosController extends Controller
         return view('video.create')->with('categories', $categories);
     }
 
+    /**
+     * Add vote to video
+     *
+     * @return ResponseFactory|Response
+     */
     public static function vote()
     {
-        $value = Input::post('value');
-        $videoId = Input::post('video_id');
+        if (request()->ajax()) {
+            $value = request()->input('value');
 
-        if (Vote::hasVoted($videoId)) {
-            /** @var Vote $vq */
-            $vq = Vote::where([['author_id', '=', Auth::id()], ['video_id', '=', $videoId]])->first();
-
-            if ($vq->value != $value) {
-                $vq->update(['value' => $value]);
+            if (is_numeric($value)) {
+                $value = $value <= 0 ? 0 : $value;
+                $value = $value >= 1 ? 1 : $value;
             } else {
-                $vq->delete();
+                return response(400);
+            }
+
+            $videoId = request()->input('videoId');
+            $video = Video::find($videoId);
+
+            if ($video) {
+                $vote = Vote::firstOrCreate(['video_id' => $videoId], ['author_id' => Auth::user()->id]);
+
+                if ($vote->wasRecentlyCreated) {
+                    $vote->value = $value;
+                    $vote->save();
+                } else {
+                    if ($value !== $vote->value) {
+                        $vote->value = $value;
+                        $vote->save();
+                    } else {
+                        $vote->delete();
+                    }
+                }
+            } else {
+                return \response(400);
             }
         } else {
-            $vote = new Vote();
-            $vote->video_id = $videoId;
-            $vote->author_id = Auth::id();
-            $vote->value = $value;
-            $vote->save();
+            return response(405);
         }
 
         return response(200);
-    }
-
-    /**
-     * Subscribe to another user
-     *
-     * @return RedirectResponse
-     */
-    public function subscribe()
-    {
-        $channelId = Input::post('channel_id');
-
-        if (!isset($channelId) || $channelId <= 0 || !is_numeric($channelId)) {
-            return back()->with('error', 'There was an error! Please try again later.');;
-        }
-
-        /** @var User $channel */
-        $channel = User::find($channelId);
-
-        if (!Auth::user()->isSubscribed($channelId)) {
-            Auth::user()->subscribe($channelId);
-            $text = 'You have successfuly subscribed to <b>' . $channel->name . '</b>';
-        } else {
-            Auth::user()->unsubscribe($channelId);
-            $text = 'You have successfuly unsubscribed from <b>' . $channel->name . '</b>';
-        }
-
-        return back()->with('success', $text);
     }
 
     /**
