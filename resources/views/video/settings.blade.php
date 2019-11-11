@@ -1,5 +1,9 @@
 @extends('shared.template')
 
+@section('title')
+    editing {{ $video->title }}
+@endsection
+
 @section('content')
     <div class="video-block section-padding">
         <div class="row">
