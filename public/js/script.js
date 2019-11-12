@@ -156,6 +156,7 @@ Version: 1.0
         });
     }
 
+    // Generate abstract background to channels cards
     $('.channels-card').each(function(){
         generateAbstractBackground($(this));
     });
@@ -163,8 +164,8 @@ Version: 1.0
     function generateAbstractBackground(element)
     {
         let pattern = Trianglify({
-            width: element.width() * 2,
-            height: element.height() * 2,
+            width: 512,
+            height: 512,
             seed: Math.random() + 1
         });
 
