@@ -17,7 +17,7 @@
             @include('shared.video.delete-button')
         </div>
         <div class="video-page">
-            By <u><a href="{{ route('channel.index', ['userId' => $video->author->id]) }}" aria-label="{{ $video->author->name }}">{{ $video->author->name }}</a></u>
+            By <a href="{{ route('channel.index', ['userId' => $video->author->id]) }}" aria-label="{{ $video->author->name }}">{{ $video->author->name }}</a>
         </div>
         <div class="video-view">
             <i class="fas fa-eye"></i> {{ $video->getFormatedViewsCount() }} - <i class="far fa-clock"></i> {{ time_elapsed_string($video->created_at) }}

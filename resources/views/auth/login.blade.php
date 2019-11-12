@@ -12,7 +12,7 @@
                     <div class="login-main-left">
                         <div class="text-center mb-5 login-main-left-header pt-4">
                             <a href="{{ route('home') }}" aria-label="Home">
-                                <img src="{{ asset('assets/img/logo.png') }}" width="50px" height="50px" class="img-fluid" alt="Logo">
+                                <img src="{{ asset('assets/img/logo.svg') }}" width="50px" height="50px" class="img-fluid" alt="Logo">
                             </a>
                             <h1 class="h4 mt-3 mb-3">Sign In</h1>
                         </div>
