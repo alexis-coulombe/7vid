@@ -31,8 +31,6 @@
                     <div class="single-video-title box mb-3">
                         @include('shared.video.edit-button')
                         <div class="float-right">
-                            {{ $upVotes }}
-                            {{ $downVotes }}
                             <button type="button" class="btn btn-{{ \App\VideoVote::hasVoted(1, $video->id) ? 'danger' : 'primary' }} vote" data-value="1" data-id="{{ $video->id }}" @if(Auth::check()) data-url="{{ route('video.vote') }}" @endif><i class="fas fa-thumbs-up"></i></button>
                             <button type="button" class="btn btn-{{ \App\VideoVote::hasVoted(0, $video->id) ? 'danger' : 'primary' }} vote" data-value="0" data-id="{{ $video->id }}" @if(Auth::check()) data-url="{{ route('video.vote') }}" @endif><i class="fas fa-thumbs-down"></i></button>
                             @if($upVotes === $downVotes)

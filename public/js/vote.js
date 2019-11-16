@@ -13,7 +13,9 @@ $('.vote').on('click', function () {
             data: data,
             type: 'POST',
             success: (result) => {
-                // increase vote
+                $(this).siblings('button').removeClass('btn-danger');
+                $(this).siblings('button').addClass('btn-primary');
+                $(this).addClass('btn-danger');
             },
             error: (result) => {
                 throw result;
