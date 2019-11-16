@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Comment;
+use App\CommentVote;
 use App\Subscription;
 use App\User;
 use App\Video;
-use App\Vote;
+use App\VideoVote;
 use Faker\Provider\File;
 use getid3_exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -81,21 +82,24 @@ class VideosController extends Controller
             $video = Video::find($videoId);
 
             if ($video) {
-                $vote = Vote::firstOrCreate(['video_id' => $videoId], ['author_id' => Auth::user()->id]);
+                $vote = VideoVote::where(['video_id' => $video->id, 'author_id' => Auth::user()->id])->first();
 
-                if ($vote->wasRecentlyCreated) {
-                    $vote->value = $value;
-                    $vote->save();
-                } else {
+                if ($vote) {
                     if ($value !== $vote->value) {
                         $vote->value = $value;
                         $vote->save();
                     } else {
                         $vote->delete();
                     }
+                } else {
+                    $vote = new VideoVote();
+                    $vote->video_id = $video->id;
+                    $vote->author_id = Auth::user()->id;
+                    $vote->value = $value;
+                    $vote->save();
                 }
             } else {
-                return \response(400);
+                return response(400);
             }
         } else {
             return response(405);

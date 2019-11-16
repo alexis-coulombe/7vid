@@ -25,6 +25,7 @@ Route::resource('video', 'VideosController', ['except' => ['index','show']])->mi
 
 // Comment routes
 Route::resource('comment', 'CommentsController', ['only' => ['index','show']]);
+Route::post('comment/vote', 'CommentsController@vote')->name('comment.vote')->middleware('auth');
 Route::resource('comment', 'CommentsController', ['except' => ['index','show']])->middleware('auth');
 
 // Channel routes

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\CommentVote;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +34,53 @@ class CommentsController extends Controller
         $comment->save();
 
         return redirect('/video/' . $request->input('video_id'))->with('success', 'Your comment has been uploaded!');
+    }
+
+    /**
+     * Add vote to comment
+     *
+     * @return ResponseFactory|Response
+     */
+    public function vote()
+    {
+        if (request()->ajax() && Auth::check()) {
+            $value = request()->input('value');
+
+            if (is_numeric($value)) {
+                $value = $value <= 0 ? 0 : $value;
+                $value = $value >= 1 ? 1 : $value;
+            } else {
+                return response(400);
+            }
+
+            $commentId = request()->input('id');
+            $comment = Comment::find($commentId);
+
+            if ($comment) {
+                $vote = CommentVote::where(['comment_id' => $comment->id, 'author_id' => Auth::user()->id])->first();
+
+                if ($vote) {
+                    if ($value !== $vote->value) {
+                        $vote->value = $value;
+                        $vote->save();
+                    } else {
+                        $vote->delete();
+                    }
+                } else {
+                    $vote = new CommentVote();
+                    $vote->comment_id = $comment->id;
+                    $vote->author_id = Auth::user()->id;
+                    $vote->value = $value;
+                    $vote->save();
+                }
+            } else {
+                return response(400);
+            }
+        } else {
+            return response(405);
+        }
+
+        return response(200);
     }
 
     /**

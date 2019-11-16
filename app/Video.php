@@ -53,7 +53,7 @@ class Video extends Model
 
     public function votes()
     {
-        return $this->hasMany(Vote::class, 'video_id');
+        return $this->hasMany(VideoVote::class, 'video_id');
     }
 
     /**
