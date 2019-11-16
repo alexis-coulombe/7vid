@@ -185,11 +185,11 @@ class VideosController extends Controller
         $allowedExtensions = ['jpeg', 'jpg', 'png'];
 
         if (!in_array(strtolower($extension), $allowedExtensions)) {
-            redirect(route('video.create'))->with('error', 'Wrong format. Must be: jpeg, jpg, png');
+            return redirect(route('video.create'))->with('error', 'Wrong format. Must be: jpeg, jpg, png');
         }
 
         if ($file == null) {
-            redirect(route('video.create'))->with('error', 'There was an error when uploading your image.');
+            return redirect(route('video.create'))->with('error', 'There was an error when uploading your image.');
         }
 
         $file->move($destinationPath, $filename);
@@ -237,6 +237,10 @@ class VideosController extends Controller
             abort(404);
         }
 
+        if(Auth::user()->id !== $video->author->id){
+            return redirect(route('video.show', ['video' => $video->id]));
+        }
+
         return view('video.settings')->with('video', $video);
     }
 
@@ -275,6 +279,10 @@ class VideosController extends Controller
 
         if ($video === null) {
             return back()->with('error', 'There was an error while trying to delete your video!');
+        }
+
+        if(Auth::user()->id !== $video->author->id){
+            return redirect(route('video.show', ['video' => $video->id]));
         }
 
         $video->delete();
