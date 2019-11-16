@@ -67,7 +67,7 @@ class VideosController extends Controller
      */
     public static function vote()
     {
-        if (request()->ajax()) {
+        if (request()->ajax() && Auth::check()) {
             $value = request()->input('value');
 
             if (is_numeric($value)) {
@@ -77,7 +77,7 @@ class VideosController extends Controller
                 return response(400);
             }
 
-            $videoId = request()->input('videoId');
+            $videoId = request()->input('id');
             $video = Video::find($videoId);
 
             if ($video) {
@@ -216,11 +216,24 @@ class VideosController extends Controller
         $relatedVideos = Video::where('title', 'like', '%' . $video->title . '%')
             ->orWhere('category_id', '=', $video->category_id)->limit(10)->get();
 
+        $upVotes = 0;
+        $downVotes = 0;
+
+        foreach ($video->votes as $vote) {
+            if($vote->value) {
+                $upVotes++;
+            } else {
+                $downVotes++;
+            }
+        }
+
         return view('video.show')
             ->with('video', $video)
             ->with('comments', $comments)
             ->with('subscriptionCount', $subscriptionCount)
-            ->with('relatedVideos', $relatedVideos);
+            ->with('relatedVideos', $relatedVideos)
+            ->with('upVotes', $upVotes)
+            ->with('downVotes', $downVotes);
     }
 
     /**

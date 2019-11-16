@@ -25,6 +25,7 @@
 	-- Custom h1, h6
 	-- Loading spinner
 	-- Category item
+	-- Progress
 */
 /* Body */
 html {
@@ -2080,4 +2081,16 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     background-color: rgba(255,255,255,0.05);
     width: 95%;
     border-radius: 5px;
+}
+
+/* Progress */
+.progress {
+    height: 5px;
+    margin-top: 10px;
+    background-color: #be3434;
+}
+
+.progress-bar {
+    width: 50%;
+    background-color:#2bca92;
 }

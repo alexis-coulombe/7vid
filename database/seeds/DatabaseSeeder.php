@@ -127,6 +127,7 @@ class DatabaseSeeder extends Seeder
             $vote->save();
         }
 
+        // Subscriptions
         for ($i = 0; $i < $maxSubCount; $i++) {
             $sub = new \App\Subscription();
             $sub->author_id = \App\User::inRandomOrder()->first()->id;
