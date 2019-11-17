@@ -14,11 +14,12 @@
 // Ajax routes
 Route::post('/', 'HomeController@scroll')->name('home.scroll');
 Route::post('video/vote', 'VideosController@vote')->name('video.vote')->middleware('auth');
+Route::post('comment/vote', 'CommentsController@vote')->name('comment.vote')->middleware('auth');
 Route::post('channel/subscribe', 'ChannelController@subscribe')->name('channel.subscribe')->middleware('auth');
 
 // Home routes
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/privacy', 'HomeController@privacy')->name('home.privacy');
+Route::get('/privacy', 'HomeController@privacy')->name('home.privacy')->middleware('cache');
 
 // Video routes
 Route::get('video/search', 'VideosController@search')->name('video.search');
@@ -28,7 +29,6 @@ Route::resource('video', 'VideosController', ['only' => ['show']])->middleware('
 
 // Comment routes
 Route::resource('comment', 'CommentsController', ['only' => ['index','show']]);
-Route::post('comment/vote', 'CommentsController@vote')->name('comment.vote')->middleware('auth');
 Route::resource('comment', 'CommentsController', ['except' => ['index','show']])->middleware('auth');
 
 // Channel routes

@@ -35,6 +35,10 @@ class CommentVote extends Model
      */
     public static function hasVoted($value, $commentId)
     {
-        return CommentVote::where(['author_id' => Auth::user()->id, 'comment_id' => $commentId, 'value' => $value])->exists();
+        if(Auth::check()) {
+            return CommentVote::where(['author_id' => Auth::user()->id, 'comment_id' => $commentId, 'value' => $value])->exists();
+        } else {
+            return false;
+        }
     }
 }

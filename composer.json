@@ -18,7 +18,8 @@
         "laravelcollective/html": "^5.4.0",
         "sentry/sentry-laravel": "1.4.0",
         "webpatser/laravel-uuid": "^3.0",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-cassandra": "*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

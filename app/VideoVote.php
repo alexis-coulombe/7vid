@@ -35,6 +35,10 @@ class VideoVote extends Model
      */
     public static function hasVoted($value, $videoId)
     {
-        return VideoVote::where(['author_id' => Auth::user()->id, 'video_id' => $videoId, 'value' => $value])->exists();
+        if(Auth::check()) {
+            return VideoVote::where(['author_id' => Auth::user()->id, 'video_id' => $videoId, 'value' => $value])->exists();
+        } else {
+            return false;
+        }
     }
 }
