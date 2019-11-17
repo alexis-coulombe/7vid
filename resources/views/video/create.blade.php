@@ -59,6 +59,34 @@
                         </div>
                     </div>
                 </div>
+                <h5>Other settings</h5>
+                <hr>
+                <label class="toggle-check">
+                    <input type="checkbox" name="private" class="toggle-check-input">
+                    <span class="toggle-check-text"></span>
+                    Mark video has hidden
+                    <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Nobody, but you, will be able to see this video.">
+                        <i class="far fa-question-circle"></i>
+                    </span>
+                </label>
+
+                <label class="toggle-check">
+                    <input type="checkbox" name="allow_comments" class="toggle-check-input" checked>
+                    <span class="toggle-check-text"></span>
+                    Allow comments
+                    <span title="" data-placement="top" data-toggle="tooltip" data-original-title="People will be able to comment on your video.">
+                        <i class="far fa-question-circle"></i>
+                    </span>
+                </label>
+
+                <label class="toggle-check">
+                    <input type="checkbox" name="allow_votes" class="toggle-check-input" checked>
+                    <span class="toggle-check-text"></span>
+                    Allow ratings
+                    <span title="" data-placement="top" data-toggle="tooltip" data-original-title="People will be able to rate this video.">
+                        <i class="far fa-question-circle"></i>
+                    </span>
+                </label>
             <div class="osahan-area text-center mt-3">
                 @include('shared.captcha.recaptcha')
                 <button type="submit" class="btn btn-outline-primary">Share !</button>

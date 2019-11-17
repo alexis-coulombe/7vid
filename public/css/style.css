@@ -27,6 +27,7 @@
 	-- Category item
 	-- Progress
 	-- Checkbox toggle
+	-- Video settings
 */
 /* Body */
 html {
@@ -2138,3 +2139,4 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     left: 100%;
     margin-left: -1.4em;
 }
+

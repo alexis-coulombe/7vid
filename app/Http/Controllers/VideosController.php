@@ -8,6 +8,7 @@ use App\CommentVote;
 use App\Subscription;
 use App\User;
 use App\Video;
+use App\VideoSetting;
 use App\VideoVote;
 use Faker\Provider\File;
 use getid3_exception;
@@ -136,6 +137,12 @@ class VideosController extends Controller
         }
 
         $video->save();
+
+        $settings = new VideoSetting();
+        $settings->video_id = $video->id;
+        $settings->private = $request->input('private') ?: 0;
+        $settings->allow_comments = $request->input('allow_comments') ?: 0;
+        $settings->allow_votes = $request->input('allow_votes') ?: 0;
 
         return redirect(route('video.show', ['video' => $video->ìd]))->with('success', 'Your video as been shared.');
     }

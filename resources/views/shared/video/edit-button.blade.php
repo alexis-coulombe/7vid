@@ -1,5 +1,5 @@
 @if(Auth::check() && $video->author->id === Auth::id())
-    <div class="float-right video-setting-button">
-        <a href="{{ route('video.edit', ['id' => $video->id]) }}"><i class="fas fa-cog"></i></a>
-    </div>
+    <button type="button" class="btn btn-primary edit-button" onclick="window.location.href='{{ route('video.edit', ['id' => $video->id]) }}'">
+        <i class="fas fa-cog"></i> Edit video settings
+    </button>
 @endif

@@ -46,7 +46,7 @@
                             <h5>Other settings</h5>
                             <hr>
                             <label class="toggle-check">
-                                <input type="checkbox" class="toggle-check-input">
+                                <input type="checkbox" name="private" class="toggle-check-input" {{ $video->setting->private ? 'checked' : '' }}>
                                 <span class="toggle-check-text"></span>
                                 Mark video has hidden
                                 <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Nobody, but you, will be able to see this video.">
@@ -55,7 +55,7 @@
                             </label>
 
                             <label class="toggle-check">
-                                <input type="checkbox" class="toggle-check-input">
+                                <input type="checkbox" name="allow_comments" class="toggle-check-input" {{ $video->setting->allow_comments ? 'checked' : '' }}>
                                 <span class="toggle-check-text"></span>
                                 Disable comments
                                 <span title="" data-placement="top" data-toggle="tooltip" data-original-title="People will not be able to comment on your video.">
@@ -64,7 +64,7 @@
                             </label>
 
                             <label class="toggle-check">
-                                <input type="checkbox" class="toggle-check-input">
+                                <input type="checkbox" name="allow_votes" class="toggle-check-input" {{ $video->setting->allow_votes ? 'checked' : '' }}>
                                 <span class="toggle-check-text"></span>
                                 Disable ratings
                                 <span title="" data-placement="top" data-toggle="tooltip" data-original-title="People will not be able to rate this video.">
