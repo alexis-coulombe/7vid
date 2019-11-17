@@ -40,6 +40,7 @@
         <script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>
         <script type="text/javascript" src="{{ asset('js/script.js') }}" defer></script>
         <script type="text/javascript" src="{{ asset('js/infiniteScrolling.js') }}" defer></script>
+        <script type="text/javascript" src="{{ asset('js/subscribe.js') }}" defer></script>
         @yield('footer')
     </body>
 </html>

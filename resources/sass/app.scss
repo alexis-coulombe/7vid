@@ -24,15 +24,7 @@ $l-purple: #332F63;
 $t-purple: #8C8AA7;
 $white: #fff;
 
-html, body {
-    background: $purple;
-    font-family: 'Ubuntu';
-}
-* {
-    box-sizing: border-box;
-}
-
-.box {
+.ghost-box {
     width: 350px;
     height: 100%;
     max-height: 600px;

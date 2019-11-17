@@ -11121,17 +11121,7 @@ a.text-dark:focus {
 
 /* 404 page css */
 
-html,
-body {
-  background: #28254C;
-  font-family: "Ubuntu";
-}
-
-* {
-  box-sizing: border-box;
-}
-
-.box {
+.ghost-box {
   width: 350px;
   height: 100%;
   max-height: 600px;
@@ -11146,7 +11136,7 @@ body {
   padding: 30px 50px;
 }
 
-.box .box__ghost {
+.ghost-box .box__ghost {
   padding: 15px 25px 25px;
   position: absolute;
   left: 50%;
@@ -11155,14 +11145,14 @@ body {
           transform: translate(-50%, -30%);
 }
 
-.box .box__ghost .symbol:nth-child(1) {
+.ghost-box .box__ghost .symbol:nth-child(1) {
   opacity: 0.2;
   -webkit-animation: shine 4s ease-in-out 3s infinite;
           animation: shine 4s ease-in-out 3s infinite;
 }
 
-.box .box__ghost .symbol:nth-child(1):before,
-.box .box__ghost .symbol:nth-child(1):after {
+.ghost-box .box__ghost .symbol:nth-child(1):before,
+.ghost-box .box__ghost .symbol:nth-child(1):after {
   content: "";
   width: 12px;
   height: 4px;
@@ -11173,17 +11163,17 @@ body {
   left: 0;
 }
 
-.box .box__ghost .symbol:nth-child(1):before {
+.ghost-box .box__ghost .symbol:nth-child(1):before {
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg);
 }
 
-.box .box__ghost .symbol:nth-child(1):after {
+.ghost-box .box__ghost .symbol:nth-child(1):after {
   -webkit-transform: rotate(-45deg);
           transform: rotate(-45deg);
 }
 
-.box .box__ghost .symbol:nth-child(2) {
+.ghost-box .box__ghost .symbol:nth-child(2) {
   position: absolute;
   left: -5px;
   top: 30px;
@@ -11197,14 +11187,14 @@ body {
           animation: shine 4s ease-in-out 1.3s infinite;
 }
 
-.box .box__ghost .symbol:nth-child(3) {
+.ghost-box .box__ghost .symbol:nth-child(3) {
   opacity: 0.2;
   -webkit-animation: shine 3s ease-in-out 0.5s infinite;
           animation: shine 3s ease-in-out 0.5s infinite;
 }
 
-.box .box__ghost .symbol:nth-child(3):before,
-.box .box__ghost .symbol:nth-child(3):after {
+.ghost-box .box__ghost .symbol:nth-child(3):before,
+.ghost-box .box__ghost .symbol:nth-child(3):after {
   content: "";
   width: 12px;
   height: 4px;
@@ -11215,24 +11205,24 @@ body {
   left: 40px;
 }
 
-.box .box__ghost .symbol:nth-child(3):before {
+.ghost-box .box__ghost .symbol:nth-child(3):before {
   -webkit-transform: rotate(90deg);
           transform: rotate(90deg);
 }
 
-.box .box__ghost .symbol:nth-child(3):after {
+.ghost-box .box__ghost .symbol:nth-child(3):after {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
 }
 
-.box .box__ghost .symbol:nth-child(4) {
+.ghost-box .box__ghost .symbol:nth-child(4) {
   opacity: 0.2;
   -webkit-animation: shine 6s ease-in-out 1.6s infinite;
           animation: shine 6s ease-in-out 1.6s infinite;
 }
 
-.box .box__ghost .symbol:nth-child(4):before,
-.box .box__ghost .symbol:nth-child(4):after {
+.ghost-box .box__ghost .symbol:nth-child(4):before,
+.ghost-box .box__ghost .symbol:nth-child(4):after {
   content: "";
   width: 15px;
   height: 4px;
@@ -11243,17 +11233,17 @@ body {
   right: 30px;
 }
 
-.box .box__ghost .symbol:nth-child(4):before {
+.ghost-box .box__ghost .symbol:nth-child(4):before {
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg);
 }
 
-.box .box__ghost .symbol:nth-child(4):after {
+.ghost-box .box__ghost .symbol:nth-child(4):after {
   -webkit-transform: rotate(-45deg);
           transform: rotate(-45deg);
 }
 
-.box .box__ghost .symbol:nth-child(5) {
+.ghost-box .box__ghost .symbol:nth-child(5) {
   position: absolute;
   right: 5px;
   top: 40px;
@@ -11267,14 +11257,14 @@ body {
           animation: shine 1.7s ease-in-out 7s infinite;
 }
 
-.box .box__ghost .symbol:nth-child(6) {
+.ghost-box .box__ghost .symbol:nth-child(6) {
   opacity: 0.2;
   -webkit-animation: shine 2s ease-in-out 6s infinite;
           animation: shine 2s ease-in-out 6s infinite;
 }
 
-.box .box__ghost .symbol:nth-child(6):before,
-.box .box__ghost .symbol:nth-child(6):after {
+.ghost-box .box__ghost .symbol:nth-child(6):before,
+.ghost-box .box__ghost .symbol:nth-child(6):after {
   content: "";
   width: 15px;
   height: 4px;
@@ -11285,17 +11275,17 @@ body {
   right: -5px;
 }
 
-.box .box__ghost .symbol:nth-child(6):before {
+.ghost-box .box__ghost .symbol:nth-child(6):before {
   -webkit-transform: rotate(90deg);
           transform: rotate(90deg);
 }
 
-.box .box__ghost .symbol:nth-child(6):after {
+.ghost-box .box__ghost .symbol:nth-child(6):after {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
 }
 
-.box .box__ghost .box__ghost-container {
+.ghost-box .box__ghost .box__ghost-container {
   background: #fff;
   width: 100px;
   height: 100px;
@@ -11306,7 +11296,7 @@ body {
           animation: upndown 3s ease-in-out infinite;
 }
 
-.box .box__ghost .box__ghost-container .box__ghost-eyes {
+.ghost-box .box__ghost .box__ghost-container .box__ghost-eyes {
   position: absolute;
   left: 50%;
   top: 45%;
@@ -11314,7 +11304,7 @@ body {
   width: 70px;
 }
 
-.box .box__ghost .box__ghost-container .box__ghost-eyes .box__eye-left {
+.ghost-box .box__ghost .box__ghost-container .box__ghost-eyes .box__eye-left {
   width: 12px;
   height: 12px;
   background: #332F63;
@@ -11324,7 +11314,7 @@ body {
   left: 0;
 }
 
-.box .box__ghost .box__ghost-container .box__ghost-eyes .box__eye-right {
+.ghost-box .box__ghost .box__ghost-container .box__ghost-eyes .box__eye-right {
   width: 12px;
   height: 12px;
   background: #332F63;
@@ -11334,7 +11324,7 @@ body {
   right: 0;
 }
 
-.box .box__ghost .box__ghost-container .box__ghost-bottom {
+.ghost-box .box__ghost .box__ghost-container .box__ghost-bottom {
   display: -webkit-box;
   display: flex;
   position: absolute;
@@ -11343,7 +11333,7 @@ body {
   right: 0;
 }
 
-.box .box__ghost .box__ghost-container .box__ghost-bottom div {
+.ghost-box .box__ghost .box__ghost-container .box__ghost-bottom div {
   -webkit-box-flex: 1;
           flex-grow: 1;
   position: relative;
@@ -11353,14 +11343,14 @@ body {
   background-color: #fff;
 }
 
-.box .box__ghost .box__ghost-container .box__ghost-bottom div:nth-child(2n) {
+.ghost-box .box__ghost .box__ghost-container .box__ghost-bottom div:nth-child(2n) {
   top: -12px;
   margin: 0 0px;
   border-top: 15px solid #332F63;
   background: transparent;
 }
 
-.box .box__ghost .box__ghost-shadow {
+.ghost-box .box__ghost .box__ghost-shadow {
   height: 20px;
   box-shadow: 0 50px 15px 5px #3B3769;
   border-radius: 50%;
@@ -11369,7 +11359,7 @@ body {
           animation: smallnbig 3s ease-in-out infinite;
 }
 
-.box .box__description {
+.ghost-box .box__description {
   position: absolute;
   bottom: 30px;
   left: 50%;
@@ -11377,7 +11367,7 @@ body {
           transform: translateX(-50%);
 }
 
-.box .box__description .box__description-container {
+.ghost-box .box__description .box__description-container {
   color: #fff;
   text-align: center;
   width: 200px;
@@ -11385,18 +11375,18 @@ body {
   margin: 0 auto;
 }
 
-.box .box__description .box__description-container .box__description-title {
+.ghost-box .box__description .box__description-container .box__description-title {
   font-size: 24px;
   letter-spacing: 0.5px;
 }
 
-.box .box__description .box__description-container .box__description-text {
+.ghost-box .box__description .box__description-container .box__description-text {
   color: #8C8AA7;
   line-height: 20px;
   margin-top: 20px;
 }
 
-.box .box__description .box__button {
+.ghost-box .box__description .box__button {
   display: block;
   position: relative;
   background: #d43a3a;
@@ -11417,7 +11407,7 @@ body {
   -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
-.box .box__description .box__button:before {
+.ghost-box .box__description .box__button:before {
   content: "";
   position: absolute;
   width: 20px;
@@ -11434,12 +11424,12 @@ body {
   transition: transform 0.5s ease, -webkit-transform 0.5s ease;
 }
 
-.box .box__description .box__button:hover {
+.ghost-box .box__description .box__button:hover {
   background: transparent;
   border-color: #fff;
 }
 
-.box .box__description .box__button:hover:before {
+.ghost-box .box__description .box__button:hover:before {
   -webkit-transform: translateX(250px) rotate(45deg);
           transform: translateX(250px) rotate(45deg);
 }

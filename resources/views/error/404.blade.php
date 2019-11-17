@@ -1,7 +1,7 @@
 @extends('shared.template')
 
 @section('content')
-<div class="box">
+<div class="ghost-box">
     <div class="box__ghost">
         <div class="symbol"></div>
         <div class="symbol"></div>
