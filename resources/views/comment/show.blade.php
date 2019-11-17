@@ -1,6 +1,29 @@
 @foreach($comments as $comment)
+    @php
+        $upVotes = 0;
+        $downVotes = 0;
+
+        foreach($comment->votes as $vote){
+            if($vote->value){
+                $upVotes++;
+            } else {
+                $downVotes++;
+            }
+        }
+    @endphp
     <div class="single-video-author box mb-3">
         <div class="float-right">
+            <button type="button" class="btn btn-sm btn-{{ \App\CommentVote::hasVoted(1, $comment->id) ? 'danger' : 'primary' }} vote" data-value="1" data-id="{{ $comment->id }}" @if(Auth::check()) data-url="{{ route('comment.vote') }}" @endif><i class="fas fa-thumbs-up"></i></button>
+            <button type="button" class="btn btn-sm btn-{{ \App\CommentVote::hasVoted(0, $comment->id) ? 'danger' : 'primary' }} vote" data-value="0" data-id="{{ $comment->id }}" @if(Auth::check()) data-url="{{ route('comment.vote') }}" @endif><i class="fas fa-thumbs-down"></i></button>
+            @if($upVotes === $downVotes)
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar"></div>
+                </div>
+            @else
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: {{ ($upVotes / ($upVotes + ($downVotes <= 0 ? 1 : $downVotes)))*100 }}%;"></div>
+                </div>
+            @endif
             @if(Auth::check() && Auth::id() === $comment->author_id)
                 <span><i class="trash fas fa-trash-alt" onclick="document.getElementById('destroy-form').submit()"></i></span>
             @endif

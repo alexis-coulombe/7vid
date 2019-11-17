@@ -19,12 +19,13 @@ Route::get('/privacy', 'HomeController@privacy')->name('home.privacy');
 // Video routes
 Route::get('video/search', 'VideosController@search')->name('video.search');
 Route::post('video/vote', 'VideosController@vote')->name('video.vote')->middleware('auth');
-Route::resource('video', 'VideosController', ['only' => ['index','show', 'edit', 'update']]);
+Route::resource('video', 'VideosController', ['except' => ['index','show']])->middleware('auth');
+Route::resource('video', 'VideosController', ['only' => ['index','show']]);
 Route::resource('video', 'VideosController', ['only' => ['show']])->middleware('viewsCounter');
-Route::resource('video', 'VideosController', ['except' => ['index','show', 'edit', 'update']])->middleware('auth');
 
 // Comment routes
 Route::resource('comment', 'CommentsController', ['only' => ['index','show']]);
+Route::post('comment/vote', 'CommentsController@vote')->name('comment.vote')->middleware('auth');
 Route::resource('comment', 'CommentsController', ['except' => ['index','show']])->middleware('auth');
 
 // Channel routes

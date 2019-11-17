@@ -118,15 +118,25 @@ class DatabaseSeeder extends Seeder
             $comment->save();
         }
 
-        // Votes
+        // Video Votes
         for ($i = 0; $i < $maxVotesCount; $i++) {
-            $vote = new \App\Vote();
+            $vote = new \App\VideoVote();
             $vote->video_id = \App\Video::inRandomOrder()->first()->id;
-            $vote->author_id = $faker->numberBetween(1, $maxUserCount);
+            $vote->author_id = $faker->numberBetween(2, $maxUserCount);
             $vote->value = $faker->boolean();
             $vote->save();
         }
 
+        // Comment Votes
+        for ($i = 0; $i < $maxVotesCount; $i++) {
+            $vote = new \App\CommentVote();
+            $vote->comment_id = \App\Comment::inRandomOrder()->first()->id;
+            $vote->author_id = $faker->numberBetween(2, $maxUserCount);
+            $vote->value = $faker->boolean();
+            $vote->save();
+        }
+
+        // Subscriptions
         for ($i = 0; $i < $maxSubCount; $i++) {
             $sub = new \App\Subscription();
             $sub->author_id = \App\User::inRandomOrder()->first()->id;

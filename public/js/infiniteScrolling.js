@@ -1,7 +1,7 @@
 let disable = false;
 
 $(window).scroll(function () {
-    if (disable === false) {
+    if (disable === false && $('#scrolling').length) {
         if ($(window).scrollTop() + $(window).height() === $(document).height()) {
             // Exclude already fetched channels
             let data = {

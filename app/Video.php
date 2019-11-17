@@ -51,6 +51,11 @@ class Video extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
+    public function votes()
+    {
+        return $this->hasMany(VideoVote::class, 'video_id');
+    }
+
     /**
      * Return formated views count to X,XXX,XXX
      *

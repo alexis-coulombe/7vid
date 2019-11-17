@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Comment;
+use App\CommentVote;
 use App\Subscription;
 use App\User;
 use App\Video;
-use App\Vote;
+use App\VideoVote;
 use Faker\Provider\File;
 use getid3_exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -67,7 +68,7 @@ class VideosController extends Controller
      */
     public static function vote()
     {
-        if (request()->ajax()) {
+        if (request()->ajax() && Auth::check()) {
             $value = request()->input('value');
 
             if (is_numeric($value)) {
@@ -77,25 +78,28 @@ class VideosController extends Controller
                 return response(400);
             }
 
-            $videoId = request()->input('videoId');
+            $videoId = request()->input('id');
             $video = Video::find($videoId);
 
             if ($video) {
-                $vote = Vote::firstOrCreate(['video_id' => $videoId], ['author_id' => Auth::user()->id]);
+                $vote = VideoVote::where(['video_id' => $video->id, 'author_id' => Auth::user()->id])->first();
 
-                if ($vote->wasRecentlyCreated) {
-                    $vote->value = $value;
-                    $vote->save();
-                } else {
+                if ($vote) {
                     if ($value !== $vote->value) {
                         $vote->value = $value;
                         $vote->save();
                     } else {
                         $vote->delete();
                     }
+                } else {
+                    $vote = new VideoVote();
+                    $vote->video_id = $video->id;
+                    $vote->author_id = Auth::user()->id;
+                    $vote->value = $value;
+                    $vote->save();
                 }
             } else {
-                return \response(400);
+                return response(400);
             }
         } else {
             return response(405);
@@ -185,11 +189,11 @@ class VideosController extends Controller
         $allowedExtensions = ['jpeg', 'jpg', 'png'];
 
         if (!in_array(strtolower($extension), $allowedExtensions)) {
-            redirect(route('video.create'))->with('error', 'Wrong format. Must be: jpeg, jpg, png');
+            return redirect(route('video.create'))->with('error', 'Wrong format. Must be: jpeg, jpg, png');
         }
 
         if ($file == null) {
-            redirect(route('video.create'))->with('error', 'There was an error when uploading your image.');
+            return redirect(route('video.create'))->with('error', 'There was an error when uploading your image.');
         }
 
         $file->move($destinationPath, $filename);
@@ -216,11 +220,24 @@ class VideosController extends Controller
         $relatedVideos = Video::where('title', 'like', '%' . $video->title . '%')
             ->orWhere('category_id', '=', $video->category_id)->limit(10)->get();
 
+        $upVotes = 0;
+        $downVotes = 0;
+
+        foreach ($video->votes as $vote) {
+            if($vote->value) {
+                $upVotes++;
+            } else {
+                $downVotes++;
+            }
+        }
+
         return view('video.show')
             ->with('video', $video)
             ->with('comments', $comments)
             ->with('subscriptionCount', $subscriptionCount)
-            ->with('relatedVideos', $relatedVideos);
+            ->with('relatedVideos', $relatedVideos)
+            ->with('upVotes', $upVotes)
+            ->with('downVotes', $downVotes);
     }
 
     /**
@@ -235,6 +252,10 @@ class VideosController extends Controller
 
         if ($video === null) {
             abort(404);
+        }
+
+        if(Auth::user()->id !== $video->author->id){
+            return redirect(route('video.show', ['video' => $video->id]));
         }
 
         return view('video.settings')->with('video', $video);
@@ -275,6 +296,10 @@ class VideosController extends Controller
 
         if ($video === null) {
             return back()->with('error', 'There was an error while trying to delete your video!');
+        }
+
+        if(Auth::user()->id !== $video->author->id){
+            return redirect(route('video.show', ['video' => $video->id]));
         }
 
         $video->delete();
