@@ -10,7 +10,7 @@
                     {{ method_field('put') }}
                     <div class="single-video-left">
                         <div class="single-video">
-                            <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' controls preload='auto' width="100%" controls preload="auto" poster="{{ $video->thumbnail }}" data-setup="{}">
+                            <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' controls preload='auto' width="100%" poster="/{{ $video->thumbnail }}" data-setup="{}">
                                 <source src="/{{ $video->location }}" type="{{ $video->mime_type }}">
                                 <p class='vjs-no-js'>
                                     To view this video please enable JavaScript, and consider upgrading to a web browser that
@@ -24,16 +24,16 @@
                             <small>Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
                         </div>
                         <div class="single-video-title box mb-3">
-                            <input type="text" name="title" class="form-control" value="{{ $video->title }}" required>
-                            <br>
-                            <p class="mb-0"><i class="fas fa-eye"></i> {{ $video->getFormatedViewsCount() }} views
-                                <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Views are based on unique active users that landed on this page">
-                                    <i class="far fa-question-circle"></i>
-                                </span>
-                            </p>
+                            <label for="title">
+                                Title
+                                <input type="text" name="title" class="form-control" value="{{ $video->title }}" required>
+                            </label>
                             <hr>
-                            <textarea name="description" class="form-control" required>{{ $video->description }}</textarea>
-                            <br>
+                            <label for="description">
+                                Description
+                                <textarea name="description" class="form-control" required>{{ $video->description }}</textarea>
+                            </label>
+                            <hr>
                             <p class="tags mb-0">
                                 <span><a href="#">Uncharted 4</a></span>
                                 <span><a href="#">Playstation 4</a></span>
@@ -45,26 +45,32 @@
                         <div class="single-video-info-content box mb-3">
                             <h5>Other settings</h5>
                             <hr>
-                            <label>Mark video has hidden
+                            <label class="toggle-check">
+                                <input type="checkbox" class="toggle-check-input">
+                                <span class="toggle-check-text"></span>
+                                Mark video has hidden
                                 <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Nobody, but you, will be able to see this video.">
                                     <i class="far fa-question-circle"></i>
                                 </span>
                             </label>
-                            <input type="checkbox">
 
-                            <label>Disable comments
+                            <label class="toggle-check">
+                                <input type="checkbox" class="toggle-check-input">
+                                <span class="toggle-check-text"></span>
+                                Disable comments
                                 <span title="" data-placement="top" data-toggle="tooltip" data-original-title="People will not be able to comment on your video.">
                                     <i class="far fa-question-circle"></i>
                                 </span>
                             </label>
-                            <input type="checkbox">
 
-                            <label>Disable ratings
+                            <label class="toggle-check">
+                                <input type="checkbox" class="toggle-check-input">
+                                <span class="toggle-check-text"></span>
+                                Disable ratings
                                 <span title="" data-placement="top" data-toggle="tooltip" data-original-title="People will not be able to rate this video.">
                                     <i class="far fa-question-circle"></i>
                                 </span>
                             </label>
-                            <input type="checkbox">
 
                             <label>thumbnail</label>
                             <input type="file" name="thumbnail">
@@ -72,7 +78,9 @@
                         </div>
                     </div>
                     @include('shared.captcha.recaptcha')
-                    <button type="submit" class="float-right btn btn-success border-none"> Save Changes or CTRL+S</button>
+                    <div class="float-right">
+                        <button type="submit" class="btn btn-success border-none"> Save Changes</button> or CTRL+S
+                    </div>
                 </form>
             </div>
             <div class="col-md-1"></div>

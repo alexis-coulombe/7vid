@@ -26,6 +26,7 @@
 	-- Loading spinner
 	-- Category item
 	-- Progress
+	-- Checkbox toggle
 */
 /* Body */
 html {
@@ -2093,4 +2094,47 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 .progress-bar {
     width: 50%;
     background-color:#2bca92;
+}
+
+/* Checkbox toggle */
+.toggle-check-input {
+    display: none;
+    position: absolute;
+}
+
+.toggle-check-text {
+    position: relative;
+    text-transform: uppercase;
+    background: #333333;
+    padding: 0.25em 0.5em 0.25em 2em;
+    border-radius: 1em;
+    min-width: 2em;
+    color: #FFF;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    margin-right: 10px;
+}
+
+.toggle-check-text:after {
+    content: ' ';
+    display: block;
+    background: #FFF;
+    width: 1.1em;
+    height: 1.1em;
+    border-radius: 1em;
+    position: absolute;
+    left: 0.3em;
+    top: 0.25em;
+    transition: left 0.15s, margin-left 0.15s;
+}
+
+.toggle-check-input:checked ~ .toggle-check-text {
+    background: #55dfbf;
+    padding-left: 0.5em;
+    padding-right: 2em;
+}
+
+.toggle-check-input:checked ~ .toggle-check-text:after {
+    left: 100%;
+    margin-left: -1.4em;
 }
