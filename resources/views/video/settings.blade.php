@@ -1,5 +1,9 @@
 @extends('shared.template')
 
+@section('title')
+    Editing {{ $video->title }}
+@endsection
+
 @section('content')
     <div class="video-block section-padding">
         <div class="row">
@@ -82,6 +86,7 @@
                         <button type="submit" class="btn btn-success border-none"> Save Changes</button> or CTRL+S
                     </div>
                 </form>
+                @include('shared.video.delete-button')
             </div>
             <div class="col-md-1"></div>
         </div>

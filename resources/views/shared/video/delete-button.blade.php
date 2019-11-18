@@ -1,6 +1,7 @@
 @if(Auth::check() && $video->author->id === Auth::id())
-    <div class="float-right">
-        <a href="#" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash"></i></a>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#deleteModal">
+            <i class="fas fa-trash"></i> Delete this video
+        </button>
 
         <form id="delete" action="{{ route('video.destroy', ['id' => $video->id]) }}" method="POST">
             {{ method_field('delete') }}
@@ -8,5 +9,4 @@
         </form>
 
         @include('shared.modals.delete')
-    </div>
 @endif
