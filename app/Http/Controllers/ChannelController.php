@@ -8,6 +8,7 @@ use App\Views;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\View\View;
@@ -43,13 +44,11 @@ class ChannelController extends Controller
             return redirect(route('channel.history', ['userId' => Auth::user()->id]));
         }
 
-        $videos_id = Views::where('author_id', '=', $userId)->limit(50)->orderBy('updated_at', 'DESC')->get();
+        $videos_id = Views::where('author_id', '=', $userId)->select('id')->limit(50)->orderBy('updated_at', 'DESC')->get();
         $videos = [];
 
         if(count($videos_id) > 0) {
-            foreach ($videos_id as $video) {
-                $videos[] = Video::where('id', '=', $video->video_id)->first();
-            }
+            $videos = Video::whereIn('id', $videos_id)->get();
         }
 
         return view('channel.history')->with('videos', $videos);
@@ -74,9 +73,9 @@ class ChannelController extends Controller
             }
 
             return view('shared.video.scroll.result')->with('channels', $users);
+        } else {
+            return response(405);
         }
-
-        App::abort(405);
     }
 
     /**
@@ -86,24 +85,32 @@ class ChannelController extends Controller
      */
     public function subscribe()
     {
-        $channelId = Input::post('channel_id');
+        if (request()->ajax() && Auth::check()) {
+            $id = request()->input('id');
 
-        if (!isset($channelId) || $channelId <= 0 || !is_numeric($channelId)) {
-            return back()->with('error', 'There was an error! Please try again later.');
-        }
+            if (!isset($id) || $id <= 0 || !is_numeric($id)) {
+                return response(405);
+            }
 
-        /** @var User $channel */
-        $channel = User::find($channelId);
+            /** @var User $channel */
+            $channel = User::find($id);
 
-        if (!Auth::user()->isSubscribed($channelId)) {
-            Auth::user()->subscribe($channelId);
-            $text = 'You have successfuly subscribed to <b>' . $channel->name . '</b>';
+            if($channel) {
+                if (!Auth::user()->isSubscribed($channel->id)) {
+                    Auth::user()->subscribe($channel->id);
+                    $text = 'Unsubscribe';
+                } else {
+                    Auth::user()->unsubscribe($channel->id);
+                    $text = 'Subscribe';
+                }
+
+                return $text;
+            } else {
+                return response(400);
+            }
         } else {
-            Auth::user()->unsubscribe($channelId);
-            $text = 'You have successfuly unsubscribed from <b>' . $channel->name . '</b>';
+            return response(405);
         }
-
-        return back()->with('success', $text);
     }
 
 }

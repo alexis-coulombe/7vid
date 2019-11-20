@@ -13,8 +13,6 @@
             <a href="{{ route('video.show', ['video' => $video->id]) }}" aria-label="{{strlen($video->title) > 50 ? substr($video->title,0,50)."..." : $video->title}}">
                 <h3 class="h4">{{strlen($video->title) > 50 ? substr($video->title,0,50)."..." : $video->title}}</h3>
             </a>
-            @include('shared.video.edit-button')
-            @include('shared.video.delete-button')
         </div>
         <div class="video-page">
             By <a href="{{ route('channel.index', ['userId' => $video->author->id]) }}" aria-label="{{ $video->author->name }}">{{ $video->author->name }}</a>

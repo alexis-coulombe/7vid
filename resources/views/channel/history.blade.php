@@ -24,7 +24,7 @@
             </div>
             @if(count($videos) > 0)
                 @foreach($videos as $video)
-                    <div class="col-xl-3 col-sm-6 mb-3">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                         @include('shared.video.card')
                     </div>
                 @endforeach

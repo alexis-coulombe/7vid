@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
 
-        $maxVideosCount = 100;
+        $maxVideosCount = 10;
         $maxCategoryCount = 10;
         $maxUserCount = 100;
         $maxCommentsCount = 200;
@@ -95,7 +95,7 @@ class DatabaseSeeder extends Seeder
         // Videos
         for ($i = 0; $i < $maxVideosCount; $i++) {
             $video = new \App\Video();
-            $video->author_id = $faker->numberBetween(1, $maxUserCount);
+            $video->author_id = 1;//$faker->numberBetween(1, $maxUserCount);
             $video->category_id = $faker->numberBetween(1, $maxCategoryCount);
             $video->title = $faker->word;
             $video->description = $faker->text;
@@ -107,6 +107,13 @@ class DatabaseSeeder extends Seeder
             $video->mime_type = 'video/mp4';
             $video->views_count = $faker->numberBetween(1, 1000000);
             $video->save();
+
+            $settings = new \App\VideoSetting();
+            $settings->video_id = $video->id;
+            $settings->private = $faker->boolean();
+            $settings->allow_comments = $faker->boolean();
+            $settings->allow_votes = $faker->boolean();
+            $settings->save();
         }
 
         // Comments
@@ -118,15 +125,25 @@ class DatabaseSeeder extends Seeder
             $comment->save();
         }
 
-        // Votes
+        // Video Votes
         for ($i = 0; $i < $maxVotesCount; $i++) {
-            $vote = new \App\Vote();
+            $vote = new \App\VideoVote();
             $vote->video_id = \App\Video::inRandomOrder()->first()->id;
-            $vote->author_id = $faker->numberBetween(1, $maxUserCount);
+            $vote->author_id = $faker->numberBetween(2, $maxUserCount);
             $vote->value = $faker->boolean();
             $vote->save();
         }
 
+        // Comment Votes
+        for ($i = 0; $i < $maxVotesCount; $i++) {
+            $vote = new \App\CommentVote();
+            $vote->comment_id = \App\Comment::inRandomOrder()->first()->id;
+            $vote->author_id = $faker->numberBetween(2, $maxUserCount);
+            $vote->value = $faker->boolean();
+            $vote->save();
+        }
+
+        // Subscriptions
         for ($i = 0; $i < $maxSubCount; $i++) {
             $sub = new \App\Subscription();
             $sub->author_id = \App\User::inRandomOrder()->first()->id;

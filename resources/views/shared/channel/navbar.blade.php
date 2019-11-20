@@ -28,7 +28,7 @@
                 </div>
             </li>
         </ul>
-        <form action="{{ route('channel.subscribe') }}" method="POST" class="form-inline my-2 my-lg-0">
+        <div class="form-inline my-2 my-lg-0">
             <input class="form-control form-control-sm mr-sm-1" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success btn-sm my-2 my-sm-0" type="submit">
                 <i class="fas fa-search"></i>
@@ -36,6 +36,6 @@
             @if(Auth::check() && $author->id !== Auth::id())
                 @include('shared.video.subscribe-small')
             @endif
-        </form>
+        </div>
     </div>
 </nav>

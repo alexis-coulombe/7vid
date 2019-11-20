@@ -22,4 +22,9 @@ class Comment extends Model
     {
         return $this->hasOne(Video::class, 'id', 'video_id');
     }
+
+    public function votes()
+    {
+        return $this->hasMany(CommentVote::class, 'comment_id');
+    }
 }

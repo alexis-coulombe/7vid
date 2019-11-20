@@ -29,21 +29,30 @@
                         <small>Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
                     </div>
                     <div class="single-video-title box mb-3">
-                        @include('shared.video.edit-button')
-                        <div class="float-right">
-                            <div id="vote" data-url="{{ route('video.vote') }}"></div>
-                            <button type="button" class="btn btn-primary vote" data-value="1" data-video-id="{{ $video->id }}"><i class="fas fa-thumbs-up"></i></button>
-                            <button type="button" class="btn btn-primary vote" data-value="0" data-video-id="{{ $video->id }}"><i class="fas fa-thumbs-down"></i></button>
-                            <div class="progress" style="height: 5px; margin-top: 10px;">
-                                <div class="progress-bar" role="progressbar" style="width: 5px"></div>
+                        @if($video->setting->allow_votes)
+                            <div class="float-right">
+                                <button type="button" class="btn btn-{{ \App\VideoVote::hasVoted(1, $video->id) ? 'danger' : 'primary' }} vote" data-value="1" data-id="{{ $video->id }}" @if(Auth::check()) data-url="{{ route('video.vote') }}" @endif><i class="fas fa-thumbs-up"></i></button>
+                                <button type="button" class="btn btn-{{ \App\VideoVote::hasVoted(0, $video->id) ? 'danger' : 'primary' }} vote" data-value="0" data-id="{{ $video->id }}" @if(Auth::check()) data-url="{{ route('video.vote') }}" @endif><i class="fas fa-thumbs-down"></i></button>
+                                @if($upVotes === $downVotes)
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar"></div>
+                                    </div>
+                                @else
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: {{ ($upVotes / ($upVotes + ($downVotes <= 0 ? 1 : $downVotes)))*100 }}%;"></div>
+                                    </div>
+                                @endif
                             </div>
-                        </div>
+                        @endif
                         <h1 class="h2">{{ $video->title }}</h1>
-                        <p class="mb-0"><i class="fas fa-eye"></i> {{ $video->getFormatedViewsCount() }} views
+                        <p class="mb-0">
+                            <i class="fas fa-eye"></i> {{ $video->getFormatedViewsCount() }} views
                             <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Views are based on unique active users that landed on this page">
                                 <i class="far fa-question-circle"></i>
                             </span>
                         </p>
+                        <hr>
+                        @include('shared.video.edit-button')
                         <hr>
                         <p>{{ $video->description }}</p>
                         <br>
@@ -55,11 +64,13 @@
                             <span><a href="#">ps4Share</a></span>
                         </p>
                     </div>
-                    @if(\Illuminate\Support\Facades\Auth::check())
-                        @include('comment.comment-form', $data = ['video_id' => $video->id])
-                    @endif
+                    @if($video->setting->allow_comments)
+                        @if(\Illuminate\Support\Facades\Auth::check())
+                            @include('comment.comment-form', $data = ['video_id' => $video->id])
+                        @endif
 
-                    @include('comment.show', $data = ['comments' => $comments])
+                        @include('comment.show', $data = ['comments' => $comments])
+                    @endif
                 </div>
             </div>
             <div class="col-md-3">
@@ -87,5 +98,5 @@
 @section('footer')
     <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
     <script src='https://vjs.zencdn.net/7.6.5/video.js'></script>
-    <script src='{{ asset('js/videoVote.js') }}'></script>
+    <script src='{{ asset('js/vote.js') }}'></script>
 @endsection
