@@ -16,7 +16,7 @@ class CreateCommentVotesTable extends Migration
         Schema::create('comment_votes', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->uuid('comment_id');
+            $table->unsignedInteger('comment_id');
             $table->foreign('comment_id')->references('id')->on('comments');
             $table->index('comment_id');
 

@@ -138,7 +138,7 @@ class VideosController extends Controller
             $this->saveVideo($request->file('upload'), $request, $video);
         }
 
-        if ($request->hasFile('upload')) {
+        if ($request->hasFile('image')) {
             $this->saveThumbnail($request->file('image'), $video);
         }
 
@@ -167,7 +167,7 @@ class VideosController extends Controller
         $allowedExtensions = ['avi', 'flv', 'mov', 'mp4'];
 
         if (!in_array(strtolower($extension), $allowedExtensions)) {
-            return redirect('/video')->with('error', 'Wrong format. Must be: avi, flv, wmv, mov, mp4');
+            return redirect('/video')->with('error', 'Wrong format. Must be: avi, flv, mov, mp4');
         }
 
         if ($file == null) {
@@ -286,13 +286,29 @@ class VideosController extends Controller
     {
         $this->validateVideoInputs($request, '', '');
 
+        /** @var Video $video */
         $video = Video::find($id);
 
         if ($video === null) {
             abort(404);
         }
 
-        $video->update($request->except(['_token', '_method']));
+        if ($request->hasFile('image')) {
+            $video->update($request->except(['_token', '_method']));
+            $this->saveThumbnail($request->file('thumbnail'), $video);
+        } else {
+            $video->update($request->except(['_token', '_method', 'thumbnail']));
+        }
+
+        /** @var VideoSetting $setting */
+        $setting = VideoSetting::where(['video_id' => $video->getId()])->first();
+
+        $setting->allow_comments = $request->input('allow_comments') ? 1: 0;
+        $setting->allow_votes = $request->input('allow_votes') ? 1: 0;
+        $setting->private = $request->input('private') ? 1: 0;
+
+        $video->save();
+        $setting->save();
 
         return back()->with('video', $video);
     }
