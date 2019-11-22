@@ -20,6 +20,16 @@ class Category extends Model
         return $this->hasMany(Video::class, 'category_id', 'id');
     }
 
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
     public function getVideosCount()
     {
         return $this->videos->count();

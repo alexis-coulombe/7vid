@@ -27,4 +27,9 @@ class Comment extends Model
     {
         return $this->hasMany(CommentVote::class, 'comment_id');
     }
+
+    public function getBody()
+    {
+        return $this->body;
+    }
 }

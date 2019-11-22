@@ -26,6 +26,11 @@ class CommentVote extends Model
         return $this->hasOne(Comment::class, 'id', 'comment_id');
     }
 
+    public function getValue()
+    {
+        return $this->value;
+    }
+
     /**
      * Check if the logged user has voted for the video
      *

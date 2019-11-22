@@ -61,6 +61,56 @@ class Video extends Model
         return $this->hasOne(VideoSetting::class, 'video_id');
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function getExtension()
+    {
+        return $this->extension;
+    }
+
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    public function getFrameRate()
+    {
+        return $this->frame_rate;
+    }
+
+    public function getMimeType()
+    {
+        return $this->mime_type;
+    }
+
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    public function getThumbnail()
+    {
+        return $this->thumbnail;
+    }
+
+    public function getViewsCount()
+    {
+        return $this->views_count;
+    }
+
     /**
      * Return formated views count to X,XXX,XXX
      *
