@@ -31,6 +31,11 @@ class Subscription extends Model
         return $this->hasMany(User::class, 'id', 'user_id');
     }
 
+    public function getChannelId()
+    {
+        return $this->channel()->getId();
+    }
+
     /**
      * Check if the logged user is subscribed to the other user
      *
@@ -39,13 +44,13 @@ class Subscription extends Model
      */
     public function isSubscribed($authorId)
     {
-        return 0;//$this->subscribers()->where([['author_id', '=', $authorId], ['user_id', '=', Auth::id()]])->exists();
+        return $this->subscribers()->where(['author_id' => $authorId, 'user_id' => Auth::id()])->exists();
     }
 
     /**
      * Get subscription count for authorId
      *
-     * @param $author_id
+     * @param $authorId
      * @return integer
      */
     public static function getSubscriptionCount($authorId)

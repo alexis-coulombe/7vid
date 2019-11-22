@@ -37,6 +37,21 @@ class User extends Authenticatable
         return $this->belongsToMany(Subscription::class)->withTimestamps();
     }
 
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
     public function isSubscribed($author_id)
     {
         return $this->subscriptions()->where(['author_id' => $author_id, 'user_id' => Auth::user()->id])->exists();

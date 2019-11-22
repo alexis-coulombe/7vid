@@ -24,8 +24,8 @@ Route::get('/privacy', 'HomeController@privacy')->name('home.privacy')->middlewa
 // Video routes
 Route::get('video/search', 'VideosController@search')->name('video.search');
 Route::resource('video', 'VideosController', ['except' => ['index','show']])->middleware('auth');
-Route::resource('video', 'VideosController', ['only' => ['index','show']]);
-Route::resource('video', 'VideosController', ['only' => ['show']])->middleware('viewsCounter');
+Route::resource('video', 'VideosController', ['only' => ['index']]);
+Route::resource('video', 'VideosController', ['only' => ['show']])->middleware('viewsCounter', 'checkAuthorisation');
 
 // Comment routes
 Route::resource('comment', 'CommentsController', ['only' => ['index','show']]);

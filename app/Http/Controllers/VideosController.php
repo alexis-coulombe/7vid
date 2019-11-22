@@ -22,6 +22,12 @@ use Illuminate\Validation\ValidationException;
 
 class VideosController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('viewsCounter');
+        $this->middleware('checkAuthorisation');
+    }
+
     /**
      * Display a listing of the resource.
      *
