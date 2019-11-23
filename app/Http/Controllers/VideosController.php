@@ -144,11 +144,12 @@ class VideosController extends Controller
 
         $video->save();
 
-        $settings = new VideoSetting();
-        $settings->video_id = $video->id;
-        $settings->private = $request->input('private') ?: 0;
-        $settings->allow_comments = $request->input('allow_comments') ?: 0;
-        $settings->allow_votes = $request->input('allow_votes') ?: 0;
+        $setting = new VideoSetting();
+        $setting->video_id = $video->id;
+        $setting->private = $request->input('private') ? 1 : 0;
+        $setting->allow_comments = $request->input('allow_comments') ? 1 : 0;
+        $setting->allow_votes = $request->input('allow_votes') ? 1 : 0;
+        $setting->save();
 
         return redirect(route('video.show', ['video' => $video->ìd]))->with('success', 'Your video as been shared.');
     }
@@ -293,7 +294,7 @@ class VideosController extends Controller
             abort(404);
         }
 
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('thumbnail')) {
             $video->update($request->except(['_token', '_method']));
             $this->saveThumbnail($request->file('thumbnail'), $video);
         } else {
@@ -303,9 +304,9 @@ class VideosController extends Controller
         /** @var VideoSetting $setting */
         $setting = VideoSetting::where(['video_id' => $video->getId()])->first();
 
-        $setting->allow_comments = $request->input('allow_comments') ? 1: 0;
-        $setting->allow_votes = $request->input('allow_votes') ? 1: 0;
-        $setting->private = $request->input('private') ? 1: 0;
+        $setting->allow_comments = $request->input('allow_comments') ? 1 : 0;
+        $setting->allow_votes = $request->input('allow_votes') ? 1 : 0;
+        $setting->private = $request->input('private') ? 1 : 0;
 
         $video->save();
         $setting->save();

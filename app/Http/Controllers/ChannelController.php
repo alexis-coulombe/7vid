@@ -40,15 +40,15 @@ class ChannelController extends Controller
      */
     public function history($userId)
     {
-        if(intval($userId) !== Auth::user()->id) {
+        if($userId != Auth::user()->id) {
             return redirect(route('channel.history', ['userId' => Auth::user()->id]));
         }
 
-        $videos_id = Views::where('author_id', '=', $userId)->select('id')->limit(50)->orderBy('updated_at', 'DESC')->get();
+        $videos_id = Views::where('author_id', '=', $userId)->select('video_id')->limit(50)->get();
         $videos = [];
 
         if(count($videos_id) > 0) {
-            $videos = Video::whereIn('id', $videos_id)->get();
+            $videos = Video::whereIn('id', $videos_id)->orderBy('updated_at', 'DESC')->get();
         }
 
         return view('channel.history')->with('videos', $videos);
