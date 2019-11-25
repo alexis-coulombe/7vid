@@ -9,17 +9,18 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "ext-json": "*",
         "fideloper/proxy": "^4.0",
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^6.4",
+        "jacobbennett/laravel-http2serverpush": "4.0.*",
         "james-heinrich/getid3": "^1.9",
-        "laravel/framework": "5.7.*",
+        "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
-        "laravelcollective/html": "^5.4.0",
+        "laravelcollective/html": "^6.0",
         "sentry/sentry-laravel": "1.4.0",
-        "webpatser/laravel-uuid": "^3.0",
-        "ext-json": "*",
-        "ext-cassandra": "*"
+        "symfony/css-selector": "^4.0",
+        "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

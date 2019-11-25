@@ -25,6 +25,7 @@ use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use JacobBennett\Http2ServerPush\Middleware\AddHttp2ServerPush;
 
 class Kernel extends HttpKernel
 {
@@ -56,7 +57,8 @@ class Kernel extends HttpKernel
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
-            SubstituteBindings::class
+            SubstituteBindings::class,
+            AddHttp2ServerPush::class
         ],
 
         'api' => [
