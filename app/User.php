@@ -47,6 +47,11 @@ class User extends Authenticatable
         return $this->email;
     }
 
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
     public function getAvatar()
     {
         return $this->avatar;

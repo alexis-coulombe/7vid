@@ -13,18 +13,19 @@
             </div>
         </div>
     </div>
-    <form id="save-on-keyboard">
+    <form method="POST" id="save-on-keyboard">
+        {{ csrf_field() }}
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="name" class="control-label">Name <span class="required">*</span></label>
-                    <input class="form-control border-form-control" value="" name="name" placeholder="{{ Auth::user()->name }}" type="text">
+                    <input class="form-control border-form-control" value="{{ Auth::user()->getName() }}" name="name" type="text">
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="email" class="control-label">Email Address <span class="required">*</span></label>
-                    <input class="form-control border-form-control" value="" name="email" placeholder="{{ Auth::user()->email }}" type="text">
+                    <input class="form-control border-form-control" value="{{ Auth::user()->getEmail() }}" name="email" type="text">
                 </div>
             </div>
         </div>
