@@ -18,6 +18,11 @@ class VideoSetting extends Model
         return $this->id;
     }
 
+    public function getVideoId()
+    {
+        return $this->video_id;
+    }
+
     public function getPrivate()
     {
         return $this->private;

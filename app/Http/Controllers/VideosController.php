@@ -86,10 +86,11 @@ class VideosController extends Controller
             }
 
             $videoId = request()->input('id');
+            /** @var Video $video */
             $video = Video::find($videoId);
 
             if ($video) {
-                $vote = VideoVote::where(['video_id' => $video->id, 'author_id' => Auth::user()->id])->first();
+                $vote = VideoVote::where(['video_id' => $video->getId(), 'author_id' => Auth::user()->id])->first();
 
                 if ($vote) {
                     if ($value !== $vote->value) {
@@ -99,8 +100,9 @@ class VideosController extends Controller
                         $vote->delete();
                     }
                 } else {
+                    /** @var VideoVote $vote */
                     $vote = new VideoVote();
-                    $vote->video_id = $video->id;
+                    $vote->video_id = $video->getId();
                     $vote->author_id = Auth::user()->id;
                     $vote->value = $value;
                     $vote->save();
@@ -127,6 +129,7 @@ class VideosController extends Controller
     {
         $this->validateVideoInputs($request);
 
+        /** @var Video $video */
         $video = new Video;
         $video->author_id = Auth::user()->id;
 
@@ -144,6 +147,7 @@ class VideosController extends Controller
 
         $video->save();
 
+        /** @var VideoSetting $setting */
         $setting = new VideoSetting();
         $setting->video_id = $video->id;
         $setting->private = $request->input('private') ? 1 : 0;
@@ -223,15 +227,16 @@ class VideosController extends Controller
      */
     public function show($id)
     {
+        /** @var Video $video */
         $video = Video::find($id);
         if ($video === null) {
             abort(404);
         }
 
-        $comments = Comment::where('video_id', '=', $video->id)->orderBy('created_at', 'DESC')->get();
+        $comments = Comment::where('video_id', '=', $video->getId())->orderBy('created_at', 'DESC')->get();
         $subscriptionCount = Subscription::where('author_id', '=', $video->author->id)->count();
 
-        $relatedVideos = Video::where('title', 'like', '%' . $video->title . '%')
+        $relatedVideos = Video::where('title', 'like', '%' . $video->getTitle() . '%')
             ->orWhere('category_id', '=', $video->category_id)->limit(10)->get();
 
         $upVotes = 0;
@@ -262,6 +267,7 @@ class VideosController extends Controller
      */
     public function edit($id)
     {
+        /** @var Video $video */
         $video = Video::find($id);
 
         if ($video === null) {
@@ -269,7 +275,7 @@ class VideosController extends Controller
         }
 
         if(Auth::user()->id !== $video->author->id){
-            return redirect(route('video.show', ['video' => $video->id]));
+            return redirect(route('video.show', ['video' => $video->getId()]));
         }
 
         return view('video.settings')->with('video', $video);
@@ -322,6 +328,7 @@ class VideosController extends Controller
      */
     public function destroy($id)
     {
+        /** @var Video $video */
         $video = Video::find($id);
 
         if ($video === null) {
@@ -329,7 +336,7 @@ class VideosController extends Controller
         }
 
         if(Auth::user()->id !== $video->author->id){
-            return redirect(route('video.show', ['video' => $video->id]));
+            return redirect(route('video.show', ['video' => $video->getId()]));
         }
 
         $video->delete();

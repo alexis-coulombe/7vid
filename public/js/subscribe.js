@@ -1,6 +1,6 @@
 $('.subscribe').on('click', function () {
 
-    if($(this).data('url').length) {
+    if ($(this).data('url').length) {
         let data = {
             id: $(this).data('id')
         };
@@ -12,7 +12,14 @@ $('.subscribe').on('click', function () {
             data: data,
             type: 'POST',
             success: (result) => {
-                $('.subscribe-text').text(result);
+                $(this).closest(this).find('.subscribe-text').text(result);
+                let subCount = $(this).closest(this).find('.subscriber-count');
+
+                if (result === 'Unsubscribe') {
+                    subCount.text(parseInt(subCount.text()) + 1);
+                } else {
+                    subCount.text(parseInt(subCount.text()) - 1);
+                }
             },
             error: (result) => {
                 throw result;
