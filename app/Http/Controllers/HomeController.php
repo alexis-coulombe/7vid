@@ -26,6 +26,11 @@ class HomeController extends Controller
         return view('home.privacy');
     }
 
+    public function settings()
+    {
+        return view('home.settings');
+    }
+
     public function scroll(Request $request)
     {
         if (request()->ajax()) {

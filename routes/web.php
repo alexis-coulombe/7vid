@@ -20,6 +20,7 @@ Route::post('channel/subscribe', 'ChannelController@subscribe')->name('channel.s
 // Home routes
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/privacy', 'HomeController@privacy')->name('home.privacy')->middleware('cache');
+Route::get('/settings', 'HomeController@settings')->name('home.settings')->middleware('auth');
 
 // Video routes
 Route::get('video/search', 'VideosController@search')->name('video.search');

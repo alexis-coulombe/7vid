@@ -9,8 +9,8 @@
 
         <title>{{ config('app.name') }} - @yield('title')</title>
 
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" >
-        <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" >
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
         @yield('head')
     </head>
     <body id="page-top">
