@@ -31,7 +31,7 @@ class User extends Authenticatable
 
     public function country()
     {
-        return $this->hasOne(Country::class, 'country_id', 'id');
+        return $this->hasOne(Country::class, 'id', 'country_id');
     }
 
     public function subscriptions()

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Country;
 use App\User;
 use App\Video;
 use App\VideoSetting;
@@ -34,6 +35,7 @@ class HomeController extends Controller
             $this->validate(request(), [
                 'name' => 'required|max:255|min:3',
                 'email' => 'required|max:255|min:3',
+                'country' => 'required|min:1',
             ]);
 
             /** @var User $user */
@@ -42,6 +44,13 @@ class HomeController extends Controller
             $user->name = request('name');
             $user->email = request('email');
 
+            $country = Country::find(request('country'));
+            if ($country) {
+                $user->country_id = request('country');
+            } else {
+                return redirect()->back()->withErrors(['There was an error, please try again.']);
+            }
+
             if (request('new-password')) {
                 if (!Hash::check(request('password'), $user->getPassword()) || request('new-password') !== request('confirm-password')) {
                     return redirect()->back()->withErrors(['You\'r password does not match.']);
@@ -49,6 +58,8 @@ class HomeController extends Controller
                     $user->password = Hash::make(request('password'));
                 }
             }
+
+            $user->save();
             return view('home.settings')->with('success', ['Settings saved.']);
         } else {
             return view('home.settings');
