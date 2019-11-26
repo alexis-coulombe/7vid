@@ -866,6 +866,7 @@ body.sidebar-toggled footer.sticky-footer {
     border-color: #303030;
     border-radius: 2px;
     font-size: 13px;
+    color: #fff;
 }
 
 .custom-checkbox .custom-control-label::before {

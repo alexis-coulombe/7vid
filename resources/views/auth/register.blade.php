@@ -56,6 +56,15 @@
                                 </label>
                             </div>
                             <div class="input-group">
+                                <label for="country">Where are you ?
+                                   <select name="country" class="custom-select">
+                                       @foreach(\App\Country::all() as $country)
+                                            <option value="{{ $country->getId() }}">{{ $country->getCountryName() }}</option>
+                                       @endforeach
+                                   </select>
+                                </label>
+                            </div>
+                            <div class="input-group">
                                 <label for="avatar">Choose an avatar
                                     <input id="avatar" type="file" class="form-control{{ $errors->has('avatar') ? ' is-invalid' : '' }}" name="avatar">
                                 </label>
@@ -66,12 +75,12 @@
                                 @endif
                             </div>
                             <div class="form-check text-left">
-                                <label class="form-check-label">
+                                <!--<label class="form-check-label">
                                     <input class="form-check-input" type="checkbox" required>
                                     <span class="form-check-sign"></span>
                                     I agree to the
                                     <a href="/terms">terms and conditions</a>.
-                                </label>
+                                </label>-->
                                 <label class="form-check-label">
                                     <input class="form-check-input" type="checkbox" required>
                                     <span class="form-check-sign"></span>

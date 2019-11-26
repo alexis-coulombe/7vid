@@ -10,7 +10,7 @@
     "require": {
         "php": "^7.2",
         "ext-json": "*",
-        "fideloper/proxy": "^4.0",
+       "fideloper/proxy": "^4.0",
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^6.4",
         "jacobbennett/laravel-http2serverpush": "4.0.*",

@@ -7,6 +7,7 @@ use \Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
+
     /**
      * Seed the application's database.
      *
@@ -80,6 +81,7 @@ class DatabaseSeeder extends Seeder
         $user->email = 'test@123.com';
         $user->password = Hash::make('123123');
         $user->avatar = 'images/seed/ZAk2WOxbLD4.jpg';
+        $user->country_id = 1;
         $user->save();
 
         // Users
@@ -89,6 +91,7 @@ class DatabaseSeeder extends Seeder
             $user->email = $faker->email;
             $user->password = Hash::make($faker->password);
             $user->avatar = 'images/seed/' . $images[$faker->numberBetween(0, count($images) - 1)];
+            $user->country_id = $faker->numberBetween(1, 100);
             $user->save();
         }
 

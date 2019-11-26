@@ -15,6 +15,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar',
+        'country',
     ];
 
     protected $hidden = [
@@ -25,6 +27,11 @@ class User extends Authenticatable
     public function videos()
     {
         return $this->hasMany(Video::class, 'author_id', 'id');
+    }
+
+    public function country()
+    {
+        return $this->hasOne(Country::class, 'country_id', 'id');
     }
 
     public function subscriptions()

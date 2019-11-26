@@ -1,7 +1,7 @@
 @extends('auth.template')
 
 @section('title')
-    Sign In
+    Connect on your account
 @endsection
 
 @section('content')

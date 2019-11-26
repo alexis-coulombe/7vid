@@ -1,4 +1,4 @@
-@extends('shared.template')
+@extends('auth.template')
 
 @section('title')
     Reset password
@@ -11,7 +11,9 @@
                 <div class="col-md-5 p-5 bg-white full-height">
                     <div class="login-main-left">
                         <div class="text-center mb-5 login-main-left-header pt-4">
-                            <img src="img/favicon.png" class="img-fluid" alt="LOGO">
+                            <a href="{{ route('home') }}">
+                                <img src="{{ asset('assets/img/logo.svg') }}" class="img-fluid" alt="LOGO">
+                            </a>
                             <h1 class="h3 mt-3 mb-3">{{ __('Reset Password') }}</h1>
                         </div>
                         <form method="POST" action="{{ route('login') }}">
