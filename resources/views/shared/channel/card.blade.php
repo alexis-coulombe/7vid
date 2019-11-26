@@ -2,7 +2,7 @@
 
 <div class="channels-card">
     <div class="channels-card-image">
-        <a href="{{ route('channel.index', ['id' => $channel->id]) }}">
+        <a href="{{ route('channel.index', ['userId' => $channel->id]) }}">
             <img src="{{ $channel->avatar }}" alt="Avatar">
         </a>
         @if(Auth::check() && Auth::id() !== $channel->id)
@@ -11,7 +11,7 @@
     </div>
     <div class="channels-card-body">
         <div class="channels-title">
-            <a href="{{ route('channel.index', ['id' => $channel->id]) }}">
+            <a href="{{ route('channel.index', ['userId' => $channel->id]) }}">
                 <p aria-label="{{ $channel->name }}">{{ $channel->name }}</p>
             </a>
         </div>
