@@ -13,6 +13,7 @@
 
 // Ajax routes
 Route::post('/', 'HomeController@scroll')->name('home.scroll');
+Route::post('/', 'HomeController@scroll')->name('home.scroll');
 Route::post('video/vote', 'VideosController@vote')->name('video.vote')->middleware('auth');
 Route::post('comment/vote', 'CommentsController@vote')->name('comment.vote')->middleware('auth');
 Route::post('channel/subscribe', 'ChannelController@subscribe')->name('channel.subscribe')->middleware('auth');

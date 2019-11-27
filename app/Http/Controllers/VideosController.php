@@ -233,7 +233,7 @@ class VideosController extends Controller
             abort(404);
         }
 
-        $comments = Comment::where('video_id', '=', $video->getId())->orderBy('created_at', 'DESC')->get();
+        $comments = Comment::where('video_id', '=', $video->id)->orderBy('created_at', 'DESC')->take(5)->get();
         $subscriptionCount = Subscription::where('author_id', '=', $video->author->id)->count();
 
         $relatedVideos = Video::where('title', 'like', '%' . $video->getTitle() . '%')

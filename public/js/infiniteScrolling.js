@@ -5,9 +5,11 @@ $(window).scroll(function () {
         if ($(window).scrollTop() + $(window).height() === $(document).height()) {
             // Exclude already fetched channels
             let data = {
-                exclude: $.map($('.scrolling-result'), (n, i) => {
+                exclude: $.map($('.scrolling-prevent'), (n, i) => {
                     return n.id
-                })
+                }),
+                type: $('#scrolling').data('type'),
+                video_id: $('#scrolling').data('video-id') ? $('#scrolling').data('video-id') : null,
             };
 
             $('#loading-spinner').show();

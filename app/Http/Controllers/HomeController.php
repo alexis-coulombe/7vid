@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Comment;
 use App\Country;
 use App\User;
 use App\Video;
@@ -70,15 +71,33 @@ class HomeController extends Controller
     {
         if (request()->ajax()) {
             $exclude = request()->input('exclude') ?: [];
-            $users = User::withCount('videos')->latest('videos_count')->take(3)->whereNotIn('id', $exclude)->get();
 
-            foreach ($users as $user) {
-                if (!count($user->videos) > 0) {
-                    return 'Done';
+            if(request()->input('type') === 'video') {
+                $users = User::withCount('videos')->latest('videos_count')->take(3)->whereNotIn('id', $exclude)->get();
+
+                foreach ($users as $user) {
+                    if (!count($user->videos) > 0) {
+                        return 'Done';
+                    }
                 }
-            }
 
-            return view('shared.video.scroll.result')->with('channels', $users);
+                return view('shared.video.scroll.result')->with('channels', $users);
+            } else if(request()->input('type') === 'comment') {
+                $videoId = request()->input('video_id');
+                $video = Video::find($videoId);
+
+                if($video) {
+                    $comments = Comment::where(['video_id' => $videoId])->orderBy('created_at')->take(5)->whereNotIn('id', $exclude)->get();
+
+                    if (!count($comments) > 0) {
+                        return 'Done';
+                    }
+
+                    return view('comment.show')->with('comments', $comments);
+                }
+            } else {
+                return 'Done';
+            }
         }
 
         App::abort(405);

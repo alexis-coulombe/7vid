@@ -41,6 +41,11 @@ class Video extends Model
         return $uuid;
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'video_id');
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');

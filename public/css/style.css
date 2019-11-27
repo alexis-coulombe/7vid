@@ -461,7 +461,6 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 
 footer.sticky-footer {
     background-color: #232323;
-    padding: 15px;
     margin-left: 225px;
 }
 
@@ -1595,6 +1594,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 
     footer.sticky-footer {
         margin-left: 90px;
+        position: fixed; bottom: 0
     }
 
     .sidebar-toggled footer.sticky-footer {

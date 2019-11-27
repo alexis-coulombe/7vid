@@ -70,6 +70,15 @@
                         @endif
 
                         @include('comment.show', $data = ['comments' => $comments])
+
+                        <div id="scrolling" data-url="{{ route('home.scroll') }}" data-type="comment" data-video-id="{{ $video->id }}"></div>
+                        <div id="loading-spinner" style="display: none;">
+                            <div class="row">
+                                <div class="col text-center">
+                                    @include('shared.misc.loading-spinner')
+                                </div>
+                            </div>
+                        </div>
                     @endif
                 </div>
             </div>
