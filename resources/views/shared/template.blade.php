@@ -4,6 +4,9 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        @if(isset($video))
+            <meta name="description" content="{{ $video->description ?: $video->title . ' - by ' . $video->author->name }}">
+        @endif
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <link rel="canonical" href="{{ url()->current() }}"/>
 
