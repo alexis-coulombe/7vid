@@ -34,6 +34,16 @@ class User extends Authenticatable
         return $this->hasOne(Country::class, 'id', 'country_id');
     }
 
+    public function videoVotes()
+    {
+        return $this->hasMany(VideoVote::class, 'author_id');
+    }
+
+    public function commentVotes()
+    {
+        return $this->hasMany(CommentVote::class, 'author_id');
+    }
+
     public function subscriptions()
     {
         return $this->hasMany(Subscription::class, 'user_id', 'id');

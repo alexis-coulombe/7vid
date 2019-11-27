@@ -22,6 +22,8 @@ Route::post('channel/subscribe', 'ChannelController@subscribe')->name('channel.s
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/privacy', 'HomeController@privacy')->name('home.privacy')->middleware('cache');
 Route::any('/settings', 'HomeController@settings')->name('home.settings')->middleware('auth');
+Route::any('/liked', 'HomeController@liked')->name('home.liked')->middleware('auth');
+Route::get('/history', 'HomeController@history')->name('home.history')->middleware('auth');
 
 // Video routes
 Route::get('video/search', 'VideosController@search')->name('video.search');
@@ -36,7 +38,6 @@ Route::resource('comment', 'CommentsController', ['except' => ['index','show']])
 // Channel routes
 Route::post('channel/', 'ChannelController@scroll')->name('channel.scroll');
 Route::get('channel/{userId}', 'ChannelController@index')->where('userId', '[0-9]+')->name('channel.index');
-Route::get('channel/{userId}/history', 'ChannelController@history')->where('userId', '[0-9]+')->name('channel.history')->middleware('auth');
 Route::post('channel/subscribe', 'ChannelController@subscribe')->name('channel.subscribe')->middleware('auth');
 
 // category routes

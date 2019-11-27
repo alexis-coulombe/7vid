@@ -34,27 +34,6 @@ class ChannelController extends Controller
     }
 
     /**
-     * Show history of connected user
-     * @param $userId
-     * @return Factory|View
-     */
-    public function history($userId)
-    {
-        if($userId != Auth::user()->id) {
-            return redirect(route('channel.history', ['userId' => Auth::user()->id]));
-        }
-
-        $videos_id = Views::where('author_id', '=', $userId)->select('video_id')->limit(50)->get();
-        $videos = [];
-
-        if(count($videos_id) > 0) {
-            $videos = Video::whereIn('id', $videos_id)->orderBy('updated_at', 'DESC')->get();
-        }
-
-        return view('channel.history')->with('videos', $videos);
-    }
-
-    /**
      * Infinite scroll for history page
      *
      * @param Request $request

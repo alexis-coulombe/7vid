@@ -57,9 +57,6 @@ body {
 .sidebar-toggled #wrapper #content-wrapper .container-fluid{
     padding: 30px 30px 30px 121px;
 }
-.single-channel-page{
-    padding: 0px 0px 0px 225px;
-}
 .sidebar-toggled .single-channel-page{
     padding: 0px 0px 0px 90px;
 }
@@ -385,7 +382,6 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 }
 footer.sticky-footer {
     background-color: #232323;
-    padding: 15px;
     margin-left: 225px;
 }
 footer.sticky-footer .copyright {

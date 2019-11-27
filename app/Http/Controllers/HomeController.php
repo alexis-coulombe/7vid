@@ -8,8 +8,11 @@ use App\Country;
 use App\User;
 use App\Video;
 use App\VideoSetting;
+use App\Views;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {
@@ -67,12 +70,42 @@ class HomeController extends Controller
         }
     }
 
+    public function liked()
+    {
+        /** @var User $user */
+        $user = Auth::user();
+        $likedVideos = $user->videoVotes->where('value', 1);
+        $videos = [];
+
+        foreach($likedVideos as $like){
+            $videos[] = $like->video;
+        }
+
+        return view('home.liked')->with('videos', $videos);
+    }
+
+    /**
+     * Show history of connected user
+     * @return Factory|View
+     */
+    public function history()
+    {
+        $videos_id = Views::where('author_id', '=', Auth::user()->id)->select('video_id')->limit(50)->get();
+        $videos = [];
+
+        if(count($videos_id) > 0) {
+            $videos = Video::whereIn('id', $videos_id)->orderBy('updated_at', 'DESC')->get();
+        }
+
+        return view('channel.history')->with('videos', $videos);
+    }
+
     public function scroll(Request $request)
     {
         if (request()->ajax()) {
             $exclude = request()->input('exclude') ?: [];
 
-            if(request()->input('type') === 'video') {
+            if (request()->input('type') === 'video') {
                 $users = User::withCount('videos')->latest('videos_count')->take(3)->whereNotIn('id', $exclude)->get();
 
                 foreach ($users as $user) {
@@ -82,11 +115,11 @@ class HomeController extends Controller
                 }
 
                 return view('shared.video.scroll.result')->with('channels', $users);
-            } else if(request()->input('type') === 'comment') {
+            } else if (request()->input('type') === 'comment') {
                 $videoId = request()->input('video_id');
                 $video = Video::find($videoId);
 
-                if($video) {
+                if ($video) {
                     $comments = Comment::where(['video_id' => $videoId])->orderBy('created_at')->take(5)->whereNotIn('id', $exclude)->get();
 
                     if (!count($comments) > 0) {

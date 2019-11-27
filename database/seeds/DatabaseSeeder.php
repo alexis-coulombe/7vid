@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
 
-        $maxVideosCount = 10;
+        $maxVideosCount = 100;
         $maxCategoryCount = 10;
         $maxUserCount = 100;
         $maxCommentsCount = 200;
@@ -98,7 +98,7 @@ class DatabaseSeeder extends Seeder
         // Videos
         for ($i = 0; $i < $maxVideosCount; $i++) {
             $video = new \App\Video();
-            $video->author_id = 1;//$faker->numberBetween(1, $maxUserCount);
+            $video->author_id = $faker->numberBetween(1, $maxUserCount);
             $video->category_id = $faker->numberBetween(1, $maxCategoryCount);
             $video->title = $faker->word;
             $video->description = $faker->text;
