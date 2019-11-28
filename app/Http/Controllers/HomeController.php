@@ -12,6 +12,7 @@ use App\Views;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -40,6 +41,9 @@ class HomeController extends Controller
                 'name' => 'required|max:255|min:3',
                 'email' => 'required|max:255|min:3',
                 'country' => 'required|min:1',
+                'current-password' => 'max:255|min:3',
+                'password' => 'max:255|min:3',
+                'confirm-password' => 'max:255|min:3',
             ]);
 
             /** @var User $user */
@@ -55,16 +59,16 @@ class HomeController extends Controller
                 return redirect()->back()->withErrors(['There was an error, please try again.']);
             }
 
-            if (request('new-password')) {
-                if (!Hash::check(request('password'), $user->getPassword()) || request('new-password') !== request('confirm-password')) {
-                    return redirect()->back()->withErrors(['You\'r password does not match.']);
+            if (request('password')) {
+                if (!Hash::check(request('current-password'), $user->getPassword()) || request('password') !== request('confirm-password')) {
+                    return view('home.settings')->with('error', 'Your password does not match.');
                 } else {
                     $user->password = Hash::make(request('password'));
                 }
             }
 
             $user->save();
-            return view('home.settings')->with('success', ['Settings saved.']);
+            return view('home.settings')->with('success', 'Settings saved.');
         } else {
             return view('home.settings');
         }

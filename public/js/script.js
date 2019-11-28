@@ -173,5 +173,4 @@ Version: 1.0
 
         element.css('background-image', 'url("' + image + '")');
     }
-
 })(jQuery); // End of use strict

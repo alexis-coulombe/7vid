@@ -9,18 +9,18 @@
     @endforeach
 @endif
 
-@if(session('success'))
+@if(isset($success))
     <div class="alert alert-success alert-dismissible fade show">
-        {!! html_entity_decode(session('success')) !!}
+        {!! $success !!}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
 @endif
 
-@if(session('error'))
+@if(isset($error))
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        {!! html_entity_decode(session('error')) !!}
+        {!! $error !!}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
