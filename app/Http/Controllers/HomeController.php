@@ -38,18 +38,16 @@ class HomeController extends Controller
         if (request()->isMethod('post')) {
 
             $this->validate(request(), [
-                'name' => 'required|max:255|min:3',
                 'email' => 'required|max:255|min:3',
                 'country' => 'required|min:1',
-                'current-password' => 'max:255|min:3',
-                'password' => 'max:255|min:3',
-                'confirm-password' => 'max:255|min:3',
+                'current-password' => 'max:255',
+                'password' => 'max:255',
+                'confirm-password' => 'max:255',
             ]);
 
             /** @var User $user */
             $user = Auth::user();
 
-            $user->name = request('name');
             $user->email = request('email');
 
             $country = Country::find(request('country'));

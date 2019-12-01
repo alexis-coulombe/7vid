@@ -15,13 +15,16 @@
     </div>
     <form method="POST" id="save-on-keyboard">
         {{ csrf_field() }}
+
         <div class="row">
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label for="name" class="control-label">Name <span class="required">*</span></label>
-                    <input class="form-control border-form-control" value="{{ Auth::user()->getName() }}" maxlength="255" minlength="3" name="name" type="text">
-                </div>
+            <div class="col-lg-5"></div>
+            <div class="col-lg-2 text-center">
+                <img class="author-img " src="/{{ Auth::user()->avatar }}" alt="Avatar">
+                <h3 style="padding-top: 10px;">{{ Auth::user()->getName() }}</h3>
             </div>
+        </div>
+
+        <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="email" class="control-label">Email Address <span class="required">*</span></label>

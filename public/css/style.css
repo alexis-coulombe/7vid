@@ -28,6 +28,8 @@
 	-- Progress
 	-- Checkbox toggle
 	-- Video settings
+	-- Author img
+	-- Drag n drop file input
 */
 /* Body */
 html {
@@ -2058,4 +2060,18 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     left: 100%;
     margin-left: -1.4em;
 }
+
+/* Author img */
+.author-img {
+    border-radius: 150px;
+    height: 250px;
+    object-fit: cover;
+    width: 250px;
+}
+
+.img-center {
+    margin:0 auto;
+}
+
+/* Drag n drop file input */
 
