@@ -29,7 +29,7 @@ Route::get('/history', 'HomeController@history')->name('home.history')->middlewa
 Route::get('video/search', 'VideosController@search')->name('video.search');
 Route::resource('video', 'VideosController', ['except' => ['index','show']])->middleware('auth');
 Route::resource('video', 'VideosController', ['only' => ['index']]);
-Route::resource('video', 'VideosController', ['only' => ['show']])->middleware('viewsCounter', 'checkAuthorisation');
+Route::resource('video', 'VideosController', ['only' => ['show']])->middleware('checkAuthorisation', 'viewsCounter');
 
 // Comment routes
 Route::resource('comment', 'CommentsController', ['only' => ['index','show']]);

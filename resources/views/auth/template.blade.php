@@ -8,7 +8,7 @@
         <meta name="description" content="A free video-hosting website that allows members to store and serve video content. Share unlimited video all around the world.">
         <link rel="canonical" href="{{ url()->current() }}">
 
-        <title>{{ env('APP_NAME') }} - @yield('title')</title>
+        <title>{{ config('app.name') }} - @yield('title')</title>
 
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
@@ -20,7 +20,6 @@
         @yield('content')
 
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
