@@ -1,8 +1,9 @@
 let disable = false;
+let shouldCall = true;
 
 $(window).scroll(function () {
-    if (disable === false && $('#scrolling').length) {
-        if ($(window).scrollTop() + $(window).height() === $(document).height()) {
+    if (disable === false && $('#scrolling').length && shouldCall) {
+        if ($(window).scrollTop() + $(window).height() >= $('footer').offset().top) {
             // Exclude already fetched channels
             let data = {
                 exclude: $.map($('.scrolling-prevent'), (n, i) => {
@@ -13,6 +14,7 @@ $(window).scroll(function () {
             };
 
             $('#loading-spinner').show();
+            shouldCall = false;
 
             $.ajax({
                 url: $('#scrolling').data('url'),
@@ -29,6 +31,7 @@ $(window).scroll(function () {
                     }
 
                     $('#scrolling').append(result);
+                    shouldCall = true;
                 },
                 error: (result) => {
                     $('#loading-spinner').hide();
