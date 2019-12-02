@@ -45,3 +45,7 @@ Route::get('channel/{userId}/videos', 'ChannelController@videos')->where('userId
 Route::get('category/{name}', 'CategoryController@index')->name('category.index');
 
 Auth::routes();
+
+//OAuth routes
+Route::get('/redirect/google', 'SocialAuthGoogleController@redirect')->name('oauth.redirect.google');
+Route::get('/callback/google', 'SocialAuthGoogleController@callback')->name('oauth.callback.google');

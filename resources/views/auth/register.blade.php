@@ -89,6 +89,7 @@
                         <div class="text-center mt-5">
                             <p class="light-gray">Already have an account? <a href="{{ route('login') }}" aria-label="Sign In">Sign In</a></p>
                         </div>
+                        <a href="{{ route('register.google') }}">Register with google</a>
                     </div>
                 </div>
                 @include('auth.features')
