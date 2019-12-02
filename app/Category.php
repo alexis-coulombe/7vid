@@ -17,7 +17,17 @@ class Category extends Model
 
     public function videos()
     {
-        return $this->hasMany('App\Video');
+        return $this->hasMany(Video::class, 'category_id', 'id');
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function getIcon()
+    {
+        return $this->icon;
     }
 
     public function getVideosCount()
@@ -27,6 +37,6 @@ class Category extends Model
 
     public function getVideos($limit = 16, $order)
     {
-        return $this->videos()->where('category_id', '=', $this->id)->limit($limit)->orderBy($order, 'ASC')->get();
+        return $this->videos()->where('category_id', '=', $this->id)->limit($limit)->orderBy($order, 'DESC')->get();
     }
 }

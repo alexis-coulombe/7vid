@@ -10,6 +10,13 @@ class Video extends Model
     // Using UUID instead
     public $incrementing = false;
 
+    public $fillable = [
+        'category_id',
+        'title',
+        'description',
+        'thumbnail'
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -34,14 +41,79 @@ class Video extends Model
         return $uuid;
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'video_id');
+    }
+
     public function category()
     {
-        return $this->hasOne('App\Category', 'id', 'category_id');
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
     public function author()
     {
-        return $this->belongsTo('App\User', 'author_id');
+        return $this->belongsTo(User::class, 'author_id');
+    }
+
+    public function votes()
+    {
+        return $this->hasMany(VideoVote::class, 'video_id');
+    }
+
+    public function setting()
+    {
+        return $this->hasOne(VideoSetting::class, 'video_id');
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function getExtension()
+    {
+        return $this->extension;
+    }
+
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    public function getFrameRate()
+    {
+        return $this->frame_rate;
+    }
+
+    public function getMimeType()
+    {
+        return $this->mime_type;
+    }
+
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    public function getThumbnail()
+    {
+        return $this->thumbnail;
+    }
+
+    public function getViewsCount()
+    {
+        return $this->views_count;
     }
 
     /**

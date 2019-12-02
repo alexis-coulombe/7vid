@@ -1,5 +1,9 @@
 @extends('shared.template')
 
+@section('title')
+    privacy
+@endsection
+
 @section('content')
     <div class="container">
         <h1>Privacy Policy</h1>
@@ -9,7 +13,7 @@
 
         <p>We only retain collected information for as long as necessary to provide you with your requested service. What data we store, we’ll protect within commercially acceptable means to prevent loss and theft, as well as unauthorised access, disclosure, copying, use or modification.</p>
 
-        <p>We don’t share any personally identifying information publicly or with third-parties, except when required to by law.
+        <p>We don’t share any personally identifying information publicly or with third-parties, except when required to by law.</p>
 
         <p>Our website may link to external sites that are not operated by us. Please be aware that we have no control over the content and practices of these sites, and cannot accept responsibility or liability for their respective privacy policies.</p>
 

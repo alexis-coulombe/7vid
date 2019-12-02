@@ -1,17 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Alexi
- * Date: 2018-12-18
- * Time: 14:26
- */
 
 namespace App\Http\Controllers;
 
-
 use App\Comment;
+use App\CommentVote;
+use App\User;
+use App\Video;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class CommentsController extends Controller
 {
@@ -19,11 +18,17 @@ class CommentsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
+     * @throws ValidationException
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'video_id' => 'required|min:1',
+            'comment' => 'required|min:1|max:255'
+        ]);
+
         $comment = new Comment();
         $comment->video_id = $request->input('video_id');
         $comment->author_id = Auth::user()->id;
@@ -34,11 +39,58 @@ class CommentsController extends Controller
     }
 
     /**
+     * Add vote to comment
+     *
+     * @return ResponseFactory|Response
+     */
+    public function vote()
+    {
+        if (request()->ajax() && Auth::check()) {
+            $value = request()->input('value');
+
+            if (is_numeric($value)) {
+                $value = $value <= 0 ? 0 : $value;
+                $value = $value >= 1 ? 1 : $value;
+            } else {
+                return response(400);
+            }
+
+            $commentId = request()->input('id');
+            $comment = Comment::find($commentId);
+
+            if ($comment) {
+                $vote = CommentVote::where(['comment_id' => $comment->id, 'author_id' => Auth::user()->id])->first();
+
+                if ($vote) {
+                    if ($value !== $vote->value) {
+                        $vote->value = $value;
+                        $vote->save();
+                    } else {
+                        $vote->delete();
+                    }
+                } else {
+                    $vote = new CommentVote();
+                    $vote->comment_id = $comment->id;
+                    $vote->author_id = Auth::user()->id;
+                    $vote->value = $value;
+                    $vote->save();
+                }
+            } else {
+                return response(400);
+            }
+        } else {
+            return response(405);
+        }
+
+        return response(200);
+    }
+
+    /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -49,7 +101,7 @@ class CommentsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

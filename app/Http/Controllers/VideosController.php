@@ -4,25 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Comment;
+use App\CommentVote;
 use App\Subscription;
 use App\User;
 use App\Video;
-use App\Vote;
+use App\VideoSetting;
+use App\VideoVote;
 use Faker\Provider\File;
+use getid3_exception;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Validation\ValidationException;
 
 class VideosController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('viewsCounter');
+        $this->middleware('checkAuthorisation');
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
-        return redirect('/');
+        return redirect(route('home'));
     }
 
     /**
@@ -46,7 +59,7 @@ class VideosController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -55,76 +68,72 @@ class VideosController extends Controller
         return view('video.create')->with('categories', $categories);
     }
 
+    /**
+     * Add vote to video
+     *
+     * @return ResponseFactory|Response
+     */
     public static function vote()
     {
-        $value = Input::post('value');
-        $videoId = Input::post('video_id');
+        if (request()->ajax() && Auth::check()) {
+            $value = request()->input('value');
 
-        if (Vote::hasVoted($videoId)) {
-            /** @var Vote $vq */
-            $vq = Vote::where([['author_id', '=', Auth::id()], ['video_id', '=', $videoId]])->first();
-
-            if ($vq->value != $value) {
-                $vq->update(['value' => $value]);
+            if (is_numeric($value)) {
+                $value = $value <= 0 ? 0 : $value;
+                $value = $value >= 1 ? 1 : $value;
             } else {
-                $vq->delete();
+                return response(400);
+            }
+
+            $videoId = request()->input('id');
+            /** @var Video $video */
+            $video = Video::find($videoId);
+
+            if ($video) {
+                $vote = VideoVote::where(['video_id' => $video->getId(), 'author_id' => Auth::user()->id])->first();
+
+                if ($vote) {
+                    if ($value !== $vote->value) {
+                        $vote->value = $value;
+                        $vote->save();
+                    } else {
+                        $vote->delete();
+                    }
+                } else {
+                    /** @var VideoVote $vote */
+                    $vote = new VideoVote();
+                    $vote->video_id = $video->getId();
+                    $vote->author_id = Auth::user()->id;
+                    $vote->value = $value;
+                    $vote->save();
+                }
+            } else {
+                return response(400);
             }
         } else {
-            $vote = new Vote();
-            $vote->video_id = $videoId;
-            $vote->author_id = Auth::id();
-            $vote->value = $value;
-            $vote->save();
+            return response(405);
         }
 
         return response(200);
     }
 
     /**
-     * Subscribe a user to another user
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function subscribe()
-    {
-        $authorId = Input::post('author_id');
-
-        if (!Subscription::isSubscribed($authorId)) {
-            $subscription = new Subscription();
-            $subscription->author_id = $authorId;
-            $subscription->user_id = Auth::id();
-            $subscription->save();
-        } else {
-            Subscription::where([['author_id', '=', $authorId], ['user_id', '=', Auth::id()]])->delete();
-        }
-
-        return back();
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
+     * @throws ValidationException
+     * @throws getid3_exception
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'title' => 'required|max:64',
-            'upload' => 'file|required',
-            'image' => 'file|required',
-            'description' => 'max:255',
-            'recaptcha' => 'required|recaptcha'
-        ], [
-            'title.required' => 'A title is required for your video.',
-            'upload.required' => 'You must choose your video to upload.',
-            'upload.file' => 'Your uploaded file must be a video.'
-        ]);
+        $this->validateVideoInputs($request);
 
+        /** @var Video $video */
         $video = new Video;
-        $video->author_id = Auth::id();
+        $video->author_id = Auth::user()->id;
 
-        if (trim($request->input('description')) == null) {
+        if (strlen($request->input('description')) > 0 && strlen(trim($request->input('description'))) === 0) {
             $request->merge(['description' => 'No description provided']);
         }
 
@@ -132,21 +141,29 @@ class VideosController extends Controller
             $this->saveVideo($request->file('upload'), $request, $video);
         }
 
-        if ($request->hasFile('upload')) {
+        if ($request->hasFile('image')) {
             $this->saveThumbnail($request->file('image'), $video);
         }
 
         $video->save();
 
-        return redirect('/video/' . $video->ìd)->with('success', 'Your video as been shared.');
+        /** @var VideoSetting $setting */
+        $setting = new VideoSetting();
+        $setting->video_id = $video->id;
+        $setting->private = $request->input('private') ? 1 : 0;
+        $setting->allow_comments = $request->input('allow_comments') ? 1 : 0;
+        $setting->allow_votes = $request->input('allow_votes') ? 1 : 0;
+        $setting->save();
+
+        return redirect(route('video.show', ['video' => $video->ìd]))->with('success', 'Your video as been shared.');
     }
 
     /**
      * @param \Illuminate\Http\File $file
      * @param Request $request
      * @param Video $video
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \getid3_exception
+     * @return RedirectResponse
+     * @throws getid3_exception
      */
     private function saveVideo($file, $request, &$video)
     {
@@ -155,7 +172,7 @@ class VideosController extends Controller
         $allowedExtensions = ['avi', 'flv', 'mov', 'mp4'];
 
         if (!in_array(strtolower($extension), $allowedExtensions)) {
-            return redirect('/video')->with('error', 'Wrong format. Must be: avi, flv, wmv, mov, mp4');
+            return redirect('/video')->with('error', 'Wrong format. Must be: avi, flv, mov, mp4');
         }
 
         if ($file == null) {
@@ -175,7 +192,7 @@ class VideosController extends Controller
         $file = $getID3->analyze(public_path() . '/' . $video->location);
         $video->duration = $file['playtime_seconds'];
         $video->frame_rate = $file['frame_rate'];
-        $video->mime_type= $file['mime_type'];
+        $video->mime_type = $file['mime_type'];
     }
 
     /**
@@ -190,11 +207,11 @@ class VideosController extends Controller
         $allowedExtensions = ['jpeg', 'jpg', 'png'];
 
         if (!in_array(strtolower($extension), $allowedExtensions)) {
-            redirect('/video/create')->with('error', 'Wrong format. Must be: jpeg, jpg, png');
+            return redirect(route('video.create'))->with('error', 'Wrong format. Must be: jpeg, jpg, png');
         }
 
         if ($file == null) {
-            redirect('/video/create')->with('error', 'There was an error when uploading your image.');
+            return redirect(route('video.create'))->with('error', 'There was an error when uploading your image.');
         }
 
         $file->move($destinationPath, $filename);
@@ -206,59 +223,147 @@ class VideosController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
+        /** @var Video $video */
         $video = Video::find($id);
         if ($video === null) {
             abort(404);
         }
 
-        $comments = Comment::where('video_id', '=', $video->id)->orderBy('created_at', 'DESC')->get();
+        $comments = Comment::where('video_id', '=', $video->id)->orderBy('created_at', 'DESC')->take(5)->get();
         $subscriptionCount = Subscription::where('author_id', '=', $video->author->id)->count();
 
-        $relatedVideos = Video::where('title', 'like', '%'.$video->title.'%')
+        $relatedVideos = Video::where('title', 'like', '%' . $video->getTitle() . '%')
             ->orWhere('category_id', '=', $video->category_id)->limit(10)->get();
+
+        $upVotes = 0;
+        $downVotes = 0;
+
+        foreach ($video->votes as $vote) {
+            if($vote->value) {
+                $upVotes++;
+            } else {
+                $downVotes++;
+            }
+        }
 
         return view('video.show')
             ->with('video', $video)
             ->with('comments', $comments)
             ->with('subscriptionCount', $subscriptionCount)
-            ->with('relatedVideos', $relatedVideos);
+            ->with('relatedVideos', $relatedVideos)
+            ->with('upVotes', $upVotes)
+            ->with('downVotes', $downVotes);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
-        //
+        /** @var Video $video */
+        $video = Video::find($id);
+
+        if ($video === null) {
+            abort(404);
+        }
+
+        if(Auth::user()->id !== $video->author->id){
+            return redirect(route('video.show', ['video' => $video->getId()]));
+        }
+
+        return view('video.settings')->with('video', $video);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
+     * @throws ValidationException
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validateVideoInputs($request, '', '');
+
+        /** @var Video $video */
+        $video = Video::find($id);
+
+        if ($video === null) {
+            abort(404);
+        }
+
+        if ($request->hasFile('thumbnail')) {
+            $video->update($request->except(['_token', '_method']));
+            $this->saveThumbnail($request->file('thumbnail'), $video);
+        } else {
+            $video->update($request->except(['_token', '_method', 'thumbnail']));
+        }
+
+        /** @var VideoSetting $setting */
+        $setting = VideoSetting::where(['video_id' => $video->getId()])->first();
+
+        $setting->allow_comments = $request->input('allow_comments') ? 1 : 0;
+        $setting->allow_votes = $request->input('allow_votes') ? 1 : 0;
+        $setting->private = $request->input('private') ? 1 : 0;
+
+        $video->save();
+        $setting->save();
+
+        return back()->with('video', $video);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function destroy($id)
     {
-        //
+        /** @var Video $video */
+        $video = Video::find($id);
+
+        if ($video === null) {
+            return back()->with('error', 'There was an error while trying to delete your video!');
+        }
+
+        if(Auth::user()->id !== $video->author->id){
+            return redirect(route('video.show', ['video' => $video->getId()]));
+        }
+
+        $video->delete();
+
+        return back();
+    }
+
+    /**
+     * Check if form inputs on creating / updating a video are all valid
+     *
+     * @param $request
+     * @param string $imageRequired
+     * @param string $uploadRequired
+     * @throws ValidationException
+     */
+    public function validateVideoInputs($request, $imageRequired = 'required', $uploadRequired = 'required')
+    {
+        $this->validate($request, [
+            'title' => 'required|max:64',
+            'upload' => 'file|' . $uploadRequired,
+            'image' => 'file|' . $imageRequired,
+            'description' => 'max:255',
+            'recaptcha' => 'required|recaptcha'
+        ], [
+            'title.required' => 'A title is required for your video.',
+            'upload.required' => 'You must choose your video to upload.',
+            'upload.file' => 'Your uploaded file must be a video.'
+        ]);
     }
 }

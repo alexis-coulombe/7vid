@@ -15,6 +15,21 @@ class Comment extends Model
 {
     public function author()
     {
-        return $this->belongsTo('App\User', 'author_id');
+        return $this->belongsTo(User::class, 'author_id', 'id');
+    }
+
+    public function video()
+    {
+        return $this->hasOne(Video::class, 'id', 'video_id');
+    }
+
+    public function votes()
+    {
+        return $this->hasMany(CommentVote::class, 'comment_id');
+    }
+
+    public function getBody()
+    {
+        return $this->body;
     }
 }

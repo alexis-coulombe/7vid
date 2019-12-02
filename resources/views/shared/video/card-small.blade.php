@@ -1,8 +1,8 @@
 <div class="video-card video-card-list">
-    <div class="video-card-image">
+    <div class="video-card-image video-card-image-small">
         <a class="play-icon" aria-label="Play video" href="{{ route('video.show', ['video' => $video->id]) }}"><i class="fas fa-play-circle"></i></a>
         <a href="{{ route('video.show', ['video' => $video->id]) }}" aria-label="View video"><img class="img-fluid" loading="lazy" src="/{{ $video->thumbnail }}" alt=""></a>
-        <div class="time">{{ gmdate("H:i:s",$video->duration) }}</div>
+        <div class="time">{{ parseVideoDuration($video->duration) }}</div>
     </div>
     <div class="video-card-body">
         <div class="btn-group float-right right-action">
@@ -16,7 +16,9 @@
             </div>
         </div>
         <div class="video-title">
-            <a href="{{ route('video.show', ['video' => $video->id]) }}" aria-label="View video">{{strlen($video->title) > 30 ? substr($video->title,0,30)."..." : $video->title}}</a>
+            <a href="{{ route('video.show', ['video' => $video->id]) }}" aria-label="View video">
+                <h3 class="h4">{{strlen($video->title) > 30 ? substr($video->title,0,30)."..." : $video->title}}</h3>
+            </a>
         </div>
         <div class="video-page text-success">
             {{ $video->category->title }}

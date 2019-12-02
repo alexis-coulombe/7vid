@@ -46,6 +46,12 @@ Version: 1.0
     if (objowlcarousel.length > 0) {
         objowlcarousel.owlCarousel({
             responsive: {
+                0:{
+                    items:3,
+                },
+                600:{
+                    items:3,
+                },
                 1000: {
                     items: 4,
                 },
@@ -59,11 +65,6 @@ Version: 1.0
             autoplaySpeed: 1000,
             autoplayTimeout: 2000,
             autoplayHoverPause: true,
-            nav: true,
-            navText: [
-                "",
-                "",
-            ],
         });
     }
 
@@ -72,15 +73,21 @@ Version: 1.0
     if (videoSlider.length > 0) {
         videoSlider.owlCarousel({
             responsive: {
+                0:{
+                    items:1,
+                },
+                600:{
+                    items:3,
+                },
                 1000: {
                     items: 4,
                 },
                 1200: {
-                    items: 4,
+                    items: 5,
                 },
             },
             loop: true,
-            margin:10,
+            margin: 15,
             lazyLoad: true,
             autoplay: true,
             autoplaySpeed: 1000,
@@ -88,8 +95,8 @@ Version: 1.0
             autoplayHoverPause: true,
             nav: true,
             navText: [
-                "",
-                "",
+                "<i class=\"fas fa-arrow-left\"></i>",
+                "<i class=\"fas fa-arrow-right\"></i>",
             ],
         });
     }
@@ -109,7 +116,7 @@ Version: 1.0
     }
 
     // Tooltip
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-toggle="tooltip"]').tooltip();
 
     // Scroll to top button appear
     $(document).on('scroll', function() {
@@ -130,14 +137,40 @@ Version: 1.0
         event.preventDefault();
     });
 
-//Go through each carousel on the page
-// https://stackoverflow.com/questions/41818880/owl-carousel-2-2-dots-with-aria-label
-$('.owl-carousel').each(function() {
-    //Find each set of dots in this carousel
-  $(this).find('.owl-dot').each(function(index) {
-    //Add one to index so it starts from 1
-    $(this).attr('aria-label', index + 1);
-  });
-});
+    // Add aria-label to carousel buttons
+    // https://stackoverflow.com/questions/41818880/owl-carousel-2-2-dots-with-aria-label
+    $('.owl-carousel').each(function() {
+      $(this).find('.owl-dot').each(function(index) {
+        $(this).attr('aria-label', index + 1);
+      });
+    });
 
+    // Detect CTRL+S
+    if($('#save-on-keyboard').length) {
+        $(document).on('keydown', (e) => {
+            if (e.ctrlKey && e.which === 83) {
+                $('#save-on-keyboard').submit();
+                e.preventDefault();
+                return false;
+            }
+        });
+    }
+
+    // Generate abstract background to channels cards
+    $('.channels-card').each(function(){
+        generateAbstractBackground($(this));
+    });
+
+    function generateAbstractBackground(element)
+    {
+        let pattern = Trianglify({
+            width: 512,
+            height: 512,
+            seed: Math.random() + 1
+        });
+
+        let image = pattern.canvas().toDataURL('image/png');
+
+        element.css('background-image', 'url("' + image + '")');
+    }
 })(jQuery); // End of use strict

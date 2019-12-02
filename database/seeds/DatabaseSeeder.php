@@ -7,6 +7,7 @@ use \Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
+
     /**
      * Seed the application's database.
      *
@@ -44,13 +45,53 @@ class DatabaseSeeder extends Seeder
             $category->save();
         }
 
+        $images = ['0smPhoTWYeE.jpg',
+                   '0ZPlUMo2lis.jpg',
+                   '1g49x5NSWH0.jpg',
+                   '4BvvvgTBObw.jpg',
+                   '85spsIgccGY.jpg',
+                   '-Yw5dLaCXYY.jpg',
+                   'APL8RzuQVA0.jpg',
+                   'bYuI23mnmDQ.jpg',
+                   'cLh4dqj2i4Y.jpg',
+                   'dBzUuNUvCwM.jpg',
+                   'dE9BUGX4UV8.jpg',
+                   'eCpdGoq9gdI.jpg',
+                   'fwlEfOEpd_E.jpg',
+                   'G0GyVaBP73E.jpg',
+                   'HwPgyWk9h-o.jpg',
+                   'kbGo1cTa5OE.jpg',
+                   'kx_uU9bfQBU.jpg',
+                   'L6bfAoC1HS8.jpg',
+                   'lwHNPvw2nVA.jpg',
+                   'mXlOuM4unSg.jpg',
+                   'q36y-w_RjG4.jpg',
+                   'qgyNUfMQO_0.jpg',
+                   'tYGHavQaxbQ.jpg',
+                   'UaSKd83CXsQ.jpg',
+                   'ULk5WMgudSY.jpg',
+                   'vAxQRGqezXk.jpg',
+                   'vg_jQG1jtVg.jpg',
+                   'ySkQHAQy7y4.jpg',
+                   'YTNeojro-fY.jpg',
+                   'ZAk2WOxbLD4.jpg'];
+
+        $user = new \App\User();
+        $user->name = 'test123';
+        $user->email = 'test@123.com';
+        $user->password = Hash::make('123123');
+        $user->avatar = 'images/seed/ZAk2WOxbLD4.jpg';
+        $user->country_id = 1;
+        $user->save();
+
         // Users
         for ($i = 0; $i < $maxUserCount; $i++) {
             $user = new \App\User();
             $user->name = $faker->name;
             $user->email = $faker->email;
             $user->password = Hash::make($faker->password);
-            $user->avatar = 'images/avatars/seed.webp';
+            $user->avatar = 'images/seed/' . $images[$faker->numberBetween(0, count($images) - 1)];
+            $user->country_id = $faker->numberBetween(1, 100);
             $user->save();
         }
 
@@ -61,14 +102,21 @@ class DatabaseSeeder extends Seeder
             $video->category_id = $faker->numberBetween(1, $maxCategoryCount);
             $video->title = $faker->word;
             $video->description = $faker->text;
-            $video->duration = 600;
+            $video->duration = $faker->numberBetween(1, 6000);
             $video->extension = 'mp4';
             $video->location = 'videos/seed.mp4';
-            $video->thumbnail = 'images/seed.jpg';
+            $video->thumbnail = 'images/seed/' . $images[$faker->numberBetween(0, count($images) - 1)];
             $video->frame_rate = 15;
             $video->mime_type = 'video/mp4';
             $video->views_count = $faker->numberBetween(1, 1000000);
             $video->save();
+
+            $settings = new \App\VideoSetting();
+            $settings->video_id = $video->id;
+            $settings->private = $faker->boolean();
+            $settings->allow_comments = $faker->boolean();
+            $settings->allow_votes = $faker->boolean();
+            $settings->save();
         }
 
         // Comments
@@ -80,15 +128,25 @@ class DatabaseSeeder extends Seeder
             $comment->save();
         }
 
-        // Votes
+        // Video Votes
         for ($i = 0; $i < $maxVotesCount; $i++) {
-            $vote = new \App\Vote();
+            $vote = new \App\VideoVote();
             $vote->video_id = \App\Video::inRandomOrder()->first()->id;
-            $vote->author_id = $faker->numberBetween(1, $maxUserCount);
+            $vote->author_id = $faker->numberBetween(2, $maxUserCount);
             $vote->value = $faker->boolean();
             $vote->save();
         }
 
+        // Comment Votes
+        for ($i = 0; $i < $maxVotesCount; $i++) {
+            $vote = new \App\CommentVote();
+            $vote->comment_id = \App\Comment::inRandomOrder()->first()->id;
+            $vote->author_id = $faker->numberBetween(2, $maxUserCount);
+            $vote->value = $faker->boolean();
+            $vote->save();
+        }
+
+        // Subscriptions
         for ($i = 0; $i < $maxSubCount; $i++) {
             $sub = new \App\Subscription();
             $sub->author_id = \App\User::inRandomOrder()->first()->id;

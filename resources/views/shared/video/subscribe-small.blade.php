@@ -1,8 +1,9 @@
-@php if(isset($video)) $authorId = $video->author->id; @endphp
-@php if(isset($author)) $authorId = $author->id; @endphp
+@php if(isset($video)) $author = $video->author->id; @endphp
 
-<form action="{{ route('video.subscribe') }}" method="POST">
-    {{ csrf_field() }}
-    <input type="hidden" name="author_id" value="{{ $authorId }}">
-    <button class="btn btn-outline-danger btn-sm" type="submit">Subscribe | <strong>{{ \App\Subscription::getSubscriptionCount($authorId) }}</strong></button>
-</form>
+@php
+    $subscribeText = Auth::user()->isSubscribed($author->id) ? 'Unsubscribe' : 'Subscribe';
+@endphp
+
+<button class="btn btn-outline-danger btn-sm subscribe" data-id="{{ $author->id }}" data-url="{{ route('channel.subscribe') }}">
+    <span class="subscribe-text">{{ $subscribeText }}</span> | <strong class="subscriber-count">{{ \App\Subscription::getSubscriptionCount($author->id) }}</strong>
+</button>

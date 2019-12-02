@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Alexi
- * Date: 2018-12-22
- * Time: 22:42
- */
 
 namespace App;
 
@@ -21,21 +15,36 @@ class Subscription extends Model
         'user_id'
     ];
 
+    public function channel()
+    {
+        return $this->belongsTo(User::class, 'author_id', 'id');
+    }
+
+    public function subscribers()
+    {
+        return $this->hasMany(User::class, 'id', 'user_id');
+    }
+
+    public function getChannelId()
+    {
+        return $this->channel()->getId();
+    }
+
     /**
      * Check if the logged user is subscribed to the other user
      *
      * @param $authorId
      * @return boolean
      */
-    public static function isSubscribed($authorId)
+    public function isSubscribed($authorId)
     {
-        return Subscription::where([['author_id', '=', $authorId], ['user_id', '=', Auth::id()]])->exists();
+        return $this->subscribers()->where(['author_id' => $authorId, 'user_id' => Auth::id()])->exists();
     }
 
     /**
      * Get subscription count for authorId
      *
-     * @param $author_id
+     * @param $authorId
      * @return integer
      */
     public static function getSubscriptionCount($authorId)

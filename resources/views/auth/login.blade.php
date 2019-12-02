@@ -1,7 +1,7 @@
 @extends('auth.template')
 
 @section('title')
-    Sign In
+    Connect on your account
 @endsection
 
 @section('content')
@@ -12,9 +12,9 @@
                     <div class="login-main-left">
                         <div class="text-center mb-5 login-main-left-header pt-4">
                             <a href="{{ route('home') }}" aria-label="Home">
-                                <img src="{{ asset('assets/img/logo.png') }}" width="50px" height="50px" class="img-fluid" alt="Logo">
+                                <img src="{{ asset('assets/img/logo.svg') }}" width="50px" height="50px" class="img-fluid" alt="Logo">
                             </a>
-                            <h5 class="mt-3 mb-3">Sign In</h5>
+                            <h1 class="h4 mt-3 mb-3">Sign In</h1>
                         </div>
                         <form method="POST" action="{{ route('login') }}">
                             {{ csrf_field() }}

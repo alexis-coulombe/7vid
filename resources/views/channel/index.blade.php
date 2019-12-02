@@ -1,7 +1,11 @@
 @extends('shared.template')
 
+@section('title')
+    channel of {{ $author->name }}
+@endsection
+
 @section('content')
-    <div class="single-channel-page" id="content-wrapper">
+    <div class="single-channel-page">
         <div class="single-channel-image">
             <img class="img-fluid" alt="" src="{{ asset('assets/img/channel-banner.png') }}">
             <div class="channel-profile">
@@ -14,48 +18,7 @@
             </div>
         </div>
         <div class="single-channel-nav">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="channel-brand" href="#">{{ $author->name }}</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Videos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Playlist</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Discussion</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Donate
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </li>
-                    </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control form-control-sm mr-sm-1" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success btn-sm my-2 my-sm-0" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button> &nbsp;&nbsp;&nbsp;
-                        @if(Auth::check())
-                            @include('shared.video.subscribe-small')
-                        @endif
-                    </form>
-                </div>
-            </nav>
+            @include('shared.channel.navbar')
         </div>
         <div class="container-fluid">
             <div class="video-block section-padding">
@@ -82,7 +45,11 @@
                             </div>
                         @endforeach
                     @else
-                        <p>This user does not have any videos</p>
+                        <div class="col-sm-3 col-md-3">
+                            <h2>Empty !</h2>
+                            <p>This author does not have any content !</p>
+                        </div>
+                        @include('shared.misc.floating-hex')
                     @endif
                 </div>
             </div>

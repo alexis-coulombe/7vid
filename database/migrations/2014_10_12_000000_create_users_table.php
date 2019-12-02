@@ -24,6 +24,11 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('avatar')->default('images/avatars/seed.webp');
+
+            $table->unsignedInteger('country_id');
+            $table->foreign('country_id')->references('id')->on('countries');
+            $table->index('country_id');
+
             $table->rememberToken();
             $table->timestamps();
         });

@@ -1,26 +1,22 @@
 @extends('shared.template')
 
+@section('title')
+    {{ $video->title }} | {{ $video->author->name }}
+@endsection
+
 @section('content')
     <div class="video-block section-padding">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="single-video-left">
                     <div class="single-video">
-                        <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' controls preload='auto' width="100%" controls preload="auto" poster="{{ $video->thumbnail }}" data-setup="{}">
+                        <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' width="100%" controls preload="auto" poster="/{{ $video->thumbnail }}" data-setup="{}">
                             <source src="/{{ $video->location }}" type="{{ $video->mime_type }}">
                             <p class='vjs-no-js'>
                                 To view this video please enable JavaScript, and consider upgrading to a web browser that
                                 <a href='https://videojs.com/html5-video-support/' aria-label="Support html5" target='_blank'>supports HTML5 video</a>
                             </p>
                         </video>
-                    </div>
-                    <div class="single-video-title box mb-3">
-                        <h2>{{ $video->title }}</h2>
-                        <p class="mb-0"><i class="fas fa-eye"></i> {{ $video->getFormatedViewsCount() }} views
-                            <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Views are based on unique active users that landed on this page">
-                                <i class="far fa-question-circle"></i>
-                            </span>
-                        </p>
                     </div>
                     <div class="single-video-author box mb-3">
                         @if(Auth::check() && $video->author->id !== Auth::id())
@@ -29,20 +25,37 @@
                             </div>
                         @endif
                         <img class="img-fluid" loading="lazy" src="/{{ $video->author->avatar }}" alt="">
-                        <p><a href="{{ route('channel.index', ['id' => $video->author->id]) }}" aria-label="View channel"><strong>{{ $video->author->name }}</strong></a> <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></span></p>
+                        <p><a href="{{ route('channel.index', ['userId' => $video->author->id]) }}" aria-label="View channel"><strong>{{ $video->author->name }}</strong></a></p>
                         <small>Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
                     </div>
-                    <div class="single-video-info-content box mb-3">
-                        @if(Auth::check())
-                            <span><i class="fas fa-thumbs-up tu" style="margin:20px; cursor:pointer;"></i></span>
+                    <div class="single-video-title box mb-3">
+                        @if($video->setting->allow_votes)
+                            <div class="float-right">
+                                <button type="button" class="btn btn-{{ \App\VideoVote::hasVoted(1, $video->id) ? 'danger' : 'primary' }} vote" data-value="1" data-id="{{ $video->id }}" @if(Auth::check()) data-url="{{ route('video.vote') }}" @endif><i class="fas fa-thumbs-up"></i></button>
+                                <button type="button" class="btn btn-{{ \App\VideoVote::hasVoted(0, $video->id) ? 'danger' : 'primary' }} vote" data-value="0" data-id="{{ $video->id }}" @if(Auth::check()) data-url="{{ route('video.vote') }}" @endif><i class="fas fa-thumbs-down"></i></button>
+                                @if($upVotes === $downVotes)
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar"></div>
+                                    </div>
+                                @else
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: {{ ($upVotes / ($upVotes + ($downVotes <= 0 ? 1 : $downVotes)))*100 }}%;"></div>
+                                    </div>
+                                @endif
+                            </div>
                         @endif
-                        <span id="upcount">{{ \App\Vote::GetVotesByValue(1, $video->id) }}</span>
-                        /
-                        <span id="downcount">{{ \App\Vote::GetVotesByValue(0, $video->id) }}</span>
-                        @if(Auth::check())
-                            <span><i class="fas fa-thumbs-down td" style="margin:20px; cursor:pointer;"></i></span>
-                        @endif
+                        <h1 class="h2">{{ $video->title }}</h1>
+                        <p class="mb-0">
+                            <i class="fas fa-eye"></i> {{ $video->getFormatedViewsCount() }} views
+                            <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Views are based on unique active users that landed on this page">
+                                <i class="far fa-question-circle"></i>
+                            </span>
+                        </p>
+                        <hr>
+                        @include('shared.video.edit-button')
+                        <hr>
                         <p>{{ $video->description }}</p>
+                        <br>
                         <p class="tags mb-0">
                             <span><a href="#">Uncharted 4</a></span>
                             <span><a href="#">Playstation 4</a></span>
@@ -51,28 +64,29 @@
                             <span><a href="#">ps4Share</a></span>
                         </p>
                     </div>
-                    @if(\Illuminate\Support\Facades\Auth::check())
-                        @include('comment.comment-form', $data = ['video_id' => $video->id])
-                    @endif
+                    @if($video->setting->allow_comments)
+                        @if(\Illuminate\Support\Facades\Auth::check())
+                            @include('comment.comment-form', $data = ['video_id' => $video->id])
+                        @endif
 
-                    @include('comment.show', $data = ['comments' => $comments])
+                        @include('comment.show', $data = ['comments' => $comments])
+
+                        <div id="scrolling" data-url="{{ route('home.scroll') }}" data-type="comment" data-video-id="{{ $video->id }}"></div>
+                        <div id="loading-spinner" style="display: none;">
+                            <div class="row">
+                                <div class="col text-center">
+                                    @include('shared.misc.loading-spinner')
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="single-video-right">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="main-title">
-                                <div class="btn-group float-right right-action">
-                                    <a href="#" aria-label="filter" class="right-action-link text-gray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Sort by <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="#"><i class="fas fa-fw fa-star"></i> &nbsp; Top Rated</a>
-                                        <a class="dropdown-item" href="#"><i class="fas fa-fw fa-signal"></i> &nbsp; Viewed</a>
-                                        <a class="dropdown-item" href="#"><i class="fas fa-fw fa-times-circle"></i> &nbsp; Close</a>
-                                    </div>
-                                </div>
                                 <h6>Up Next</h6>
                             </div>
                         </div>
@@ -88,39 +102,10 @@
             </div>
         </div>
     </div>
-
-    <!--<script>
-        let voteup = function(){
-            $('.tu').css('color', '#82007d');
-            $('.td').css('color', '#B855F5');
-            $.ajax({
-                url: '/video/vote',
-                type: 'POST',
-                data: {_token: '<?php echo csrf_token() ?>', value: 1, video_id: '{{$video->id}}'},
-                dataType: 'JSON',
-                success: function(){
-                    location.reload();
-                }
-            });
-        };
-
-        let votedown = function(){
-            $('.tu').css('color', '#B855F5');
-            $('.td').css('color', '#82007d');
-            $.ajax({
-                url: '/video/vote',
-                type: 'POST',
-                data: {_token: '<?php echo csrf_token() ?>', value: 0, video_id: '{{$video->id}}'},
-                dataType: 'JSON',
-                success: function () {
-                    location.reload();
-                }
-            });
-        };
-    </script>-->
 @endsection
 
 @section('footer')
     <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
     <script src='https://vjs.zencdn.net/7.6.5/video.js'></script>
+    <script src='{{ asset('js/vote.js') }}'></script>
 @endsection

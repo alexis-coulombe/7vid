@@ -12,9 +12,9 @@
                     <div class="login-main-left">
                         <div class="text-center mb-5 login-main-left-header pt-4">
                             <a href="{{ route('home') }}" aria-label="Home">
-                                <img src="{{ asset('assets/img/logo.png') }}" width="50px" height="50px" class="img-fluid" alt="Logo">
+                                <img src="{{ asset('assets/img/logo.svg') }}" width="50px" height="50px" class="img-fluid" alt="Logo">
                             </a>
-                            <h5 class="mt-3 mb-3">Welcome to 7-Vid</h5>
+                            <h1 class="h4 mt-3 mb-3">Welcome to 7-Vid</h1>
                             <p>It is a long established fact that a reader <br> will be distracted by the readable.</p>
                         </div>
                         <form method="POST" action="{{ route('register') }}">
@@ -52,7 +52,7 @@
                             </div>
                             <div class="input-group">
                                 <label for="password_confirmation">Confirm your password
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm your password" required>
+                                    <input id="password-confirm" type="password" class="form-control{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}" name="password_confirmation" placeholder="Confirm your password" required>
                                 </label>
                             </div>
                             <div class="input-group">
@@ -66,12 +66,12 @@
                                 @endif
                             </div>
                             <div class="form-check text-left">
-                                <label class="form-check-label">
+                                <!--<label class="form-check-label">
                                     <input class="form-check-input" type="checkbox" required>
                                     <span class="form-check-sign"></span>
                                     I agree to the
                                     <a href="/terms">terms and conditions</a>.
-                                </label>
+                                </label>-->
                                 <label class="form-check-label">
                                     <input class="form-check-input" type="checkbox" required>
                                     <span class="form-check-sign"></span>
