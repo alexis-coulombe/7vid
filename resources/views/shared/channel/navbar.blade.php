@@ -7,11 +7,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Main page</a>
+            <li class="nav-item {{ \Illuminate\Support\Facades\Route::currentRouteName() === 'channel.index' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('channel.index', ['userId' => $author->id]) }}">Main page</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Videos</a>
+            <li class="nav-item {{ \Illuminate\Support\Facades\Route::currentRouteName() === 'channel.videos' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('channel.videos', ['userId' => $author->id]) }}">Videos</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">About</a>

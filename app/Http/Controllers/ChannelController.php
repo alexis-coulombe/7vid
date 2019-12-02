@@ -26,11 +26,29 @@ class ChannelController extends Controller
     {
         $author = User::find($userId);
 
-        if ($author == null) {
+        if ($author === null) {
             abort(404);
         }
 
         return view('channel.index')->with('author', $author);
+    }
+
+    /**
+     * Channel videos
+     *
+     * @param $userId
+     * @return Factory|View
+     */
+    public function videos($userId)
+    {
+        $author = User::find($userId);
+
+        if ($author === null) {
+            abort(404);
+        }
+
+        return view('channel.videos')
+            ->with('author', $author);
     }
 
     /**
@@ -45,24 +63,24 @@ class ChannelController extends Controller
             $exclude = request()->input('exclude') ?: [];
             $users = User::withCount('videos')->latest('videos_count')->take(3)->whereNotIn('id', $exclude)->get();
 
-            foreach($users as $user){
-                if(!count($user->videos) > 0){
+            foreach ($users as $user) {
+                if ((!count($user->videos)) > 0) {
                     return 'Done';
                 }
             }
 
             return view('shared.video.scroll.result')->with('channels', $users);
-        } else {
-            return response(405);
         }
+
+        return response(405);
     }
 
     /**
      * Subscribe to another user
      *
-     * @return RedirectResponse
+     * @return string
      */
-    public function subscribe()
+    public function subscribe(): string
     {
         if (request()->ajax() && Auth::check()) {
             $id = request()->input('id');
@@ -74,7 +92,7 @@ class ChannelController extends Controller
             /** @var User $channel */
             $channel = User::find($id);
 
-            if($channel) {
+            if ($channel) {
                 if (!Auth::user()->isSubscribed($channel->id)) {
                     Auth::user()->subscribe($channel->id);
                     $text = 'Unsubscribe';
@@ -84,12 +102,12 @@ class ChannelController extends Controller
                 }
 
                 return $text;
-            } else {
-                return response(400);
             }
-        } else {
-            return response(405);
+
+            return response(400);
         }
+
+        return response(405);
     }
 
 }

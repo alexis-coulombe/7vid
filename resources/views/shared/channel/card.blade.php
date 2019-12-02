@@ -1,4 +1,4 @@
-@php if(isset($author)) $channel = $author; @endphp
+@php if(isset($author)) { $channel = $author; } @endphp
 
 <div class="channels-card">
     <div class="channels-card-image">

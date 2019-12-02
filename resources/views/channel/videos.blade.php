@@ -39,7 +39,11 @@
                                 <h6>Videos</h6>
                             </div>
                         </div>
-                        Index page todo CMS
+                        @foreach($author->videos as $video)
+                            <div class="col-xl-3 col-sm-6 mb-3">
+                                @include('shared.video.card')
+                            </div>
+                        @endforeach
                     @else
                         <div class="col-sm-3 col-md-3">
                             <h2>Empty !</h2>
