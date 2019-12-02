@@ -33,7 +33,7 @@
 	-- Checkbox toggle
 	-- Video settings
 	-- Author img
-	-- Drag n drop file input
+	-- 3rd party button
 */
 /* Body */
 html {
@@ -2077,5 +2077,10 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     margin:0 auto;
 }
 
-/* Drag n drop file input */
-
+/* 3rd party button */
+.btn-google {
+    margin: 10px 0;
+    font-size: 15px;
+    text-align: left;
+    line-height: 24px;
+}

@@ -4,6 +4,10 @@
     Connect on your account
 @endsection
 
+@section('head')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+@endsection
+
 @section('content')
     <section class="login-main-wrapper">
         <div class="container-fluid pl-0 pr-0">
@@ -61,12 +65,9 @@
                             <p class="light-gray">Don’t have an account? <a href="{{ route('register') }}" aria-label="Sign up">Sign Up</a></p>
                         </div>
                         <br />
-                        <p>OR</p>
-                        <br />
-                        <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <a href="{{ route('oauth.redirect.google') }}" class="btn btn-primary">Login with Google</a>
-                            </div>
+                        <div class="form-group text-center">
+                            <p><b>OR</b></p>
+                            <button class="btn btn-danger btn-google" onclick="window.location.href='{{ route('oauth.redirect.google') }}'"><i class="fab fa-google"></i> Sign in with <b>Google</b></button>
                         </div>
                     </div>
                 </div>
@@ -74,5 +75,9 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('footer')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
 @endsection
 
