@@ -46,5 +46,5 @@ Route::get('category/{name}', 'CategoryController@index')->name('category.index'
 Auth::routes();
 
 //OAuth routes
-Route::get('/register/google', 'Auth\RegisterController@googleAuth')->name('register.google');
-Route::get('/register/google', 'Auth\RegisterController@googleAuthCallBack')->name('register.google.callback');
+Route::get('/redirect/google', 'SocialAuthGoogleController@redirect')->name('oauth.redirect.google');
+Route::get('/callback/google', 'SocialAuthGoogleController@callback')->name('oauth.callback.google');

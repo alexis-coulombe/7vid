@@ -22,7 +22,9 @@ class CreateUsersTable extends Migration
             $table->index('email');
 
             $table->timestamp('email_verified_at')->nullable();
+
             $table->string('password');
+
             $table->string('avatar')->default('images/avatars/seed.webp');
 
             $table->unsignedInteger('country_id');

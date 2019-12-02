@@ -60,6 +60,14 @@
                         <div class="text-center mt-5">
                             <p class="light-gray">Don’t have an account? <a href="{{ route('register') }}" aria-label="Sign up">Sign Up</a></p>
                         </div>
+                        <br />
+                        <p>OR</p>
+                        <br />
+                        <div class="form-group">
+                            <div class="col-md-8 col-md-offset-4">
+                                <a href="{{ route('oauth.redirect.google') }}" class="btn btn-primary">Login with Google</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 @include('auth.features')
