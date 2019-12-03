@@ -33,7 +33,7 @@ class VideosController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(): Response
     {
         return redirect(route('home'));
     }
@@ -44,7 +44,7 @@ class VideosController extends Controller
      * @param Request $request
      * @return HomeController
      */
-    public function search(Request $request)
+    public function search(Request $request): HomeController
     {
         $search = Input::get('search');
 
@@ -61,7 +61,7 @@ class VideosController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create(): Response
     {
         $categories = Category::all();
 
@@ -125,7 +125,7 @@ class VideosController extends Controller
      * @throws ValidationException
      * @throws getid3_exception
      */
-    public function store(Request $request)
+    public function store(Request $request): Response
     {
         $this->validateVideoInputs($request);
 
@@ -133,7 +133,7 @@ class VideosController extends Controller
         $video = new Video;
         $video->author_id = Auth::user()->id;
 
-        if (strlen($request->input('description')) > 0 && strlen(trim($request->input('description'))) === 0) {
+        if ($request->input('description') !== '' && trim($request->input('description')) === '') {
             $request->merge(['description' => 'No description provided']);
         }
 
@@ -165,7 +165,7 @@ class VideosController extends Controller
      * @return RedirectResponse
      * @throws getid3_exception
      */
-    private function saveVideo($file, $request, &$video)
+    private function saveVideo($file, $request, &$video): ?RedirectResponse
     {
         $destinationPath = 'videos';
         $extension = $file->getClientOriginalExtension();
@@ -175,7 +175,7 @@ class VideosController extends Controller
             return redirect('/video')->with('error', 'Wrong format. Must be: avi, flv, mov, mp4');
         }
 
-        if ($file == null) {
+        if ($file === null) {
             return redirect('/video')->with('error', 'There was an error when uploading your video.');
         }
 
@@ -225,7 +225,7 @@ class VideosController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show($id)
+    public function show($id): Response
     {
         /** @var Video $video */
         $video = Video::find($id);
@@ -265,7 +265,7 @@ class VideosController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit($id)
+    public function edit($id): Response
     {
         /** @var Video $video */
         $video = Video::find($id);
@@ -289,7 +289,7 @@ class VideosController extends Controller
      * @return Response
      * @throws ValidationException
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): Response
     {
         $this->validateVideoInputs($request, '', '');
 
@@ -325,8 +325,9 @@ class VideosController extends Controller
      *
      * @param int $id
      * @return void
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($id): void
     {
         /** @var Video $video */
         $video = Video::find($id);
@@ -352,7 +353,7 @@ class VideosController extends Controller
      * @param string $uploadRequired
      * @throws ValidationException
      */
-    public function validateVideoInputs($request, $imageRequired = 'required', $uploadRequired = 'required')
+    public function validateVideoInputs($request, $imageRequired = 'required', $uploadRequired = 'required'): void
     {
         $this->validate($request, [
             'title' => 'required|max:64',

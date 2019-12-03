@@ -15,7 +15,7 @@ class Category extends Model
 {
     public $timestamps = false;
 
-    public function videos()
+    public function videos(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Video::class, 'category_id', 'id');
     }
@@ -35,7 +35,7 @@ class Category extends Model
         return $this->videos->count();
     }
 
-    public function getVideos($limit = 16, $order)
+    public function getVideos($limit = 16, $order): \Illuminate\Database\Eloquent\Collection
     {
         return $this->videos()->where('category_id', '=', $this->id)->limit($limit)->orderBy($order, 'DESC')->get();
     }

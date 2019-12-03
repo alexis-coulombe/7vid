@@ -16,12 +16,12 @@ class CommentVote extends Model
         'value'
     ];
 
-    public function author()
+    public function author(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(User::class, 'id', 'author_id');
     }
 
-    public function comment()
+    public function comment(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Comment::class, 'id', 'comment_id');
     }

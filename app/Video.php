@@ -25,12 +25,12 @@ class Video extends Model
          * Attach to the 'creating' Model Event to provide a UUID
          * for the `id` field (provided by $model->getKeyName())
          */
-        Video::creating(function ($model) {
+        self::creating(static function ($model) {
             $model->{$model->getKeyName()} = (string)$model->generateNewId();
         });
     }
 
-    public function generateNewId()
+    public function generateNewId(): \Ramsey\Uuid\Uuid
     {
         try {
             /** @var \Ramsey\Uuid\Uuid $uuid */
@@ -41,27 +41,27 @@ class Video extends Model
         return $uuid;
     }
 
-    public function comments()
+    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Comment::class, 'video_id');
     }
 
-    public function category()
+    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
-    public function author()
+    public function author(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function votes()
+    public function votes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(VideoVote::class, 'video_id');
     }
 
-    public function setting()
+    public function setting(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(VideoSetting::class, 'video_id');
     }
@@ -121,7 +121,7 @@ class Video extends Model
      *
      * @return string
      */
-    public function getFormatedViewsCount()
+    public function getFormatedViewsCount(): string
     {
         return number_format($this->views_count);
     }

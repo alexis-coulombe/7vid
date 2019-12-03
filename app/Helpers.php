@@ -26,7 +26,9 @@ function time_elapsed_string($datetime, $full = false)
         }
     }
 
-    if (!$full) $string = array_slice($string, 0, 1);
+    if (!$full) {
+        $string = array_slice($string, 0, 1);
+    }
     return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
 
@@ -35,10 +37,10 @@ function parseVideoDuration($seconds)
     $hours = floor($seconds / 3600);
     $total = null;
 
-    if($hours > 0) {
-        $total = $hours . gmdate(":i:s", $seconds % 3600);
+    if ($hours > 0) {
+        $total = $hours . gmdate(':i:s', $seconds % 3600);
     } else {
-        $total = gmdate("i:s", $seconds % 3600);
+        $total = gmdate('i:s', $seconds % 3600);
     }
 
     return $total;

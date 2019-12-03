@@ -8,7 +8,7 @@ class VideoSetting extends Model
 {
     public $timestamps = false;
 
-    public function video()
+    public function video(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Video::class, 'video_id', 'id');
     }

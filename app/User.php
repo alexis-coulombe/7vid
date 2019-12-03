@@ -24,32 +24,32 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function videos()
+    public function videos(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Video::class, 'author_id', 'id');
     }
 
-    public function country()
+    public function country(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Country::class, 'id', 'country_id');
     }
 
-    public function videoVotes()
+    public function videoVotes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(VideoVote::class, 'author_id');
     }
 
-    public function commentVotes()
+    public function commentVotes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(CommentVote::class, 'author_id');
     }
 
-    public function subscriptions()
+    public function subscriptions(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Subscription::class, 'user_id', 'id');
     }
 
-    public function subscribers()
+    public function subscribers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Subscription::class)->withTimestamps();
     }
@@ -74,12 +74,12 @@ class User extends Authenticatable
         return $this->avatar;
     }
 
-    public function isSubscribed($author_id)
+    public function isSubscribed($author_id): bool
     {
         return $this->subscriptions()->where(['author_id' => $author_id, 'user_id' => Auth::user()->id])->exists();
     }
 
-    public function subscribe($channelId)
+    public function subscribe($channelId): void
     {
         $subscription = new Subscription();
         $subscription->author_id = $channelId;
@@ -87,7 +87,7 @@ class User extends Authenticatable
         $subscription->save();
     }
 
-    public function unsubscribe($channelId)
+    public function unsubscribe($channelId): void
     {
         $this->subscriptions()->where([['author_id', '=', $channelId], ['user_id', '=', $this->id]])->delete();
     }

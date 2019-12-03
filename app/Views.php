@@ -20,12 +20,12 @@ class Views extends Model
         'author_id'
     ];
 
-    public function video()
+    public function video(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Video::class, 'id', 'video_id');
     }
 
-    public function author()
+    public function author(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(User::class, 'id', 'author_id');
     }

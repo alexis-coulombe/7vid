@@ -15,19 +15,14 @@ class Subscription extends Model
         'user_id'
     ];
 
-    public function channel()
+    public function channel(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id', 'id');
     }
 
-    public function subscribers()
+    public function subscribers(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(User::class, 'id', 'user_id');
-    }
-
-    public function getChannelId()
-    {
-        return $this->channel()->getId();
     }
 
     /**
@@ -36,7 +31,7 @@ class Subscription extends Model
      * @param $authorId
      * @return boolean
      */
-    public function isSubscribed($authorId)
+    public function isSubscribed($authorId): bool
     {
         return $this->subscribers()->where(['author_id' => $authorId, 'user_id' => Auth::id()])->exists();
     }
@@ -47,8 +42,8 @@ class Subscription extends Model
      * @param $authorId
      * @return integer
      */
-    public static function getSubscriptionCount($authorId)
+    public static function getSubscriptionCount($authorId): int
     {
-        return Subscription::where('author_id', '=', $authorId)->count();
+        return self::where('author_id', '=', $authorId)->count();
     }
 }

@@ -60,16 +60,16 @@ class HomeController extends Controller
             if (request('password')) {
                 if (!Hash::check(request('current-password'), $user->getPassword()) || request('password') !== request('confirm-password')) {
                     return view('home.settings')->with('error', 'Your password does not match.');
-                } else {
-                    $user->password = Hash::make(request('password'));
                 }
+
+                $user->password = Hash::make(request('password'));
             }
 
             $user->save();
             return view('home.settings')->with('success', 'Settings saved.');
-        } else {
-            return view('home.settings');
         }
+
+        return view('home.settings');
     }
 
     public function liked()
@@ -111,7 +111,7 @@ class HomeController extends Controller
                 $users = User::withCount('videos')->latest('videos_count')->take(3)->whereNotIn('id', $exclude)->get();
 
                 foreach ($users as $user) {
-                    if (!count($user->videos) > 0) {
+                    if ((!count($user->videos)) > 0) {
                         return 'Done';
                     }
                 }
@@ -124,7 +124,7 @@ class HomeController extends Controller
                 if ($video) {
                     $comments = Comment::where(['video_id' => $videoId])->orderBy('created_at')->take(5)->whereNotIn('id', $exclude)->get();
 
-                    if (!count($comments) > 0) {
+                    if ((!count($comments)) > 0) {
                         return 'Done';
                     }
 

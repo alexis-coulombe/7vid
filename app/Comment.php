@@ -13,17 +13,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    public function author()
+    public function author(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id', 'id');
     }
 
-    public function video()
+    public function video(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Video::class, 'id', 'video_id');
     }
 
-    public function votes()
+    public function votes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(CommentVote::class, 'comment_id');
     }
