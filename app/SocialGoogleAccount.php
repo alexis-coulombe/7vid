@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SocialGoogleAccount extends Model
 {
@@ -12,10 +13,8 @@ class SocialGoogleAccount extends Model
         'provider'
     ];
 
-    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-
-    ////https://medium.com/@confidenceiyke/laravel-5-8-google-socialite-authentication-a8b57aa59241
 }

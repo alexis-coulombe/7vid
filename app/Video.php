@@ -3,7 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Webpatser\Uuid\Uuid;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use phpDocumentor\Reflection\Types\Integer;
+use \Ramsey\Uuid\Uuid;
 
 class Video extends Model
 {
@@ -17,7 +21,7 @@ class Video extends Model
         'thumbnail'
     ];
 
-    protected static function boot()
+    protected static function boot() : void
     {
         parent::boot();
 
@@ -30,10 +34,10 @@ class Video extends Model
         });
     }
 
-    public function generateNewId(): \Ramsey\Uuid\Uuid
+    public function generateNewId(): Uuid
     {
         try {
-            /** @var \Ramsey\Uuid\Uuid $uuid */
+            /** @var Uuid $uuid */
             $uuid = Uuid::generate();
         } catch (\Exception $e) {
             var_dump($e->getMessage());
@@ -41,77 +45,77 @@ class Video extends Model
         return $uuid;
     }
 
-    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function comments(): HasMany
     {
         return $this->hasMany(Comment::class, 'video_id');
     }
 
-    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
-    public function author(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function votes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function votes(): HasMany
     {
         return $this->hasMany(VideoVote::class, 'video_id');
     }
 
-    public function setting(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function setting(): HasOne
     {
         return $this->hasOne(VideoSetting::class, 'video_id');
     }
 
-    public function getId()
+    public function getId() : int
     {
         return $this->id;
     }
 
-    public function getTitle()
+    public function getTitle() : string
     {
         return $this->title;
     }
 
-    public function getDescription()
+    public function getDescription() : string
     {
         return $this->description;
     }
 
-    public function getExtension()
+    public function getExtension() : string
     {
         return $this->extension;
     }
 
-    public function getDuration()
+    public function getDuration() : int
     {
         return $this->duration;
     }
 
-    public function getFrameRate()
+    public function getFrameRate() : int
     {
         return $this->frame_rate;
     }
 
-    public function getMimeType()
+    public function getMimeType() : string
     {
         return $this->mime_type;
     }
 
-    public function getLocation()
+    public function getLocation() : string
     {
         return $this->location;
     }
 
-    public function getThumbnail()
+    public function getThumbnail() : string
     {
         return $this->thumbnail;
     }
 
-    public function getViewsCount()
+    public function getViewsCount() : int
     {
         return $this->views_count;
     }

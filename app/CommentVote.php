@@ -4,6 +4,7 @@ namespace App;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
 
 class CommentVote extends Model
@@ -16,17 +17,17 @@ class CommentVote extends Model
         'value'
     ];
 
-    public function author(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function author(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'author_id');
     }
 
-    public function comment(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function comment(): HasOne
     {
         return $this->hasOne(Comment::class, 'id', 'comment_id');
     }
 
-    public function getValue()
+    public function getValue() : bool
     {
         return $this->value;
     }
@@ -38,12 +39,12 @@ class CommentVote extends Model
      * @param $commentId
      * @return boolean
      */
-    public static function hasVoted($value, $commentId)
+    public static function hasVoted($value, $commentId) : bool
     {
         if(Auth::check()) {
-            return CommentVote::where(['author_id' => Auth::user()->id, 'comment_id' => $commentId, 'value' => $value])->exists();
-        } else {
-            return false;
+            return self::where(['author_id' => Auth::user()->id, 'comment_id' => $commentId, 'value' => $value])->exists();
         }
+
+        return false;
     }
 }

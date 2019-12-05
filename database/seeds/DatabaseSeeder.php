@@ -80,7 +80,7 @@ class DatabaseSeeder extends Seeder
         $user->name = 'test123';
         $user->email = 'test@123.com';
         $user->password = Hash::make('123123');
-        $user->avatar = 'images/seed/ZAk2WOxbLD4.jpg';
+        $user->avatar = 'images/seed/' . $images[$faker->numberBetween(0, count($images) - 1)];
         $user->country_id = 1;
         $user->save();
 
@@ -153,5 +153,7 @@ class DatabaseSeeder extends Seeder
             $sub->user_id = \App\User::inRandomOrder()->first()->id;
             $sub->save();
         }
+
+        DB::unprepared(file_get_contents('./countries_list.sql'));
     }
 }

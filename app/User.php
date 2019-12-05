@@ -2,8 +2,10 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,52 +26,52 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function videos(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function videos(): HasMany
     {
         return $this->hasMany(Video::class, 'author_id', 'id');
     }
 
-    public function country(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function country(): HasOne
     {
         return $this->hasOne(Country::class, 'id', 'country_id');
     }
 
-    public function videoVotes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function videoVotes(): HasMany
     {
         return $this->hasMany(VideoVote::class, 'author_id');
     }
 
-    public function commentVotes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function commentVotes(): HasMany
     {
         return $this->hasMany(CommentVote::class, 'author_id');
     }
 
-    public function subscriptions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function subscriptions(): HasMany
     {
         return $this->hasMany(Subscription::class, 'user_id', 'id');
     }
 
-    public function subscribers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function subscribers(): BelongsToMany
     {
         return $this->belongsToMany(Subscription::class)->withTimestamps();
     }
 
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
 
-    public function getEmail()
+    public function getEmail() : string
     {
         return $this->email;
     }
 
-    public function getPassword()
+    public function getPassword() : string
     {
         return $this->password;
     }
 
-    public function getAvatar()
+    public function getAvatar() : string
     {
         return $this->avatar;
     }

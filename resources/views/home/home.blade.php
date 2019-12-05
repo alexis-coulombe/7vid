@@ -78,7 +78,7 @@
                             <h6>Most popular videos for <b>{{ $category->title  }}</b> - <a href="{{ route('category.index', ['name' => $category->title]) }}">View all</a></h6>
                         </div>
                     </div>
-                    @foreach($category->getVideos(12, 'views_count') as $video)
+                    @foreach($category->getVideos('views_count', 12) as $video)
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                             @include('shared.video.card')
                         </div>

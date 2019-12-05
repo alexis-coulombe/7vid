@@ -15,22 +15,22 @@ class Country extends Model
         'code'
     ];
 
-    public function getId()
+    public function getId() : int
     {
         return $this->id;
     }
 
-    public function getCountryName()
+    public function getCountryName() : string
     {
         return $this->country_name;
     }
 
-    public function getCountryCode()
+    public function getCountryCode() : string
     {
         return $this->country_code;
     }
 
-    public function getCode()
+    public function getCode() : string
     {
         return $this->code;
     }

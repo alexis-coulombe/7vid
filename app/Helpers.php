@@ -32,7 +32,7 @@ function time_elapsed_string($datetime, $full = false)
     return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
 
-function parseVideoDuration($seconds)
+function parseVideoDuration($seconds) : string
 {
     $hours = floor($seconds / 3600);
     $total = null;
