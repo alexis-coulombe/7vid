@@ -14,7 +14,7 @@
                     {{ method_field('put') }}
                     <div class="single-video-left">
                         <div class="single-video">
-                            <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' controls preload='auto' width="100%" poster="/{{ $video->thumbnail }}" data-setup="{}">
+                            <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' controls preload='auto' width="100%" poster="{{ route('cdn.img', ['path' => $video->thumbnail]) }}" data-setup="{}">
                                 <source src="/{{ $video->location }}" type="{{ $video->mime_type }}">
                                 <p class='vjs-no-js'>
                                     To view this video please enable JavaScript, and consider upgrading to a web browser that

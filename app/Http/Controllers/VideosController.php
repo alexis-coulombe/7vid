@@ -19,6 +19,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 
 class VideosController extends Controller
 {
@@ -223,9 +224,9 @@ class VideosController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return Response
+     * @return View
      */
-    public function show($id): Response
+    public function show($id): View
     {
         /** @var Video $video */
         $video = Video::find($id);
@@ -263,9 +264,9 @@ class VideosController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return Response
+     * @return Response | View
      */
-    public function edit($id): Response
+    public function edit($id)
     {
         /** @var Video $video */
         $video = Video::find($id);
@@ -327,7 +328,7 @@ class VideosController extends Controller
      * @return void
      * @throws \Exception
      */
-    public function destroy($id): void
+    public function destroy($id): Request
     {
         /** @var Video $video */
         $video = Video::find($id);

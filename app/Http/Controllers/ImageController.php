@@ -11,7 +11,7 @@ class ImageController extends Controller
     private $BASE_URL = 'app/img/';
     private $BASE_CACHE_URL = 'app/img/cache/';
 
-    private $BASE_AVATAR_URL = 'app/avatar/cache/';
+    private $BASE_AVATAR_URL = 'app/avatar/';
     private $BASE_AVATAR_CACHE_URL = 'app/avatar/cache/';
 
     public function show(Filesystem $filesystem, $path)

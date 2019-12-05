@@ -45,7 +45,7 @@
         <li class="nav-item dropdown no-arrow osahan-right-navbar-user">
             @if(Auth::check())
                 <a class="nav-link dropdown-toggle user-dropdown-link" href="{{ route('channel.index', ['userId' => Auth::user()->id]) }}">
-                    <img alt="Avatar" loading="lazy" src="/{{ Auth::user()->avatar }}">
+                    <img alt="Avatar" loading="lazy" src="{{ route('cdn.img.avatar', ['path' => Auth::user()->avatar]) }}">
                     {{ Auth::user()->name }}
                 </a>
             @else

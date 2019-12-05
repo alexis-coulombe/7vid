@@ -80,7 +80,7 @@ class DatabaseSeeder extends Seeder
         $user->name = 'test123';
         $user->email = 'test@123.com';
         $user->password = Hash::make('123123');
-        $user->avatar = 'images/seed/' . $images[$faker->numberBetween(0, count($images) - 1)];
+        $user->avatar = $images[$faker->numberBetween(0, count($images) - 1)];
         $user->country_id = 1;
         $user->save();
 
@@ -90,7 +90,7 @@ class DatabaseSeeder extends Seeder
             $user->name = $faker->name;
             $user->email = $faker->email;
             $user->password = Hash::make($faker->password);
-            $user->avatar = 'images/seed/' . $images[$faker->numberBetween(0, count($images) - 1)];
+            $user->avatar = $images[$faker->numberBetween(0, count($images) - 1)];
             $user->country_id = $faker->numberBetween(1, 100);
             $user->save();
         }
@@ -105,7 +105,7 @@ class DatabaseSeeder extends Seeder
             $video->duration = $faker->numberBetween(1, 6000);
             $video->extension = 'mp4';
             $video->location = 'videos/seed.mp4';
-            $video->thumbnail = 'images/seed/' . $images[$faker->numberBetween(0, count($images) - 1)];
+            $video->thumbnail = $images[$faker->numberBetween(0, count($images) - 1)];
             $video->frame_rate = 15;
             $video->mime_type = 'video/mp4';
             $video->views_count = $faker->numberBetween(1, 1000000);
@@ -153,7 +153,5 @@ class DatabaseSeeder extends Seeder
             $sub->user_id = \App\User::inRandomOrder()->first()->id;
             $sub->save();
         }
-
-        DB::unprepared(file_get_contents('./countries_list.sql'));
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use phpDocumentor\Reflection\Types\Integer;
-use \Ramsey\Uuid\Uuid;
+use Webpatser\Uuid\Uuid;
 
 class Video extends Model
 {
