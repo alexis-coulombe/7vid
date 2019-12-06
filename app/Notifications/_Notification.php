@@ -40,7 +40,7 @@ class _Notification extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray($notifiable): array
     {
         return [
             'data' => json_encode($this->data),

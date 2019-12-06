@@ -6,19 +6,19 @@
 </a>
 
 @php
-    $notifications = Auth::user()->notifications()->limit(5)->get();
+    $date = new \DateTime();
+    $date->modify('-1 week');
+    $formatted_date = $date->format('Y-m-d H:i:s');
+
+    $notifications = Auth::user()->notifications()->where('created_at', '>',$formatted_date)->limit(5)->get();
 @endphp
 
 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
     @foreach($notifications as $notification)
-        @php $notification = json_decode($notification->data['data']) @endphp
+        @php $notification = json_decode($notification->data['data']); @endphp
         <div class="dropdown-item">
             <button class="btn btn-sm btn-primary">Hide</button>
             <a href="{{ isset($notification->link) ?? '#' }}">{{ $notification->desc }}</a>
         </div>
     @endforeach
-    <div class="dropdown-divider"></div>
-    <div class="dropdown-item">
-        <a href="#">See more</a>
-    </div>
 </div>
