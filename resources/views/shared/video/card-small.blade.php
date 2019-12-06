@@ -1,7 +1,9 @@
 <div class="video-card video-card-list">
     <div class="video-card-image video-card-image-small">
         <a class="play-icon" aria-label="Play video" href="{{ route('video.show', ['video' => $video->id]) }}"><i class="fas fa-play-circle"></i></a>
-        <a href="{{ route('video.show', ['video' => $video->id]) }}" aria-label="View video"><img class="img-fluid" loading="lazy" src="/{{ $video->thumbnail }}" alt=""></a>
+        <a href="{{ route('video.show', ['video' => $video->id]) }}" aria-label="View video">
+            <img class="img-fluid" loading="lazy" src="{{ getImage(route('cdn.img'), $video->thumbnail) }}" alt="">
+        </a>
         <div class="time">{{ parseVideoDuration($video->duration) }}</div>
     </div>
     <div class="video-card-body">

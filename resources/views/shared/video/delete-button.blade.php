@@ -3,7 +3,7 @@
             <i class="fas fa-trash"></i> Delete this video
         </button>
 
-        <form id="delete" action="{{ route('video.destroy', ['id' => $video->id]) }}" method="POST">
+        <form id="delete" action="{{ route('video.destroy', ['video' => $video->id]) }}" method="POST">
             {{ method_field('delete') }}
             {{ csrf_field() }}
         </form>

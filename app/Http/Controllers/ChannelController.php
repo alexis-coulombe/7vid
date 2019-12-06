@@ -26,7 +26,7 @@ class ChannelController extends Controller
     {
         $author = User::find($userId);
 
-        if ($author == null) {
+        if ($author === null) {
             abort(404);
         }
 
@@ -34,24 +34,21 @@ class ChannelController extends Controller
     }
 
     /**
-     * Show history of connected user
+     * Channel videos
+     *
      * @param $userId
      * @return Factory|View
      */
-    public function history($userId)
+    public function videos($userId)
     {
-        if($userId != Auth::user()->id) {
-            return redirect(route('channel.history', ['userId' => Auth::user()->id]));
+        $author = User::find($userId);
+
+        if ($author === null) {
+            abort(404);
         }
 
-        $videos_id = Views::where('author_id', '=', $userId)->select('video_id')->limit(50)->get();
-        $videos = [];
-
-        if(count($videos_id) > 0) {
-            $videos = Video::whereIn('id', $videos_id)->orderBy('updated_at', 'DESC')->get();
-        }
-
-        return view('channel.history')->with('videos', $videos);
+        return view('channel.videos')
+            ->with('author', $author);
     }
 
     /**
@@ -66,24 +63,24 @@ class ChannelController extends Controller
             $exclude = request()->input('exclude') ?: [];
             $users = User::withCount('videos')->latest('videos_count')->take(3)->whereNotIn('id', $exclude)->get();
 
-            foreach($users as $user){
-                if(!count($user->videos) > 0){
+            foreach ($users as $user) {
+                if ((!count($user->videos)) > 0) {
                     return 'Done';
                 }
             }
 
             return view('shared.video.scroll.result')->with('channels', $users);
-        } else {
-            return response(405);
         }
+
+        return response(405);
     }
 
     /**
      * Subscribe to another user
      *
-     * @return RedirectResponse
+     * @return string
      */
-    public function subscribe()
+    public function subscribe(): string
     {
         if (request()->ajax() && Auth::check()) {
             $id = request()->input('id');
@@ -95,7 +92,7 @@ class ChannelController extends Controller
             /** @var User $channel */
             $channel = User::find($id);
 
-            if($channel) {
+            if ($channel) {
                 if (!Auth::user()->isSubscribed($channel->id)) {
                     Auth::user()->subscribe($channel->id);
                     $text = 'Unsubscribe';
@@ -105,12 +102,12 @@ class ChannelController extends Controller
                 }
 
                 return $text;
-            } else {
-                return response(400);
             }
-        } else {
-            return response(405);
+
+            return response(400);
         }
+
+        return response(405);
     }
 
 }

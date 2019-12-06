@@ -52,16 +52,7 @@
                             </div>
                             <div class="input-group">
                                 <label for="password_confirmation">Confirm your password
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm your password" required>
-                                </label>
-                            </div>
-                            <div class="input-group">
-                                <label for="country">Where are you ?
-                                   <select name="country" class="custom-select">
-                                       @foreach(\App\Country::all() as $country)
-                                            <option value="{{ $country->getId() }}">{{ $country->getCountryName() }}</option>
-                                       @endforeach
-                                   </select>
+                                    <input id="password-confirm" type="password" class="form-control{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}" name="password_confirmation" placeholder="Confirm your password" required>
                                 </label>
                             </div>
                             <div class="input-group">
@@ -98,6 +89,7 @@
                         <div class="text-center mt-5">
                             <p class="light-gray">Already have an account? <a href="{{ route('login') }}" aria-label="Sign In">Sign In</a></p>
                         </div>
+                        <a href="{{ route('register.google') }}">Register with google</a>
                     </div>
                 </div>
                 @include('auth.features')

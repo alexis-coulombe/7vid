@@ -4,6 +4,7 @@ namespace App;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
 
 class VideoVote extends Model
@@ -16,17 +17,17 @@ class VideoVote extends Model
         'value'
     ];
 
-    public function author()
+    public function author(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'author_id');
     }
 
-    public function video()
+    public function video(): HasOne
     {
         return $this->hasOne(Video::class, 'id', 'video_id');
     }
 
-    public function getValue()
+    public function getValue() : bool
     {
         return $this->value;
     }
@@ -38,12 +39,12 @@ class VideoVote extends Model
      * @param $videoId
      * @return boolean
      */
-    public static function hasVoted($value, $videoId)
+    public static function hasVoted($value, $videoId): bool
     {
         if(Auth::check()) {
-            return VideoVote::where(['author_id' => Auth::user()->id, 'video_id' => $videoId, 'value' => $value])->exists();
-        } else {
-            return false;
+            return self::where(['author_id' => Auth::user()->id, 'video_id' => $videoId, 'value' => $value])->exists();
         }
+
+        return false;
     }
 }

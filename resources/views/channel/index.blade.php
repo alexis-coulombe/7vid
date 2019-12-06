@@ -6,17 +6,8 @@
 
 @section('content')
     <div class="single-channel-page">
-        <div class="single-channel-image">
-            <img class="img-fluid" alt="" src="{{ asset('assets/img/channel-banner.png') }}">
-            <div class="channel-profile">
-                <img class="channel-profile-img" alt="" src="/{{ $author->avatar }}">
-                @if(Auth::check() && Auth::id() === $author->id)
-                    <div class="social hidden-xs">
-                        <a href="#">Edit channel page</a>
-                    </div>
-                @endif
-            </div>
-        </div>
+        @include('shared.channel.image')
+
         <div class="single-channel-nav">
             @include('shared.channel.navbar')
         </div>
@@ -39,11 +30,7 @@
                                 <h6>Videos</h6>
                             </div>
                         </div>
-                        @foreach($author->videos as $video)
-                            <div class="col-xl-3 col-sm-6 mb-3">
-                                @include('shared.video.card')
-                            </div>
-                        @endforeach
+                        Index page todo CMS
                     @else
                         <div class="col-sm-3 col-md-3">
                             <h2>Empty !</h2>

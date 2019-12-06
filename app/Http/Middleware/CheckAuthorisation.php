@@ -30,7 +30,7 @@ class CheckAuthorisation
 
                 if ($settings->getPrivate()) {
                     if (!Auth::check() || (Auth::check() && $video->author->id !== Auth::user()->id)) {
-                        return redirect(route('home'))->withErrors('This video is marked private');
+                        return redirect()->back()->withErrors('This video is marked private');
                     }
                 }
             }

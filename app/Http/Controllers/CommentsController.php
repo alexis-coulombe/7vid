@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\CommentVote;
+use App\User;
+use App\Video;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -20,7 +22,7 @@ class CommentsController extends Controller
      * @return Response
      * @throws ValidationException
      */
-    public function store(Request $request)
+    public function store(Request $request): Response
     {
         $this->validate($request, [
             'video_id' => 'required|min:1',
@@ -90,7 +92,7 @@ class CommentsController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): ?Response
     {
         //
     }
@@ -101,7 +103,7 @@ class CommentsController extends Controller
      * @param int $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($id): Response
     {
         $comment = Comment::find($id);
 

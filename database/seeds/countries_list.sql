@@ -1,5 +1,6 @@
-INSERT INTO countries (`country_code`, `country_name`, `code`)
+INSERT INTO 7vid.countries (`country_code`, `country_name`, `code`)
 VALUES
+('NUL', 'Not specified', 'XX'),
 ('AFG','Afghanistan','AF'),
 ('ALA','Åland','AX'),
 ('ALB','Albania','AL'),

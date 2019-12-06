@@ -116,7 +116,7 @@ Version: 1.0
     }
 
     // Tooltip
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-toggle="tooltip"]').tooltip();
 
     // Scroll to top button appear
     $(document).on('scroll', function() {
@@ -173,5 +173,4 @@ Version: 1.0
 
         element.css('background-image', 'url("' + image + '")');
     }
-
 })(jQuery); // End of use strict

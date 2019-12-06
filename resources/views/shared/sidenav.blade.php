@@ -16,10 +16,16 @@
         </a>
     </li>
     @if(Auth::check())
-            <li class="nav-item {{ \Illuminate\Support\Facades\Route::currentRouteName() === 'channel.history' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('channel.history', ['userId' => Auth::user()->id]) }}">
+            <li class="nav-item {{ \Illuminate\Support\Facades\Route::currentRouteName() === 'home.history' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('home.history') }}">
                     <i class="fas fa-book-open"></i>
                     <span>Your history</span>
+                </a>
+            </li>
+            <li class="nav-item {{ \Illuminate\Support\Facades\Route::currentRouteName() === 'home.liked' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('home.liked') }}">
+                    <i class="fas fa-heart"></i>
+                    <span>Videos you liked</span>
                 </a>
             </li>
         @php $subscriptions = Auth::user()->subscriptions; @endphp
@@ -30,7 +36,8 @@
                     @foreach($subscriptions as $subscription)
                         <li>
                             <a href="{{ route('channel.index', ['userId' => $subscription->channel->id]) }}">
-                                <img class="img-fluid" alt="" src="/{{ $subscription->channel->avatar }}"> {{ $subscription->channel->name }}
+                                <img class="img-fluid" alt="" src="{{ getImage(route('cdn.img.avatar'), $subscription->channel->avatar) }}">
+                                {{ $subscription->channel->name }}
                             </a>
                         </li>
                     @endforeach

@@ -34,6 +34,6 @@ class CreateCountriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('countries');
+        //Schema::dropIfExists('countries');
     }
 }

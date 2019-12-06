@@ -7,7 +7,7 @@ use App\User;
 use App\Video;
 use Illuminate\Http\Request;
 
-class categoryController extends Controller
+class CategoryController extends Controller
 {
     public function index($name)
     {

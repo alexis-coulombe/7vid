@@ -10,7 +10,7 @@
             <div class="col-md-9">
                 <div class="single-video-left">
                     <div class="single-video">
-                        <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' width="100%" controls preload="auto" poster="/{{ $video->thumbnail }}" data-setup="{}">
+                        <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' width="100%" controls preload="auto" poster="{{ route('cdn.img', ['path' => $video->thumbnail]) }}" data-setup="{}">
                             <source src="/{{ $video->location }}" type="{{ $video->mime_type }}">
                             <p class='vjs-no-js'>
                                 To view this video please enable JavaScript, and consider upgrading to a web browser that
@@ -25,7 +25,7 @@
                             </div>
                         @endif
                         <img class="img-fluid" loading="lazy" src="/{{ $video->author->avatar }}" alt="">
-                        <p><a href="{{ route('channel.index', ['id' => $video->author->id]) }}" aria-label="View channel"><strong>{{ $video->author->name }}</strong></a></p>
+                        <p><a href="{{ route('channel.index', ['userId' => $video->author->id]) }}" aria-label="View channel"><strong>{{ $video->author->name }}</strong></a></p>
                         <small>Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
                     </div>
                     <div class="single-video-title box mb-3">
@@ -70,6 +70,15 @@
                         @endif
 
                         @include('comment.show', $data = ['comments' => $comments])
+
+                        <div id="scrolling" data-url="{{ route('home.scroll') }}" data-type="comment" data-video-id="{{ $video->id }}"></div>
+                        <div id="loading-spinner" style="display: none;">
+                            <div class="row">
+                                <div class="col text-center">
+                                    @include('shared.misc.loading-spinner')
+                                </div>
+                            </div>
+                        </div>
                     @endif
                 </div>
             </div>

@@ -9,33 +9,35 @@
 namespace App;
 
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
     public $timestamps = false;
 
-    public function videos()
+    public function videos(): HasMany
     {
         return $this->hasMany(Video::class, 'category_id', 'id');
     }
 
-    public function getTitle()
+    public function getTitle() : string
     {
         return $this->title;
     }
 
-    public function getIcon()
+    public function getIcon() : string
     {
         return $this->icon;
     }
 
-    public function getVideosCount()
+    public function getVideosCount() : int
     {
         return $this->videos->count();
     }
 
-    public function getVideos($limit = 16, $order)
+    public function getVideos($order, $limit = 16): Collection
     {
         return $this->videos()->where('category_id', '=', $this->id)->limit($limit)->orderBy($order, 'DESC')->get();
     }

@@ -27,6 +27,7 @@
     },
     "dependencies": {
         "jquery.easing": "^1.4.1",
+        "password-strength-meter": "^1.2.2",
         "react": "^16.6.3",
         "react-dom": "^16.6.3",
         "trianglify": "^2.0.0",
