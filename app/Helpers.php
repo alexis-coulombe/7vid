@@ -45,3 +45,12 @@ function parseVideoDuration($seconds) : string
 
     return $total;
 }
+
+function getImage($route, $image, $params = []){
+    $signKey = config('app.key');
+
+    $urlBuilder = \League\Glide\Urls\UrlBuilderFactory::create($route, $signKey);
+    $url = $urlBuilder->getUrl($image);
+
+    return $url;
+}

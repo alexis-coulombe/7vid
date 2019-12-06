@@ -2,7 +2,7 @@
     <div class="video-card-image video-card-image-small">
         <a class="play-icon" aria-label="Play video" href="{{ route('video.show', ['video' => $video->id]) }}"><i class="fas fa-play-circle"></i></a>
         <a href="{{ route('video.show', ['video' => $video->id]) }}" aria-label="View video">
-            <img class="img-fluid" loading="lazy" src="{{ route('cdn.img', ['path' => $video->thumbnail]) }}" alt="">
+            <img class="img-fluid" loading="lazy" src="{{ getImage(route('cdn.img'), $video->thumbnail) }}" alt="">
         </a>
         <div class="time">{{ parseVideoDuration($video->duration) }}</div>
     </div>

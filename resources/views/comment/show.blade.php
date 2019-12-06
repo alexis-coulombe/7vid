@@ -35,7 +35,7 @@
             @endif
         </div>
         <a href="{{ route('channel.index', ['userId' => $comment->author_id]) }}">
-            <img class="img-fluid" loading="lazy" src="{{ route('cdn.img.avatar', ['path' => $comment->author->avatar]) }}" alt="{{ $comment->author->name }}">
+            <img class="img-fluid" loading="lazy" src="{{ getImage(route('cdn.img.avatar'), $comment->author->avatar) }}" alt="{{ $comment->author->name }}">
         </a>
         <p>
             <a href="{{ route('channel.index', ['userId' => $comment->author_id]) }}">

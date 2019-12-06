@@ -12,8 +12,8 @@
 */
 
 // Images CDN
-Route::get('/img/{path}', 'ImageController@show')->where('path', '.*')->name('cdn.img');
-Route::get('/avatar/{path}', 'ImageController@showAvatar')->where('path', '.*')->name('cdn.img.avatar');
+Route::get('/img/{path?}', 'ImageController@show')->where('path', '.*')->name('cdn.img');
+Route::get('/avatar/{path?}', 'ImageController@showAvatar')->where('path', '.*')->name('cdn.img.avatar');
 
 // Ajax routes
 Route::post('/', 'HomeController@scroll')->name('home.scroll');

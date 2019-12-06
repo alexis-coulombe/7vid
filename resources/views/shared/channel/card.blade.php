@@ -3,7 +3,7 @@
 <div class="channels-card">
     <div class="channels-card-image">
         <a href="{{ route('channel.index', ['userId' => $channel->id]) }}">
-            <img src="{{ route('cdn.img.avatar', ['path' => $channel->avatar]) }}" alt="Avatar">
+            <img src="{{ getImage(route('cdn.img.avatar'), $channel->avatar) }}" alt="Avatar">
         </a>
         @if(Auth::check() && Auth::id() !== $channel->id)
             @include('shared.video.subscribe')
