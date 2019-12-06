@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Comment;
 use App\Country;
+use App\Notifications\_Notification;
 use App\User;
 use App\Video;
 use App\VideoSetting;

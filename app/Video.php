@@ -70,7 +70,7 @@ class Video extends Model
         return $this->hasOne(VideoSetting::class, 'video_id');
     }
 
-    public function getId() : int
+    public function getId() : string
     {
         return $this->id;
     }

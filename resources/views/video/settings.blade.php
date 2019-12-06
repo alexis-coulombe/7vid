@@ -24,7 +24,7 @@
                         </div>
                         <div class="single-video-author box mb-3">
                             <img class="img-fluid" loading="lazy" src="/{{ $video->author->avatar }}" alt="">
-                            <p><a href="{{ route('channel.index', ['id' => $video->author->id]) }}" aria-label="View channel"><strong>{{ $video->author->name }}</strong></a></p>
+                            <p><a href="{{ route('channel.index', ['userId' => $video->author->id]) }}" aria-label="View channel"><strong>{{ $video->author->name }}</strong></a></p>
                             <small>Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
                         </div>
                         <div class="single-video-title box mb-3">
