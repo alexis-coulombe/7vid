@@ -11,12 +11,14 @@
 |
 */
 
+// Dashboard routes
+Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index')->middleware('auth');
+
 // Images CDN
 Route::get('/img/{path?}', 'ImageController@show')->where('path', '.*')->name('cdn.img');
 Route::get('/avatar/{path?}', 'ImageController@showAvatar')->where('path', '.*')->name('cdn.img.avatar');
 
 // Ajax routes
-Route::post('/', 'HomeController@scroll')->name('home.scroll');
 Route::post('/', 'HomeController@scroll')->name('home.scroll');
 Route::post('video/vote', 'VideosController@vote')->name('video.vote')->middleware('auth');
 Route::post('comment/vote', 'CommentsController@vote')->name('comment.vote')->middleware('auth');

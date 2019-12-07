@@ -1,5 +1,5 @@
 <ul class="sidebar navbar-nav">
-    @if(!Auth::check())
+    @guest
         <li class="nav-item">
             <a class="nav-link" href="{{ route('login') }}">
                 <small>
@@ -8,14 +8,14 @@
                 </small>
             </a>
         </li>
-    @endif
+    @endguest
     <li class="nav-item separator {{ \Illuminate\Support\Facades\Route::currentRouteName() === 'home' ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('home') }}">
             <i class="fas fa-fw fa-home"></i>
             <span>Home</span>
         </a>
     </li>
-    @if(Auth::check())
+    @auth
             <li class="nav-item {{ \Illuminate\Support\Facades\Route::currentRouteName() === 'home.history' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('home.history') }}">
                     <i class="fas fa-book-open"></i>
@@ -26,6 +26,12 @@
                 <a class="nav-link" href="{{ route('home.liked') }}">
                     <i class="fas fa-heart"></i>
                     <span>Videos you liked</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('dashboard.index') }}">
+                    <i class="fas fa-columns"></i>
+                    <span>Dashboard</span>
                 </a>
             </li>
         @php $subscriptions = Auth::user()->subscriptions; @endphp
@@ -44,5 +50,5 @@
                 </ul>
             </li>
         @endif
-    @endif
+    @endauth
 </ul>
