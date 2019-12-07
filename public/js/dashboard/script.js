@@ -13,7 +13,7 @@
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 
-(function() {
+(function () {
     isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 
     if (isWindows) {
@@ -37,13 +37,13 @@ toggle_initialized = false;
 seq = 0, delays = 80, durations = 500;
 seq2 = 0, delays2 = 80, durations2 = 500;
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     if ($('.full-screen-map').length == 0 && $('.bd-docs').length == 0) {
         // On click navbar-collapse the menu will be white not transparent
-        $('.collapse').on('show.bs.collapse', function() {
+        $('.collapse').on('show.bs.collapse', function () {
             $(this).closest('.navbar').removeClass('navbar-transparent').addClass('bg-white');
-        }).on('hide.bs.collapse', function() {
+        }).on('hide.bs.collapse', function () {
             $(this).closest('.navbar').addClass('navbar-transparent').removeClass('bg-white');
         });
     }
@@ -59,14 +59,14 @@ $(document).ready(function() {
         $(window).on('scroll', paperDashboard.checkScrollForTransparentNavbar)
     }
 
-    $('.form-control').on("focus", function() {
+    $('.form-control').on("focus", function () {
         $(this).parent('.input-group').addClass("input-group-focus");
-    }).on("blur", function() {
+    }).on("blur", function () {
         $(this).parent(".input-group").removeClass("input-group-focus");
     });
 
     // Activate bootstrapSwitch
-    $('.bootstrap-switch').each(function() {
+    $('.bootstrap-switch').each(function () {
         $this = $(this);
         data_on_label = $this.data('on-label') || '';
         data_off_label = $this.data('off-label') || '';
@@ -78,27 +78,27 @@ $(document).ready(function() {
     });
 });
 
-$(document).on('click', '.navbar-toggle', function() {
+$(document).on('click', '.navbar-toggle', function () {
     $toggle = $(this);
 
     if (paperDashboard.misc.navbar_menu_visible == 1) {
         $('html').removeClass('nav-open');
         paperDashboard.misc.navbar_menu_visible = 0;
-        setTimeout(function() {
+        setTimeout(function () {
             $toggle.removeClass('toggled');
             $('#bodyClick').remove();
         }, 550);
 
     } else {
-        setTimeout(function() {
+        setTimeout(function () {
             $toggle.addClass('toggled');
         }, 580);
 
         div = '<div id="bodyClick"></div>';
-        $(div).appendTo('body').click(function() {
+        $(div).appendTo('body').click(function () {
             $('html').removeClass('nav-open');
             paperDashboard.misc.navbar_menu_visible = 0;
-            setTimeout(function() {
+            setTimeout(function () {
                 $toggle.removeClass('toggled');
                 $('#bodyClick').remove();
             }, 550);
@@ -109,7 +109,7 @@ $(document).on('click', '.navbar-toggle', function() {
     }
 });
 
-$(window).resize(function() {
+$(window).resize(function () {
     // reset the seq for charts drawing animations
     seq = seq2 = 0;
 
@@ -129,12 +129,12 @@ paperDashboard = {
         navbar_menu_visible: 0
     },
 
-    initMinimizeSidebar: function() {
+    initMinimizeSidebar: function () {
         if ($('.sidebar-mini').length != 0) {
             sidebar_mini_active = true;
         }
 
-        $('#minimizeSidebar').click(function() {
+        $('#minimizeSidebar').click(function () {
             var $btn = $(this);
 
             if (sidebar_mini_active == true) {
@@ -148,18 +148,18 @@ paperDashboard = {
             }
 
             // we simulate the window Resize so the charts will get updated in realtime.
-            var simulateWindowResize = setInterval(function() {
+            var simulateWindowResize = setInterval(function () {
                 window.dispatchEvent(new Event('resize'));
             }, 180);
 
             // we stop the simulation of Window Resize after the animations are completed
-            setTimeout(function() {
+            setTimeout(function () {
                 clearInterval(simulateWindowResize);
             }, 1000);
         });
     },
 
-    showSidebarMessage: function(message) {
+    showSidebarMessage: function (message) {
         try {
             $.notify({
                 icon: "now-ui-icons ui-1_bell-53",
@@ -180,41 +180,5 @@ paperDashboard = {
 
 };
 
-let userChart = $('#chartEmail');
-var options = {
-    responsive: true,
-    legend: {
-        display: true,
-        position: "bottom",
-        labels: {
-            fontColor: "#333",
-            fontSize: 16
-        }
-    }
-};
-console.log(JSON.parse(JSON.stringify(userChart.data('countries'))));
-var data1 = {
-    labels: JSON.parse(JSON.stringify(userChart.data('countries'))),
-    datasets: [
-        {
-            label: "TeamA Score",
-            data: [20,20,20,20,20],
-            backgroundColor: [
-                "#de4c48",
-                "#bbff66",
-                "#dc7231",
-                "#707bff",
-                "#5cff77",
-                "#7a7477"
-            ],
-            borderWidth: [1, 1, 1, 1, 1]
-        }
-    ]
-};
-
-var chart1 = new Chart(userChart, {
-    type: "pie",
-    data: data1,
-    options: options
-});
+ClassicEditor.create(document.querySelector('#editor'));
 

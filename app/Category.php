@@ -22,17 +22,17 @@ class Category extends Model
         return $this->hasMany(Video::class, 'category_id', 'id');
     }
 
-    public function getTitle() : string
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    public function getIcon() : string
+    public function getIcon(): string
     {
         return $this->icon;
     }
 
-    public function getVideosCount() : int
+    public function getVideosCount(): int
     {
         return $this->videos->count();
     }

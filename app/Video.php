@@ -21,7 +21,7 @@ class Video extends Model
         'thumbnail'
     ];
 
-    protected static function boot() : void
+    protected static function boot(): void
     {
         parent::boot();
 
@@ -70,52 +70,52 @@ class Video extends Model
         return $this->hasOne(VideoSetting::class, 'video_id');
     }
 
-    public function getId() : string
+    public function getId(): string
     {
         return $this->id;
     }
 
-    public function getTitle() : string
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    public function getExtension() : string
+    public function getExtension(): string
     {
         return $this->extension;
     }
 
-    public function getDuration() : int
+    public function getDuration(): int
     {
         return $this->duration;
     }
 
-    public function getFrameRate() : int
+    public function getFrameRate(): int
     {
         return $this->frame_rate;
     }
 
-    public function getMimeType() : string
+    public function getMimeType(): string
     {
         return $this->mime_type;
     }
 
-    public function getLocation() : string
+    public function getLocation(): string
     {
         return $this->location;
     }
 
-    public function getThumbnail() : string
+    public function getThumbnail(): string
     {
         return $this->thumbnail;
     }
 
-    public function getViewsCount() : int
+    public function getViewsCount(): int
     {
         return $this->views_count;
     }

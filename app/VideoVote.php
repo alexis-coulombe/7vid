@@ -27,7 +27,7 @@ class VideoVote extends Model
         return $this->hasOne(Video::class, 'id', 'video_id');
     }
 
-    public function getValue() : bool
+    public function getValue(): bool
     {
         return $this->value;
     }
@@ -41,7 +41,7 @@ class VideoVote extends Model
      */
     public static function hasVoted($value, $videoId): bool
     {
-        if(Auth::check()) {
+        if (Auth::check()) {
             return self::where(['author_id' => Auth::user()->id, 'video_id' => $videoId, 'value' => $value])->exists();
         }
 

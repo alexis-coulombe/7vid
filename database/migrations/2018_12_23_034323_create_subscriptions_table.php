@@ -11,9 +11,9 @@ class CreateSubscriptionsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('subscriptions', function (Blueprint $table) {
+        Schema::create('subscriptions', static function (Blueprint $table) {
             $table->unsignedInteger('author_id');
             $table->foreign('author_id')->references('id')->on('users');
             $table->index('author_id');
@@ -31,7 +31,7 @@ class CreateSubscriptionsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('subscriptions');
     }

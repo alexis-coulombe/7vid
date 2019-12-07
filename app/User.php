@@ -57,22 +57,22 @@ class User extends Authenticatable
         return Subscription::where(['author_id' => $this->id])->get();
     }
 
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function getEmail() : string
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function getPassword() : string
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    public function getAvatar() : string
+    public function getAvatar(): string
     {
         return $this->avatar;
     }
