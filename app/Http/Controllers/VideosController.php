@@ -210,15 +210,19 @@ class VideosController extends Controller
 
         /** @var User $author */
         $author = $video->author;
-        $subscribers = $author->subscribers();
+        $subscribers = $author->subscribers;
 
-        /** @var User $subscriber */
-        foreach($subscribers as $subscriber){
-            $user = User::find($subscriber);
-            $user->notify(new _Notification());
+        if(count($subscribers) > 0) {
+            /** @var User $subscriber */
+            foreach ($subscribers as $subscriber) {
+                $subscriber->notify(new _Notification([
+                    'desc' => $author->getName() . ' uploaded a video',
+                    'link' => route('video.show', ['video' => $video->getId()])
+                ]));
+            }
         }
 
-        return redirect(route('video.show', ['video' => $video->ìd]))->with('success', 'Your video as been shared.');
+        return redirect(route('video.show', ['video' => $video->getId()]))->with('success', 'Your video as been shared.');
     }
 
     /**
