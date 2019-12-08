@@ -34,7 +34,12 @@ class User extends Authenticatable
 
     public function country(): HasOne
     {
-        return $this->hasOne(Country::class, 'id', 'country_id');
+        return $this->hasOne(Country::class, 'country_id', 'id');
+    }
+
+    public function setting(): HasOne
+    {
+        return $this->hasOne(ChannelSetting::class, 'channel_id', 'id');
     }
 
     public function videoVotes(): HasMany

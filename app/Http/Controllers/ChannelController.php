@@ -60,15 +60,15 @@ class ChannelController extends Controller
     public function about($userId)
     {
         $author = User::find($userId);
+        $setting = $author->setting;
 
         if ($author === null) {
             abort(404);
         }
 
-        return view('channel.about')
-            ->with('author', $author);
+        return view('channel.about')->with('author', $author)
+            ->with('setting', $setting);
     }
-
 
     /**
      * Infinite scroll for history page

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\ChannelSetting;
 use App\Comment;
 use App\Country;
 use App\Notifications\_Notification;
@@ -22,6 +23,24 @@ class DashboardController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
+        /** @var ChannelSetting $setting */
+        $setting = $user->setting;
+
+        if (request()->isMethod('POST')) {
+            $setting = $user->setting;
+
+            if (!isset($setting)) {
+                $setting = new ChannelSetting();
+                $setting->channel_id = $user->id;
+            }
+
+            if (request('about')) {
+                $setting->about = request('about');
+            }
+            $user->setting = $setting;
+            $setting->save();
+        }
+
         $videos = $user->videos;
         $subscribers = $user->subscribers();
         $totalViews = 0;
@@ -34,6 +53,6 @@ class DashboardController extends Controller
 
         return view('dashboard.index')->with('totalViews', $totalViews)
             ->with('videos', $videos)->with('subscribers', $subscribers)
-            ->with('user', $user);
+            ->with('user', $user)->with('setting', $setting);
     }
 }

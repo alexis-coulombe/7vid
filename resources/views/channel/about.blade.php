@@ -16,15 +16,17 @@
                 <div class="row">
                     <h1 class="h2 col-lg-12">About {{ $author->name }}</h1>
                     <hr>
-                    <p class="text-justify col-lg-6">
-                        Prepare for the Recruitment drive of product
-                        based companies like Microsoft, Amazon, Adobe
-                        etc with a free online placement preparation
-                        course. The course focuses on various MCQ's
-                        & Coding question likely to be asked in the
-                        interviews & make your upcoming placement
-                        season efficient and successful.
-                    </p>
+                    <div class="col-lg-6">
+                        @if($setting)
+                            {!! $setting->getAbout() !!}
+                        @else
+                            No description provided.
+                            <br>
+                            @if(Auth::check() && $author->id === Auth::user()->id)
+                                <b>Write one <a href="{{ route('dashboard.index') }}">in your dashboard</a></b>
+                            @endif
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

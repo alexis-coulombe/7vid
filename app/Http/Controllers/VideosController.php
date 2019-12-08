@@ -314,7 +314,7 @@ class VideosController extends Controller
         }
 
         /** @var VideoSetting $setting */
-        $setting = VideoSetting::where(['video_id' => $video->getId()])->first();
+        $setting = $video->setting;
 
         $setting->allow_comments = $request->input('allow_comments') ? 1 : 0;
         $setting->allow_votes = $request->input('allow_votes') ? 1 : 0;
