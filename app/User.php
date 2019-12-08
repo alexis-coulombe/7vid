@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -33,7 +34,12 @@ class User extends Authenticatable
 
     public function country(): HasOne
     {
-        return $this->hasOne(Country::class, 'id', 'country_id');
+        return $this->hasOne(Country::class, 'country_id', 'id');
+    }
+
+    public function setting(): HasOne
+    {
+        return $this->hasOne(ChannelSetting::class, 'channel_id', 'id');
     }
 
     public function videoVotes(): HasMany
@@ -51,27 +57,27 @@ class User extends Authenticatable
         return $this->hasMany(Subscription::class, 'user_id', 'id');
     }
 
-    public function subscribers(): BelongsToMany
+    public function subscribers(): Collection
     {
-        return $this->belongsToMany(Subscription::class)->withTimestamps();
+        return Subscription::where(['author_id' => $this->id])->get();
     }
 
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function getEmail() : string
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function getPassword() : string
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    public function getAvatar() : string
+    public function getAvatar(): string
     {
         return $this->avatar;
     }

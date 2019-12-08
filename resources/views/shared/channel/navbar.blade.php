@@ -13,8 +13,8 @@
             <li class="nav-item {{ \Illuminate\Support\Facades\Route::currentRouteName() === 'channel.videos' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('channel.videos', ['userId' => $author->id]) }}">Videos</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
+            <li class="nav-item {{ \Illuminate\Support\Facades\Route::currentRouteName() === 'channel.about' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('channel.about', ['userId' => $author->id]) }}">About</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

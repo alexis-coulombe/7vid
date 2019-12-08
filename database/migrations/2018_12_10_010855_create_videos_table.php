@@ -11,9 +11,9 @@ class CreateVideosTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('videos', function (Blueprint $table) {
+        Schema::create('videos', static function (Blueprint $table) {
             $table->primary('id');
             $table->uuid('id');
 
@@ -45,7 +45,7 @@ class CreateVideosTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('videos');
     }

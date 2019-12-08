@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Alexi
- * Date: 2018-12-18
- * Time: 14:23
- */
 
 namespace App;
-
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,7 +24,7 @@ class Comment extends Model
         return $this->hasMany(CommentVote::class, 'comment_id');
     }
 
-    public function getBody() : string
+    public function getBody(): string
     {
         return $this->body;
     }

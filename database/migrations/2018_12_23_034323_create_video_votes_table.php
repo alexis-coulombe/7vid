@@ -11,9 +11,9 @@ class CreateVideoVotesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('video_votes', function (Blueprint $table) {
+        Schema::create('video_votes', static function (Blueprint $table) {
             $table->increments('id');
 
             $table->uuid('video_id');
@@ -33,7 +33,7 @@ class CreateVideoVotesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('video_votes');
     }
