@@ -7,7 +7,7 @@
 @section('content')
     <div class="video-block section-padding">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-10">
                 <div class="single-video-left">
                     <div class="single-video">
                         <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' width="100%" controls preload="auto" poster="{{ route('cdn.img', ['path' => $video->thumbnail]) }}" data-setup="{}">
@@ -82,7 +82,7 @@
                     @endif
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="single-video-right">
                     <div class="row">
                         <div class="col-md-12">
@@ -93,7 +93,7 @@
                         <div class="col-md-12">
                             @if(count($relatedVideos) > 0)
                                 @foreach($relatedVideos as $video)
-                                    @include('shared.video.card-small')
+                                    @include('shared.video.card')
                                 @endforeach
                             @endif
                         </div>

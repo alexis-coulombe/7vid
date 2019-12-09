@@ -21,9 +21,13 @@ class HomeController extends Controller
     public function index()
     {
         $newVideos = Video::orderBy('created_at', 'DESC')->limit(16)->get();
-        $randomChannels = User::inRandomOrder()->limit(4)->get();
         $popularCategories = Category::withCount('videos')->latest('videos_count')->take(3)->get();
 
+        if(Auth::check()){
+            $randomChannels = User::inRandomOrder()->where('id', '<>', Auth::user()->id)->limit(4)->get();
+        } else {
+            $randomChannels = User::inRandomOrder()->limit(4)->get();
+        }
         return view('home.home')->with('newVideos', $newVideos)
             ->with('randomChannels', $randomChannels)
             ->with('categories', $popularCategories);
