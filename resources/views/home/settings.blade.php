@@ -77,12 +77,28 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12 text-right">
-                <button type="submit" class="btn btn-success border-none"> Save Changes</button> or CTRL+S
+            <div class="col-lg-8">
+                <hr>
+                    <a href="#" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">More settings</a>
+                    <div class="collapse multi-collapse" id="multiCollapseExample2">
+                        <button type="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#deleteModal">Delete my account</button>
+                        <span title="" data-placement="top" data-toggle="tooltip" data-original-title="We will everything related to your account. This action is not reversible.">
+                            <i class="far fa-question-circle"></i>
+                        </span>
+                    </div>
             </div>
+        </div>
+        <div class="col-lg-12 text-right">
+            <button type="submit" class="btn btn-success border-none">Save Changes</button> {{ !(new Mobile_Detect())->isMobile() ? 'or CTRL+S' : '' }}
         </div>
     </form>
     </div>
+
+    @include('shared.modals.delete')
+    <form id="delete" action="{{ route('channel.delete') }}" method="POST">
+        {{ csrf_field() }}
+        {{ method_field('DELETE') }}
+    </form>
 @endsection
 
 @section('footer')

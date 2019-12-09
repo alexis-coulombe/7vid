@@ -10,8 +10,10 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\View\View;
+use Webpatser\Uuid\Uuid;
 
 class ChannelController extends Controller
 {
@@ -127,6 +129,21 @@ class ChannelController extends Controller
         }
 
         return response(405);
+    }
+
+    public function delete()
+    {
+        if (Auth::check()) {
+            /** @var User $user */
+            $user = User::find(Auth::user()->id);
+            Auth::logout();
+
+            if ($user) {
+                $user->delete();
+            }
+        }
+
+        return redirect()->back();
     }
 
 }

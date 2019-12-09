@@ -43,10 +43,11 @@ Route::resource('comment', 'CommentsController', ['except' => ['index','show']])
 
 // Channel routes
 Route::post('channel/', 'ChannelController@scroll')->name('channel.scroll');
+Route::delete('channel/delete', 'ChannelController@delete')->name('channel.delete');
 Route::get('channel/{userId}', 'ChannelController@index')->where('userId', '[0-9]+')->name('channel.index');
 Route::post('channel/subscribe', 'ChannelController@subscribe')->name('channel.subscribe')->middleware('auth');
-Route::get('channel/{userId}/videos', 'ChannelController@videos')->where('userId', '[0-9]+')->name('channel.videos');
 Route::get('channel/{userId}/about', 'ChannelController@about')->where('userId', '[0-9]+')->name('channel.about');
+Route::get('channel/{userId}/videos', 'ChannelController@videos')->where('userId', '[0-9]+')->name('channel.videos');
 
 // category routes
 Route::get('category/{name}', 'CategoryController@index')->name('category.index');

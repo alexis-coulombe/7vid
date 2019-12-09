@@ -17,7 +17,7 @@ class CreateChannelSettingsTable extends Migration
             $table->increments('id');
 
             $table->unsignedInteger('channel_id');
-            $table->foreign('channel_id')->references('id')->on('users');
+            $table->foreign('channel_id')->references('id')->on('users')->onDelete('cascade');
             $table->index('channel_id');
 
             $table->text('about');
