@@ -144,7 +144,7 @@ class VideosController extends Controller
 
         /** @var Video $video */
         $video = new Video;
-        $video->author_id = Auth::user()->id;
+        $video->setAuthorId(Auth::user()->id);
 
         if (strlen(request('description')) > 0 && strlen(trim(request('description'))) === 0) {
             $request->merge(['description' => 'No description provided']);
@@ -163,20 +163,20 @@ class VideosController extends Controller
                 return redirect('/video')->with('error', 'There was an error when uploading your video.');
             }
 
-            $filename = time() . '_' . uniqid() . '.' . $extension;
+            $filename = time() . '_' . uniqid('', true) . '.' . $extension;
             request('upload')->move($destinationPath, $filename);
 
-            $video->title = request('title');
-            $video->description = request('description');
-            $video->category_id = request('category');
-            $video->extension = $extension;
-            $video->location = $destinationPath . '/' . $filename;
+            $video->setTitle(request('title'));
+            $video->setDescription(request('description'));
+            $video->setCategoryId(request('category'));
+            $video->setExtension($extension);
+            $video->setLocation($destinationPath . '/' . $filename);
 
             $getID3 = new \getID3();
-            $file = $getID3->analyze(public_path() . '/' . $video->location);
-            $video->duration = $file['playtime_seconds'];
-            $video->frame_rate = isset($file['frame_rate']) ? $file['frame_rate'] : 0;
-            $video->mime_type = $file['mime_type'];
+            $file = $getID3->analyze(public_path() . '/' . $video->getLocation());
+            $video->setDuration($file['playtime_seconds']);
+            $video->setFrameRate($file['frame_rate'] ?? 0);
+            $video->setMimeType($file['mime_type']);
         }
 
         if ($request->hasFile('image')) {
@@ -195,14 +195,14 @@ class VideosController extends Controller
 
             request('image')->move($destinationPath, $filename);
 
-            $video->thumbnail = $destinationPath . '\\' . $filename;
+            $video->setThumbnail($destinationPath . '\\' . $filename);
         }
 
         $video->save();
 
         /** @var VideoSetting $setting */
         $setting = new VideoSetting();
-        $setting->video_id = $video->id;
+        $setting->video_id = $video->getId();
         $setting->private = request('private') ? 1 : 0;
         $setting->allow_comments = request('allow_comments') ? 1 : 0;
         $setting->allow_votes = request('allow_votes') ? 1 : 0;
@@ -239,11 +239,11 @@ class VideosController extends Controller
             abort(404);
         }
 
-        $comments = Comment::where('video_id', '=', $video->id)->orderBy('created_at', 'DESC')->take(5)->get();
+        $comments = Comment::where('video_id', '=', $video->getId())->orderBy('created_at', 'DESC')->take(5)->get();
         $subscriptionCount = Subscription::where('author_id', '=', $video->author->id)->count();
 
         $relatedVideos = Video::where('title', 'like', '%' . $video->getTitle() . '%')
-            ->orWhere('category_id', '=', $video->category_id)->limit(10)->get();
+            ->orWhere('category_id', '=', $video->getCategoryId())->limit(10)->get();
 
         $upVotes = 0;
         $downVotes = 0;

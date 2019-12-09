@@ -1,14 +1,14 @@
 <div class="video-card video-card-list">
     <div class="video-card-image video-card-image-small">
-        <a class="play-icon" aria-label="Play video" href="{{ route('video.show', ['video' => $video->id]) }}"><i class="fas fa-play-circle"></i></a>
-        <a href="{{ route('video.show', ['video' => $video->id]) }}" aria-label="View video">
-            <img class="img-fluid" loading="lazy" src="{{ getImage(route('cdn.img'), $video->thumbnail) }}" alt="">
+        <a class="play-icon" aria-label="Play video" href="{{ route('video.show', ['video' => $video->getId()]) }}"><i class="fas fa-play-circle"></i></a>
+        <a href="{{ route('video.show', ['video' => $video->getId()]) }}" aria-label="View video">
+            <img class="img-fluid" loading="lazy" src="{{ getImage(route('cdn.img'), $video->getThumbnail()) }}" alt="">
         </a>
-        <div class="time">{{ parseVideoDuration($video->duration) }}</div>
+        <div class="time">{{ parseVideoDuration($video->getDuration()) }}</div>
     </div>
     <div class="video-card-body">
         <div class="btn-group float-right right-action">
-            <a href="{{ route('video.show', ['video' => $video->id]) }}" aria-label="View video" class="right-action-link text-gray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a href="{{ route('video.show', ['video' => $video->getId()]) }}" aria-label="View video" class="right-action-link text-gray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
@@ -18,8 +18,8 @@
             </div>
         </div>
         <div class="video-title">
-            <a href="{{ route('video.show', ['video' => $video->id]) }}" aria-label="View video">
-                <h3 class="h4">{{strlen($video->title) > 30 ? substr($video->title,0,30)."..." : $video->title}}</h3>
+            <a href="{{ route('video.show', ['video' => $video->getId()]) }}" aria-label="View video">
+                <h3 class="h4">{{strlen($video->getTitle()) > 30 ? substr($video->getTitle(),0,30)."..." : $video->getTitle()}}</h3>
             </a>
         </div>
         <div class="video-page text-success">

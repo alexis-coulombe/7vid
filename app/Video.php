@@ -21,6 +21,19 @@ class Video extends Model
         'thumbnail'
     ];
 
+    protected $id;
+    protected $title;
+    protected $views_count;
+    protected $thumbnail;
+    protected $location;
+    protected $mime_type;
+    protected $frame_rate;
+    protected $description;
+    protected $extension;
+    protected $duration;
+    protected $author_id;
+    protected $category_id;
+
     protected static function boot() : void
     {
         parent::boot();
@@ -75,9 +88,34 @@ class Video extends Model
         return $this->id;
     }
 
+    public function getAuthorId() : int
+    {
+        return $this->author_id;
+    }
+
+    public function setAuthorId($authorId) : void
+    {
+        $this->author_id = $authorId;
+    }
+
+    public function getCategoryId() : int
+    {
+        return $this->category_id;
+    }
+
+    public function setCategoryId($categoryId) : void
+    {
+        $this->category_id = $categoryId;
+    }
+
     public function getTitle() : string
     {
         return $this->title;
+    }
+
+    public function setTitle($title): void
+    {
+        $this->title = $title;
     }
 
     public function getDescription() : string
@@ -85,9 +123,19 @@ class Video extends Model
         return $this->description;
     }
 
+    public function setDescription($description) : void
+    {
+        $this->description = $description;
+    }
+
     public function getExtension() : string
     {
         return $this->extension;
+    }
+
+    public function setExtension($extension) : void
+    {
+        $this->extension = $extension;
     }
 
     public function getDuration() : int
@@ -95,9 +143,19 @@ class Video extends Model
         return $this->duration;
     }
 
+    public function setDuration($duration) : void
+    {
+        $this->duration = $duration;
+    }
+
     public function getFrameRate() : int
     {
         return $this->frame_rate;
+    }
+
+    public function setFrameRate($frameRate) : void
+    {
+        $this->frame_rate = $frameRate;
     }
 
     public function getMimeType() : string
@@ -105,9 +163,19 @@ class Video extends Model
         return $this->mime_type;
     }
 
+    public function setMimeType($mimeType) : void
+    {
+        $this->mime_type = $mimeType;
+    }
+
     public function getLocation() : string
     {
         return $this->location;
+    }
+
+    public function setLocation($location) : void
+    {
+        $this->location = $location;
     }
 
     public function getThumbnail() : string
@@ -115,9 +183,19 @@ class Video extends Model
         return $this->thumbnail;
     }
 
+    public function setThumbnail($thumbnail) : void
+    {
+        $this->thumbnail = $thumbnail;
+    }
+
     public function getViewsCount() : int
     {
         return $this->views_count;
+    }
+
+    public function setViewsCount($viewsCount) : void
+    {
+        $this->views_count = $viewsCount;
     }
 
     /**
