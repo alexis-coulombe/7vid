@@ -157,7 +157,7 @@ Version: 1.0
     }
 
     // Generate abstract background to channels cards
-    $('.channels-card').each(function(){
+    $('.generate-background').each(function(){
         generateAbstractBackground($(this));
     });
 
