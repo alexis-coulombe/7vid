@@ -11,9 +11,9 @@ class CreateCountriesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('countries', function (Blueprint $table) {
+        Schema::create('countries', static function (Blueprint $table) {
             $table->increments('id');
 
             $table->string('country_code')->unique();
@@ -32,7 +32,7 @@ class CreateCountriesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         //Schema::dropIfExists('countries');
     }

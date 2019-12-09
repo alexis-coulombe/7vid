@@ -1,6 +1,6 @@
 @php if(isset($author)) { $channel = $author; } @endphp
 
-<div class="channels-card">
+<div class="channels-card generate-background">
     <div class="channels-card-image">
         <a href="{{ route('channel.index', ['userId' => $channel->id]) }}">
             <img src="{{ getImage(route('cdn.img.avatar'), $channel->avatar) }}" alt="Avatar">

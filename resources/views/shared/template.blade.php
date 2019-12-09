@@ -17,18 +17,18 @@
         @yield('head')
     </head>
     <body id="page-top">
-            @include('shared.navbar')
+        @include('shared.navbar')
 
-            <div id="wrapper">
-                @include('shared.sidenav')
-                <div id="content-wrapper">
-                    <div class="container-fluid">
-                        @include('shared.navbar.mobile-search')
-                        @include('shared.message')
-                        @yield('content')
-                    </div>
+        <div id="wrapper">
+            @include('shared.sidenav')
+            <div id="content-wrapper">
+                <div class="container-fluid">
+                    @include('shared.navbar.mobile-search')
+                    @include('shared.message')
+                    @yield('content')
                 </div>
             </div>
+        </div>
 
         @include('shared.footer')
 

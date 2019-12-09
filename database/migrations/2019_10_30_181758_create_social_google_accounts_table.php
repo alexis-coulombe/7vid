@@ -10,9 +10,9 @@ class CreateSocialGoogleAccountsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('social_google_accounts', function (Blueprint $table) {
+        Schema::create('social_google_accounts', static function (Blueprint $table) {
             $table->integer('user_id');
             $table->string('provider_user_id');
             $table->string('provider');
@@ -24,7 +24,7 @@ class CreateSocialGoogleAccountsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('social_google_accounts');
     }

@@ -11,9 +11,9 @@ class CreateCommentsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('comments', static function (Blueprint $table) {
             $table->increments('id');
 
             $table->uuid('video_id');
@@ -34,7 +34,7 @@ class CreateCommentsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('comments');
     }

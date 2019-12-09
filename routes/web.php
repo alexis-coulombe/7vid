@@ -11,12 +11,14 @@
 |
 */
 
+// Dashboard routes
+Route::any('/dashboard', 'DashboardController@index')->name('dashboard.index')->middleware('auth');
+
 // Images CDN
 Route::get('/img/{path?}', 'ImageController@show')->where('path', '.*')->name('cdn.img');
 Route::get('/avatar/{path?}', 'ImageController@showAvatar')->where('path', '.*')->name('cdn.img.avatar');
 
 // Ajax routes
-Route::post('/', 'HomeController@scroll')->name('home.scroll');
 Route::post('/', 'HomeController@scroll')->name('home.scroll');
 Route::post('video/vote', 'VideosController@vote')->name('video.vote')->middleware('auth');
 Route::post('comment/vote', 'CommentsController@vote')->name('comment.vote')->middleware('auth');
@@ -44,6 +46,7 @@ Route::post('channel/', 'ChannelController@scroll')->name('channel.scroll');
 Route::get('channel/{userId}', 'ChannelController@index')->where('userId', '[0-9]+')->name('channel.index');
 Route::post('channel/subscribe', 'ChannelController@subscribe')->name('channel.subscribe')->middleware('auth');
 Route::get('channel/{userId}/videos', 'ChannelController@videos')->where('userId', '[0-9]+')->name('channel.videos');
+Route::get('channel/{userId}/about', 'ChannelController@about')->where('userId', '[0-9]+')->name('channel.about');
 
 // category routes
 Route::get('category/{name}', 'CategoryController@index')->name('category.index');

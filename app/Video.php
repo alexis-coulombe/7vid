@@ -34,7 +34,7 @@ class Video extends Model
     protected $author_id;
     protected $category_id;
 
-    protected static function boot() : void
+    protected static function boot(): void
     {
         parent::boot();
 
@@ -83,7 +83,7 @@ class Video extends Model
         return $this->hasOne(VideoSetting::class, 'video_id');
     }
 
-    public function getId() : string
+    public function getId(): string
     {
         return $this->id;
     }
@@ -108,7 +108,7 @@ class Video extends Model
         $this->category_id = $categoryId;
     }
 
-    public function getTitle() : string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -118,7 +118,7 @@ class Video extends Model
         $this->title = $title;
     }
 
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -128,7 +128,7 @@ class Video extends Model
         $this->description = $description;
     }
 
-    public function getExtension() : string
+    public function getExtension(): string
     {
         return $this->extension;
     }
@@ -138,7 +138,7 @@ class Video extends Model
         $this->extension = $extension;
     }
 
-    public function getDuration() : int
+    public function getDuration(): int
     {
         return $this->duration;
     }
@@ -148,7 +148,7 @@ class Video extends Model
         $this->duration = $duration;
     }
 
-    public function getFrameRate() : int
+    public function getFrameRate(): int
     {
         return $this->frame_rate;
     }
@@ -158,7 +158,7 @@ class Video extends Model
         $this->frame_rate = $frameRate;
     }
 
-    public function getMimeType() : string
+    public function getMimeType(): string
     {
         return $this->mime_type;
     }
@@ -168,7 +168,7 @@ class Video extends Model
         $this->mime_type = $mimeType;
     }
 
-    public function getLocation() : string
+    public function getLocation(): string
     {
         return $this->location;
     }
@@ -178,7 +178,7 @@ class Video extends Model
         $this->location = $location;
     }
 
-    public function getThumbnail() : string
+    public function getThumbnail(): string
     {
         return $this->thumbnail;
     }
@@ -188,7 +188,7 @@ class Video extends Model
         $this->thumbnail = $thumbnail;
     }
 
-    public function getViewsCount() : int
+    public function getViewsCount(): int
     {
         return $this->views_count;
     }

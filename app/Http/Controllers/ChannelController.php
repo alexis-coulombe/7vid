@@ -52,6 +52,25 @@ class ChannelController extends Controller
     }
 
     /**
+     * Channel about
+     *
+     * @param $userId
+     * @return Factory|View
+     */
+    public function about($userId)
+    {
+        $author = User::find($userId);
+        $setting = $author->setting;
+
+        if ($author === null) {
+            abort(404);
+        }
+
+        return view('channel.about')->with('author', $author)
+            ->with('setting', $setting);
+    }
+
+    /**
      * Infinite scroll for history page
      *
      * @param Request $request

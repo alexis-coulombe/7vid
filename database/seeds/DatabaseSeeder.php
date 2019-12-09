@@ -153,5 +153,13 @@ class DatabaseSeeder extends Seeder
             $sub->user_id = \App\User::inRandomOrder()->first()->id;
             $sub->save();
         }
+
+        // Views
+        for ($i = 0; $i < $maxVideosCount; $i++) {
+            $view = new \App\Views();
+            $view->video_id = \App\Video::inRandomOrder()->first()->id;
+            $view->author_id = \App\User::inRandomOrder()->first()->id;
+            $view->save();
+        }
     }
 }
