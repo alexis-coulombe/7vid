@@ -57,3 +57,8 @@ Auth::routes();
 //OAuth routes
 Route::get('/redirect/google', 'SocialAuthGoogleController@redirect')->name('oauth.redirect.google');
 Route::get('/callback/google', 'SocialAuthGoogleController@callback')->name('oauth.callback.google');
+
+// Front assets preview
+Route::get('/front', static function(){
+    return view('front-preview');
+});
