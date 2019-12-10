@@ -24,7 +24,7 @@ class CreateCommentVotesTable extends Migration
             $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
             $table->index('author_id');
 
-            $table->boolean('value')->default(1);
+            $table->boolean('value');
         });
     }
 
