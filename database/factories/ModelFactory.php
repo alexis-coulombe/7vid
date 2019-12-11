@@ -139,3 +139,10 @@ $factory->define(App\CommentVote::class, static function (Faker $faker) {
         'value' => $faker->boolean ? 1 : 0,
     ];
 });
+
+$factory->define(App\Views::class, static function (Faker $faker) {
+    return [
+        'video_id' => \App\Video::inRandomOrder()->first()->id,
+        'author_id' => $faker->numberBetween(\App\User::first()->id, \App\User::all()->last()->id),
+    ];
+});
