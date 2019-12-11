@@ -27,9 +27,10 @@ class ViewsCounter
             $viewed = Views::firstOrCreate(['video_id' => $videoId], ['author_id' => Auth::id()]);
 
             if ($viewed->wasRecentlyCreated) {
+                /** @var Video $video */
                 $video = Video::find($videoId);
                 if ($video) {
-                    $video->views_count += 1;
+                    $video->setViewsCount($video->getViewsCount() + 1);
                     $video->save();
                 }
             } else {

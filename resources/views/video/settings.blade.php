@@ -83,7 +83,7 @@
                     </div>
                     @include('shared.captcha.recaptcha')
                     <div class="float-right">
-                        <button type="submit" class="btn btn-success border-none"> Save Changes</button> or CTRL+S
+                        <button type="submit" class="btn btn-success border-none"> Save Changes</button> {{ !(new Mobile_Detect())->isMobile() ? 'or CTRL+S' : '' }}
                     </div>
                 </form>
                 @include('shared.video.delete-button')

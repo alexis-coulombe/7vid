@@ -17,28 +17,85 @@ class Category extends Model
 {
     public $timestamps = false;
 
+    /**
+     * Get videos relation
+     *
+     * @return HasMany
+     */
     public function videos(): HasMany
     {
         return $this->hasMany(Video::class, 'category_id', 'id');
     }
 
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
+    /**
+     * Set title
+     *
+     * @param string $title
+     */
+    public function setTitle(string$title): void
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * Get icon
+     *
+     * @return string
+     */
     public function getIcon(): string
     {
         return $this->icon;
     }
 
+    /**
+     * Set icon
+     *
+     * @param string $icon
+     */
+    public function setIcon(string $icon): void
+    {
+        $this->icon = $icon;
+    }
+
+    /**
+     * Get number of videos in this category
+     *
+     * @return int
+     */
     public function getVideosCount(): int
     {
         return $this->videos->count();
     }
 
-    public function getVideos($order, $limit = 16): Collection
+    /**
+     * Get videos in this category
+     *
+     * @param string $order
+     * @param int $limit
+     * @return Collection
+     */
+    public function getVideos(string $order, int $limit = 16): Collection
     {
-        return $this->videos()->where('category_id', '=', $this->id)->limit($limit)->orderBy($order, 'DESC')->get();
+        return $this->videos()->where(['category_id' => $this->getId()])->limit($limit)->orderBy($order, 'DESC')->get();
     }
 }

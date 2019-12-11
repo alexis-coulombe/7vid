@@ -17,7 +17,7 @@ class CreateVideoSettingsTable extends Migration
             $table->increments('id');
 
             $table->uuid('video_id');
-            $table->foreign('video_id')->references('id')->on('videos');
+            $table->foreign('video_id')->references('id')->on('videos')->onDelete('cascade');
             $table->index('video_id');
 
             $table->boolean('private');

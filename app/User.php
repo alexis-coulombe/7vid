@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\_Notification;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -34,12 +35,17 @@ class User extends Authenticatable
 
     public function country(): HasOne
     {
-        return $this->hasOne(Country::class, 'country_id', 'id');
+        return $this->hasOne(Country::class, 'id', 'country_id');
     }
 
     public function setting(): HasOne
     {
         return $this->hasOne(ChannelSetting::class, 'channel_id', 'id');
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class, 'author_id', 'id');
     }
 
     public function videoVotes(): HasMany

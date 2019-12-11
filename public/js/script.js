@@ -27,7 +27,8 @@ Version: 1.0
     // Toggle the side navigation
     $(document).on('click', '#sidebarToggle', function(e) {
         e.preventDefault();
-        $("body").toggleClass("sidebar-toggled");
+        //$("body").toggleClass("sidebar-toggled");
+        $("#overlay").toggle();
         $(".sidebar").toggleClass("toggled");
     });
 
@@ -157,7 +158,7 @@ Version: 1.0
     }
 
     // Generate abstract background to channels cards
-    $('.channels-card').each(function(){
+    $('.generate-background').each(function(){
         generateAbstractBackground($(this));
     });
 

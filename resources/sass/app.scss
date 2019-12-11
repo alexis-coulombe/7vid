@@ -11,6 +11,12 @@
 @import "~owl.carousel/dist/assets/owl.theme.default.min.css";
 @import "~video.js/dist/video-js.min.css";
 
+@import "../../public/css/cards/video-card.css";
+@import "../../public/css/cards/single-video.css";
+@import "../../public/css/channel/single-channel.css";
+@import "../../public/css/auth/login-page.css";
+@import "../../public/css/category/category-slider.css";
+
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);

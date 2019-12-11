@@ -15,6 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', static function (Blueprint $table) {
             $table->increments('id');
+
             $table->string('name')->unique();
             $table->index('name');
 
@@ -27,7 +28,7 @@ class CreateUsersTable extends Migration
 
             $table->string('avatar')->default('images/avatars/seed.webp');
 
-            $table->unsignedInteger('country_id');
+            $table->unsignedInteger('country_id')->default(1);
             $table->foreign('country_id')->references('id')->on('countries');
             $table->index('country_id');
 

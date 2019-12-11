@@ -16,8 +16,8 @@ class CreateChannelSettingsTable extends Migration
         Schema::create('channel_settings', static function (Blueprint $table) {
             $table->increments('id');
 
-            $table->uuid('channel_id');
-            $table->foreign('channel_id')->references('id')->on('users');
+            $table->unsignedInteger('channel_id');
+            $table->foreign('channel_id')->references('id')->on('users')->onDelete('cascade');
             $table->index('channel_id');
 
             $table->text('about');

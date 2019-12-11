@@ -13,7 +13,7 @@
                 </a>
             </li>
             <li class="active">
-                <a href="./dashboard.html">
+                <a href="{{ route('dashboard.index') }}">
                     <i class="fas fa-home"></i>
                     <p>Dashboard</p>
                 </a>

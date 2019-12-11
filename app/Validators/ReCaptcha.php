@@ -18,7 +18,7 @@ class ReCaptcha
                     ]
             ]
         );
-        $body = json_decode((string)$response->getBody());
+        $body = json_decode((string)$response->getBody(), true, 512, JSON_THROW_ON_ERROR);
 
         return $body->success;
     }
