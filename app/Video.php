@@ -122,9 +122,9 @@ class Video extends Model
     /**
      * Set author id
      *
-     * @param $authorId
+     * @param int $authorId
      */
-    public function setAuthorId($authorId) : void
+    public function setAuthorId(int $authorId) : void
     {
         $this->author_id = $authorId;
     }
@@ -142,9 +142,9 @@ class Video extends Model
     /**
      * Set category id
      *
-     * @param $categoryId
+     * @param int $categoryId
      */
-    public function setCategoryId($categoryId) : void
+    public function setCategoryId(int $categoryId) : void
     {
         $this->category_id = $categoryId;
     }
@@ -162,9 +162,9 @@ class Video extends Model
     /**
      * Set title
      *
-     * @param $title
+     * @param string $title
      */
-    public function setTitle($title): void
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
@@ -182,9 +182,9 @@ class Video extends Model
     /**
      * Set description
      *
-     * @param $description
+     * @param string $description
      */
-    public function setDescription($description) : void
+    public function setDescription(string $description) : void
     {
         $this->description = $description;
     }
@@ -202,9 +202,9 @@ class Video extends Model
     /**
      * Set extension
      *
-     * @param $extension
+     * @param string $extension
      */
-    public function setExtension($extension) : void
+    public function setExtension(string $extension) : void
     {
         $this->extension = $extension;
     }
@@ -222,9 +222,9 @@ class Video extends Model
     /**
      * Set duration
      *
-     * @param $duration
+     * @param int $duration
      */
-    public function setDuration($duration) : void
+    public function setDuration(int $duration) : void
     {
         $this->duration = $duration;
     }
@@ -242,9 +242,9 @@ class Video extends Model
     /**
      * Set frame rate
      *
-     * @param $frameRate
+     * @param int $frameRate
      */
-    public function setFrameRate($frameRate) : void
+    public function setFrameRate(int $frameRate) : void
     {
         $this->frame_rate = $frameRate;
     }
@@ -262,9 +262,9 @@ class Video extends Model
     /**
      * Set mime type
      *
-     * @param $mimeType
+     * @param string $mimeType
      */
-    public function setMimeType($mimeType) : void
+    public function setMimeType(string $mimeType) : void
     {
         $this->mime_type = $mimeType;
     }
@@ -282,9 +282,9 @@ class Video extends Model
     /**
      * Set file location
      *
-     * @param $location
+     * @param string $location
      */
-    public function setLocation($location) : void
+    public function setLocation(string $location) : void
     {
         $this->location = $location;
     }
@@ -302,9 +302,9 @@ class Video extends Model
     /**
      * Set file thumbnail
      *
-     * @param $thumbnail
+     * @param string $thumbnail
      */
-    public function setThumbnail($thumbnail) : void
+    public function setThumbnail(string $thumbnail) : void
     {
         $this->thumbnail = $thumbnail;
     }
@@ -322,9 +322,9 @@ class Video extends Model
     /**
      * Set view count
      *
-     * @param $viewsCount
+     * @param int $viewsCount
      */
-    public function setViewsCount($viewsCount) : void
+    public function setViewsCount(int $viewsCount) : void
     {
         $this->views_count = $viewsCount;
     }

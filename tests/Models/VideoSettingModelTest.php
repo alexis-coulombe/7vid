@@ -27,7 +27,7 @@ class VideoSettingModelTest extends TestCase
     }
 
     /**
-     * Test each getters / setters of video model
+     * Test each getters / setters of setting model
      *
      * @return void
      */
