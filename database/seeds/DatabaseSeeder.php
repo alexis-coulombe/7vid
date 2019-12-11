@@ -1,5 +1,7 @@
 <?php
 
+use App\Category;
+use App\Video;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -38,12 +40,7 @@ class DatabaseSeeder extends Seeder
             ];
 
         // Categories
-        for ($i = 0; $i < $maxCategoryCount; $i++) {
-            $category = new \App\Category();
-            $category->title = $faker->word;
-            $category->icon = $icons[$i];
-            $category->save();
-        }
+        \factory(Category::class, $maxCategoryCount);
 
         $images = ['0smPhoTWYeE.jpg',
                    '0ZPlUMo2lis.jpg',
@@ -85,7 +82,7 @@ class DatabaseSeeder extends Seeder
         $user->save();
 
         // Users
-        for ($i = 0; $i < $maxUserCount; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $user = new \App\User();
             $user->name = $faker->name;
             $user->email = $faker->email;
@@ -96,23 +93,10 @@ class DatabaseSeeder extends Seeder
         }
 
         // Videos
-        for ($i = 0; $i < $maxVideosCount; $i++) {
-            $video = new \App\Video();
-            $video->setAuthorId($faker->numberBetween(1, $maxUserCount));
-            $video->setCategoryId($faker->numberBetween(1, $maxCategoryCount));
-            $video->setTitle($faker->word);
-            $video->setDescription($faker->text);
-            $video->setDuration($faker->numberBetween(1, 6000));
-            $video->setExtension('mp4');
-            $video->setLocation('videos/seed.mp4');
-            $video->setThumbnail($images[$faker->numberBetween(0, count($images) - 1)]);
-            $video->setFrameRate(15);
-            $video->setMimeType('video/mp4');
-            $video->setViewsCount($faker->numberBetween(1, 1000000));
-            $video->save();
-
+        \factory(Video::class, $maxVideosCount);
+        for ($i = 1; $i <= $maxVideosCount; $i++) {
             $settings = new \App\VideoSetting();
-            $settings->video_id = $video->getId();
+            $settings->video_id = $i;
             $settings->private = $faker->boolean();
             $settings->allow_comments = $faker->boolean();
             $settings->allow_votes = $faker->boolean();
@@ -122,7 +106,7 @@ class DatabaseSeeder extends Seeder
         // Comments
         for ($i = 0; $i < $maxCommentsCount; $i++) {
             $comment = new \App\Comment();
-            $comment->video_id = \App\Video::inRandomOrder()->first()->id;
+            $comment->video_id = Video::inRandomOrder()->first()->id;
             $comment->author_id = $faker->numberBetween(1, $maxUserCount);
             $comment->body = $faker->text;
             $comment->save();
@@ -131,7 +115,7 @@ class DatabaseSeeder extends Seeder
         // Video Votes
         for ($i = 0; $i < $maxVotesCount; $i++) {
             $vote = new \App\VideoVote();
-            $vote->video_id = \App\Video::inRandomOrder()->first()->id;
+            $vote->video_id = Video::inRandomOrder()->first()->id;
             $vote->author_id = $faker->numberBetween(2, $maxUserCount);
             $vote->value = $faker->boolean();
             $vote->save();
@@ -157,7 +141,7 @@ class DatabaseSeeder extends Seeder
         // Views
         for ($i = 0; $i < $maxVideosCount; $i++) {
             $view = new \App\Views();
-            $view->video_id = \App\Video::inRandomOrder()->first()->id;
+            $view->video_id = Video::inRandomOrder()->first()->id;
             $view->author_id = \App\User::inRandomOrder()->first()->id;
             $view->save();
         }
