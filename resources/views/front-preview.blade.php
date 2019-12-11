@@ -96,8 +96,18 @@
             <div class="row">
                 <h3 class="col-lg-12">Video card</h3>
                 @php $video = \App\Video::first(); @endphp
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="col-xl-3 col-sm-6 mb-3">
                     @include('shared.video.card')
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="single-video-right">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @include('shared.video.card')
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
