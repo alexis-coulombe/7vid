@@ -150,6 +150,52 @@
 .video-card-list:hover .video-card-body .right-action {
     opacity: unset;
 }
+.box {
+    padding: 15px;
+    background: #1c1c1c none repeat scroll 0 0;
+    border-radius: 2px;
+    -webkit-transition-duration: 0.4s;
+            transition-duration: 0.4s;
+}
+
+.single-video-title h2 {
+    font-size: 18px;
+}
+
+.single-video-title h2 a {
+    color: #fff;
+}
+
+.single-video-author img {
+    border-radius: 50px;
+    float: left;
+    height: 38px;
+    margin: 0 13px 30px 0;
+    width: 38px;
+}
+
+.single-video-author p {
+    margin: 0;
+    padding: 0;
+    text-align:justify;
+}
+
+.single-video-info-content h6 {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.tags span a {
+    background: #333333 none repeat scroll 0 0;
+    border-radius: 2px;
+    color: #fff;
+    display: inline-block;
+    padding: 4px 9px;
+}
+
+.tags span a:hover {
+    background: #000 none repeat scroll 0 0;
+}
 @charset "UTF-8";
 
 /*!
