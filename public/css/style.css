@@ -10,6 +10,11 @@
     height: 5px;
 }
 
+.vertical-center {
+    display: flex;
+    align-items: center;
+}
+
 /*
 	-- Body
 	-- Nav
@@ -58,10 +63,10 @@ body {
     width: 100%;
 }
 #wrapper #content-wrapper .container-fluid{
-    padding: 30px 30px 30px 255px;
+    padding: 30px 30px 30px 30px;
 }
 .sidebar-toggled #wrapper #content-wrapper .container-fluid{
-    padding: 30px 30px 30px 121px;
+    padding: 30px 30px 30px 30px;
 }
 .sidebar-toggled .single-channel-page{
     padding: 0px 0px 0px 90px;
@@ -261,10 +266,6 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
     }
     .sidebar .nav-item.dropdown .dropdown-toggle::after {
         display: block;
-    }
-    .sidebar.toggled {
-        overflow: visible;
-        width: 90px !important;
     }
     .sidebar.toggled:hover {
         overflow-x: auto;
@@ -893,9 +894,6 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     border: medium none;
     border-radius: 2px;
 }
-
-/* Category Slider */
-
 
 /* Channels Card */
 .channels-card {

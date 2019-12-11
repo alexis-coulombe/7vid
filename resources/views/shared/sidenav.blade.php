@@ -1,4 +1,4 @@
-<ul class="sidebar navbar-nav">
+<ul class="sidebar navbar-nav toggled">
     @guest
         <li class="nav-item">
             <a class="nav-link" href="{{ route('login') }}">
