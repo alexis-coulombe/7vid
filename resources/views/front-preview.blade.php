@@ -11,6 +11,9 @@
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#cards">Cards</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#category">Category</a>
+        </li>
     </ul>
 
     <div class="tab-content">
@@ -107,6 +110,30 @@
                         <div class="col-md-12">
                             @include('shared.video.card')
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="category" class="tab-pane fade">
+            <!-- Video card -->
+            <div class="row">
+                <h3 class="col-lg-12">Category slider</h3>
+                @php $categories = \App\Category::all() @endphp
+                <div class="col-md-12">
+                    <div class="owl-carousel owl-carousel-category">
+                        @foreach($categories as $category)
+                            <a href="{{ route('category.index', ['name' => $category->title]) }}">
+                                <div class="item">
+                                    <div class="category-item text-center">
+                                        <h3>
+                                            <i class="{{ $category->icon }}"></i>
+                                        </h3>
+                                        <h6>{{ $category->title }}</h6>
+                                        <p>{{ $category->getVideosCount() }} videos</p>
+                                    </div>
+                                </div>
+                            </a>
+                        @endforeach
                     </div>
                 </div>
             </div>
