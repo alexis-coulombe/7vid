@@ -21,19 +21,6 @@ class Video extends Model
         'thumbnail'
     ];
 
-    protected $id;
-    protected $title;
-    protected $views_count;
-    protected $thumbnail;
-    protected $location;
-    protected $mime_type;
-    protected $frame_rate;
-    protected $description;
-    protected $extension;
-    protected $duration;
-    protected $author_id;
-    protected $category_id;
-
     protected static function boot(): void
     {
         parent::boot();
