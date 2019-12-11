@@ -68,6 +68,19 @@ $factory->define(App\User::class, static function (Faker $faker) {
     ];
 });
 
+$factory->define(App\ChannelSetting::class, static function (Faker $faker) {
+    return [
+        'channel_id' => $faker->numberBetween(\App\User::first()->id, \App\User::all()->last()->id),
+        'about' => $faker->text,
+    ];
+});
+
+$factory->define(App\Subscription::class, static function (Faker $faker) {
+    return [
+        'author_id' => $faker->numberBetween(\App\User::first()->id, \App\User::all()->last()->id),
+        'user_id' => $faker->numberBetween(\App\User::first()->id, \App\User::all()->last()->id),
+    ];
+});
 
 $factory->define(App\Video::class, static function (Faker $faker) use ($images) {
     return [
@@ -98,16 +111,16 @@ $factory->define(App\VideoVote::class, static function (Faker $faker) {
     return [
         'video_id' => \App\Video::inRandomOrder()->first()->id,
         'author_id' => $faker->numberBetween(\App\User::first()->id, \App\User::all()->last()->id),
-        'value' => $faker->boolean() ? 1 : 0,
+        'value' => $faker->boolean ? 1 : 0,
     ];
 });
 
 $factory->define(App\VideoSetting::class, static function (Faker $faker) {
     return [
         'video_id' => \App\Video::inRandomOrder()->first()->id,
-        'private' => $faker->boolean() ? 1 : 0,
-        'allow_comments' => $faker->boolean() ? 1 : 0,
-        'allow_votes' => $faker->boolean() ? 1 : 0,
+        'private' => $faker->boolean ? 1 : 0,
+        'allow_comments' => $faker->boolean ? 1 : 0,
+        'allow_votes' => $faker->boolean ? 1 : 0,
     ];
 });
 
@@ -115,7 +128,7 @@ $factory->define(App\Comment::class, static function (Faker $faker) {
     return [
         'video_id' => \App\Video::inRandomOrder()->first()->id,
         'author_id' => $faker->numberBetween(\App\User::first()->id, \App\User::all()->last()->id),
-        'body' => $faker->text(),
+        'body' => $faker->text,
     ];
 });
 
@@ -123,6 +136,6 @@ $factory->define(App\CommentVote::class, static function (Faker $faker) {
     return [
         'comment_id' => \App\Comment::inRandomOrder()->first()->id,
         'author_id' => $faker->numberBetween(\App\User::first()->id, \App\User::all()->last()->id),
-        'value' => $faker->boolean() ? 1 : 0,
+        'value' => $faker->boolean ? 1 : 0,
     ];
 });

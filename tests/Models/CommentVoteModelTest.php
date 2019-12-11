@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Models;
 
 use App\Category;
 use App\Comment;
@@ -29,7 +29,7 @@ class CommentVoteModelTest extends TestCase
     }
 
     /**
-     * Test each getters / setters of comment model
+     * Test each getters / setters of model
      *
      * @return void
      */
@@ -43,7 +43,7 @@ class CommentVoteModelTest extends TestCase
     }
 
     /**
-     *  Comment should have access to all of it's relationship
+     *  Model should have access to all of it's relationship
      */
     public function testRelationship(): void
     {
@@ -58,7 +58,7 @@ class CommentVoteModelTest extends TestCase
     }
 
     /**
-     * Deleting a comment should not throw any foreign key exception
+     * Deleting a model should not throw any foreign key exception
      *
      * @throws Exception
      */

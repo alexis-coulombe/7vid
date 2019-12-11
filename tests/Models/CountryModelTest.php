@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Models;
 
 use App\Category;
 use App\Comment;
@@ -13,7 +13,7 @@ use Exception;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class CountryModelTest extends TestCase
+class CountryModelTest extends TestCase implements \BaseModelTest
 {
     use DatabaseTransactions;
 
@@ -23,7 +23,7 @@ class CountryModelTest extends TestCase
     }
 
     /**
-     * Test each getters / setters of country model
+     * Test each getters / setters of model
      *
      * @return void
      */
@@ -38,5 +38,23 @@ class CountryModelTest extends TestCase
         $this->assertSame($country->getCode(), 'TE');
         $this->assertSame($country->getCountryCode(), 'TES');
         $this->assertSame($country->getCountryName(), 'TEST');
+    }
+
+    /**
+     *  Model should have access to all of it's relationship
+     */
+    public function testRelationship(): void
+    {
+        $this->assertTrue(true);
+    }
+
+    /**
+     * Deleting a model should not throw any foreign key exception
+     *
+     * @throws Exception
+     */
+    public function testDelete(): void
+    {
+        $this->assertTrue(true);
     }
 }

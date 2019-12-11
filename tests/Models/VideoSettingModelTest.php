@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Models;
 
 use App\Category;
 use App\Comment;
@@ -12,7 +12,7 @@ use Exception;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class VideoSettingModelTest extends TestCase
+class VideoSettingModelTest extends TestCase implements \BaseModelTest
 {
     use DatabaseTransactions;
 
@@ -27,7 +27,7 @@ class VideoSettingModelTest extends TestCase
     }
 
     /**
-     * Test each getters / setters of setting model
+     * Test each getters / setters of model
      *
      * @return void
      */
@@ -43,7 +43,7 @@ class VideoSettingModelTest extends TestCase
     }
 
     /**
-     *  Setting should have access to all of it's relationship
+     *  Model should have access to all of it's relationship
      */
     public function testRelationship(): void
     {
@@ -55,7 +55,7 @@ class VideoSettingModelTest extends TestCase
     }
 
     /**
-     * Deleting a setting should not throw any foreign key exception
+     * Deleting a model should not throw any foreign key exception
      *
      * @throws Exception
      */
