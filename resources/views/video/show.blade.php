@@ -96,13 +96,13 @@
                                 <h6>Up Next</h6>
                             </div>
                         </div>
-                        <div class="col-md-12">
                             @if(count($relatedVideos) > 0)
                                 @foreach($relatedVideos as $video)
+                                <div class="col-lg-12 col-md-6 col-sm-6">
                                     @include('shared.video.card')
+                                </div>
                                 @endforeach
                             @endif
-                        </div>
                     </div>
                 </div>
             </div>
