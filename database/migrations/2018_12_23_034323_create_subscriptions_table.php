@@ -14,6 +14,8 @@ class CreateSubscriptionsTable extends Migration
     public function up(): void
     {
         Schema::create('subscriptions', static function (Blueprint $table) {
+            $table->increments('id');
+
             $table->unsignedInteger('author_id');
             $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
             $table->index('author_id');
