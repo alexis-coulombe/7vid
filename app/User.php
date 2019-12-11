@@ -232,4 +232,19 @@ class User extends Authenticatable
     {
         $this->subscriptions()->where([['author_id', '=', $channelId], ['user_id', '=', $this->getId()]])->delete();
     }
+
+    /**
+     * Get subscription count for authorId
+     *
+     * @param $authorId
+     * @return integer
+     */
+    public function getSubscriptionCount(int $authorId = 0): int
+    {
+        if ($authorId === 0 && Auth::check()) {
+            $authorId = Auth::user()->getId();
+        }
+
+        return $this->subscriptions()->where(['author_id' => $authorId])->count();
+    }
 }

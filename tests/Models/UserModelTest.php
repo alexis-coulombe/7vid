@@ -113,6 +113,16 @@ class UserModelTest extends TestCase implements \BaseModelTest
         $this->assertTrue($user->isSubscribed(User::first()->getId()));
     }
 
+    public function testSubscriptionCount(): void
+    {
+        /** @var User $user */
+        $user = User::first();
+        $this->be($user);
+
+        $this->assertSame(1, $user->getSubscriptionCount());
+        $this->assertSame(1, $user->getSubscriptionCount(User::first()->getId()));
+    }
+
     /**
      * Deleting a model should not throw any foreign key exception
      *
