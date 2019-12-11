@@ -61,6 +61,19 @@ class CommentModelTest extends TestCase
     }
 
     /**
+     * Check if user has voted on a comment
+     */
+    public function testUserHasVoted(): void
+    {
+        /** @var Comment $comment */
+        $comment = Comment::first();
+        $vote = $comment->votes->first();
+
+        $this->be(User::first());
+        $this->assertTrue($comment->userHasVoted($vote->getValue()));
+    }
+
+    /**
      * Deleting a comment should not throw any foreign key exception
      *
      * @throws Exception

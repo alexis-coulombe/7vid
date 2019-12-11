@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Auth;
 use Webpatser\Uuid\Uuid;
 
 class Video extends Model
@@ -337,5 +338,20 @@ class Video extends Model
     public function getFormatedViewsCount(): string
     {
         return number_format($this->views_count);
+    }
+
+    /**
+     * Check if the logged user has voted for the video
+     *
+     * @param $value
+     * @return boolean
+     */
+    public function userHasVoted($value): bool
+    {
+        if (Auth::check()) {
+            return VideoVote::where(['author_id' => Auth::user()->id, 'video_id' => $this->getId(), 'value' => $value])->exists();
+        }
+
+        return false;
     }
 }

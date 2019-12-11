@@ -55,20 +55,6 @@ class VideoVoteModelTest extends TestCase
     }
 
     /**
-     * Check if user has voted on a video
-     */
-    public function testUserHasVoted(): void
-    {
-        /** @var VideoVote $vote */
-        $vote = VideoVote::first();
-        /** @var Video $video */
-        $video = $vote->video;
-
-        $this->be(User::first());
-        $this->assertTrue($vote->userHasVoted($vote->getValue()));
-    }
-
-    /**
      * Deleting a vote should not throw any foreign key exception
      *
      * @throws Exception
