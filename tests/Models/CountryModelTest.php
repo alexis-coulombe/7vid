@@ -23,7 +23,7 @@ class CountryModelTest extends TestCase
     }
 
     /**
-     * Test each getters / setters of video model
+     * Test each getters / setters of country model
      *
      * @return void
      */
