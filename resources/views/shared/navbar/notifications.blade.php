@@ -13,12 +13,14 @@
     $notifications = Auth::user()->notifications()->where('created_at', '>',$formatted_date)->limit(5)->get();
 @endphp
 
-<div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
-    @foreach($notifications as $notification)
-        @php $notification = json_decode($notification->data['data']); @endphp
-        <div class="dropdown-item">
-            <button class="btn btn-sm btn-primary">Hide</button>
-            <a href="{{ isset($notification->link) ?? '#' }}">{{ $notification->desc }}</a>
-        </div>
-    @endforeach
-</div>
+@if(count($notifications) < 0)
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
+        @foreach($notifications as $notification)
+            @php $notification = json_decode($notification->data['data']); @endphp
+            <div class="dropdown-item">
+                <button class="btn btn-sm btn-primary">Hide</button>
+                <a href="{{ isset($notification->link) ?? '#' }}">{{ $notification->desc }}</a>
+            </div>
+        @endforeach
+    </div>
+@endif

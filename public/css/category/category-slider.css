@@ -1,0 +1,40 @@
+.owl-carousel .owl-item img {
+    margin: 0 auto;
+    width: inherit !important;
+}
+
+.owl-nav button {
+    background: #1c1c1c none repeat scroll 0 0 !important;
+    border-radius: 30px;
+    color: #fff !important;
+    display: inline-block;
+    font-size: 12px;
+    height: 30px;
+    line-height: 31px;
+    margin: 0 -15px;
+    opacity: 0.8;
+    text-align: center;
+    text-transform: uppercase;
+    width: 30px;
+}
+
+.owl-nav button:hover {
+    background: #1c2224 none repeat scroll 0 0 !important;
+    color: #fff !important;
+}
+
+.owl-prev {
+    position: absolute;
+    top: 35%;
+    left: 20px;
+    display: block !important;
+    transition: all 0.45s cubic-bezier(0.165, 0.84, 0.44, 1) 0s;
+}
+
+.owl-next {
+    position: absolute;
+    top: 35%;
+    right: 20px;
+    display: block !important;
+    transition: all 0.45s cubic-bezier(0.165, 0.84, 0.44, 1) 0s;
+}

@@ -27,7 +27,8 @@ Version: 1.0
     // Toggle the side navigation
     $(document).on('click', '#sidebarToggle', function(e) {
         e.preventDefault();
-        $("body").toggleClass("sidebar-toggled");
+        //$("body").toggleClass("sidebar-toggled");
+        $("#overlay").toggle();
         $(".sidebar").toggleClass("toggled");
     });
 

@@ -18,7 +18,7 @@ class CreateVideosTable extends Migration
             $table->uuid('id');
 
             $table->unsignedInteger('author_id');
-            $table->foreign('author_id')->references('id')->on('users');
+            $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
             $table->index('author_id');
 
             $table->unsignedInteger('category_id');

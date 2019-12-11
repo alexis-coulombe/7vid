@@ -43,6 +43,11 @@ class User extends Authenticatable
         return $this->hasOne(ChannelSetting::class, 'channel_id', 'id');
     }
 
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class, 'author_id', 'id');
+    }
+
     public function videoVotes(): HasMany
     {
         return $this->hasMany(VideoVote::class, 'author_id');

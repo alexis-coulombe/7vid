@@ -17,14 +17,14 @@ class CreateCommentVotesTable extends Migration
             $table->increments('id');
 
             $table->unsignedInteger('comment_id');
-            $table->foreign('comment_id')->references('id')->on('comments');
+            $table->foreign('comment_id')->references('id')->on('comments')->onDelete('cascade');
             $table->index('comment_id');
 
             $table->unsignedInteger('author_id');
-            $table->foreign('author_id')->references('id')->on('users');
+            $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
             $table->index('author_id');
 
-            $table->boolean('value')->default(1);
+            $table->boolean('value');
         });
     }
 
