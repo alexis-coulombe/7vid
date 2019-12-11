@@ -37,6 +37,16 @@ class CommentVote extends Model
     }
 
     /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId():int
+    {
+        return $this->id;
+    }
+
+    /**
      * Get value
      *
      * @return bool
