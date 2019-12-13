@@ -26,6 +26,7 @@
         "socialiteproviders/patreon": "^2.0",
         "socialiteproviders/paypal": "^3.0",
         "socialiteproviders/twitter": "^3.0",
+        "stevebauman/purify": "^3.0",
         "symfony/css-selector": "^4.0",
         "webpatser/laravel-uuid": "^3.0"
     },

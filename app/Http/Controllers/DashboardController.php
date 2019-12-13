@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use Stevebauman\Purify\Purify;
 
 class DashboardController extends Controller
 {
@@ -26,7 +27,7 @@ class DashboardController extends Controller
         /** @var ChannelSetting $setting */
         $setting = $user->setting;
 
-        if (request()->isMethod('POST')) {
+        if (request()->isMethod('post')) {
             $setting = $user->setting;
 
             if (!isset($setting)) {
@@ -35,7 +36,7 @@ class DashboardController extends Controller
             }
 
             if (request('about')) {
-                $setting->about = request('about');
+                $setting->about = (new Purify())->clean(request('about'));
             }
             $user->setting = $setting;
             $setting->save();
