@@ -5,6 +5,6 @@
     $subscribeText = Auth::user()->isSubscribed($author->id) ? 'Unsubscribe' : 'Subscribe';
 @endphp
 
-<button class="btn btn-danger subscribe" data-id="{{ $author->id }}" data-url="{{ route('channel.subscribe') }}">
-    <span class="subscribe-text">{{ $subscribeText }}</span> | <strong>{{ $author->getSubscriptionCount($author->id) }}</strong>
+<button class="btn btn-danger subscribe" data-id="{{ $author->getId() }}" data-url="{{ route('channel.subscribe') }}">
+    <span class="subscribe-text">{{ $subscribeText }}</span> | <strong>{{ $author->getSubscribersCount($author->getId()) }}</strong>
 </button>

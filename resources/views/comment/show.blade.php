@@ -34,15 +34,16 @@
                 </div>
             @endif
         </div>
-        <a href="{{ route('channel.index', ['userId' => $comment->author_id]) }}">
-            <img class="img-fluid" loading="lazy" src="{{ getImage(route('cdn.img.avatar'), $comment->author->avatar) }}" alt="{{ $comment->author->name }}">
-        </a>
-        <p>
+        <div class="row vertical-center mb-2">
             <a href="{{ route('channel.index', ['userId' => $comment->author_id]) }}">
-                <strong>{{ $comment->author->name }}</strong>
+                <img class="img-fluid" loading="lazy" src="{{ getImage(route('cdn.img.avatar'), $comment->author->avatar) }}" alt="{{ $comment->author->name }}">
             </a>
-            <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></span>
-        </p>
+            <p class="ml-2">
+                <a href="{{ route('channel.index', ['userId' => $comment->author_id]) }}">
+                    <strong>{{ $comment->author->name }}</strong>
+                </a>
+            </p>
+        </div>
         <p>{{ $comment->body }}</p>
         <br>
         <small>Published on {{date('Y-m-d', strtotime($comment->created_at))}}</small>

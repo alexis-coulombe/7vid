@@ -29,9 +29,9 @@
                     </div>
                 @endforeach
             @else
-                <div class="col-sm-3 col-md-3">
+                <div class="col-sm-3 col-md-3 col-lg-12 text-center">
                     <h2>Empty!</h2>
-                    <p>You have not watched any video yet !</p>
+                    <p>You did not liked any video yet !</p>
                 </div>
                 @include('shared.misc.floating-hex')
             @endif

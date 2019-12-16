@@ -40,7 +40,9 @@
             <div id="content-wrapper">
                 <div class="container-fluid">
                     @include('shared.navbar.mobile-search')
-                    @include('shared.message')
+                    <div class="mb-2">
+                        @include('shared.message')
+                    </div>
                     @yield('content')
                 </div>
             </div>

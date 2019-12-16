@@ -174,4 +174,10 @@ Version: 1.0
 
         element.css('background-image', 'url("' + image + '")');
     }
+
+    // Close sidenav on overlay click
+    $('#overlay').on('click', function(){
+         $('.sidebar.navbar-nav').addClass('toggled');
+         $(this).toggle();
+    });
 })(jQuery); // End of use strict
