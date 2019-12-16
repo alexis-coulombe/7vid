@@ -2,7 +2,7 @@
 @php if(isset($channel)) { $author = $channel; } @endphp
 
 @php
-    $subscribeText = Auth::user()->isSubscribed($author->id) ? 'Unsubscribe' : 'Subscribe';
+    $subscribeText = Auth::user()->isSubscribed($author->getI()) ? 'Unsubscribe' : 'Subscribe';
 @endphp
 
 <button class="btn btn-danger subscribe" data-id="{{ $author->getId() }}" data-url="{{ route('channel.subscribe') }}">

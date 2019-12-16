@@ -5,7 +5,7 @@
 
 @if (isset($errors) && $errors->any())
     @foreach ($errors->all() as $error)
-        @if(!in_array($error, $passed))
+        @if(!in_array($error, $passed, true))
             @php $passed[] = $error @endphp
             <div class="alert alert-danger alert-dismissible fade show mb-1" role="alert">
                 {!! html_entity_decode($error) !!}

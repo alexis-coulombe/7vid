@@ -1,7 +1,7 @@
 @extends('shared.template')
 
 @section('title')
-    channel of {{ $author->name }}
+    channel of {{ $author->getName() }}
 @endsection
 
 @section('content')

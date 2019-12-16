@@ -14,7 +14,7 @@
         <div class="container-fluid">
             <div class="video-block section-padding">
                 <div class="row">
-                    <h1 class="h2 col-lg-12">About {{ $author->name }}</h1>
+                    <h1 class="h2 col-lg-12">About {{ $author->getName() }}</h1>
                     <hr>
                     <div class="col-lg-6">
                         @if($setting)
@@ -22,7 +22,7 @@
                         @else
                             No description provided.
                             <br>
-                            @if(Auth::check() && $author->id === Auth::user()->id)
+                            @if(Auth::check() && $author->getId() === Auth::user()->getId())
                                 <b>Write one <a href="{{ route('dashboard.index') }}">in your dashboard</a></b>
                             @endif
                         @endif

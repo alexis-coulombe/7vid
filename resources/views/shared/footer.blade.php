@@ -1,7 +1,7 @@
 <footer class="sticky-footer page-footer font-small unique-color-dark">
     <div style="background-color: #d43a3a;">
         <div class="container">
-            @if(!Auth::check())
+            @guest
                 <div class="row py-4 d-flex align-items-center">
                     <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
                         <h6 class="mb-0">Share video and get access to all features by creating an account!</h6>
@@ -13,9 +13,10 @@
                         </a>
                     </div>
                 </div>
-            @else
-             <hr>
-            @endif
+            @endguest
+            @auth
+                <hr>
+            @endauth
         </div>
     </div>
     <div class="container text-center text-md-left mt-5">

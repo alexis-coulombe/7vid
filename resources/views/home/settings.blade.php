@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-lg-5"></div>
             <div class="col-lg-2 text-center">
-                <img class="author-img " src="{{ getImage(route('cdn.img.avatar'), Auth::user()->avatar) }}" alt="Avatar">
+                <img class="author-img " src="{{ getImage(route('cdn.img.avatar'), Auth::user()->getAvatar()) }}" alt="Avatar">
                 <h3 style="padding-top: 10px;">{{ Auth::user()->getName() }}</h3>
             </div>
         </div>
@@ -70,7 +70,9 @@
                     <label class="control-label">Country <span class="required">*</span></label>
                     <select name="country" class="custom-select">
                         @foreach(\App\Country::all() as $country)
-                            <option value="{{ $country->getId() }}" {{ Auth::user()->country->id === $country->getId() ? 'selected' : '' }}>{{ $country->getCountryName() }}</option>
+                            <option value="{{ $country->getId() }}" {{ Auth::user()->country->getId() === $country->getId() ? 'selected' : '' }}>
+                                {{ $country->getCountryName() }}
+                            </option>
                         @endforeach
                     </select>
                 </div>

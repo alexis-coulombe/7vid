@@ -341,6 +341,16 @@ class Video extends Model
     }
 
     /**
+     * Return formated title to not exceed limit
+     *
+     * @return string
+     */
+    public function getFormatedTitle(int $limit): string
+    {
+        return strlen($this->getTitle()) > $limit ? substr($this->getTitle(),0,$limit) . '...' : $this->getTitle();
+    }
+
+    /**
      * Check if the logged user has voted for the video
      *
      * @param $value

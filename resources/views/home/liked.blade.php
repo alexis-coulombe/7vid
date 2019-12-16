@@ -1,7 +1,7 @@
 @extends('shared.template')
 
 @section('title')
-    liked videos of {{ Auth::user()->name }}
+    liked videos of {{ Auth::user()->getName() }}
 @endsection
 
 @section('content')

@@ -52,7 +52,7 @@
                                 <select id="e3" class="custom-select" name="category">
                                     <option value="">Select a category</option>
                                     @foreach($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->title }}</option>
+                                        <option value="{{ $category->getId() }}">{{ $category->getTitle() }}</option>
                                     @endforeach
                                 </select>
                             </div>

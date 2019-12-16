@@ -1,21 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <style>
-            #overlay {
-                position: fixed;
-                display: none;
-                width: 100%;
-                height: 100%;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-color: rgba(0,0,0,0.5);
-                z-index: 2;
-                cursor: pointer;
-            }
-        </style>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -62,14 +47,6 @@
         <script type="text/javascript" src="{{ asset('js/script.js') }}" defer></script>
         <script type="text/javascript" src="{{ asset('js/infiniteScrolling.js') }}" defer></script>
         <script type="text/javascript" src="{{ asset('js/subscribe.js') }}" defer></script>
-        <script>
-            function on() {
-            }
-
-            function off() {
-                document.getElementById("overlay").style.display = "none";
-            }
-        </script>
         @yield('footer')
     </body>
 </html>
