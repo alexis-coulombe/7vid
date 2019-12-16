@@ -56,4 +56,24 @@ class VideoVote extends Model
     {
         $this->value = $value;
     }
+
+    /**
+     * Set value
+     *
+     * @param int $videoId
+     */
+    public function setVideoId(int $videoId): void
+    {
+        $this->video_id = $videoId;
+    }
+
+    /**
+     * Set value
+     *
+     * @param int $authorId
+     */
+    public function setAuthorId(int $authorId): void
+    {
+        $this->author_id = $authorId;
+    }
 }

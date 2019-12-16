@@ -200,6 +200,26 @@ class User extends Authenticatable
     }
 
     /**
+     * Get country id
+     *
+     * @return string
+     */
+    public function getCountryId(): string
+    {
+        return $this->country_id;
+    }
+
+    /**
+     * Set country id
+     *
+     * @param int $countryId
+     */
+    public function setCountryId(int $countryId): void
+    {
+        $this->country_id = $countryId;
+    }
+
+    /**
      * Check if user is subscribed to another user
      *
      * @param $author_id

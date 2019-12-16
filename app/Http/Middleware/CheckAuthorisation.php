@@ -25,11 +25,11 @@ class CheckAuthorisation
             /** @var Video $video */
             $video = Video::find($request->route('video'));
             /** @var VideoSetting $settings */
-            if($video) {
+            if ($video) {
                 $settings = $video->setting;
 
                 if ($settings->getPrivate()) {
-                    if (!Auth::check() || (Auth::check() && $video->author->id !== Auth::user()->id)) {
+                    if (!Auth::check() || (Auth::check() && $video->author->getId() !== Auth::user()->getId())) {
                         return redirect()->back()->withErrors('This video is marked private');
                     }
                 }

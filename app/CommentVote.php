@@ -65,4 +65,24 @@ class CommentVote extends Model
     {
         $this->value = $value;
     }
+
+    /**
+     * Set comment id
+     *
+     * @param int $commentId
+     */
+    public function setCommentId(int $commentId): void
+    {
+        $this->comment_id = $commentId;
+    }
+
+    /**
+     * Set author id
+     *
+     * @param int $authorId
+     */
+    public function setAuthorId(int $authorId): void
+    {
+        $this->author_id = $authorId;
+    }
 }

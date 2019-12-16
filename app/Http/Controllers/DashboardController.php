@@ -32,11 +32,11 @@ class DashboardController extends Controller
 
             if (!isset($setting)) {
                 $setting = new ChannelSetting();
-                $setting->channel_id = $user->id;
+                $setting->setChannelId($user->getId());
             }
 
             if (request('about')) {
-                $setting->about = (new Purify())->clean(request('about'));
+                $setting->setAbout((new Purify())->clean(request('about')));
             }
             $user->setting = $setting;
             $setting->save();

@@ -30,10 +30,11 @@ class CommentsController extends Controller
             'comment' => 'required|min:1|max:255'
         ]);
 
+        /** @var Comment $comment */
         $comment = new Comment();
-        $comment->video_id = $request->input('video_id');
-        $comment->author_id = Auth::user()->id;
-        $comment->body = $request->input('comment');
+        $comment->setVideoId($request->input('video_id'));
+        $comment->setAuthorId(Auth::user()->getId());
+        $comment->setBody($request->input('comment'));
         $comment->save();
 
         return redirect('/video/' . $request->input('video_id'))->with('success', 'Your comment has been uploaded!');
@@ -47,7 +48,7 @@ class CommentsController extends Controller
     public function vote()
     {
         if (request()->ajax() && Auth::check()) {
-            $value = request()->input('value');
+            $value = request('value');
 
             if (is_numeric($value)) {
                 $value = $value <= 0 ? 0 : $value;
@@ -56,24 +57,26 @@ class CommentsController extends Controller
                 return response(400);
             }
 
-            $commentId = request()->input('id');
+            $commentId = request('id');
+            /** @var Comment $comment */
             $comment = Comment::find($commentId);
 
             if ($comment) {
-                $vote = CommentVote::where(['comment_id' => $comment->id, 'author_id' => Auth::user()->id])->first();
+                /** @var CommentVote $vote */
+                $vote = CommentVote::where(['comment_id' => $comment->getId(), 'author_id' => Auth::user()->getId()])->first();
 
                 if ($vote) {
-                    if ($value !== $vote->value) {
-                        $vote->value = $value;
+                    if ($value !== $vote->getValue()) {
+                        $vote->setValue($value);
                         $vote->save();
                     } else {
                         $vote->delete();
                     }
                 } else {
                     $vote = new CommentVote();
-                    $vote->comment_id = $comment->id;
-                    $vote->author_id = Auth::user()->id;
-                    $vote->value = $value;
+                    $vote->setCommentId($comment->getId());
+                    $vote->setAuthorId(Auth::user()->getId());
+                    $vote->setValue($value);
                     $vote->save();
                 }
             } else {

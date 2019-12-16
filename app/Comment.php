@@ -71,6 +71,26 @@ class Comment extends Model
     }
 
     /**
+     * Set author id
+     *
+     * @param int $authorId
+     */
+    public function setAuthorId(int $authorId): void
+    {
+        $this->author_id = $authorId;
+    }
+
+    /**
+     * Set video id
+     *
+     * @param $body
+     */
+    public function setVideoId(int $videoId): void
+    {
+        $this->video_id = $videoId;
+    }
+
+    /**
      * Check if the logged user has voted for the video
      *
      * @param bool $value

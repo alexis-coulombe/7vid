@@ -25,7 +25,7 @@ class HomeController extends Controller
         $popularCategories = Category::withCount('videos')->latest('videos_count')->take(3)->get();
 
         if (Auth::check()) {
-            $randomChannels = User::inRandomOrder()->where('id', '<>', Auth::user()->id)->limit(4)->get();
+            $randomChannels = User::inRandomOrder()->where('id', '<>', Auth::user()->getId())->limit(4)->get();
         } else {
             $randomChannels = User::inRandomOrder()->limit(4)->get();
         }
@@ -65,11 +65,11 @@ class HomeController extends Controller
             /** @var User $user */
             $user = Auth::user();
 
-            $user->email = request('email');
+            $user->setEmail(request('email'));
 
             $country = Country::find(request('country'));
             if ($country) {
-                $user->country_id = request('country');
+                $user->setCountryId(request('country'));
             } else {
                 return redirect()->back()->withErrors(['There was an error, please try again.']);
             }
@@ -79,7 +79,7 @@ class HomeController extends Controller
                     return view('home.settings')->with('error', 'Your password does not match.');
                 }
 
-                $user->password = Hash::make(request('password'));
+                $user->setPassword(Hash::make(request('password')));
             }
 
             $user->save();
@@ -115,7 +115,7 @@ class HomeController extends Controller
      */
     public function history(): View
     {
-        $videos_id = Views::where('author_id', '=', Auth::user()->id)->select('video_id')->limit(50)->get();
+        $videos_id = Views::where(['author_id' => Auth::user()->getId()])->select('video_id')->limit(50)->get();
         $videos = [];
 
         if (count($videos_id) > 0) {

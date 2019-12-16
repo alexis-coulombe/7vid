@@ -43,7 +43,7 @@ class _Notification extends Notification
     public function toArray($notifiable): array
     {
         return [
-            'data' => json_encode($this->data),
+            'data' => json_encode($this->data, JSON_THROW_ON_ERROR, 512),
         ];
     }
 }

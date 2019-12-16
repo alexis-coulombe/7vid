@@ -40,6 +40,16 @@ class ChannelSetting extends Model
     }
 
     /**
+     * Set channel id
+     *
+     * @param int $channelId
+     */
+    public function setChannelId(int $channelId): void
+    {
+        $this->channel_id = $channelId;
+    }
+
+    /**
      * Set author id
      *
      * @param int $authorId

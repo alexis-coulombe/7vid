@@ -104,7 +104,7 @@ class ChannelController extends Controller
     public function subscribe(): string
     {
         if (request()->ajax() && Auth::check()) {
-            $id = request()->input('id');
+            $id = request('id');
 
             if (!isset($id) || $id <= 0 || !is_numeric($id)) {
                 return response(405);
@@ -114,11 +114,11 @@ class ChannelController extends Controller
             $channel = User::find($id);
 
             if ($channel) {
-                if (!Auth::user()->isSubscribed($channel->id)) {
-                    Auth::user()->subscribe($channel->id);
+                if (!Auth::user()->isSubscribed($channel->getId())) {
+                    Auth::user()->subscribe($channel->getId());
                     $text = 'Unsubscribe';
                 } else {
-                    Auth::user()->unsubscribe($channel->id);
+                    Auth::user()->unsubscribe($channel->getId());
                     $text = 'Subscribe';
                 }
 
@@ -135,7 +135,7 @@ class ChannelController extends Controller
     {
         if (Auth::check()) {
             /** @var User $user */
-            $user = User::find(Auth::user()->id);
+            $user = User::find(Auth::user()->getId());
             Auth::logout();
 
             if ($user) {

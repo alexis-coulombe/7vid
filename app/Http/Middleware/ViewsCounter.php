@@ -24,7 +24,8 @@ class ViewsCounter
     {
         if (Auth::check() && $request->route('video')) {
             $videoId = $request->route('video');
-            $viewed = Views::firstOrCreate(['video_id' => $videoId], ['author_id' => Auth::id()]);
+            /** @var Views $viewed */
+            $viewed = Views::firstOrCreate(['video_id' => $videoId], ['author_id' => Auth::user()->getId()]);
 
             if ($viewed->wasRecentlyCreated) {
                 /** @var Video $video */
