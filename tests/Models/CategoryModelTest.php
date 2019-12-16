@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Models;
 
 use App\Category;
 use App\Comment;
@@ -13,7 +13,7 @@ use Exception;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class CategoryModelTest extends TestCase
+class CategoryModelTest extends TestCase implements \BaseModelTest
 {
     use DatabaseTransactions;
 
@@ -26,7 +26,7 @@ class CategoryModelTest extends TestCase
     }
 
     /**
-     * Test each getters / setters of category model
+     * Test each getters / setters of model
      *
      * @return void
      */
@@ -44,7 +44,7 @@ class CategoryModelTest extends TestCase
     }
 
     /**
-     *  Category should have access to all of it's relationship
+     *  Model should have access to all of it's relationship
      */
     public function testRelationship(): void
     {
@@ -53,5 +53,15 @@ class CategoryModelTest extends TestCase
 
         $this->assertNotNull($category->videos);
         $this->assertSame(count($category->videos), 1);
+    }
+
+    /**
+     * Deleting a model should not throw any foreign key exception
+     *
+     * @throws Exception
+     */
+    public function testDelete(): void
+    {
+        $this->assertTrue(true);
     }
 }

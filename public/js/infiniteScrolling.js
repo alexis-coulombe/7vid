@@ -3,38 +3,43 @@ let shouldCall = true;
 
 $(window).scroll(function () {
     if (disable === false && $('#scrolling').length && shouldCall) {
+        let scrollingElement = $('#scrolling');
+        let loadingSpinner = $('#loading-spinner');
+
         if ($(window).scrollTop() + $(window).height() >= $('footer').offset().top) {
-            // Exclude already fetched channels
             let data = {
+                // Exclude already fetched channels
                 exclude: $.map($('.scrolling-prevent'), (n, i) => {
                     return n.id
                 }),
-                type: $('#scrolling').data('type'),
-                video_id: $('#scrolling').data('video-id') ? $('#scrolling').data('video-id') : null,
+                //
+                type: scrollingElement.data('type'),
+                video_id: scrollingElement.data('video-id') ? scrollingElement.data('video-id') : null,
+                category_id:  scrollingElement.data('category-id') ? scrollingElement.data('category-id') : null,
             };
 
-            $('#loading-spinner').show();
+            loadingSpinner.show();
             shouldCall = false;
 
             $.ajax({
-                url: $('#scrolling').data('url'),
+                url: scrollingElement.data('url'),
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr("content")
                 },
                 data: data,
                 type: 'POST',
                 success: (result) => {
-                    $('#loading-spinner').hide();
+                    loadingSpinner.hide();
                     if (result === 'Done') {
                         disable = true;
                         return;
                     }
 
-                    $('#scrolling').append(result);
+                    scrollingElement.append(result);
                     shouldCall = true;
                 },
                 error: (result) => {
-                    $('#loading-spinner').hide();
+                    loadingSpinner.hide();
                     throw result;
                 }
             });

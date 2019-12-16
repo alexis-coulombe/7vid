@@ -18,10 +18,10 @@
                     <i class="trash fas fa-trash-alt"></i>
                 </button>
             @endif
-            <button type="button" class="btn btn-sm btn-{{ \App\CommentVote::hasVoted(1, $comment->id) ? 'danger' : 'primary' }} vote" data-value="1" data-id="{{ $comment->id }}" @if(Auth::check()) data-url="{{ route('comment.vote') }}" @endif>
+            <button type="button" class="btn btn-sm btn-{{ $comment->userHasVoted(1) ? 'danger' : 'primary' }} vote" data-value="1" data-id="{{ $comment->id }}" @if(Auth::check()) data-url="{{ route('comment.vote') }}" @endif>
                 <i class="fas fa-thumbs-up"></i>
             </button>
-            <button type="button" class="btn btn-sm btn-{{ \App\CommentVote::hasVoted(0, $comment->id) ? 'danger' : 'primary' }} vote" data-value="0" data-id="{{ $comment->id }}" @if(Auth::check()) data-url="{{ route('comment.vote') }}" @endif>
+            <button type="button" class="btn btn-sm btn-{{ $comment->userHasVoted(0) ? 'danger' : 'primary' }} vote" data-value="0" data-id="{{ $comment->id }}" @if(Auth::check()) data-url="{{ route('comment.vote') }}" @endif>
                 <i class="fas fa-thumbs-down"></i>
             </button>
             @if($upVotes === $downVotes)
@@ -34,15 +34,16 @@
                 </div>
             @endif
         </div>
-        <a href="{{ route('channel.index', ['userId' => $comment->author_id]) }}">
-            <img class="img-fluid" loading="lazy" src="{{ getImage(route('cdn.img.avatar'), $comment->author->avatar) }}" alt="{{ $comment->author->name }}">
-        </a>
-        <p>
+        <div class="row vertical-center mb-2">
             <a href="{{ route('channel.index', ['userId' => $comment->author_id]) }}">
-                <strong>{{ $comment->author->name }}</strong>
+                <img class="img-fluid" loading="lazy" src="{{ getImage(route('cdn.img.avatar'), $comment->author->avatar) }}" alt="{{ $comment->author->name }}">
             </a>
-            <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></span>
-        </p>
+            <p class="ml-2">
+                <a href="{{ route('channel.index', ['userId' => $comment->author_id]) }}">
+                    <strong>{{ $comment->author->name }}</strong>
+                </a>
+            </p>
+        </div>
         <p>{{ $comment->body }}</p>
         <br>
         <small>Published on {{date('Y-m-d', strtotime($comment->created_at))}}</small>

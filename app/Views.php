@@ -21,11 +21,21 @@ class Views extends Model
         'author_id'
     ];
 
+    /**
+     * Get video relation
+     *
+     * @return HasOne
+     */
     public function video(): HasOne
     {
         return $this->hasOne(Video::class, 'id', 'video_id');
     }
 
+    /**
+     * Get author relation
+     *
+     * @return HasOne
+     */
     public function author(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'author_id');

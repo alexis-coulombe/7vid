@@ -73,77 +73,29 @@ class DatabaseSeeder extends Seeder
                    'YTNeojro-fY.jpg',
                    'ZAk2WOxbLD4.jpg'];
 
-        $user = new \App\User();
+        /*$user = new \App\User();
         $user->name = 'test123';
         $user->email = 'test@123.com';
         $user->password = Hash::make('123123');
         $user->avatar = $images[$faker->numberBetween(0, count($images) - 1)];
         $user->country_id = 1;
-        $user->save();
+        $user->save();*/
 
         // Users
-        for ($i = 0; $i < 100; $i++) {
-            $user = new \App\User();
-            $user->name = $faker->name;
-            $user->email = $faker->email;
-            $user->password = Hash::make($faker->password);
-            $user->avatar = $images[$faker->numberBetween(0, count($images) - 1)];
-            $user->country_id = $faker->numberBetween(1, 100);
-            $user->save();
-        }
-
+        factory(\App\User::class, $maxUserCount)->create();
+        // Category
+        \factory(Category::class, $maxCategoryCount)->create();
         // Videos
-        \factory(Video::class, $maxVideosCount);
-        for ($i = 1; $i <= $maxVideosCount; $i++) {
-            $settings = new \App\VideoSetting();
-            $settings->video_id = $i;
-            $settings->private = $faker->boolean();
-            $settings->allow_comments = $faker->boolean();
-            $settings->allow_votes = $faker->boolean();
-            $settings->save();
-        }
-
+        \factory(Video::class, $maxVideosCount)->create();
         // Comments
-        for ($i = 0; $i < $maxCommentsCount; $i++) {
-            $comment = new \App\Comment();
-            $comment->video_id = Video::inRandomOrder()->first()->id;
-            $comment->author_id = $faker->numberBetween(1, $maxUserCount);
-            $comment->body = $faker->text;
-            $comment->save();
-        }
-
+        \factory(\App\Comment::class, $maxCommentsCount)->create();
         // Video Votes
-        for ($i = 0; $i < $maxVotesCount; $i++) {
-            $vote = new \App\VideoVote();
-            $vote->video_id = Video::inRandomOrder()->first()->id;
-            $vote->author_id = $faker->numberBetween(2, $maxUserCount);
-            $vote->value = $faker->boolean();
-            $vote->save();
-        }
-
+        \factory(\App\VideoVote::class, $maxVotesCount)->create();
         // Comment Votes
-        for ($i = 0; $i < $maxVotesCount; $i++) {
-            $vote = new \App\CommentVote();
-            $vote->comment_id = \App\Comment::inRandomOrder()->first()->id;
-            $vote->author_id = $faker->numberBetween(2, $maxUserCount);
-            $vote->value = $faker->boolean();
-            $vote->save();
-        }
-
+        \factory(\App\CommentVote::class, $maxVotesCount)->create();
         // Subscriptions
-        for ($i = 0; $i < $maxSubCount; $i++) {
-            $sub = new \App\Subscription();
-            $sub->author_id = \App\User::inRandomOrder()->first()->id;
-            $sub->user_id = \App\User::inRandomOrder()->first()->id;
-            $sub->save();
-        }
-
+        \factory(\App\Subscription::class, $maxSubCount)->create();
         // Views
-        for ($i = 0; $i < $maxVideosCount; $i++) {
-            $view = new \App\Views();
-            $view->video_id = Video::inRandomOrder()->first()->id;
-            $view->author_id = \App\User::inRandomOrder()->first()->id;
-            $view->save();
-        }
+        \factory(\App\Views::class, $maxVideosCount)->create();
     }
 }

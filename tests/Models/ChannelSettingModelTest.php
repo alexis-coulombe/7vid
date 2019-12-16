@@ -3,6 +3,7 @@
 namespace Tests\Models;
 
 use App\Category;
+use App\ChannelSetting;
 use App\Comment;
 use App\Country;
 use App\User;
@@ -13,14 +14,17 @@ use Exception;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class CountryModelTest extends TestCase implements \BaseModelTest
+class ChannelSettingModelTest extends TestCase implements \BaseModelTest
 {
     use DatabaseTransactions;
 
     public function setUp(): void
     {
         parent::setUp();
+        factory(User::class, 1)->create();
+        factory(ChannelSetting::class, 1)->create();
     }
+
 
     /**
      * Test each getters / setters of model
@@ -29,15 +33,12 @@ class CountryModelTest extends TestCase implements \BaseModelTest
      */
     public function testGettersSetters(): void
     {
-        /** @var Country $country */
-        $country = Country::first();
-        $country->setCode('TE');
-        $country->setCountryCode('TES');
-        $country->setCountryName('TEST');
+        /** @var ChannelSetting $setting */
+        $setting = ChannelSetting::first();
+        $setting->setAbout('test');
 
-        $this->assertSame($country->getCode(), 'TE');
-        $this->assertSame($country->getCountryCode(), 'TES');
-        $this->assertSame($country->getCountryName(), 'TEST');
+        $this->assertSame(User::first()->getId(), $setting->getChannelId());
+        $this->assertSame('test', $setting->getAbout());
     }
 
     /**
@@ -45,7 +46,11 @@ class CountryModelTest extends TestCase implements \BaseModelTest
      */
     public function testRelationship(): void
     {
-        $this->assertTrue(true);
+        /** @var ChannelSetting $setting */
+        $setting = ChannelSetting::first();
+
+        $this->assertNotNull($setting->channel);
+        $this->assertSame($setting->channel->getId(), User::first()->getId());
     }
 
     /**

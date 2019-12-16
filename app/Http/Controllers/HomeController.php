@@ -12,6 +12,7 @@ use App\VideoSetting;
 use App\Views;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
@@ -23,7 +24,7 @@ class HomeController extends Controller
         $newVideos = Video::orderBy('created_at', 'DESC')->limit(16)->get();
         $popularCategories = Category::withCount('videos')->latest('videos_count')->take(3)->get();
 
-        if(Auth::check()){
+        if (Auth::check()) {
             $randomChannels = User::inRandomOrder()->where('id', '<>', Auth::user()->id)->limit(4)->get();
         } else {
             $randomChannels = User::inRandomOrder()->limit(4)->get();
@@ -33,12 +34,23 @@ class HomeController extends Controller
             ->with('categories', $popularCategories);
     }
 
-    public function privacy()
+    /**
+     * Privacy page
+     *
+     * @return View
+     */
+    public function privacy(): View
     {
         return view('home.privacy');
     }
 
-    public function settings()
+    /**
+     * Account setting page
+     *
+     * @return View
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function settings(): View
     {
         if (request()->isMethod('post')) {
 
@@ -77,14 +89,19 @@ class HomeController extends Controller
         return view('home.settings');
     }
 
-    public function liked()
+    /**
+     * Show liked video of current user
+     *
+     * @return View
+     */
+    public function liked(): View
     {
         /** @var User $user */
         $user = Auth::user();
         $likedVideos = $user->videoVotes->where('value', 1);
         $videos = [];
 
-        foreach($likedVideos as $like){
+        foreach ($likedVideos as $like) {
             $videos[] = $like->video;
         }
 
@@ -92,15 +109,16 @@ class HomeController extends Controller
     }
 
     /**
-     * Show history of connected user
+     * Show video history of current user
+     *
      * @return Factory|View
      */
-    public function history()
+    public function history(): View
     {
         $videos_id = Views::where('author_id', '=', Auth::user()->id)->select('video_id')->limit(50)->get();
         $videos = [];
 
-        if(count($videos_id) > 0) {
+        if (count($videos_id) > 0) {
             $videos = Video::whereIn('id', $videos_id)->orderBy('updated_at', 'DESC')->get();
         }
 
@@ -110,9 +128,9 @@ class HomeController extends Controller
     public function scroll(Request $request)
     {
         if (request()->ajax()) {
-            $exclude = request()->input('exclude') ?: [];
+            $exclude = request('exclude') ?: [];
 
-            if (request()->input('type') === 'video') {
+            if (request('type') === 'channel-video') {
                 $users = User::withCount('videos')->latest('videos_count')->take(3)->whereNotIn('id', $exclude)->get();
 
                 foreach ($users as $user) {
@@ -121,9 +139,26 @@ class HomeController extends Controller
                     }
                 }
 
-                return view('shared.video.scroll.result')->with('channels', $users);
-            } else if (request()->input('type') === 'comment') {
-                $videoId = request()->input('video_id');
+                return view('shared.video.scroll.channel-video')->with('channels', $users);
+            }
+
+            if (request('type') === 'category-video') {
+                $categoryId = request('category_id');
+                $category = Category::find($categoryId);
+
+                if ($category) {
+                    $videos = $category->videos()->orderBy('created_at', 'DESC')->take(16)->whereNotIn('id', $exclude)->get();
+
+                    if ((!count($videos)) > 0) {
+                        return 'Done';
+                    }
+
+                    return view('shared.video.scroll.category-video')->with('videos', $videos);
+                }
+            }
+
+            if (request('type') === 'comment') {
+                $videoId = request('video_id');
                 $video = Video::find($videoId);
 
                 if ($video) {

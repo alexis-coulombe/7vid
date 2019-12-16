@@ -16,34 +16,53 @@ class CommentVote extends Model
         'value'
     ];
 
+    /**
+     * Get user relation
+     *
+     * @return HasOne
+     */
     public function author(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'author_id');
     }
 
+    /**
+     * Get comment relation
+     *
+     * @return HasOne
+     */
     public function comment(): HasOne
     {
         return $this->hasOne(Comment::class, 'id', 'comment_id');
     }
 
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId():int
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get value
+     *
+     * @return bool
+     */
     public function getValue(): bool
     {
         return $this->value;
     }
 
     /**
-     * Check if the logged user has voted for the video
+     * Set value
      *
-     * @param $value
-     * @param $commentId
-     * @return boolean
+     * @param bool $value
      */
-    public static function hasVoted($value, $commentId): bool
+    public function setValue(bool $value): void
     {
-        if (Auth::check()) {
-            return self::where(['author_id' => Auth::user()->id, 'comment_id' => $commentId, 'value' => $value])->exists();
-        }
-
-        return false;
+        $this->value = $value;
     }
 }

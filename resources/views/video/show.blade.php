@@ -10,8 +10,8 @@
             <div class="col-md-10">
                 <div class="single-video-left">
                     <div class="single-video">
-                        <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' width="100%" controls preload="auto" poster="{{ route('cdn.img', ['path' => $video->thumbnail]) }}" data-setup="{}">
-                            <source src="/{{ $video->getLocation }}" type="{{ $video->getMimeType }}">
+                        <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' width="100%" controls preload="auto" poster="{{ route('cdn.img', ['path' => $video->getThumbnail()]) }}" data-setup="{}">
+                            <source src="/{{ $video->getLocation() }}" type="{{ $video->getMimeType() }}">
                             <p class='vjs-no-js'>
                                 To view this video please enable JavaScript, and consider upgrading to a web browser that
                                 <a href='https://videojs.com/html5-video-support/' aria-label="Support html5" target='_blank'>supports HTML5 video</a>
@@ -20,19 +20,17 @@
                     </div>
                     <div class="single-video-author box mb-3">
                         @if(Auth::check() && $video->author->id !== Auth::id())
-                            <div class="float-right">
+                            <div class="float-right mt-2">
                                 @include('shared.video.subscribe')
                             </div>
                         @endif
                         <div class="row vertical-center">
-                            <img class="img-fluid ml-1 mr-1" loading="lazy" src="{{ getImage(route('cdn.img.avatar'), $video->author->avatar) }}" alt="">
-                            <p>
+                            <img class="img-fluid" loading="lazy" src="{{ getImage(route('cdn.img.avatar'), $video->author->avatar) }}" alt="">
+                            <p class="ml-2">
                                 <a href="{{ route('channel.index', ['userId' => $video->author->id]) }}" aria-label="View channel"><strong>{{ $video->author->name }}</strong></a>
                             </p>
                         </div>
-                            <small>Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
-
-
+                        <small>Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
                     </div>
                     <div class="single-video-title box mb-3">
                         @if($video->setting->allow_votes)
@@ -60,7 +58,7 @@
                         <hr>
                         @include('shared.video.edit-button')
                         <hr>
-                        <p>{{ $video->getDescription }}</p>
+                        <p>{{ $video->getDescription() }}</p>
                         <br>
                         <p class="tags mb-0">
                             <span><a href="#">Uncharted 4</a></span>
@@ -70,22 +68,6 @@
                             <span><a href="#">ps4Share</a></span>
                         </p>
                     </div>
-                    @if($video->setting->allow_comments)
-                        @if(\Illuminate\Support\Facades\Auth::check())
-                            @include('comment.comment-form', $data = ['video_id' => $video->getId()])
-                        @endif
-
-                        @include('comment.show', $data = ['comments' => $comments])
-
-                        <div id="scrolling" data-url="{{ route('home.scroll') }}" data-type="comment" data-video-id="{{ $video->getId() }}"></div>
-                        <div id="loading-spinner" style="display: none;">
-                            <div class="row">
-                                <div class="col text-center">
-                                    @include('shared.misc.loading-spinner')
-                                </div>
-                            </div>
-                        </div>
-                    @endif
                 </div>
             </div>
             <div class="col-md-2">
@@ -96,15 +78,35 @@
                                 <h6>Up Next</h6>
                             </div>
                         </div>
-                            @if(count($relatedVideos) > 0)
-                                @foreach($relatedVideos as $video)
+                        @if(count($relatedVideos) > 0)
+                            @foreach($relatedVideos as $video)
                                 <div class="col-lg-12 col-md-6 col-sm-6">
                                     @include('shared.video.card')
                                 </div>
-                                @endforeach
-                            @endif
+                            @endforeach
+                        @endif
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-10">
+                @if($video->setting->allow_comments)
+                    @if(\Illuminate\Support\Facades\Auth::check())
+                        @include('comment.comment-form', $data = ['video_id' => $video->getId()])
+                    @endif
+
+                    @include('comment.show', $data = ['comments' => $comments])
+
+                    <div id="scrolling" data-url="{{ route('home.scroll') }}" data-type="comment" data-video-id="{{ $video->getId() }}"></div>
+                    <div id="loading-spinner" style="display: none;">
+                        <div class="row">
+                            <div class="col text-center">
+                                @include('shared.misc.loading-spinner')
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

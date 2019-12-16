@@ -4,6 +4,8 @@ namespace Tests\Models;
 
 use App\Category;
 use App\Comment;
+use App\CommentVote;
+use App\Country;
 use App\User;
 use App\Video;
 use App\VideoSetting;
@@ -12,18 +14,18 @@ use Exception;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class VideoSettingModelTest extends TestCase implements \BaseModelTest
+class CommentVoteModelTest extends TestCase
 {
     use DatabaseTransactions;
 
     public function setUp(): void
     {
         parent::setUp();
-
         factory(User::class, 1)->create();
         factory(Category::class, 1)->create();
         factory(Video::class, 1)->create();
-        factory(VideoSetting::class, 1)->create();
+        factory(Comment::class, 1)->create();
+        factory(CommentVote::class, 1)->create();
     }
 
     /**
@@ -33,13 +35,11 @@ class VideoSettingModelTest extends TestCase implements \BaseModelTest
      */
     public function testGettersSetters(): void
     {
-        /** @var VideoSetting $setting */
-        $setting = VideoSetting::first();
+        /** @var CommentVote $vote */
+        $vote = CommentVote::first();
+        $vote->setValue(1);
 
-        $this->assertNotEmpty($setting->getVideoId());
-        $this->assertIsBool($setting->getPrivate());
-        $this->assertIsBool($setting->getAllowComments());
-        $this->assertIsBool($setting->getAllowVotes());
+        $this->assertTrue($vote->getValue());
     }
 
     /**
@@ -47,11 +47,14 @@ class VideoSettingModelTest extends TestCase implements \BaseModelTest
      */
     public function testRelationship(): void
     {
-        /** @var VideoSetting $setting */
-        $setting = VideoSetting::first();
+        /** @var Vote $vote */
+        $vote = CommentVote::first();
 
-        $this->assertNotNull($setting->video);
-        $this->assertNotEmpty($setting->video->getTitle());
+        $this->assertNotNull($vote->comment);
+        $this->assertSame($vote->comment->getId(), Comment::first()->getId());
+
+        $this->assertNotNull($vote->author);
+        $this->assertSame($vote->author->id, User::first()->id);
     }
 
     /**
@@ -61,8 +64,8 @@ class VideoSettingModelTest extends TestCase implements \BaseModelTest
      */
     public function testDelete(): void
     {
-        /** @var VideoSetting $setting */
-        $setting = VideoSetting::first();
-        $this->assertTrue($setting->delete());
+        /** @var Vote $vote */
+        $vote = Comment::first();
+        $this->assertTrue($vote->delete());
     }
 }

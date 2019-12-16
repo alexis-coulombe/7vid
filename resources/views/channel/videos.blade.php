@@ -36,14 +36,12 @@
                             </div>
                         @endforeach
                     @else
-                        <div class="row">
-                            <div class="col-sm-3 col-md-3">
-                                <h2>Empty !</h2>
-                                <p>This author does not have any content !</p>
-                            </div>
-                            <div class="col-lg-12 content-center">
-                                @include('shared.misc.floating-hex')
-                            </div>
+                        <div class="col-sm-3 col-md-3 col-lg-12 text-center">
+                            <h2>Empty !</h2>
+                            <p>This author does not have any content !</p>
+                        </div>
+                        <div class="col-lg-12 content-center">
+                            @include('shared.misc.floating-hex')
                         </div>
                     @endif
                 </div>

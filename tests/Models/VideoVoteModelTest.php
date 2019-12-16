@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Models;
 
 use App\Category;
 use App\Comment;
@@ -12,7 +12,7 @@ use Exception;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class VideoVoteModelTest extends TestCase
+class VideoVoteModelTest extends TestCase implements \BaseModelTest
 {
     use DatabaseTransactions;
 
@@ -27,7 +27,7 @@ class VideoVoteModelTest extends TestCase
     }
 
     /**
-     * Test each getters / setters of vote model
+     * Test each getters / setters of model
      *
      * @return void
      */
@@ -40,7 +40,7 @@ class VideoVoteModelTest extends TestCase
     }
 
     /**
-     *  Vote should have access to all of it's relationship
+     *  Model should have access to all of it's relationship
      */
     public function testRelationship(): void
     {
@@ -55,21 +55,7 @@ class VideoVoteModelTest extends TestCase
     }
 
     /**
-     * Check if user has voted on a video
-     */
-    public function testUserHasVoted(): void
-    {
-        /** @var VideoVote $vote */
-        $vote = VideoVote::first();
-        /** @var Video $video */
-        $video = $vote->video;
-
-        $this->be(User::first());
-        $this->assertTrue($vote->userHasVoted($vote->getValue()));
-    }
-
-    /**
-     * Deleting a vote should not throw any foreign key exception
+     * Deleting a model should not throw any foreign key exception
      *
      * @throws Exception
      */

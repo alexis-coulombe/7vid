@@ -2,24 +2,21 @@
 
 namespace Tests\Models;
 
-use App\Category;
-use App\Comment;
-use App\Country;
+use App\Subscription;
 use App\User;
-use App\Video;
-use App\VideoSetting;
-use App\VideoVote;
 use Exception;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class CountryModelTest extends TestCase implements \BaseModelTest
+class SubscriptionModelTest extends TestCase implements \BaseModelTest
 {
     use DatabaseTransactions;
 
     public function setUp(): void
     {
         parent::setUp();
+        factory(User::class, 1)->create();
+        factory(Subscription::class, 1)->create();
     }
 
     /**
@@ -29,15 +26,7 @@ class CountryModelTest extends TestCase implements \BaseModelTest
      */
     public function testGettersSetters(): void
     {
-        /** @var Country $country */
-        $country = Country::first();
-        $country->setCode('TE');
-        $country->setCountryCode('TES');
-        $country->setCountryName('TEST');
-
-        $this->assertSame($country->getCode(), 'TE');
-        $this->assertSame($country->getCountryCode(), 'TES');
-        $this->assertSame($country->getCountryName(), 'TEST');
+        $this->assertTrue(true);
     }
 
     /**
@@ -45,7 +34,11 @@ class CountryModelTest extends TestCase implements \BaseModelTest
      */
     public function testRelationship(): void
     {
-        $this->assertTrue(true);
+        /** @var Subscription $subscription */
+        $subscription = Subscription::first();
+
+        $this->assertNotNull($subscription->channel);
+        $this->assertSame(User::first()->getId(), $subscription->channel->getId());
     }
 
     /**
@@ -55,6 +48,8 @@ class CountryModelTest extends TestCase implements \BaseModelTest
      */
     public function testDelete(): void
     {
-        $this->assertTrue(true);
+        /** @var Subscription $subscription */
+        $subscription = Subscription::first();
+        $this->assertTrue($subscription->delete());
     }
 }

@@ -113,6 +113,18 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main-title">
+                        <h6>Channel</h6>
+                    </div>
+                </div>
+                @php $channel = \App\User::first(); @endphp
+                <div class="col-xl-3 col-sm-6 mb-3">
+                    @include('shared.channel.card')
+                </div>
+            </div>
         </div>
         <div id="category" class="tab-pane fade">
             <!-- Video card -->

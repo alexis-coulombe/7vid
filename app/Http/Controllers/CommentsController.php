@@ -7,6 +7,7 @@ use App\CommentVote;
 use App\User;
 use App\Video;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -19,10 +20,10 @@ class CommentsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return RedirectResponse
      * @throws ValidationException
      */
-    public function store(Request $request): Response
+    public function store(Request $request): RedirectResponse
     {
         $this->validate($request, [
             'video_id' => 'required|min:1',
@@ -101,9 +102,9 @@ class CommentsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return Response
+     * @return RedirectResponse
      */
-    public function destroy($id): Response
+    public function destroy($id): RedirectResponse
     {
         $comment = Comment::find($id);
 

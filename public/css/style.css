@@ -20,15 +20,9 @@
 	-- Nav
 	-- Sidebar
 	-- Customize Bootstrap
-	-- Category Slider
-	-- Video Card
-	-- Channels Card
 	-- Upload Details
 	-- Watch History
-	-- Single Channel
-    -- Video Page
     -- My Account
-	-- Footer
 
 	-- Empty author page
 	-- Custom h1, h6
@@ -53,7 +47,8 @@ body {
     height: 100%;
 }
 
-.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+svg{
+    max-height: 400px;
 }
 
 #wrapper {
@@ -506,7 +501,7 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 .osahan-navbar-search {
-    margin-right: auto !important;
+    margin: 0 auto;
 }
 
 .osahan-navbar-search .btn {

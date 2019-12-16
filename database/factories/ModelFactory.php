@@ -68,12 +68,25 @@ $factory->define(App\User::class, static function (Faker $faker) {
     ];
 });
 
+$factory->define(App\ChannelSetting::class, static function (Faker $faker) {
+    return [
+        'channel_id' => \App\User::inRandomOrder()->first()->id,
+        'about' => $faker->text,
+    ];
+});
+
+$factory->define(App\Subscription::class, static function (Faker $faker) {
+    return [
+        'author_id' => \App\User::inRandomOrder()->first()->id,
+        'user_id' => \App\User::inRandomOrder()->first()->id,
+    ];
+});
 
 $factory->define(App\Video::class, static function (Faker $faker) use ($images) {
     return [
         'id' => Uuid::generate()->string,
-        'author_id' => $faker->numberBetween(\App\User::first()->id, \App\User::all()->last()->id),
-        'category_id' => $faker->numberBetween(\App\Category::first()->id, \App\Category::all()->last()->id),
+        'author_id' => \App\User::inRandomOrder()->first()->id,
+        'category_id' => \App\Category::inRandomOrder()->first()->id,
         'title' => $faker->word,
         'description' => $faker->text,
         'duration' => $faker->numberBetween(1, 6000),
@@ -93,27 +106,43 @@ $factory->define(App\Category::class, static function (Faker $faker) use ($icons
     ];
 });
 
-$factory->define(App\VideoVote::class, static function (Faker $faker) use ($icons) {
+
+$factory->define(App\VideoVote::class, static function (Faker $faker) {
     return [
         'video_id' => \App\Video::inRandomOrder()->first()->id,
-        'author_id' => $faker->numberBetween(\App\User::first()->id, \App\User::all()->last()->id),
-        'value' => $faker->boolean() ? 1 : 0,
+        'author_id' => \App\User::inRandomOrder()->first()->id,
+        'value' => $faker->boolean ? 1 : 0,
     ];
 });
 
-$factory->define(App\VideoSetting::class, static function (Faker $faker) use ($icons) {
+$factory->define(App\VideoSetting::class, static function (Faker $faker) {
     return [
         'video_id' => \App\Video::inRandomOrder()->first()->id,
-        'private' => $faker->boolean() ? 1 : 0,
-        'allow_comments' => $faker->boolean() ? 1 : 0,
-        'allow_votes' => $faker->boolean() ? 1 : 0,
+        'private' => $faker->boolean ? 1 : 0,
+        'allow_comments' => $faker->boolean ? 1 : 0,
+        'allow_votes' => $faker->boolean ? 1 : 0,
     ];
 });
 
-$factory->define(App\Comment::class, static function (Faker $faker) use ($icons) {
+$factory->define(App\Comment::class, static function (Faker $faker) {
     return [
         'video_id' => \App\Video::inRandomOrder()->first()->id,
-        'author_id' => $faker->numberBetween(\App\User::first()->id, \App\User::all()->last()->id),
-        'body' => $faker->text(),
+        'author_id' => \App\User::inRandomOrder()->first()->id,
+        'body' => $faker->text,
+    ];
+});
+
+$factory->define(App\CommentVote::class, static function (Faker $faker) {
+    return [
+        'comment_id' => \App\Comment::inRandomOrder()->first()->id,
+        'author_id' => \App\User::inRandomOrder()->first()->id,
+        'value' => $faker->boolean ? 1 : 0,
+    ];
+});
+
+$factory->define(App\Views::class, static function (Faker $faker) {
+    return [
+        'video_id' => \App\Video::inRandomOrder()->first()->id,
+        'author_id' => \App\User::inRandomOrder()->first()->id,
     ];
 });
