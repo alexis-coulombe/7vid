@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Webpatser\Uuid\Uuid;
 
@@ -22,17 +23,19 @@ class ChannelController extends Controller
      * Channel index
      *
      * @param $userId
-     * @return Factory|View
+     * @return RedirectResponse
      */
-    public function index($userId)
+    public function index($userId): RedirectResponse
     {
-        $author = User::find($userId);
+        return Redirect::route('channel.videos', ['userId' => $userId]);
+
+        /*$author = User::find($userId);
 
         if ($author === null) {
             abort(404);
         }
 
-        return view('channel.index')->with('author', $author);
+        return view('channel.index')->with('author', $author);*/
     }
 
     /**

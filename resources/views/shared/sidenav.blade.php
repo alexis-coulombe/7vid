@@ -28,12 +28,6 @@
                     <span>Videos you liked</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('dashboard.index') }}">
-                    <i class="fas fa-columns"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
         @php $subscriptions = Auth::user()->subscriptions; @endphp
         @if(count($subscriptions) > 0)
             <li class="nav-item channel-sidebar-list">

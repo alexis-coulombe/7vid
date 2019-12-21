@@ -20,16 +20,16 @@
     <!-- Navbar -->
     <ul class="navbar-nav ml-auto ml-md-0 osahan-right-navbar">
         @auth
-            <li class="nav-item mx-1">
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('video.create') }}">
                     <i class="fas fa-plus-circle fa-fw"></i>
                     Upload
                 </a>
             </li>
-            <li class="nav-item dropdown no-arrow mx-1">
+            <li class="nav-item dropdown no-arrow">
                 @include('shared.navbar.notifications')
             </li>
-            <li class="nav-item dropdown no-arrow mx-1">
+            <li class="nav-item dropdown no-arrow">
                 @include('shared.navbar.parameters')
             </li>
         @endauth

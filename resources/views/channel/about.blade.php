@@ -21,10 +21,6 @@
                             {!! $setting->getAbout() !!}
                         @else
                             No description provided.
-                            <br>
-                            @if(Auth::check() && $author->getId() === Auth::user()->getId())
-                                <b>Write one <a href="{{ route('dashboard.index') }}">in your dashboard</a></b>
-                            @endif
                         @endif
                     </div>
                 </div>
