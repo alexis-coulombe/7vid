@@ -11,9 +11,6 @@
 |
 */
 
-// Dashboard routes
-Route::any('/dashboard', 'DashboardController@index')->name('dashboard.index')->middleware('auth');
-
 // Images CDN
 Route::get('/img/{path?}', 'ImageController@show')->where('path', '.*')->name('cdn.img');
 Route::get('/avatar/{path?}', 'ImageController@showAvatar')->where('path', '.*')->name('cdn.img.avatar');

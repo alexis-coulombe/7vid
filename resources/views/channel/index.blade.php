@@ -11,12 +11,5 @@
         <div class="single-channel-nav">
             @include('shared.channel.navbar')
         </div>
-        <div class="container-fluid">
-            <div class="video-block section-padding">
-                <div class="row">
-                    Index page todo CMS
-                </div>
-            </div>
-        </div>
     </div>
 @endsection
