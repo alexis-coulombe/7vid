@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Cassandra\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -93,9 +94,9 @@ class Comment extends Model
     /**
      * Set video id
      *
-     * @param $body
+     * @param string $videoId
      */
-    public function setVideoId(int $videoId): void
+    public function setVideoId(string $videoId): void
     {
         $this->video_id = $videoId;
     }

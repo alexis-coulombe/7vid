@@ -3,6 +3,7 @@
 namespace App;
 
 
+use Cassandra\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
@@ -60,9 +61,9 @@ class VideoVote extends Model
     /**
      * Set value
      *
-     * @param int $videoId
+     * @param string $videoId
      */
-    public function setVideoId(int $videoId): void
+    public function setVideoId(string $videoId): void
     {
         $this->video_id = $videoId;
     }

@@ -203,10 +203,10 @@ class VideosController extends Controller
 
         /** @var VideoSetting $setting */
         $setting = new VideoSetting();
-        $setting->video_id = $video->getId();
-        $setting->private = request('private') ? 1 : 0;
-        $setting->allow_comments = request('allow_comments') ? 1 : 0;
-        $setting->allow_votes = request('allow_votes') ? 1 : 0;
+        $setting->setVideoId($video->getId());
+        $setting->setPrivate(request('private') ? 1 : 0);
+        $setting->setAllowComments(request('allow_comments') ? 1 : 0);
+        $setting->setAllowVotes(request('allow_votes') ? 1 : 0);
         $setting->save();
 
         /** @var User $author */
@@ -276,24 +276,13 @@ class VideosController extends Controller
         $relatedVideos = Video::where('title', 'like', '%' . $video->getTitle() . '%')
             ->orWhere('category_id', '=', $video->getCategoryId())->limit(10)->get();
 
-        $upVotes = 0;
-        $downVotes = 0;
-
-        foreach ($video->votes as $vote) {
-            if ($vote->value) {
-                $upVotes++;
-            } else {
-                $downVotes++;
-            }
-        }
-
         return view('video.show')
             ->with('video', $video)
             ->with('comments', $comments)
             ->with('subscriptionCount', $subscriptionCount)
             ->with('relatedVideos', $relatedVideos)
-            ->with('upVotes', $upVotes)
-            ->with('downVotes', $downVotes);
+            ->with('upVotes', $video->getUpVotes())
+            ->with('downVotes', $video->getDownVotes());
     }
 
     /**
