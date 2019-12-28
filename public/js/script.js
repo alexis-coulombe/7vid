@@ -4,28 +4,24 @@ Author: Askbootstrap
 Author URI: https://themeforest.net/user/askbootstrap
 Version: 1.0
 */
-(function($) {
+(function ($) {
     "use strict"; // Start of use strict
 
     // Temporarly fix Passive Event Listeners
     // https://stackoverflow.com/questions/39152877/consider-marking-event-handler-as-passive-to-make-the-page-more-responsive
     jQuery.event.special.touchstart =
-    {
-      setup: function( _, ns, handle )
-      {
-        if ( ns.includes("noPreventDefault") )
         {
-          this.addEventListener("touchstart", handle, { passive: false });
-        }
-        else
-        {
-          this.addEventListener("touchstart", handle, { passive: true });
-        }
-      }
-    };
+            setup: function (_, ns, handle) {
+                if (ns.includes("noPreventDefault")) {
+                    this.addEventListener("touchstart", handle, {passive: false});
+                } else {
+                    this.addEventListener("touchstart", handle, {passive: true});
+                }
+            }
+        };
 
     // Toggle the side navigation
-    $(document).on('click', '#sidebarToggle', function(e) {
+    $(document).on('click', '#sidebarToggle', function (e) {
         e.preventDefault();
         //$("body").toggleClass("sidebar-toggled");
         $("#overlay").toggle();
@@ -33,7 +29,7 @@ Version: 1.0
     });
 
     // Prevent the content wrapper from scrolling when the fixed side navigation hovered over
-    $('body.fixed-nav .sidebar').on('mousewheel DOMMouseScroll wheel', function(e) {
+    $('body.fixed-nav .sidebar').on('mousewheel DOMMouseScroll wheel', function (e) {
         if ($window.width() > 768) {
             var e0 = e.originalEvent,
                 delta = e0.wheelDelta || -e0.detail;
@@ -47,11 +43,11 @@ Version: 1.0
     if (objowlcarousel.length > 0) {
         objowlcarousel.owlCarousel({
             responsive: {
-                0:{
-                    items:3,
+                0: {
+                    items: 3,
                 },
-                600:{
-                    items:3,
+                600: {
+                    items: 3,
                 },
                 1000: {
                     items: 4,
@@ -74,11 +70,11 @@ Version: 1.0
     if (videoSlider.length > 0) {
         videoSlider.owlCarousel({
             responsive: {
-                0:{
-                    items:1,
+                0: {
+                    items: 1,
                 },
-                600:{
-                    items:3,
+                600: {
+                    items: 3,
                 },
                 1000: {
                     items: 4,
@@ -120,7 +116,7 @@ Version: 1.0
     $('[data-toggle="tooltip"]').tooltip();
 
     // Scroll to top button appear
-    $(document).on('scroll', function() {
+    $(document).on('scroll', function () {
         var scrollDistance = $(this).scrollTop();
         if (scrollDistance > 100) {
             $('.scroll-to-top').fadeIn();
@@ -130,7 +126,7 @@ Version: 1.0
     });
 
     // Smooth scrolling using jQuery easing
-    $(document).on('click', 'a.scroll-to-top', function(event) {
+    $(document).on('click', 'a.scroll-to-top', function (event) {
         var $anchor = $(this);
         $('html, body').stop().animate({
             scrollTop: ($($anchor.attr('href')).offset().top)
@@ -140,14 +136,14 @@ Version: 1.0
 
     // Add aria-label to carousel buttons
     // https://stackoverflow.com/questions/41818880/owl-carousel-2-2-dots-with-aria-label
-    $('.owl-carousel').each(function() {
-      $(this).find('.owl-dot').each(function(index) {
-        $(this).attr('aria-label', index + 1);
-      });
+    $('.owl-carousel').each(function () {
+        $(this).find('.owl-dot').each(function (index) {
+            $(this).attr('aria-label', index + 1);
+        });
     });
 
     // Detect CTRL+S
-    if($('#save-on-keyboard').length) {
+    if ($('#save-on-keyboard').length) {
         $(document).on('keydown', (e) => {
             if (e.ctrlKey && e.which === 83) {
                 $('#save-on-keyboard').submit();
@@ -158,12 +154,11 @@ Version: 1.0
     }
 
     // Generate abstract background to channels cards
-    $('.generate-background').each(function(){
+    $('.generate-background').each(function () {
         generateAbstractBackground($(this));
     });
 
-    function generateAbstractBackground(element)
-    {
+    function generateAbstractBackground(element) {
         let pattern = Trianglify({
             width: 512,
             height: 512,
@@ -176,8 +171,8 @@ Version: 1.0
     }
 
     // Close sidenav on overlay click
-    $('#overlay').on('click', function(){
-         $('.sidebar.navbar-nav').addClass('toggled');
-         $(this).toggle();
+    $('#overlay').on('click', function () {
+        $('.sidebar.navbar-nav').addClass('toggled');
+        $(this).toggle();
     });
 })(jQuery); // End of use strict

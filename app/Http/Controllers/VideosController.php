@@ -213,7 +213,7 @@ class VideosController extends Controller
         $author = $video->author;
         $subscribers = $author->subscribers;
 
-        if(count($subscribers) > 0) {
+        if (count($subscribers) > 0) {
             /** @var User $subscriber */
             foreach ($subscribers as $subscriber) {
                 $subscriber->notify(new _Notification([
@@ -236,13 +236,43 @@ class VideosController extends Controller
     {
         /** @var Video $video */
         $video = Video::find($id);
+
         if ($video === null) {
             abort(404);
         }
 
-        $comments = Comment::where('video_id', '=', $video->getId())->orderBy('created_at', 'DESC')->take(5)->get();
+        $commentOrder = 'created_at';
+
+        if (request('filter_comments')) {
+            switch (request('filter_comments')) {
+                case 'date':
+                {
+                    $commentOrder = 'created_at';
+                    break;
+                }
+                case 'rated':
+                {
+                    $commentOrder = 'comment_votes_count';
+                    break;
+                }
+            }
+        }
+
+        $comments = Comment::where(['video_id' => $video->getId()])->orderBy($commentOrder, 'DESC')->take(5);
+
+        if (request('filter_comments') && request('filter_comments') === 'rated') {
+            $comments = $comments->withCount(['comment_votes', 'comment_votes' => static function ($query) {
+                $query->where(['value' => 1]);
+            }]);
+        }
+
+        /** @var array $comments */
+        $comments = $comments->get();
+
+        /** @var int $subscriptionCount */
         $subscriptionCount = Subscription::where('author_id', '=', $video->author->id)->count();
 
+        /** @var array $relatedVideos */
         $relatedVideos = Video::where('title', 'like', '%' . $video->getTitle() . '%')
             ->orWhere('category_id', '=', $video->getCategoryId())->limit(10)->get();
 
@@ -250,7 +280,7 @@ class VideosController extends Controller
         $downVotes = 0;
 
         foreach ($video->votes as $vote) {
-            if($vote->value) {
+            if ($vote->value) {
                 $upVotes++;
             } else {
                 $downVotes++;
@@ -281,7 +311,7 @@ class VideosController extends Controller
             abort(404);
         }
 
-        if(Auth::user()->getId() !== $video->author->getId()){
+        if (Auth::user()->getId() !== $video->author->getId()) {
             return redirect(route('video.show', ['video' => $video->getId()]));
         }
 
@@ -343,7 +373,7 @@ class VideosController extends Controller
             return back()->with('error', 'There was an error while trying to delete your video!');
         }
 
-        if(!Auth::check() || Auth::user()->getId() !== $video->author->getId()){
+        if (!Auth::check() || Auth::user()->getId() !== $video->author->getId()) {
             return redirect(route('video.show', ['video' => $video->getId()]));
         }
 

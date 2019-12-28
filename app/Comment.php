@@ -35,7 +35,7 @@ class Comment extends Model
      *
      * @return HasMany
      */
-    public function votes(): HasMany
+    public function comment_votes(): HasMany
     {
         return $this->hasMany(CommentVote::class, 'comment_id');
     }
@@ -123,5 +123,41 @@ class Comment extends Model
         }
 
         return false;
+    }
+
+    /**
+     * Get number of up votes
+     *
+     * @return int
+     */
+    public function getUpVotes() : int
+    {
+        $upVotes = 0;
+
+        foreach($this->comment_votes as $vote){
+            if($vote->value){
+                $upVotes++;
+            }
+        }
+
+        return $upVotes;
+    }
+
+    /**
+     * get number of down votes
+     *
+     * @return int
+     */
+    public function getDownVotes() : int
+    {
+        $downVotes = 0;
+
+        foreach($this->comment_votes as $vote){
+            if(!$vote->value){
+                $downVotes++;
+            }
+        }
+
+        return $downVotes;
     }
 }

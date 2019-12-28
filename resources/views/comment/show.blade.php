@@ -1,15 +1,7 @@
 @foreach($comments as $comment)
     @php
-        $upVotes = 0;
-        $downVotes = 0;
-
-        foreach($comment->votes as $vote){
-            if($vote->value){
-                $upVotes++;
-            } else {
-                $downVotes++;
-            }
-        }
+        $upVotes = $comment->getUpVotes();
+        $downVotes = $comment->getDownVotes();
     @endphp
     <div class="single-video-author box mb-3 scrolling-prevent" id="{{ $comment->getId() }}">
         <div class="float-right" style="padding-bottom: 30px; margin-left: 10px;">

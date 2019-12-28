@@ -90,6 +90,9 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-10">
+                @include('shared.comment.filter')
+            </div>
             <div class="col-lg-10">
                 @if($video->setting->allow_comments)
                     @if(\Illuminate\Support\Facades\Auth::check())
