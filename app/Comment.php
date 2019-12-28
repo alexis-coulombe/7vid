@@ -81,6 +81,16 @@ class Comment extends Model
     }
 
     /**
+     * Get author id
+     *
+     * @return int
+     */
+    public function getAuthorId(): int
+    {
+        return $this->author->getId();
+    }
+
+    /**
      * Set video id
      *
      * @param $body
@@ -88,6 +98,16 @@ class Comment extends Model
     public function setVideoId(int $videoId): void
     {
         $this->video_id = $videoId;
+    }
+
+    /**
+     * Get video id
+     *
+     * @return int
+     */
+    public function getVideoId(): int
+    {
+        return $this->video->getId();
     }
 
     /**

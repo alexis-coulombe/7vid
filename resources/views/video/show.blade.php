@@ -10,7 +10,7 @@
             <div class="col-md-10">
                 <div class="single-video-left">
                     <div class="single-video">
-                        <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' width="100%" controls preload="auto" poster="{{ route('cdn.img', ['path' => $video->getThumbnail()]) }}" data-setup="{}">
+                        <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' width="100%" controls preload="auto" poster="{{ getImage(route('cdn.img'), $video->getThumbnail()) }}" data-setup="{}">
                             <source src="/{{ $video->getLocation() }}" type="{{ $video->getMimeType() }}">
                             <p class='vjs-no-js'>
                                 To view this video please enable JavaScript, and consider upgrading to a web browser that

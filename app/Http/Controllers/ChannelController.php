@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ChannelSetting;
 use App\User;
 use App\Video;
 use App\Views;
@@ -13,7 +14,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Stevebauman\Purify\Purify;
 use Webpatser\Uuid\Uuid;
 
 class ChannelController extends Controller
@@ -61,14 +64,28 @@ class ChannelController extends Controller
      *
      * @param $userId
      * @return Factory|View
+     * @throws ValidationException
      */
     public function about($userId)
     {
+        /** @var User $author */
         $author = User::find($userId);
+        /** @var ChannelSetting $setting */
         $setting = $author->setting;
 
         if ($author === null) {
             abort(404);
+        }
+
+        if (request()->isMethod('post')) {
+            $this->validate(request(), [
+                'about' => 'required|min:1',
+            ]);
+
+            $about = (new Purify())->clean(request('about'));
+            $setting->setAbout($about);
+
+            $setting->save();
         }
 
         return view('channel.about')->with('author', $author)
