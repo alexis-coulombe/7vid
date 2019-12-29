@@ -2,6 +2,7 @@
     @php
         $upVotes = $comment->getUpVotes();
         $downVotes = $comment->getDownVotes();
+        $total = $upVotes + $downVotes;
     @endphp
     <div class="single-video-author box mb-3 scrolling-prevent" id="{{ $comment->getId() }}">
         <div class="float-right" style="padding-bottom: 30px; margin-left: 10px;">
@@ -16,15 +17,13 @@
             <button type="button" class="btn btn-sm btn-{{ $comment->userHasVoted(0) ? 'danger' : 'primary' }} vote" data-value="0" data-id="{{ $comment->getId() }}" @if(Auth::check()) data-url="{{ route('comment.vote') }}" @endif>
                 <i class="fas fa-thumbs-down"></i>
             </button>
-            @if($upVotes === $downVotes)
+            <div>
                 <div class="progress">
-                    <div class="progress-bar" role="progressbar"></div>
+                    <div class="progress-bar" role="progressbar" style="width: {{ $total > 0 ? ($upVotes / $total)*100 : 100 }}%;"></div>
                 </div>
-            @else
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: {{ ($upVotes / ($upVotes + ($downVotes <= 0 ? 1 : $downVotes)))*100 }}%;"></div>
-                </div>
-            @endif
+                <span class="pull-left">{{ $upVotes }}</span>
+                <span class="pull-right">{{ $downVotes }}</span>
+            </div>
         </div>
         <div class="row vertical-center mb-2">
             <a href="{{ route('channel.index', ['userId' => $comment->getAuthorId()]) }}">

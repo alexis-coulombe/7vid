@@ -14,6 +14,7 @@ use App\VideoVote;
 use Faker\Provider\File;
 use getid3_exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -45,7 +46,7 @@ class VideosController extends Controller
      * Search for videos that fits filters
      *
      * @param Request $request
-     * @return HomeController
+     * @return View
      */
     public function search(Request $request): View
     {
@@ -85,6 +86,7 @@ class VideosController extends Controller
      * Add vote to video
      *
      * @return ResponseFactory|Response
+     * @throws \Exception
      */
     public static function vote()
     {
@@ -241,33 +243,11 @@ class VideosController extends Controller
             abort(404);
         }
 
-        $commentOrder = 'created_at';
-
-        if (request('filter_comments')) {
-            switch (request('filter_comments')) {
-                case 'date':
-                {
-                    $commentOrder = 'created_at';
-                    break;
-                }
-                case 'rated':
-                {
-                    $commentOrder = 'comment_votes_count';
-                    break;
-                }
-            }
-        }
-
-        $comments = Comment::where(['video_id' => $video->getId()])->orderBy($commentOrder, 'DESC')->take(5);
-
-        if (request('filter_comments') && request('filter_comments') === 'rated') {
-            $comments = $comments->withCount(['comment_votes', 'comment_votes' => static function ($query) {
-                $query->where(['value' => 1]);
-            }]);
-        }
+        /** @var Builder $comments */
+        $comments = Comment::getByFilter(request('filter_comments') ?: '', $video->getId());
 
         /** @var array $comments */
-        $comments = $comments->get();
+        $comments = $comments->limit(5)->get();
 
         /** @var int $subscriptionCount */
         $subscriptionCount = Subscription::where('author_id', '=', $video->author->id)->count();

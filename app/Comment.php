@@ -3,6 +3,8 @@
 namespace App;
 
 use Cassandra\Uuid;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -48,7 +50,7 @@ class Comment extends Model
      */
     public function getId(): int
     {
-       return $this->id;
+        return $this->id;
     }
 
     /**
@@ -131,12 +133,12 @@ class Comment extends Model
      *
      * @return int
      */
-    public function getUpVotes() : int
+    public function getUpVotes(): int
     {
         $upVotes = 0;
 
-        foreach($this->comment_votes as $vote){
-            if($vote->value){
+        foreach ($this->comment_votes as $vote) {
+            if ($vote->value) {
                 $upVotes++;
             }
         }
@@ -149,16 +151,65 @@ class Comment extends Model
      *
      * @return int
      */
-    public function getDownVotes() : int
+    public function getDownVotes(): int
     {
         $downVotes = 0;
 
-        foreach($this->comment_votes as $vote){
-            if(!$vote->value){
+        foreach ($this->comment_votes as $vote) {
+            if (!$vote->value) {
                 $downVotes++;
             }
         }
 
         return $downVotes;
+    }
+
+    /**
+     * @param string $filter
+     * @param string $videoId
+     * @return Builder
+     */
+    public static function getByFilter(string $filter, string $videoId): Builder
+    {
+        $commentOrder = 'created_at';
+
+        if ($filter) {
+            switch ($filter) {
+                case 'date':
+                {
+                    $commentOrder = 'created_at';
+                    break;
+                }
+                case 'rated':
+                case 'vote_count':
+                {
+                    $commentOrder = 'comment_votes_count';
+                    break;
+                }
+            }
+        }
+
+        $comments = self::where(['video_id' => $videoId])->orderBy($commentOrder, 'DESC');
+
+        if ($filter) {
+            switch ($filter) {
+                case 'rated':
+                {
+                    $comments = $comments->withCount(['comment_votes', 'comment_votes' => static function ($query) {
+                        $query->where(['value' => 1]);
+                    }]);
+
+                    break;
+                }
+                case 'vote_count':
+                {
+                    $comments = $comments->withCount('comment_votes');
+                    break;
+                }
+            }
+
+        }
+
+        return $comments;
     }
 }

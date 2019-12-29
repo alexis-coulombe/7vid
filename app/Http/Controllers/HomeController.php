@@ -11,6 +11,7 @@ use App\Video;
 use App\VideoSetting;
 use App\Views;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -162,7 +163,11 @@ class HomeController extends Controller
                 $video = Video::find($videoId);
 
                 if ($video) {
-                    $comments = Comment::where(['video_id' => $videoId])->orderBy('created_at')->take(5)->whereNotIn('id', $exclude)->get();
+                    /** @var Builder $comments */
+                    $comments = Comment::getByFilter(request('filter_comments') ?: '', $video->getId());
+
+                    /** @var array $comments */
+                    $comments = $comments->limit(5)->whereNotIn('id', $exclude)->get();
 
                     if ((!count($comments)) > 0) {
                         return 'Done';
