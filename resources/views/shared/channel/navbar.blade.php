@@ -26,10 +26,13 @@
             </li>
         </ul>
         <div class="form-inline my-2 my-lg-0">
-            <input class="form-control form-control-sm mr-sm-1" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success btn-sm my-2 my-sm-0" type="submit">
-                <i class="fas fa-search"></i>
-            </button> &nbsp;&nbsp;&nbsp;
+            <form action="{{ route('channel.search', ['userId' => $author->getId()]) }}" method="POST">
+                {{ csrf_field() }}
+                <input class="form-control form-control-sm mr-sm-1" type="search" name="search" placeholder="Search" aria-label="Search" minlength="1" required>
+                <button class="btn btn-outline-success btn-sm my-2 my-sm-0" type="submit">
+                    <i class="fas fa-search"></i>
+                </button> &nbsp;&nbsp;&nbsp;
+            </form>
             @if(Auth::check() && $author->getId() !== Auth::user()->getId())
                 @include('shared.video.subscribe-small')
             @endif

@@ -45,6 +45,7 @@ Route::get('channel/{userId}', 'ChannelController@index')->where('userId', '[0-9
 Route::post('channel/subscribe', 'ChannelController@subscribe')->name('channel.subscribe')->middleware('auth');
 Route::any('channel/{userId}/about', 'ChannelController@about')->where('userId', '[0-9]+')->name('channel.about');
 Route::get('channel/{userId}/videos', 'ChannelController@videos')->where('userId', '[0-9]+')->name('channel.videos');
+Route::post('channel/{userId}/search', 'ChannelController@search')->where('userId', '[0-9]+')->name('channel.search');
 
 // category routes
 Route::get('category/{name}', 'CategoryController@index')->name('category.index');

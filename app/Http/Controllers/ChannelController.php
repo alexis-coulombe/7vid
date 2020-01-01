@@ -44,10 +44,10 @@ class ChannelController extends Controller
     /**
      * Channel videos
      *
-     * @param $userId
+     * @param int $userId
      * @return Factory|View
      */
-    public function videos($userId)
+    public function videos(int $userId)
     {
         $author = User::find($userId);
 
@@ -62,11 +62,11 @@ class ChannelController extends Controller
     /**
      * Channel about
      *
-     * @param $userId
+     * @param int $userId
      * @return Factory|View
      * @throws ValidationException
      */
-    public function about($userId)
+    public function about(int $userId) : View
     {
         /** @var User $author */
         $author = User::find($userId);
@@ -95,13 +95,12 @@ class ChannelController extends Controller
     /**
      * Infinite scroll for history page
      *
-     * @param Request $request
      * @return Factory|View|string
      */
-    public function scroll(Request $request)
+    public function scroll()
     {
         if (request()->ajax()) {
-            $exclude = request()->input('exclude') ?: [];
+            $exclude = request('exclude') ?: [];
             $users = User::withCount('videos')->latest('videos_count')->take(3)->whereNotIn('id', $exclude)->get();
 
             foreach ($users as $user) {
@@ -149,6 +148,30 @@ class ChannelController extends Controller
         }
 
         return response(405);
+    }
+
+    /**
+     * Search for video name
+     *
+     * @param int $userId
+     * @return Factory|View
+     */
+    public function search(int $userId) : View
+    {
+        /** @var User $user */
+        $user = User::find($userId);
+        /** @var string $search */
+        $search = '%' . request('search') . '%';
+
+        if (!$user) {
+            abort(404);
+        }
+
+        /** @var array $videos */
+        $videos = $user->videos()->where('title', 'LIKE', $search)->get();
+
+        return View('channel.search')->with('videos', $videos)
+            ->with('search', request('search'))->with('author', $user);
     }
 
     public function delete()
