@@ -280,19 +280,13 @@ class User extends Authenticatable
     {
         /** @var User $user */
         $user = null;
-        if ($userId && self::find($userId)) {
-            $user = self::find($userId);
-        } elseif (Auth::check()) {
-            $user = Auth::user();
-        } else {
+        if (!$user = $this->validateUser($userId)) {
             return false;
         }
 
         /** @var Video $video */
         $video = null;
-        if (Video::find($videoId)) {
-            $video = Video::find($videoId);
-        } else {
+        if (!$video = $this->validateVideo($videoId)) {
             return false;
         }
 
@@ -331,19 +325,14 @@ class User extends Authenticatable
     {
         /** @var User $user */
         $user = null;
-        if ($userId && self::find($userId)) {
-            $user = self::find($userId);
-        } elseif (Auth::check()) {
-            $user = Auth::user();
-        } else {
+
+        if (!$user = $this->validateUser($userId)) {
             return false;
         }
 
         /** @var Comment $comment */
         $comment = null;
-        if (Comment::find($commentId)) {
-            $comment = Comment::find($commentId);
-        } else {
+        if (!$comment = $this->validateComment($commentId)) {
             return false;
         }
 
@@ -367,5 +356,58 @@ class User extends Authenticatable
         }
 
         return true;
+    }
+
+    /**
+     * Check if user exists, logged or not then return it.
+     *
+     * @param $userId
+     * @return \Illuminate\Contracts\Auth\Authenticatable|bool
+     */
+    private function validateUser($userId)
+    {
+        if ($userId && self::find($userId)) {
+            $user = self::find($userId);
+        } elseif (Auth::check()) {
+            $user = Auth::user();
+        } else {
+            return false;
+        }
+
+        return $user;
+    }
+
+    /**
+     * Check if video exists, then return it.
+     *
+     * @param $commentId
+     * @return bool|Comment
+     */
+    private function validateComment($commentId)
+    {
+        if (Comment::find($commentId)) {
+            $comment = Comment::find($commentId);
+        } else {
+            return false;
+        }
+
+        return $comment;
+    }
+
+    /**
+     * Check if video exists, then return it.
+     *
+     * @param $videoId
+     * @return bool|Video
+     */
+    private function validateVideo($videoId)
+    {
+        if (Video::find($videoId)) {
+            $video = Video::find($videoId);
+        } else {
+            return false;
+        }
+
+        return $video;
     }
 }
