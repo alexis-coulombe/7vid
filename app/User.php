@@ -226,7 +226,12 @@ class User extends Authenticatable
      */
     public function isSubscribed($author_id): bool
     {
-        return $this->subscriptions()->where(['author_id' => $author_id, 'user_id' => Auth::user()->getId()])->exists();
+        if(Auth::check()) {
+            return $this->subscriptions()->where([
+                'author_id' => $author_id,
+                'user_id' => Auth::user()->getId()
+            ])->exists();
+        }
     }
 
     /**
@@ -236,10 +241,17 @@ class User extends Authenticatable
      */
     public function subscribe($channelId): void
     {
-        $subscription = new Subscription();
-        $subscription->author_id = $channelId;
-        $subscription->user_id = Auth::user()->getId();
-        $subscription->save();
+        if (Auth::check()) {
+            if($this->isSubscribed($channelId)){
+                $this->unsubscribe($channelId);
+            } else {
+                /** @var Subscription $subscription */
+                $subscription = new Subscription();
+                $subscription->setAuthorId($channelId);
+                $subscription->setUserId(Auth::user()->getId());
+                $subscription->save();
+            }
+        }
     }
 
     /**
@@ -249,7 +261,12 @@ class User extends Authenticatable
      */
     public function unsubscribe($channelId): void
     {
-        $this->subscriptions()->where([['author_id', '=', $channelId], ['user_id', '=', $this->getId()]])->delete();
+        if(Auth::check()) {
+            $this->subscriptions()->where([
+                ['author_id', '=', $channelId],
+                ['user_id', '=', Auth::user()->getId()]
+            ])->delete();
+        }
     }
 
     /**
@@ -258,13 +275,32 @@ class User extends Authenticatable
      * @param $authorId
      * @return integer
      */
-    public function getSubscriptionCount(int $authorId = 0): int
+    public function getSubscriptionCount(int $authorId = null): int
     {
-        if ($authorId === 0 && Auth::check()) {
-            $authorId = Auth::user()->getId();
+        /** @var User $user */
+        $user = null;
+        if (!$user = $this->validateUser($authorId)) {
+            return 0;
         }
 
-        return $this->subscriptions()->where(['author_id' => $authorId])->count();
+        return $this->subscriptions()->where(['author_id' => $user->getId()])->count();
+    }
+
+    /**
+     * Get subscription count for authorId
+     *
+     * @param $authorId
+     * @return integer
+     */
+    public function getSubscribersCount(int $authorId = null): int
+    {
+        /** @var User $user */
+        $user = null;
+        if (!$user = $this->validateUser($authorId)) {
+            return 0;
+        }
+
+        return Subscription::where(['author_id' => $user->getId()])->count();
     }
 
     /**
