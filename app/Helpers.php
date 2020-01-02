@@ -32,7 +32,7 @@ function time_elapsed_string($datetime, $full = false)
     return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
 
-function parseVideoDuration($seconds) : string
+function parseVideoDuration($seconds): string
 {
     $hours = floor($seconds / 3600);
     $total = null;
@@ -46,11 +46,17 @@ function parseVideoDuration($seconds) : string
     return $total;
 }
 
-function getImage($route, $image, $params = []){
+function getImage($route, $image, $params = [])
+{
     $signKey = config('app.key');
 
     $urlBuilder = \League\Glide\Urls\UrlBuilderFactory::create($route, $signKey);
     $url = $urlBuilder->getUrl($image);
 
     return $url;
+}
+
+function isMobile(): bool
+{
+    return (new Mobile_Detect())->isMobile();
 }

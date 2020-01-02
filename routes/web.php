@@ -11,9 +11,6 @@
 |
 */
 
-// Dashboard routes
-Route::any('/dashboard', 'DashboardController@index')->name('dashboard.index')->middleware('auth');
-
 // Images CDN
 Route::get('/img/{path?}', 'ImageController@show')->where('path', '.*')->name('cdn.img');
 Route::get('/avatar/{path?}', 'ImageController@showAvatar')->where('path', '.*')->name('cdn.img.avatar');
@@ -46,8 +43,9 @@ Route::post('channel/', 'ChannelController@scroll')->name('channel.scroll');
 Route::delete('channel/delete', 'ChannelController@delete')->name('channel.delete');
 Route::get('channel/{userId}', 'ChannelController@index')->where('userId', '[0-9]+')->name('channel.index');
 Route::post('channel/subscribe', 'ChannelController@subscribe')->name('channel.subscribe')->middleware('auth');
-Route::get('channel/{userId}/about', 'ChannelController@about')->where('userId', '[0-9]+')->name('channel.about');
+Route::any('channel/{userId}/about', 'ChannelController@about')->where('userId', '[0-9]+')->name('channel.about');
 Route::get('channel/{userId}/videos', 'ChannelController@videos')->where('userId', '[0-9]+')->name('channel.videos');
+Route::post('channel/{userId}/search', 'ChannelController@search')->where('userId', '[0-9]+')->name('channel.search');
 
 // category routes
 Route::get('category/{name}', 'CategoryController@index')->name('category.index');

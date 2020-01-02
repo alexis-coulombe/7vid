@@ -115,7 +115,7 @@ class Video extends Model
      *
      * @return int
      */
-    public function getAuthorId() : int
+    public function getAuthorId(): int
     {
         return $this->author_id;
     }
@@ -125,7 +125,7 @@ class Video extends Model
      *
      * @param int $authorId
      */
-    public function setAuthorId(int $authorId) : void
+    public function setAuthorId(int $authorId): void
     {
         $this->author_id = $authorId;
     }
@@ -135,7 +135,7 @@ class Video extends Model
      *
      * @return int
      */
-    public function getCategoryId() : int
+    public function getCategoryId(): int
     {
         return $this->category_id;
     }
@@ -145,7 +145,7 @@ class Video extends Model
      *
      * @param int $categoryId
      */
-    public function setCategoryId(int $categoryId) : void
+    public function setCategoryId(int $categoryId): void
     {
         $this->category_id = $categoryId;
     }
@@ -185,7 +185,7 @@ class Video extends Model
      *
      * @param string $description
      */
-    public function setDescription(string $description) : void
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
@@ -205,7 +205,7 @@ class Video extends Model
      *
      * @param string $extension
      */
-    public function setExtension(string $extension) : void
+    public function setExtension(string $extension): void
     {
         $this->extension = $extension;
     }
@@ -225,7 +225,7 @@ class Video extends Model
      *
      * @param int $duration
      */
-    public function setDuration(int $duration) : void
+    public function setDuration(int $duration): void
     {
         $this->duration = $duration;
     }
@@ -245,7 +245,7 @@ class Video extends Model
      *
      * @param int $frameRate
      */
-    public function setFrameRate(int $frameRate) : void
+    public function setFrameRate(int $frameRate): void
     {
         $this->frame_rate = $frameRate;
     }
@@ -265,7 +265,7 @@ class Video extends Model
      *
      * @param string $mimeType
      */
-    public function setMimeType(string $mimeType) : void
+    public function setMimeType(string $mimeType): void
     {
         $this->mime_type = $mimeType;
     }
@@ -285,7 +285,7 @@ class Video extends Model
      *
      * @param string $location
      */
-    public function setLocation(string $location) : void
+    public function setLocation(string $location): void
     {
         $this->location = $location;
     }
@@ -305,7 +305,7 @@ class Video extends Model
      *
      * @param string $thumbnail
      */
-    public function setThumbnail(string $thumbnail) : void
+    public function setThumbnail(string $thumbnail): void
     {
         $this->thumbnail = $thumbnail;
     }
@@ -325,7 +325,7 @@ class Video extends Model
      *
      * @param int $viewsCount
      */
-    public function setViewsCount(int $viewsCount) : void
+    public function setViewsCount(int $viewsCount): void
     {
         $this->views_count = $viewsCount;
     }
@@ -341,17 +341,68 @@ class Video extends Model
     }
 
     /**
+     * Return formated title to not exceed limit
+     *
+     * @return string
+     */
+    public function getFormatedTitle(int $limit): string
+    {
+        return strlen($this->getTitle()) > $limit ? substr($this->getTitle(), 0, $limit) . '...' : $this->getTitle();
+    }
+
+    /**
      * Check if the logged user has voted for the video
      *
-     * @param $value
+     * @param bool $value
+     * @param null $userId
      * @return boolean
      */
-    public function userHasVoted($value): bool
+    public function userHasVoted(bool $value, $userId = null): bool
     {
+        if ($userId !== null) {
+            return $this->votes()->where(['author_id' => $userId, 'value' => $value])->exists();
+        }
+
         if (Auth::check()) {
-            return VideoVote::where(['author_id' => Auth::user()->id, 'video_id' => $this->getId(), 'value' => $value])->exists();
+            return $this->votes()->where(['author_id' => Auth::user()->getId(), 'value' => $value])->exists();
         }
 
         return false;
+    }
+
+    /**
+     * Get video up votes
+     *
+     * @return int
+     */
+    public function getUpVotes(): int
+    {
+        $upVotes = 0;
+
+        foreach ($this->votes as $vote) {
+            if ($vote->value) {
+                $upVotes++;
+            }
+        }
+
+        return $upVotes;
+    }
+
+    /**
+     * Get video down votes
+     *
+     * @return int
+     */
+    public function getDownVotes(): int
+    {
+        $downVotes = 0;
+
+        foreach ($this->votes as $vote) {
+            if (!$vote->value) {
+                $downVotes++;
+            }
+        }
+
+        return $downVotes;
     }
 }

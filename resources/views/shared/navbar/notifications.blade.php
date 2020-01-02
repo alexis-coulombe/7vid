@@ -16,7 +16,7 @@
 @if(count($notifications) < 0)
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
         @foreach($notifications as $notification)
-            @php $notification = json_decode($notification->data['data']); @endphp
+            @php $notification = json_decode($notification->data['data'], true, 512, JSON_THROW_ON_ERROR); @endphp
             <div class="dropdown-item">
                 <button class="btn btn-sm btn-primary">Hide</button>
                 <a href="{{ isset($notification->link) ?? '#' }}">{{ $notification->desc }}</a>

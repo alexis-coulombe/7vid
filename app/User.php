@@ -2,9 +2,8 @@
 
 namespace App;
 
-use App\Notifications\_Notification;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
@@ -200,6 +199,26 @@ class User extends Authenticatable
     }
 
     /**
+     * Get country id
+     *
+     * @return string
+     */
+    public function getCountryId(): string
+    {
+        return $this->country_id;
+    }
+
+    /**
+     * Set country id
+     *
+     * @param int $countryId
+     */
+    public function setCountryId(int $countryId): void
+    {
+        $this->country_id = $countryId;
+    }
+
+    /**
      * Check if user is subscribed to another user
      *
      * @param $author_id
@@ -207,7 +226,12 @@ class User extends Authenticatable
      */
     public function isSubscribed($author_id): bool
     {
-        return $this->subscriptions()->where(['author_id' => $author_id, 'user_id' => Auth::user()->getId()])->exists();
+        if(Auth::check()) {
+            return $this->subscriptions()->where([
+                'author_id' => $author_id,
+                'user_id' => Auth::user()->getId()
+            ])->exists();
+        }
     }
 
     /**
@@ -217,10 +241,17 @@ class User extends Authenticatable
      */
     public function subscribe($channelId): void
     {
-        $subscription = new Subscription();
-        $subscription->author_id = $channelId;
-        $subscription->user_id = Auth::user()->getId();
-        $subscription->save();
+        if (Auth::check()) {
+            if($this->isSubscribed($channelId)){
+                $this->unsubscribe($channelId);
+            } else {
+                /** @var Subscription $subscription */
+                $subscription = new Subscription();
+                $subscription->setAuthorId($channelId);
+                $subscription->setUserId(Auth::user()->getId());
+                $subscription->save();
+            }
+        }
     }
 
     /**
@@ -230,7 +261,12 @@ class User extends Authenticatable
      */
     public function unsubscribe($channelId): void
     {
-        $this->subscriptions()->where([['author_id', '=', $channelId], ['user_id', '=', $this->getId()]])->delete();
+        if(Auth::check()) {
+            $this->subscriptions()->where([
+                ['author_id', '=', $channelId],
+                ['user_id', '=', Auth::user()->getId()]
+            ])->delete();
+        }
     }
 
     /**
@@ -239,13 +275,15 @@ class User extends Authenticatable
      * @param $authorId
      * @return integer
      */
-    public function getSubscriptionCount(int $authorId = 0): int
+    public function getSubscriptionCount(int $authorId = null): int
     {
-        if ($authorId === 0 && Auth::check()) {
-            $authorId = Auth::user()->getId();
+        /** @var User $user */
+        $user = null;
+        if (!$user = $this->validateUser($authorId)) {
+            return 0;
         }
 
-        return $this->subscriptions()->where(['author_id' => $authorId])->count();
+        return $this->subscriptions()->where(['author_id' => $user->getId()])->count();
     }
 
     /**
@@ -254,12 +292,158 @@ class User extends Authenticatable
      * @param $authorId
      * @return integer
      */
-    public function getSubscribersCount(int $authorId = 0): int
+    public function getSubscribersCount(int $authorId = null): int
     {
-        if ($authorId === 0 && Auth::check()) {
-            $authorId = Auth::user()->getId();
+        /** @var User $user */
+        $user = null;
+        if (!$user = $this->validateUser($authorId)) {
+            return 0;
         }
 
-        return Subscription::where(['author_id' => $authorId])->count();
+        return Subscription::where(['author_id' => $user->getId()])->count();
+    }
+
+    /**
+     * Set user vote for video
+     *
+     * @param bool $value
+     * @param string $videoId
+     * @param int $userId
+     * @return bool
+     * @throws Exception
+     */
+    public function voteVideo(bool $value, string $videoId, int $userId = null): bool
+    {
+        /** @var User $user */
+        $user = null;
+        if (!$user = $this->validateUser($userId)) {
+            return false;
+        }
+
+        /** @var Video $video */
+        $video = null;
+        if (!$video = $this->validateVideo($videoId)) {
+            return false;
+        }
+
+        /** @var VideoVote $vote */
+        $vote = VideoVote::where(['video_id' => $video->getId(), 'author_id' => $user->getId()])->first();
+
+        if ($vote) {
+            if ($value !== $vote->getValue()) {
+                $vote->setValue($value);
+                $vote->save();
+            } else {
+                $vote->delete();
+            }
+        } else {
+            /** @var VideoVote $vote */
+            $vote = new VideoVote();
+            $vote->setVideoId($video->getId());
+            $vote->setAuthorId($user->getId());
+            $vote->setValue($value);
+            $vote->save();
+        }
+
+        return true;
+    }
+
+    /**
+     * Set user vote for comment
+     *
+     * @param bool $value
+     * @param int $commentId
+     * @param int $userId
+     * @return bool
+     * @throws Exception
+     */
+    public function voteComment(bool $value, int $commentId, int $userId = null): bool
+    {
+        /** @var User $user */
+        $user = null;
+
+        if (!$user = $this->validateUser($userId)) {
+            return false;
+        }
+
+        /** @var Comment $comment */
+        $comment = null;
+        if (!$comment = $this->validateComment($commentId)) {
+            return false;
+        }
+
+        /** @var VideoVote $vote */
+        $vote = CommentVote::where(['comment_id' => $comment->getId(), 'author_id' => $user->getId()])->first();
+
+        if ($vote) {
+            if ($value !== $vote->getValue()) {
+                $vote->setValue($value);
+                $vote->save();
+            } else {
+                $vote->delete();
+            }
+        } else {
+            /** @var CommentVote $vote */
+            $vote = new CommentVote();
+            $vote->setCommentId($comment->getId());
+            $vote->setAuthorId($user->getId());
+            $vote->setValue($value);
+            $vote->save();
+        }
+
+        return true;
+    }
+
+    /**
+     * Check if user exists, logged or not then return it.
+     *
+     * @param $userId
+     * @return \Illuminate\Contracts\Auth\Authenticatable|bool
+     */
+    private function validateUser($userId)
+    {
+        if ($userId && self::find($userId)) {
+            $user = self::find($userId);
+        } elseif (Auth::check()) {
+            $user = Auth::user();
+        } else {
+            return false;
+        }
+
+        return $user;
+    }
+
+    /**
+     * Check if video exists, then return it.
+     *
+     * @param $commentId
+     * @return bool|Comment
+     */
+    private function validateComment($commentId)
+    {
+        if (Comment::find($commentId)) {
+            $comment = Comment::find($commentId);
+        } else {
+            return false;
+        }
+
+        return $comment;
+    }
+
+    /**
+     * Check if video exists, then return it.
+     *
+     * @param $videoId
+     * @return bool|Video
+     */
+    private function validateVideo($videoId)
+    {
+        if (Video::find($videoId)) {
+            $video = Video::find($videoId);
+        } else {
+            return false;
+        }
+
+        return $video;
     }
 }

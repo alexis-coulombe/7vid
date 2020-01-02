@@ -1,7 +1,7 @@
 @extends('shared.template')
 
 @section('title')
-    channel of {{ $author->getName() }}
+    Search for {{ $search }}
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
         <div class="container-fluid">
             <div class="video-block section-padding">
                 <div class="row">
-                    @if(count($author->videos) > 0)
+                    @if(count($videos) > 0)
                         <div class="col-md-12">
                             <div class="main-title">
                                 <div class="btn-group float-right right-action">
@@ -30,7 +30,7 @@
                                 <h6>Videos</h6>
                             </div>
                         </div>
-                        @foreach($author->videos as $video)
+                        @foreach($videos as $video)
                             <div class="col-xl-3 col-sm-6 mb-3">
                                 @include('shared.video.card')
                             </div>

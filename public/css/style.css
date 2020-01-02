@@ -33,6 +33,7 @@
 	-- Video settings
 	-- Author img
 	-- 3rd party button
+	-- Overlay
 */
 /* Body */
 html {
@@ -1797,4 +1798,19 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     font-size: 15px;
     text-align: left;
     line-height: 24px;
+}
+
+/* Overlay */
+#overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
 }

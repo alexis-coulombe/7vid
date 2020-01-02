@@ -36,6 +36,7 @@ $(window).scroll(function () {
                     }
 
                     scrollingElement.append(result);
+                    onVoteClickEvent();
                     shouldCall = true;
                 },
                 error: (result) => {

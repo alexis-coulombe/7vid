@@ -1,7 +1,7 @@
 @extends('shared.template')
 
 @section('title')
-    {{ $video->getTitle() }} | {{ $video->author->name }}
+    {{ $video->getTitle() }} | {{ $video->author->getName() }}
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
             <div class="col-md-10">
                 <div class="single-video-left">
                     <div class="single-video">
-                        <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' width="100%" controls preload="auto" poster="{{ route('cdn.img', ['path' => $video->getThumbnail()]) }}" data-setup="{}">
+                        <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' width="100%" controls preload="auto" poster="{{ getImage(route('cdn.img'), $video->getThumbnail()) }}" data-setup="{}">
                             <source src="/{{ $video->getLocation() }}" type="{{ $video->getMimeType() }}">
                             <p class='vjs-no-js'>
                                 To view this video please enable JavaScript, and consider upgrading to a web browser that
@@ -19,15 +19,15 @@
                         </video>
                     </div>
                     <div class="single-video-author box mb-3">
-                        @if(Auth::check() && $video->author->id !== Auth::id())
+                        @if(Auth::check() && $video->author->getId() !== Auth::user()->getId())
                             <div class="float-right mt-2">
                                 @include('shared.video.subscribe')
                             </div>
                         @endif
                         <div class="row vertical-center">
-                            <img class="img-fluid" loading="lazy" src="{{ getImage(route('cdn.img.avatar'), $video->author->avatar) }}" alt="">
+                            <img class="img-fluid" loading="lazy" src="{{ getImage(route('cdn.img.avatar'), $video->author->getAvatar()) }}" alt="">
                             <p class="ml-2">
-                                <a href="{{ route('channel.index', ['userId' => $video->author->id]) }}" aria-label="View channel"><strong>{{ $video->author->name }}</strong></a>
+                                <a href="{{ route('channel.index', ['userId' => $video->author->getId()]) }}" aria-label="View channel"><strong>{{ $video->author->getName() }}</strong></a>
                             </p>
                         </div>
                         <small>Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
@@ -35,8 +35,8 @@
                     <div class="single-video-title box mb-3">
                         @if($video->setting->allow_votes)
                             <div class="float-right">
-                                <button type="button" class="btn btn-{{ $video->userHasVoted(1) ? 'danger' : 'primary' }} vote" data-value="1" data-id="{{ $video->id }}" @if(Auth::check()) data-url="{{ route('video.vote') }}" @endif><i class="fas fa-thumbs-up"></i></button>
-                                <button type="button" class="btn btn-{{ $video->userHasVoted(0) ? 'danger' : 'primary' }} vote" data-value="0" data-id="{{ $video->id }}" @if(Auth::check()) data-url="{{ route('video.vote') }}" @endif><i class="fas fa-thumbs-down"></i></button>
+                                <button type="button" class="btn btn-{{ $video->userHasVoted(1) ? 'danger' : 'primary' }} vote" data-value="1" data-id="{{ $video->getId() }}" @if(Auth::check()) data-url="{{ route('video.vote') }}" @endif><i class="fas fa-thumbs-up"></i></button>
+                                <button type="button" class="btn btn-{{ $video->userHasVoted(0) ? 'danger' : 'primary' }} vote" data-value="0" data-id="{{ $video->getId() }}" @if(Auth::check()) data-url="{{ route('video.vote') }}" @endif><i class="fas fa-thumbs-down"></i></button>
                                 @if($upVotes === $downVotes)
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar"></div>
@@ -78,6 +78,7 @@
                                 <h6>Up Next</h6>
                             </div>
                         </div>
+                        @php $temp = $video @endphp
                         @if(count($relatedVideos) > 0)
                             @foreach($relatedVideos as $video)
                                 <div class="col-lg-12 col-md-6 col-sm-6">
@@ -85,11 +86,15 @@
                                 </div>
                             @endforeach
                         @endif
+                        @php $video = $temp @endphp
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
+            <div class="col-md-10">
+                @include('shared.comment.filter')
+            </div>
             <div class="col-lg-10">
                 @if($video->setting->allow_comments)
                     @if(\Illuminate\Support\Facades\Auth::check())

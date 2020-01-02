@@ -12,7 +12,7 @@ class CategoryController extends Controller
     public function index($name)
     {
         /** @var Category $category */
-        $category = Category::where('title', '=', $name)->first();
+        $category = Category::where(['title' => $name])->first();
 
         if (!$category) {
             App::abort(404);

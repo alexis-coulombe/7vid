@@ -19,27 +19,28 @@
     </form>
     <!-- Navbar -->
     <ul class="navbar-nav ml-auto ml-md-0 osahan-right-navbar">
-        @if(Auth::check())
-            <li class="nav-item mx-1">
+        @auth
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('video.create') }}">
                     <i class="fas fa-plus-circle fa-fw"></i>
                     Upload
                 </a>
             </li>
-            <li class="nav-item dropdown no-arrow mx-1">
+            <li class="nav-item dropdown no-arrow">
                 @include('shared.navbar.notifications')
             </li>
-            <li class="nav-item dropdown no-arrow mx-1">
+            <li class="nav-item dropdown no-arrow">
                 @include('shared.navbar.parameters')
             </li>
-        @endif
+        @endauth
         <li class="nav-item dropdown no-arrow osahan-right-navbar-user">
-            @if(Auth::check())
+            @auth
                 <a class="nav-link dropdown-toggle user-dropdown-link" href="{{ route('channel.index', ['userId' => Auth::user()->id]) }}">
                     <img alt="Avatar" loading="lazy" src="{{ getImage(route('cdn.img.avatar'), Auth::user()->avatar) }}">
                     {{ Auth::user()->name }}
                 </a>
-            @else
+            @endauth
+            @guest
                 <a class="nav-link dropdown-toggle user-dropdown-link" aria-label="dropdown" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Create an account / Login
                 </a>
@@ -47,7 +48,7 @@
                     <a class="dropdown-item" href="{{ route('register') }}"><i class="fas fa-fw fa-user-circle"></i> &nbsp; Create an account</a>
                     <a class="dropdown-item" href="{{ route('login') }}"><i class="fas fa-fw fa-video"></i> &nbsp; Login</a>
                 </div>
-            @endif
+            @endguest
         </li>
     </ul>
 </nav>

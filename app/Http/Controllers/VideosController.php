@@ -14,6 +14,7 @@ use App\VideoVote;
 use Faker\Provider\File;
 use getid3_exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -45,13 +46,14 @@ class VideosController extends Controller
      * Search for videos that fits filters
      *
      * @param Request $request
-     * @return HomeController
+     * @return View
      */
     public function search(Request $request): View
     {
         $search = request('search');
 
-        $videos = Video::where('title', 'like', '%' . $search . '%')->orWhere('description', 'like', '% ' . $search . ' %')->paginate(20, ['*'], 'video_page');
+        $videos = Video::where('title', 'like', '%' . $search . '%')->orWhere('description', 'like',
+            '% ' . $search . ' %')->paginate(20, ['*'], 'video_page');
         $authors = User::where('name', 'like', '%' . $search . '%')->paginate(12, ['*'], 'author_page');
 
 
@@ -71,10 +73,10 @@ class VideosController extends Controller
         $subscribers = $author->subscribers();
 
         /** @var User $subscriber */
-        foreach($subscribers as $subscriber){
-            $user = User::find($subscriber);
-            $user->notify(new _Notification('Test'));
-        }
+        //foreach($subscribers as $subscriber){
+        //    $user = User::find($subscriber);
+        //    $user->notify(new _Notification('Test'));
+        //}
 
         $categories = Category::all();
 
@@ -85,46 +87,17 @@ class VideosController extends Controller
      * Add vote to video
      *
      * @return ResponseFactory|Response
+     * @throws \Exception
      */
     public static function vote()
     {
         if (request()->ajax() && Auth::check()) {
-            $value = request()->input('value');
+            $value = request('value');
+            $videoId = request('id');
 
-            if (is_numeric($value)) {
-                $value = $value <= 0 ? 0 : $value;
-                $value = $value >= 1 ? 1 : $value;
-            } else {
-                return response(400);
+            if (!Auth::user()->voteVideo((bool)$value, $videoId)) {
+                return response(403);
             }
-
-            $videoId = request()->input('id');
-            /** @var Video $video */
-            $video = Video::find($videoId);
-
-            if ($video) {
-                $vote = VideoVote::where(['video_id' => $video->getId(), 'author_id' => Auth::user()->id])->first();
-
-                if ($vote) {
-                    if ($value !== $vote->value) {
-                        $vote->value = $value;
-                        $vote->save();
-                    } else {
-                        $vote->delete();
-                    }
-                } else {
-                    /** @var VideoVote $vote */
-                    $vote = new VideoVote();
-                    $vote->video_id = $video->getId();
-                    $vote->author_id = Auth::user()->id;
-                    $vote->value = $value;
-                    $vote->save();
-                }
-            } else {
-                return response(400);
-            }
-        } else {
-            return response(405);
         }
 
         return response(200);
@@ -146,7 +119,7 @@ class VideosController extends Controller
         $video = new Video;
         $video->setAuthorId(Auth::user()->id);
 
-        if (strlen(request('description')) > 0 && strlen(trim(request('description'))) === 0) {
+        if (trim(request('description')) === '') {
             $request->merge(['description' => 'No description provided']);
         }
 
@@ -155,11 +128,11 @@ class VideosController extends Controller
             $extension = request('upload')->getClientOriginalExtension();
             $allowedExtensions = ['avi', 'flv', 'mov', 'mp4'];
 
-            if (!in_array(strtolower($extension), $allowedExtensions)) {
+            if (!in_array(strtolower($extension), $allowedExtensions, true)) {
                 return redirect('/video')->with('error', 'Wrong format. Must be: avi, flv, mov, mp4');
             }
 
-            if (request('upload') == null) {
+            if (request('upload') === null) {
                 return redirect('/video')->with('error', 'There was an error when uploading your video.');
             }
 
@@ -182,10 +155,10 @@ class VideosController extends Controller
         if ($request->hasFile('image')) {
             $destinationPath = 'images';
             $extension = request('image')->getClientOriginalExtension();
-            $filename = time() . '_' . uniqid() . '.' . $extension;
+            $filename = time() . '_' . uniqid('', true) . '.' . $extension;
             $allowedExtensions = ['jpeg', 'jpg', 'png'];
 
-            if (!in_array(strtolower($extension), $allowedExtensions)) {
+            if (!in_array(strtolower($extension), $allowedExtensions, true)) {
                 return redirect(route('video.create'))->with('error', 'Wrong format. Must be: jpeg, jpg, png');
             }
 
@@ -202,17 +175,17 @@ class VideosController extends Controller
 
         /** @var VideoSetting $setting */
         $setting = new VideoSetting();
-        $setting->video_id = $video->getId();
-        $setting->private = request('private') ? 1 : 0;
-        $setting->allow_comments = request('allow_comments') ? 1 : 0;
-        $setting->allow_votes = request('allow_votes') ? 1 : 0;
+        $setting->setVideoId($video->getId());
+        $setting->setPrivate(request('private') ? 1 : 0);
+        $setting->setAllowComments(request('allow_comments') ? 1 : 0);
+        $setting->setAllowVotes(request('allow_votes') ? 1 : 0);
         $setting->save();
 
         /** @var User $author */
         $author = $video->author;
         $subscribers = $author->subscribers;
 
-        if(count($subscribers) > 0) {
+        if (count($subscribers) > 0) {
             /** @var User $subscriber */
             foreach ($subscribers as $subscriber) {
                 $subscriber->notify(new _Notification([
@@ -222,7 +195,8 @@ class VideosController extends Controller
             }
         }
 
-        return redirect(route('video.show', ['video' => $video->getId()]))->with('success', 'Your video as been shared.');
+        return redirect(route('video.show', ['video' => $video->getId()]))->with('success',
+            'Your video as been shared.');
     }
 
     /**
@@ -235,34 +209,31 @@ class VideosController extends Controller
     {
         /** @var Video $video */
         $video = Video::find($id);
+
         if ($video === null) {
             abort(404);
         }
 
-        $comments = Comment::where('video_id', '=', $video->getId())->orderBy('created_at', 'DESC')->take(5)->get();
+        /** @var Builder $comments */
+        $comments = Comment::getByFilter(request('filter_comments') ?: '', $video->getId());
+
+        /** @var array $comments */
+        $comments = $comments->limit(5)->get();
+
+        /** @var int $subscriptionCount */
         $subscriptionCount = Subscription::where('author_id', '=', $video->author->id)->count();
 
+        /** @var array $relatedVideos */
         $relatedVideos = Video::where('title', 'like', '%' . $video->getTitle() . '%')
             ->orWhere('category_id', '=', $video->getCategoryId())->limit(10)->get();
-
-        $upVotes = 0;
-        $downVotes = 0;
-
-        foreach ($video->votes as $vote) {
-            if($vote->value) {
-                $upVotes++;
-            } else {
-                $downVotes++;
-            }
-        }
 
         return view('video.show')
             ->with('video', $video)
             ->with('comments', $comments)
             ->with('subscriptionCount', $subscriptionCount)
             ->with('relatedVideos', $relatedVideos)
-            ->with('upVotes', $upVotes)
-            ->with('downVotes', $downVotes);
+            ->with('upVotes', $video->getUpVotes())
+            ->with('downVotes', $video->getDownVotes());
     }
 
     /**
@@ -280,7 +251,7 @@ class VideosController extends Controller
             abort(404);
         }
 
-        if(Auth::user()->id !== $video->author->id){
+        if (Auth::user()->getId() !== $video->author->getId()) {
             return redirect(route('video.show', ['video' => $video->getId()]));
         }
 
@@ -316,9 +287,9 @@ class VideosController extends Controller
         /** @var VideoSetting $setting */
         $setting = $video->setting;
 
-        $setting->allow_comments = $request->input('allow_comments') ? 1 : 0;
-        $setting->allow_votes = $request->input('allow_votes') ? 1 : 0;
-        $setting->private = $request->input('private') ? 1 : 0;
+        $setting->setAllowComments($request->input('allow_comments') ? 1 : 0);
+        $setting->setAllowVotes($request->input('allow_votes') ? 1 : 0);
+        $setting->setPrivate($request->input('private') ? 1 : 0);
 
         $video->save();
         $setting->save();
@@ -342,7 +313,7 @@ class VideosController extends Controller
             return back()->with('error', 'There was an error while trying to delete your video!');
         }
 
-        if(Auth::user()->id !== $video->author->id){
+        if (!Auth::check() || Auth::user()->getId() !== $video->author->getId()) {
             return redirect(route('video.show', ['video' => $video->getId()]));
         }
 
@@ -366,7 +337,7 @@ class VideosController extends Controller
             'upload' => 'file|' . $uploadRequired,
             'image' => 'file|' . $imageRequired,
             'description' => 'max:255',
-            //'recaptcha' => 'required|recaptcha'
+            'recaptcha' => 'required|recaptcha'
         ], [
             'title.required' => 'A title is required for your video.',
             'upload.required' => 'You must choose your video to upload.',

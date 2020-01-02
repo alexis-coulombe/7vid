@@ -16,6 +16,9 @@ class CommentVote extends Model
         'value'
     ];
 
+    public const UPVOTE = true;
+    public const DOWNVOTE = false;
+
     /**
      * Get user relation
      *
@@ -64,5 +67,25 @@ class CommentVote extends Model
     public function setValue(bool $value): void
     {
         $this->value = $value;
+    }
+
+    /**
+     * Set comment id
+     *
+     * @param int $commentId
+     */
+    public function setCommentId(int $commentId): void
+    {
+        $this->comment_id = $commentId;
+    }
+
+    /**
+     * Set author id
+     *
+     * @param int $authorId
+     */
+    public function setAuthorId(int $authorId): void
+    {
+        $this->author_id = $authorId;
     }
 }

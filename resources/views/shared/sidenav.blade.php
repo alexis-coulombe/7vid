@@ -28,12 +28,6 @@
                     <span>Videos you liked</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('dashboard.index') }}">
-                    <i class="fas fa-columns"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
         @php $subscriptions = Auth::user()->subscriptions; @endphp
         @if(count($subscriptions) > 0)
             <li class="nav-item channel-sidebar-list">
@@ -41,9 +35,9 @@
                 <ul>
                     @foreach($subscriptions as $subscription)
                         <li>
-                            <a href="{{ route('channel.index', ['userId' => $subscription->channel->id]) }}">
-                                <img class="img-fluid" alt="" src="{{ getImage(route('cdn.img.avatar'), $subscription->channel->avatar) }}">
-                                {{ $subscription->channel->name }}
+                            <a href="{{ route('channel.index', ['userId' => $subscription->channel->getId()]) }}">
+                                <img class="img-fluid" alt="" src="{{ getImage(route('cdn.img.avatar'), $subscription->channel->getAvatar()) }}">
+                                {{ $subscription->channel->getName() }}
                             </a>
                         </li>
                     @endforeach

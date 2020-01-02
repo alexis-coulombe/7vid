@@ -2,10 +2,8 @@
 
 namespace App;
 
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Facades\Auth;
 
 class VideoVote extends Model
 {
@@ -16,6 +14,9 @@ class VideoVote extends Model
         'author_id',
         'value'
     ];
+
+    public const UPVOTE = true;
+    public const DOWNVOTE = false;
 
     /**
      * Get author relation
@@ -55,5 +56,25 @@ class VideoVote extends Model
     public function setValue(bool $value): void
     {
         $this->value = $value;
+    }
+
+    /**
+     * Set value
+     *
+     * @param string $videoId
+     */
+    public function setVideoId(string $videoId): void
+    {
+        $this->video_id = $videoId;
+    }
+
+    /**
+     * Set value
+     *
+     * @param int $authorId
+     */
+    public function setAuthorId(int $authorId): void
+    {
+        $this->author_id = $authorId;
     }
 }

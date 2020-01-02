@@ -2,6 +2,7 @@
     <p>Comment that video</p>
     <form action="/comment" method="POST">
         {{ csrf_field() }}
+
         <div class="form-group">
             <input type="hidden" name="video_id" value="{{ $video_id }}" required>
             <textarea name="comment" class="form-control" placeholder="Enter your comment" required minlength="1" maxlength="255"></textarea>
