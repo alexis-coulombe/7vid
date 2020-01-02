@@ -33,10 +33,10 @@
                         <small>Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
                     </div>
                     <div class="single-video-title box mb-3">
-                        @if($video->setting->allow_votes)
+                        @if($video->setting()->first() && $video->setting()->first()->getAllowVotes())
                             <div class="float-right">
-                                <button type="button" class="btn btn-{{ $video->userHasVoted(1) ? 'danger' : 'primary' }} vote" data-value="1" data-id="{{ $video->getId() }}" @if(Auth::check()) data-url="{{ route('video.vote') }}" @endif><i class="fas fa-thumbs-up"></i></button>
-                                <button type="button" class="btn btn-{{ $video->userHasVoted(0) ? 'danger' : 'primary' }} vote" data-value="0" data-id="{{ $video->getId() }}" @if(Auth::check()) data-url="{{ route('video.vote') }}" @endif><i class="fas fa-thumbs-down"></i></button>
+                                <button type="button" class="btn btn-{{ $video->userHasVoted(\App\VideoVote::UPVOTE) ? 'danger' : 'primary' }} vote" data-value="1" data-id="{{ $video->getId() }}" @if(Auth::check()) data-url="{{ route('video.vote') }}" @endif><i class="fas fa-thumbs-up"></i></button>
+                                <button type="button" class="btn btn-{{ $video->userHasVoted(\App\VideoVote::DOWNVOTE) ? 'danger' : 'primary' }} vote" data-value="0" data-id="{{ $video->getId() }}" @if(Auth::check()) data-url="{{ route('video.vote') }}" @endif><i class="fas fa-thumbs-down"></i></button>
                                 @if($upVotes === $downVotes)
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar"></div>
@@ -92,11 +92,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-10">
-                @include('shared.comment.filter')
-            </div>
-            <div class="col-lg-10">
-                @if($video->setting->allow_comments)
+            @if($video->setting()->first() && $video->setting()->first()->getAllowComments())
+                <div class="col-md-10">
+                    @include('shared.comment.filter')
+                </div>
+                <div class="col-lg-10">
                     @if(\Illuminate\Support\Facades\Auth::check())
                         @include('comment.comment-form', $data = ['video_id' => $video->getId()])
                     @endif
@@ -111,8 +111,8 @@
                             </div>
                         </div>
                     </div>
-                @endif
-            </div>
+                </div>
+            @endif
         </div>
     </div>
 @endsection
