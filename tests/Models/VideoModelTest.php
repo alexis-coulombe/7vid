@@ -12,7 +12,7 @@ use Exception;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class VideoModelTest extends TestCase implements \BaseModelTest
+class VideoModelTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -35,28 +35,39 @@ class VideoModelTest extends TestCase implements \BaseModelTest
      */
     public function testGettersSetters(): void
     {
+        $title = 'title';
+        $description = 'description';
+        $viewsCount = 1000;
+        $formatedViews = '1,000';
+        $duration = 1000;
+        $extension = 'avi';
+        $mimeType = 'video/mp4';
+        $location  = 'video/test.mp4';
+        $thumbnail = 'img/img.jpg';
+        $fps = 70;
+
         /** @var Video $video */
         $video = Video::first();
-        $video->setTitle('Title');
-        $video->setDescription('Description');
-        $video->setViewsCount(1000);
-        $video->setDuration(1000);
-        $video->setExtension('avi');
-        $video->setMimeType('test/test');
-        $video->setLocation('test/test');
-        $video->setFrameRate(70);
-        $video->setThumbnail('thumbnail');
+        $video->setTitle($title);
+        $video->setDescription($description);
+        $video->setViewsCount($viewsCount);
+        $video->setDuration($duration);
+        $video->setExtension($extension);
+        $video->setMimeType($mimeType);
+        $video->setLocation($location);
+        $video->setFrameRate($fps);
+        $video->setThumbnail($thumbnail);
 
-        $this->assertEquals('Title', $video->getTitle());
-        $this->assertEquals('Description', $video->getDescription());
-        $this->assertEquals('avi', $video->getExtension());
-        $this->assertEquals(1000, $video->getDuration());
-        $this->assertEquals(70, $video->getFrameRate());
-        $this->assertEquals('test/test', $video->getMimeType());
-        $this->assertEquals('test/test', $video->getLocation());
-        $this->assertEquals('thumbnail', $video->getThumbnail());
-        $this->assertEquals(1000, $video->getViewsCount());
-        $this->assertEquals('1,000', $video->getFormatedViewsCount());
+        $this->assertEquals($title, $video->getTitle());
+        $this->assertEquals($description, $video->getDescription());
+        $this->assertEquals($extension, $video->getExtension());
+        $this->assertEquals($duration, $video->getDuration());
+        $this->assertEquals($fps, $video->getFrameRate());
+        $this->assertEquals($mimeType, $video->getMimeType());
+        $this->assertEquals($location, $video->getLocation());
+        $this->assertEquals($thumbnail, $video->getThumbnail());
+        $this->assertEquals($viewsCount, $video->getViewsCount());
+        $this->assertEquals($formatedViews, $video->getFormatedViewsCount());
     }
 
     /**
@@ -67,20 +78,20 @@ class VideoModelTest extends TestCase implements \BaseModelTest
         /** @var Video $video */
         $video = Video::first();
 
-        $this->assertNotNull($video->author);
-        $this->assertSame($video->author->name, User::first()->name);
+        $this->assertNotNull($video->author());
+        $this->assertInstanceOf(User::class, $video->author()->first());
 
-        $this->assertNotNull($video->category);
-        $this->assertSame($video->category->title, Category::first()->title);
+        $this->assertNotNull($video->category());
+        $this->assertInstanceOf(Category::class, $video->category()->first());
 
-        $this->assertNotNull($video->votes);
-        $this->assertSame(count($video->votes), 1);
+        $this->assertNotNull($video->votes());
+        $this->assertInstanceOf(VideoVote::class, $video->votes()->first());
 
-        $this->assertNotNull($video->setting);
-        $this->assertSame($video->setting->video_id, $video->getId());
+        $this->assertNotNull($video->setting());
+        $this->assertInstanceOf(VideoSetting::class, $video->setting()->first());
 
-        $this->assertNotNull($video->comments);
-        $this->assertSame(count($video->comments), 1);
+        $this->assertNotNull($video->comments());
+        $this->assertInstanceOf(Comment::class, $video->comments()->first());
     }
 
     /**
@@ -90,10 +101,20 @@ class VideoModelTest extends TestCase implements \BaseModelTest
     {
         /** @var Video $video */
         $video = Video::first();
-        $vote = $video->votes->first();
+        $vote = $video->votes()->first();
+        $user = User::first();
+        $this->be($user);
 
-        $this->be(User::first());
-        $this->assertTrue($video->userHasVoted($vote->getValue()));
+        $user->voteVideo(VideoVote::UPVOTE, $video->getId());
+        $this->assertTrue($video->userHasVoted(VideoVote::UPVOTE, $user->getId()));
+
+        $user->voteVideo(VideoVote::DOWNVOTE, $video->getId());
+        $this->assertTrue($video->userHasVoted(VideoVote::DOWNVOTE, $user->getId()));
+        $this->assertFalse($video->userHasVoted(VideoVote::UPVOTE, $user->getId()));
+
+        $user->voteVideo(VideoVote::DOWNVOTE, $video->getId());
+        $this->assertFalse($video->userHasVoted(VideoVote::DOWNVOTE, $user->getId()));
+        $this->assertFalse($video->userHasVoted(VideoVote::UPVOTE, $user->getId()));
     }
 
     /**

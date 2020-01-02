@@ -353,13 +353,18 @@ class Video extends Model
     /**
      * Check if the logged user has voted for the video
      *
-     * @param $value
+     * @param bool $value
+     * @param null $userId
      * @return boolean
      */
-    public function userHasVoted($value): bool
+    public function userHasVoted(bool $value, $userId = null): bool
     {
+        if ($userId !== null) {
+            return $this->votes()->where(['author_id' => $userId, 'value' => $value])->exists();
+        }
+
         if (Auth::check()) {
-            return VideoVote::where(['author_id' => Auth::user()->id, 'video_id' => $this->getId(), 'value' => $value])->exists();
+            return $this->votes()->where(['author_id' => Auth::user()->getId(), 'value' => $value])->exists();
         }
 
         return false;

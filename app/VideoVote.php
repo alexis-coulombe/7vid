@@ -2,11 +2,8 @@
 
 namespace App;
 
-
-use Cassandra\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Facades\Auth;
 
 class VideoVote extends Model
 {
@@ -17,6 +14,9 @@ class VideoVote extends Model
         'author_id',
         'value'
     ];
+
+    public const UPVOTE = true;
+    public const DOWNVOTE = false;
 
     /**
      * Get author relation

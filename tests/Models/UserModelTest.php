@@ -41,19 +41,25 @@ class UserModelTest extends TestCase
      */
     public function testGettersSetters(): void
     {
+        $name = 'test';
+        $email = 'test@test.com';
+        $avatar = 'avatar.jpg';
+        $password = 'password';
+        $countryId = 1;
+
         /** @var User $user */
         $user = User::first();
-        $user->setName('test');
-        $user->setEmail('test@test.com');
-        $user->setAvatar('avatar.jpg');
-        $user->setPassword('password');
-        $user->setCountryId(1);
+        $user->setName($name);
+        $user->setEmail($email);
+        $user->setAvatar($avatar);
+        $user->setPassword($password);
+        $user->setCountryId($countryId);
 
-        $this->assertEquals('test', $user->getName());
-        $this->assertEquals('test@test.com', $user->getEmail());
-        $this->assertEquals('avatar.jpg', $user->getAvatar());
-        $this->assertEquals(1, $user->getCountryId());
-        $this->assertTrue(Hash::check('password', $user->getPassword()));
+        $this->assertEquals($name, $user->getName());
+        $this->assertEquals($email, $user->getEmail());
+        $this->assertEquals($avatar, $user->getAvatar());
+        $this->assertEquals($countryId, $user->getCountryId());
+        $this->assertTrue(Hash::check($password, $user->getPassword()));
     }
 
     /**
@@ -117,6 +123,9 @@ class UserModelTest extends TestCase
         $this->assertTrue($user->isSubscribed(User::first()->getId()));
     }
 
+    /**
+     * Test subscriptions count
+     */
     public function testSubscriptionCount(): void
     {
         /** @var User $user */
@@ -143,5 +152,29 @@ class UserModelTest extends TestCase
 
         $this->assertTrue($user->delete());
         $this->assertNull(User::first());
+    }
+
+    /**
+     * Test upVoting / downVoting and unVoting of a video
+     * @throws Exception
+     */
+    public function testVoteVideo(): void
+    {
+        /** @var Video $video */
+        $video = Video::first();
+        /** @var User $user */
+        $user = User::first();
+        $this->be($user);
+
+        $user->voteVideo(VideoVote::UPVOTE, $video->getId());
+        $this->assertTrue($video->userHasVoted(VideoVote::UPVOTE, $user->getId()));
+
+        $user->voteVideo(VideoVote::DOWNVOTE, $video->getId());
+        $this->assertTrue($video->userHasVoted(VideoVote::DOWNVOTE, $user->getId()));
+        $this->assertFalse($video->userHasVoted(VideoVote::UPVOTE, $user->getId()));
+
+        $user->voteVideo(VideoVote::DOWNVOTE, $video->getId());
+        $this->assertFalse($video->userHasVoted(VideoVote::DOWNVOTE, $user->getId()));
+        $this->assertFalse($video->userHasVoted(VideoVote::UPVOTE, $user->getId()));
     }
 }

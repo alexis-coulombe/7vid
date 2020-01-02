@@ -2,9 +2,8 @@
 
 namespace App;
 
-use App\Notifications\_Notification;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
@@ -266,5 +265,107 @@ class User extends Authenticatable
         }
 
         return $this->subscriptions()->where(['author_id' => $authorId])->count();
+    }
+
+    /**
+     * Set user vote for video
+     *
+     * @param bool $value
+     * @param string $videoId
+     * @param int $userId
+     * @return bool
+     * @throws Exception
+     */
+    public function voteVideo(bool $value, string $videoId, int $userId = null): bool
+    {
+        /** @var User $user */
+        $user = null;
+        if ($userId && self::find($userId)) {
+            $user = self::find($userId);
+        } elseif (Auth::check()) {
+            $user = Auth::user();
+        } else {
+            return false;
+        }
+
+        /** @var Video $video */
+        $video = null;
+        if (Video::find($videoId)) {
+            $video = Video::find($videoId);
+        } else {
+            return false;
+        }
+
+        /** @var VideoVote $vote */
+        $vote = VideoVote::where(['video_id' => $video->getId(), 'author_id' => $user->getId()])->first();
+
+        if ($vote) {
+            if ($value !== $vote->getValue()) {
+                $vote->setValue($value);
+                $vote->save();
+            } else {
+                $vote->delete();
+            }
+        } else {
+            /** @var VideoVote $vote */
+            $vote = new VideoVote();
+            $vote->setVideoId($video->getId());
+            $vote->setAuthorId($user->getId());
+            $vote->setValue($value);
+            $vote->save();
+        }
+
+        return true;
+    }
+
+    /**
+     * Set user vote for comment
+     *
+     * @param bool $value
+     * @param int $commentId
+     * @param int $userId
+     * @return bool
+     * @throws Exception
+     */
+    public function voteComment(bool $value, int $commentId, int $userId = null): bool
+    {
+        /** @var User $user */
+        $user = null;
+        if ($userId && self::find($userId)) {
+            $user = self::find($userId);
+        } elseif (Auth::check()) {
+            $user = Auth::user();
+        } else {
+            return false;
+        }
+
+        /** @var Comment $comment */
+        $comment = null;
+        if (Comment::find($commentId)) {
+            $comment = Comment::find($commentId);
+        } else {
+            return false;
+        }
+
+        /** @var VideoVote $vote */
+        $vote = CommentVote::where(['comment_id' => $comment->getId(), 'author_id' => $user->getId()])->first();
+
+        if ($vote) {
+            if ($value !== $vote->getValue()) {
+                $vote->setValue($value);
+                $vote->save();
+            } else {
+                $vote->delete();
+            }
+        } else {
+            /** @var CommentVote $vote */
+            $vote = new CommentVote();
+            $vote->setCommentId($comment->getId());
+            $vote->setAuthorId($user->getId());
+            $vote->setValue($value);
+            $vote->save();
+        }
+
+        return true;
     }
 }

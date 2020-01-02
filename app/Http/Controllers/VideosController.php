@@ -52,7 +52,8 @@ class VideosController extends Controller
     {
         $search = request('search');
 
-        $videos = Video::where('title', 'like', '%' . $search . '%')->orWhere('description', 'like', '% ' . $search . ' %')->paginate(20, ['*'], 'video_page');
+        $videos = Video::where('title', 'like', '%' . $search . '%')->orWhere('description', 'like',
+            '% ' . $search . ' %')->paginate(20, ['*'], 'video_page');
         $authors = User::where('name', 'like', '%' . $search . '%')->paginate(12, ['*'], 'author_page');
 
 
@@ -92,42 +93,11 @@ class VideosController extends Controller
     {
         if (request()->ajax() && Auth::check()) {
             $value = request('value');
-
-            if (is_numeric($value)) {
-                $value = $value <= 0 ? 0 : $value;
-                $value = $value >= 1 ? 1 : $value;
-            } else {
-                return response(400);
-            }
-
             $videoId = request('id');
-            /** @var Video $video */
-            $video = Video::find($videoId);
 
-            if ($video) {
-                /** @var VideoVote $vote */
-                $vote = VideoVote::where(['video_id' => $video->getId(), 'author_id' => Auth::user()->id])->first();
-
-                if ($vote) {
-                    if ($value !== $vote->value) {
-                        $vote->setValue($value);
-                        $vote->save();
-                    } else {
-                        $vote->delete();
-                    }
-                } else {
-                    /** @var VideoVote $vote */
-                    $vote = new VideoVote();
-                    $vote->setVideoId($video->getId());
-                    $vote->setAuthorId(Auth::user()->getId());
-                    $vote->setValue($value);
-                    $vote->save();
-                }
-            } else {
-                return response(400);
+            if (!Auth::user()->voteVideo((bool)$value, $videoId)) {
+                return response(403);
             }
-        } else {
-            return response(405);
         }
 
         return response(200);
@@ -225,7 +195,8 @@ class VideosController extends Controller
             }
         }
 
-        return redirect(route('video.show', ['video' => $video->getId()]))->with('success', 'Your video as been shared.');
+        return redirect(route('video.show', ['video' => $video->getId()]))->with('success',
+            'Your video as been shared.');
     }
 
     /**
@@ -366,7 +337,7 @@ class VideosController extends Controller
             'upload' => 'file|' . $uploadRequired,
             'image' => 'file|' . $imageRequired,
             'description' => 'max:255',
-            //'recaptcha' => 'required|recaptcha'
+            'recaptcha' => 'required|recaptcha'
         ], [
             'title.required' => 'A title is required for your video.',
             'upload.required' => 'You must choose your video to upload.',

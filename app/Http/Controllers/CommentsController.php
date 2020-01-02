@@ -49,41 +49,11 @@ class CommentsController extends Controller
     {
         if (request()->ajax() && Auth::check()) {
             $value = request('value');
-
-            if (is_numeric($value)) {
-                $value = $value <= 0 ? 0 : $value;
-                $value = $value >= 1 ? 1 : $value;
-            } else {
-                return response(400);
-            }
-
             $commentId = request('id');
-            /** @var Comment $comment */
-            $comment = Comment::find($commentId);
 
-            if ($comment) {
-                /** @var CommentVote $vote */
-                $vote = CommentVote::where(['comment_id' => $comment->getId(), 'author_id' => Auth::user()->getId()])->first();
-
-                if ($vote) {
-                    if ($value !== $vote->getValue()) {
-                        $vote->setValue($value);
-                        $vote->save();
-                    } else {
-                        $vote->delete();
-                    }
-                } else {
-                    $vote = new CommentVote();
-                    $vote->setCommentId($comment->getId());
-                    $vote->setAuthorId(Auth::user()->getId());
-                    $vote->setValue($value);
-                    $vote->save();
-                }
-            } else {
-                return response(400);
+            if (!Auth::user()->voteComment((bool)$value, $commentId)) {
+                return \response(403);
             }
-        } else {
-            return response(405);
         }
 
         return response(200);
