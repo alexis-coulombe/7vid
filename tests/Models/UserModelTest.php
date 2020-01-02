@@ -6,17 +6,18 @@ use App\Category;
 use App\ChannelSetting;
 use App\Comment;
 use App\CommentVote;
+use App\Country;
 use App\Subscription;
 use App\User;
 use App\Video;
-use App\VideoSetting;
 use App\VideoVote;
 use Exception;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Hash;
+use PHPUnit\Framework\Constraint\Count;
 use Tests\TestCase;
 
-class UserModelTest extends TestCase implements \BaseModelTest
+class UserModelTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -46,10 +47,12 @@ class UserModelTest extends TestCase implements \BaseModelTest
         $user->setEmail('test@test.com');
         $user->setAvatar('avatar.jpg');
         $user->setPassword('password');
+        $user->setCountryId(1);
 
         $this->assertEquals('test', $user->getName());
         $this->assertEquals('test@test.com', $user->getEmail());
         $this->assertEquals('avatar.jpg', $user->getAvatar());
+        $this->assertEquals(1, $user->getCountryId());
         $this->assertTrue(Hash::check('password', $user->getPassword()));
     }
 
@@ -61,25 +64,26 @@ class UserModelTest extends TestCase implements \BaseModelTest
         /** @var User $user */
         $user = User::first();
 
-        $this->assertNotNull($user->videos);
-        $this->assertCount(1, $user->videos);
+        $this->assertNotNull($user->videos());
+        $this->assertInstanceOf(Video::class, $user->videos()->first());
 
-        $this->assertNotNull($user->country);
+        $this->assertNotNull($user->country());
+        $this->assertInstanceOf(Country::class, $user->country()->first());
 
-        $this->assertNotNull($user->setting);
-        $this->assertSame($user->setting->id, ChannelSetting::first()->id);
+        $this->assertNotNull($user->setting());
+        $this->assertInstanceOf(ChannelSetting::class, $user->setting()->first());
 
-        $this->assertNotNull($user->comments);
-        $this->assertCount(1, $user->comments);
+        $this->assertNotNull($user->comments());
+        $this->assertInstanceOf(Comment::class, $user->comments()->first());
 
-        $this->assertNotNull($user->videoVotes);
-        $this->assertCount(1, $user->videoVotes);
+        $this->assertNotNull($user->videoVotes());
+        $this->assertInstanceOf(VideoVote::class, $user->videoVotes()->first());
 
-        $this->assertNotNull($user->commentVotes);
-        $this->assertCount(1, $user->commentVotes);
+        $this->assertNotNull($user->commentVotes());
+        $this->assertInstanceOf(CommentVote::class, $user->commentVotes()->first());
 
-        $this->assertNotNull($user->subscriptions);
-        $this->assertCount(1, $user->subscriptions);
+        $this->assertNotNull($user->subscriptions());
+        $this->assertInstanceOf(Subscription::class, $user->subscriptions()->first());
 
     }
 
@@ -121,6 +125,10 @@ class UserModelTest extends TestCase implements \BaseModelTest
 
         $this->assertSame(1, $user->getSubscriptionCount());
         $this->assertSame(1, $user->getSubscriptionCount(User::first()->getId()));
+
+        $user->unsubscribe(User::first()->getId());
+        $this->assertSame(0, $user->getSubscriptionCount());
+        $this->assertSame(0, $user->getSubscriptionCount(User::first()->getId()));
     }
 
     /**
@@ -132,6 +140,8 @@ class UserModelTest extends TestCase implements \BaseModelTest
     {
         /** @var User $user */
         $user = User::first();
+
         $this->assertTrue($user->delete());
+        $this->assertNull(User::first());
     }
 }

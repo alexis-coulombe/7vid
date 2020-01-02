@@ -267,19 +267,4 @@ class User extends Authenticatable
 
         return $this->subscriptions()->where(['author_id' => $authorId])->count();
     }
-
-    /**
-     * Get subscription count for authorId
-     *
-     * @param $authorId
-     * @return integer
-     */
-    public function getSubscribersCount(int $authorId = 0): int
-    {
-        if ($authorId === 0 && Auth::check()) {
-            $authorId = Auth::user()->getId();
-        }
-
-        return Subscription::where(['author_id' => $authorId])->count();
-    }
 }
