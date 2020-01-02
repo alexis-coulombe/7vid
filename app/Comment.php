@@ -106,9 +106,9 @@ class Comment extends Model
     /**
      * Get video id
      *
-     * @return int
+     * @return string
      */
-    public function getVideoId(): int
+    public function getVideoId(): string
     {
         return $this->video->getId();
     }
@@ -135,15 +135,7 @@ class Comment extends Model
      */
     public function getUpVotes(): int
     {
-        $upVotes = 0;
-
-        foreach ($this->comment_votes as $vote) {
-            if ($vote->value) {
-                $upVotes++;
-            }
-        }
-
-        return $upVotes;
+        return $this->comment_votes()->where(['comment_id' => $this->getId(), 'value' => CommentVote::UPVOTE])->count();
     }
 
     /**
@@ -153,15 +145,7 @@ class Comment extends Model
      */
     public function getDownVotes(): int
     {
-        $downVotes = 0;
-
-        foreach ($this->comment_votes as $vote) {
-            if (!$vote->value) {
-                $downVotes++;
-            }
-        }
-
-        return $downVotes;
+        return $this->comment_votes()->where(['comment_id' => $this->getId(), 'value' => CommentVote::DOWNVOTE])->count();
     }
 
     /**

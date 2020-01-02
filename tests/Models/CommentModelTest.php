@@ -14,7 +14,7 @@ use Exception;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class CommentModelTest extends TestCase implements \BaseModelTest
+class CommentModelTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -35,11 +35,16 @@ class CommentModelTest extends TestCase implements \BaseModelTest
      */
     public function testGettersSetters(): void
     {
+        $body = 'test';
+
         /** @var Comment $comment */
         $comment = Comment::first();
-        $comment->setBody('Test!');
+        $comment->setBody($body);
 
-        $this->assertSame('Test!', $comment->getBody());
+        $this->assertSame(Comment::first()->getId(), $comment->getId());
+        $this->assertSame(Video::first()->getId(), $comment->getVideoId());
+        $this->assertSame(User::first()->getId(), $comment->getAuthorId());
+        $this->assertSame($body, $comment->getBody());
     }
 
     /**
@@ -50,14 +55,14 @@ class CommentModelTest extends TestCase implements \BaseModelTest
         /** @var Comment $comment */
         $comment = Comment::first();
 
-        $this->assertNotNull($comment->video);
-        $this->assertSame($comment->video->getId(), Video::first()->getId());
+        $this->assertNotNull($comment->video());
+        $this->assertInstanceOf(Video::class, $comment->video()->first());
 
-        $this->assertNotNull($comment->author);
-        $this->assertSame($comment->author->id, User::first()->id);
+        $this->assertNotNull($comment->author());
+        $this->assertInstanceOf(User::class, $comment->author()->first());
 
-        $this->assertNotNull($comment->votes);
-        $this->assertCount(1, $comment->votes);
+        $this->assertNotNull($comment->comment_votes());
+        $this->assertInstanceOf(CommentVote::class, $comment->comment_votes()->first());
     }
 
     /**
@@ -67,10 +72,20 @@ class CommentModelTest extends TestCase implements \BaseModelTest
     {
         /** @var Comment $comment */
         $comment = Comment::first();
-        $vote = $comment->votes->first();
+        /** @var User $user */
+        $user = User::first();
+        $this->be($user);
 
-        $this->be(User::first());
-        $this->assertTrue($comment->userHasVoted($vote->getValue()));
+        $user->voteComment(CommentVote::UPVOTE, $comment->getId());
+        $this->assertTrue($comment->userHasVoted(CommentVote::UPVOTE, $user->getId()));
+
+        $user->voteComment(CommentVote::DOWNVOTE, $comment->getId());
+        $this->assertTrue($comment->userHasVoted(CommentVote::DOWNVOTE, $user->getId()));
+        $this->assertFalse($comment->userHasVoted(CommentVote::UPVOTE, $user->getId()));
+
+        $user->voteComment(CommentVote::DOWNVOTE, $comment->getId());
+        $this->assertFalse($comment->userHasVoted(CommentVote::DOWNVOTE, $user->getId()));
+        $this->assertFalse($comment->userHasVoted(CommentVote::UPVOTE, $user->getId()));
     }
 
     /**
@@ -83,5 +98,17 @@ class CommentModelTest extends TestCase implements \BaseModelTest
         /** @var Comment $comment */
         $comment = Comment::first();
         $this->assertTrue($comment->delete());
+    }
+
+    /**
+     * Test number of upvotes / downvotes of comment
+     */
+    public function testUpVotesDownVotes(): void
+    {
+        /** @var Comment $comment */
+        $comment = Comment::first();
+
+        $this->assertNotSame($comment->getUpVotes(), $comment->getDownVotes());
+        $this->assertSame(1, $comment->getUpVotes() + $comment->getDownVotes());
     }
 }

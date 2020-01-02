@@ -16,6 +16,9 @@ class CommentVote extends Model
         'value'
     ];
 
+    public const UPVOTE = true;
+    public const DOWNVOTE = false;
+
     /**
      * Get user relation
      *
