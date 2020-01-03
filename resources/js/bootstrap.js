@@ -31,6 +31,12 @@ window.jQueryEasing = require('jquery.easing');
 window.popperJs = require('popper.js');
 window.bootstrap = require('bootstrap');
 window.Trianglify = require('trianglify');
-window.OwlCarousel = require('owl.carousel');
+window.owlCarousel = require('owl.carousel');
 window.ClassicEditor = require('ckeditor');
 window.videojs = require('video.js');
+//window.Sentry = require('@sentry/node');
+
+require('../../public/js/infiniteScrolling');
+require('../../public/js/subscribe');
+require('../../public/js/vote');
+require('../../public/js/script');

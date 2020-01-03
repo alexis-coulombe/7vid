@@ -102106,6 +102106,359 @@ function extend() {
 
 /***/ }),
 
+/***/ "./public/js/infiniteScrolling.js":
+/*!****************************************!*\
+  !*** ./public/js/infiniteScrolling.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var disable = false;
+var shouldCall = true;
+$(window).scroll(function () {
+  if (disable === false && $('#scrolling').length && shouldCall) {
+    var scrollingElement = $('#scrolling');
+    var loadingSpinner = $('#loading-spinner');
+
+    if ($(window).scrollTop() + $(window).height() >= $('footer').offset().top) {
+      var data = {
+        // Exclude already fetched channels
+        exclude: $.map($('.scrolling-prevent'), function (n, i) {
+          return n.id;
+        }),
+        //
+        type: scrollingElement.data('type'),
+        video_id: scrollingElement.data('video-id') ? scrollingElement.data('video-id') : null,
+        category_id: scrollingElement.data('category-id') ? scrollingElement.data('category-id') : null
+      };
+      loadingSpinner.show();
+      shouldCall = false;
+      $.ajax({
+        url: scrollingElement.data('url'),
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr("content")
+        },
+        data: data,
+        type: 'POST',
+        success: function success(result) {
+          loadingSpinner.hide();
+
+          if (result === 'Done') {
+            disable = true;
+            return;
+          }
+
+          scrollingElement.append(result);
+          onVoteClickEvent();
+          shouldCall = true;
+        },
+        error: function error(result) {
+          loadingSpinner.hide();
+          throw result;
+        }
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./public/js/script.js":
+/*!*****************************!*\
+  !*** ./public/js/script.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*
+Template Name: VIDOE - Video Streaming Website HTML Template
+Author: Askbootstrap
+Author URI: https://themeforest.net/user/askbootstrap
+Version: 1.0
+*/
+(function ($) {
+  "use strict"; // Start of use strict
+  // Temporarly fix Passive Event Listeners
+  // https://stackoverflow.com/questions/39152877/consider-marking-event-handler-as-passive-to-make-the-page-more-responsive
+
+  jQuery.event.special.touchstart = {
+    setup: function setup(_, ns, handle) {
+      if (ns.includes("noPreventDefault")) {
+        this.addEventListener("touchstart", handle, {
+          passive: false
+        });
+      } else {
+        this.addEventListener("touchstart", handle, {
+          passive: true
+        });
+      }
+    }
+  }; // Toggle the side navigation
+
+  $(document).on('click', '#sidebarToggle', function (e) {
+    e.preventDefault(); //$("body").toggleClass("sidebar-toggled");
+
+    $("#overlay").toggle();
+    $(".sidebar").toggleClass("toggled");
+  }); // Prevent the content wrapper from scrolling when the fixed side navigation hovered over
+
+  $('body.fixed-nav .sidebar').on('mousewheel DOMMouseScroll wheel', function (e) {
+    if ($window.width() > 768) {
+      var e0 = e.originalEvent,
+          delta = e0.wheelDelta || -e0.detail;
+      this.scrollTop += (delta < 0 ? 1 : -1) * 30;
+      e.preventDefault();
+    }
+  }); // Category Owl Carousel
+
+  var objowlcarousel = $('.owl-carousel-category');
+
+  if (objowlcarousel.length > 0) {
+    objowlcarousel.owlCarousel({
+      responsive: {
+        0: {
+          items: 3
+        },
+        600: {
+          items: 3
+        },
+        1000: {
+          items: 4
+        },
+        1200: {
+          items: 6
+        }
+      },
+      loop: true,
+      lazyLoad: true,
+      autoplay: true,
+      autoplaySpeed: 1000,
+      autoplayTimeout: 2000,
+      autoplayHoverPause: true
+    });
+  } // Video cards Owl Carousel
+
+
+  var videoSlider = $('.owl-carousel-video-card');
+
+  if (videoSlider.length > 0) {
+    videoSlider.owlCarousel({
+      responsive: {
+        0: {
+          items: 1
+        },
+        600: {
+          items: 3
+        },
+        1000: {
+          items: 4
+        },
+        1200: {
+          items: 5
+        }
+      },
+      loop: true,
+      margin: 15,
+      lazyLoad: true,
+      autoplay: true,
+      autoplaySpeed: 1000,
+      autoplayTimeout: 4000,
+      autoplayHoverPause: true,
+      nav: true,
+      navText: ["<i class=\"fas fa-arrow-left\"></i>", "<i class=\"fas fa-arrow-right\"></i>"]
+    });
+  } // Login Owl Carousel
+
+
+  var mainslider = $('.owl-carousel-login');
+
+  if (mainslider.length > 0) {
+    mainslider.owlCarousel({
+      items: 1,
+      lazyLoad: true,
+      loop: true,
+      autoplay: true,
+      autoplaySpeed: 2000,
+      autoplayTimeout: 6000,
+      autoplayHoverPause: true
+    });
+  } // Tooltip
+
+
+  $('[data-toggle="tooltip"]').tooltip(); // Scroll to top button appear
+
+  $(document).on('scroll', function () {
+    var scrollDistance = $(this).scrollTop();
+
+    if (scrollDistance > 100) {
+      $('.scroll-to-top').fadeIn();
+    } else {
+      $('.scroll-to-top').fadeOut();
+    }
+  }); // Smooth scrolling using jQuery easing
+
+  $(document).on('click', 'a.scroll-to-top', function (event) {
+    var $anchor = $(this);
+    $('html, body').stop().animate({
+      scrollTop: $($anchor.attr('href')).offset().top
+    }, 1000, 'easeInOutExpo');
+    event.preventDefault();
+  }); // Add aria-label to carousel buttons
+  // https://stackoverflow.com/questions/41818880/owl-carousel-2-2-dots-with-aria-label
+
+  $('.owl-carousel').each(function () {
+    $(this).find('.owl-dot').each(function (index) {
+      $(this).attr('aria-label', index + 1);
+    });
+  }); // Detect CTRL+S
+
+  if ($('#save-on-keyboard').length) {
+    $(document).on('keydown', function (e) {
+      if (e.ctrlKey && e.which === 83) {
+        $('#save-on-keyboard').submit();
+        e.preventDefault();
+        return false;
+      }
+    });
+  } // Generate abstract background to channels cards
+
+
+  $('.generate-background').each(function () {
+    generateAbstractBackground($(this));
+  });
+
+  function generateAbstractBackground(element) {
+    var pattern = Trianglify({
+      width: 512,
+      height: 512,
+      seed: Math.random() + 1
+    });
+    var image = pattern.canvas().toDataURL('image/png');
+    element.css('background-image', 'url("' + image + '")');
+  } // Close sidenav on overlay click
+
+
+  $('#overlay').on('click', function () {
+    $('.sidebar.navbar-nav').addClass('toggled');
+    $(this).toggle();
+  }); // Classic editor init
+
+  if ($('#editor').length) {
+    ClassicEditor.create(document.querySelector('#editor'), {
+      toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
+      heading: {
+        options: [{
+          model: 'paragraph',
+          title: 'Paragraph',
+          "class": 'ck-heading_paragraph'
+        }, {
+          model: 'heading1',
+          view: 'h1',
+          title: 'Heading 1',
+          "class": 'ck-heading_heading1'
+        }, {
+          model: 'heading2',
+          view: 'h2',
+          title: 'Heading 2',
+          "class": 'ck-heading_heading2'
+        }]
+      }
+    });
+  } // Comment filter trigger
+
+
+  $('.filter_item').click(function () {
+    $('#filter_value').val($(this).data('value'));
+    $('#filter_form').submit();
+  });
+})(jQuery); // End of use strict
+
+/***/ }),
+
+/***/ "./public/js/subscribe.js":
+/*!********************************!*\
+  !*** ./public/js/subscribe.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$('.subscribe').on('click', function () {
+  var _this = this;
+
+  if ($(this).data('url').length) {
+    var data = {
+      id: $(this).data('id')
+    };
+    $.ajax({
+      url: $(this).data('url'),
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr("content")
+      },
+      data: data,
+      type: 'POST',
+      success: function success(result) {
+        $(_this).closest(_this).find('.subscribe-text').text(result);
+        var subCount = $(_this).closest(_this).find('.subscriber-count');
+
+        if (result === 'Unsubscribe') {
+          subCount.text(parseInt(subCount.text()) + 1);
+        } else {
+          subCount.text(parseInt(subCount.text()) - 1);
+        }
+      },
+      error: function error(result) {
+        throw result;
+      }
+    });
+  } else {
+    window.location.href = '/login';
+  }
+});
+
+/***/ }),
+
+/***/ "./public/js/vote.js":
+/*!***************************!*\
+  !*** ./public/js/vote.js ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function onVoteClickEvent() {
+  $('.vote').on('click', function () {
+    var _this = this;
+
+    if ($(this).data('url').length) {
+      var data = {
+        value: $(this).data('value'),
+        id: $(this).data('id')
+      };
+      $.ajax({
+        url: $(this).data('url'),
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr("content")
+        },
+        data: data,
+        type: 'POST',
+        success: function success(result) {
+          $(_this).siblings('button').removeClass('btn-danger');
+          $(_this).siblings('button').addClass('btn-primary');
+          $(_this).addClass('btn-danger');
+        },
+        error: function error(result) {
+          throw result;
+        }
+      });
+    } else {
+      window.location.href = '/login';
+    }
+  });
+}
+
+onVoteClickEvent();
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -102158,9 +102511,17 @@ window.jQueryEasing = __webpack_require__(/*! jquery.easing */ "./node_modules/j
 window.popperJs = __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js");
 window.bootstrap = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
 window.Trianglify = __webpack_require__(/*! trianglify */ "./node_modules/trianglify/lib/trianglify.js");
-window.OwlCarousel = __webpack_require__(/*! owl.carousel */ "./node_modules/owl.carousel/dist/owl.carousel.js");
+window.owlCarousel = __webpack_require__(/*! owl.carousel */ "./node_modules/owl.carousel/dist/owl.carousel.js");
 window.ClassicEditor = __webpack_require__(/*! ckeditor */ "./node_modules/ckeditor/ckeditor.js");
-window.videojs = __webpack_require__(/*! video.js */ "./node_modules/video.js/dist/video.es.js");
+window.videojs = __webpack_require__(/*! video.js */ "./node_modules/video.js/dist/video.es.js"); //window.Sentry = require('@sentry/node');
+
+__webpack_require__(/*! ../../public/js/infiniteScrolling */ "./public/js/infiniteScrolling.js");
+
+__webpack_require__(/*! ../../public/js/subscribe */ "./public/js/subscribe.js");
+
+__webpack_require__(/*! ../../public/js/vote */ "./public/js/vote.js");
+
+__webpack_require__(/*! ../../public/js/script */ "./public/js/script.js");
 
 /***/ }),
 

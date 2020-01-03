@@ -12,8 +12,8 @@
 
         <title>{{ config('app.name') }} - @yield('title')</title>
 
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
-        <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('css/app.css') . '?v=' . filemtime(public_path('css/app.css')) }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('css/style.css') . '?v=' . filemtime(public_path('css/style.css')) }}" rel="stylesheet" type="text/css">
         @yield('head')
     </head>
     <body id="page-top" class="sidebar-toggled">
@@ -37,11 +37,7 @@
 
         <script src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js" integrity="sha384-KMv6bBTABABhv0NI+rVWly6PIRvdippFEgjpKyxUcpEmDWZTkDOiueL5xW+cztZZ" crossorigin="anonymous"></script>
         <script> Sentry.init({ dsn:  '{{ env('SENTRY_LARAVEL_DSN') }}' });</script>
-
         <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/infiniteScrolling.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/subscribe.js') }}"></script>
         @yield('footer')
     </body>
 </html>

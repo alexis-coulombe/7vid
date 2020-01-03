@@ -34,7 +34,7 @@ class ImageController extends Controller
             'cache' => storage_path($this->BASE_CACHE_URL),
             'cache_path_prefix' => '.cache',
             'base_url' => 'img',
-            'max_image_size' => 2000*2000,
+            'max_image_size' => 2000*2000
         ]);
 
         return $server->getImageResponse($path, request()->all());
@@ -57,7 +57,7 @@ class ImageController extends Controller
             'cache' => storage_path($this->BASE_AVATAR_CACHE_URL),
             'cache_path_prefix' => '.cache',
             'base_url' => 'img',
-            'max_image_size' => 2000*2000,
+            'max_image_size' => 2000*2000
         ]);
 
         return $server->getImageResponse($path, request()->all());
