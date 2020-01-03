@@ -25,4 +25,12 @@ if (token) {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
+window.jQuery = window.$ = require('jquery');
+window.jQueryUi = require('jquery-ui');
+window.jQueryEasing = require('jquery.easing');
+window.popperJs = require('popper.js');
+window.bootstrap = require('bootstrap');
 window.Trianglify = require('trianglify');
+window.OwlCarousel = require('owl.carousel');
+window.ClassicEditor = require('ckeditor');
+window.videojs = require('video.js');

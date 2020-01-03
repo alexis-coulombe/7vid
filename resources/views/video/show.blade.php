@@ -81,7 +81,7 @@
                         @php $temp = $video @endphp
                         @if(count($relatedVideos) > 0)
                             @foreach($relatedVideos as $video)
-                                <div class="col-lg-12 col-md-6 col-sm-6">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
                                     @include('shared.video.card')
                                 </div>
                             @endforeach
@@ -118,7 +118,5 @@
 @endsection
 
 @section('footer')
-    <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
-    <script src='https://vjs.zencdn.net/7.6.5/video.js'></script>
     <script src='{{ asset('js/vote.js') }}'></script>
 @endsection

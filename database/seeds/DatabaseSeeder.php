@@ -6,6 +6,7 @@ use App\CommentVote;
 use App\Subscription;
 use App\User;
 use App\Video;
+use App\VideoSetting;
 use App\VideoVote;
 use App\Views;
 use Faker\Factory;
@@ -25,20 +26,20 @@ class DatabaseSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
 
-        $maxVideosCount = 10000;
+        $maxVideosCount = 5000;
         $maxCategoryCount = 10;
-        $maxUserCount = 10000;
-        $maxCommentsCount = 10000;
-        $maxVotesCount = 10000;
+        $maxUserCount = 5000;
+        $maxCommentsCount = 8000;
+        $maxVotesCount = 20000;
         $maxSubCount = $faker->numberBetween($maxUserCount / 2, $maxUserCount);
 
-        /*$user = new \App\User();
+        $user = new \App\User();
         $user->name = 'test123';
         $user->email = 'test@123.com';
         $user->password = Hash::make('123123');
-        $user->avatar = $images[$faker->numberBetween(0, count($images) - 1)];
+        $user->avatar = '0smPhoTWYeE.jpg';
         $user->country_id = 1;
-        $user->save();*/
+        $user->save();
 
         echo 'Users' . PHP_EOL;
         factory(User::class, $maxUserCount)->create();
@@ -46,6 +47,17 @@ class DatabaseSeeder extends Seeder
         \factory(Category::class, $maxCategoryCount)->create();
         echo 'Videos'. PHP_EOL;
         \factory(Video::class, $maxVideosCount)->create();
+        echo 'Videos settings'. PHP_EOL;
+
+        foreach(Video::all() as $video){
+            /** @var VideoSetting $setting */
+            $setting = new VideoSetting();
+            $setting->setVideoId($video->getId());
+            $setting->setPrivate($faker->boolean);
+            $setting->setAllowComments($faker->boolean);
+            $setting->setAllowVotes($faker->boolean);
+        }
+
         echo 'Comments'. PHP_EOL;
         \factory(Comment::class, $maxCommentsCount)->create();
         echo 'Video Votes'. PHP_EOL;

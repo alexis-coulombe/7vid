@@ -6,6 +6,7 @@ use App\Comment;
 use App\CommentVote;
 use App\User;
 use App\Video;
+use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -76,9 +77,11 @@ class CommentsController extends Controller
      *
      * @param int $id
      * @return RedirectResponse
+     * @throws Exception
      */
     public function destroy($id): RedirectResponse
     {
+        /** @var Comment $comment */
         $comment = Comment::find($id);
 
         if ($comment === null) {
