@@ -102424,7 +102424,7 @@ $('.subscribe').on('click', function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-function onVoteClickEvent() {
+window.onVoteClickEvent = function () {
   $('.vote').on('click', function () {
     var _this = this;
 
@@ -102453,7 +102453,7 @@ function onVoteClickEvent() {
       window.location.href = '/login';
     }
   });
-}
+};
 
 onVoteClickEvent();
 
@@ -102515,11 +102515,11 @@ window.owlCarousel = __webpack_require__(/*! owl.carousel */ "./node_modules/owl
 window.ClassicEditor = __webpack_require__(/*! ckeditor */ "./node_modules/ckeditor/ckeditor.js");
 window.videojs = __webpack_require__(/*! video.js */ "./node_modules/video.js/dist/video.es.js"); //window.Sentry = require('@sentry/node');
 
+__webpack_require__(/*! ../../public/js/vote */ "./public/js/vote.js");
+
 __webpack_require__(/*! ../../public/js/infiniteScrolling */ "./public/js/infiniteScrolling.js");
 
 __webpack_require__(/*! ../../public/js/subscribe */ "./public/js/subscribe.js");
-
-__webpack_require__(/*! ../../public/js/vote */ "./public/js/vote.js");
 
 __webpack_require__(/*! ../../public/js/script */ "./public/js/script.js");
 
@@ -102543,8 +102543,8 @@ __webpack_require__(/*! ../../public/js/script */ "./public/js/script.js");
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/acoulombe/code/VidMock/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/acoulombe/code/VidMock/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\VidMock\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\VidMock\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ }),

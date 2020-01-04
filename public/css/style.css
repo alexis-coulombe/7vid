@@ -1503,10 +1503,6 @@ a:hover, h1, h2, h3, h4, h5, h6 {
         padding: 8px 14px !important;
     }
 
-    .sidebar-toggled #wrapper #content-wrapper .container-fluid {
-        padding-left: 105px;
-    }
-
     .single-channel-page .container-fluid {
         padding: 30px 15px 15px !important;
     }

@@ -1,6 +1,6 @@
-function onVoteClickEvent(){
+window.onVoteClickEvent = function () {
     $('.vote').on('click', function () {
-        if($(this).data('url').length) {
+        if ($(this).data('url').length) {
             let data = {
                 value: $(this).data('value'),
                 id: $(this).data('id')
@@ -25,7 +25,7 @@ function onVoteClickEvent(){
             window.location.href = '/login';
         }
     });
-}
+};
 
 onVoteClickEvent();
 
