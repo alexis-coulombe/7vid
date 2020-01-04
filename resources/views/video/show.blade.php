@@ -5,6 +5,9 @@
 @endsection
 
 @section('content')
+    @php
+        $total = $upVotes + $downVotes;
+    @endphp
     <div class="video-block section-padding">
         <div class="row">
             <div class="col-md-10">
@@ -19,7 +22,7 @@
                         </video>
                     </div>
                     <div class="single-video-author box mb-3">
-                        @if(Auth::check() && $video->author->getId() !== Auth::user()->getId())
+                        @if((Auth::check() && $video->author->getId() !== Auth::user()->getId()) || !Auth::check())
                             <div class="float-right mt-2">
                                 @include('shared.video.subscribe')
                             </div>
@@ -37,15 +40,7 @@
                             <div class="float-right">
                                 <button type="button" class="btn btn-{{ $video->userHasVoted(\App\VideoVote::UPVOTE) ? 'danger' : 'primary' }} vote" data-value="1" data-id="{{ $video->getId() }}" @if(Auth::check()) data-url="{{ route('video.vote') }}" @endif><i class="fas fa-thumbs-up"></i></button>
                                 <button type="button" class="btn btn-{{ $video->userHasVoted(\App\VideoVote::DOWNVOTE) ? 'danger' : 'primary' }} vote" data-value="0" data-id="{{ $video->getId() }}" @if(Auth::check()) data-url="{{ route('video.vote') }}" @endif><i class="fas fa-thumbs-down"></i></button>
-                                @if($upVotes === $downVotes)
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar"></div>
-                                    </div>
-                                @else
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: {{ ($upVotes / ($upVotes + ($downVotes <= 0 ? 1 : $downVotes)))*100 }}%;"></div>
-                                    </div>
-                                @endif
+                                @include('shared.vote.progress')
                             </div>
                         @endif
                         <h1 class="h2">{{ $video->getTitle() }}</h1>
@@ -93,13 +88,11 @@
         </div>
         <div class="row">
             @if($video->setting()->first() && $video->setting()->first()->getAllowComments())
-                <div class="col-md-10">
+                <div class="col-md-10 mb-2">
                     @include('shared.comment.filter')
                 </div>
                 <div class="col-lg-10">
-                    @if(\Illuminate\Support\Facades\Auth::check())
-                        @include('comment.comment-form', $data = ['video_id' => $video->getId()])
-                    @endif
+                    @include('comment.comment-form', $data = ['video_id' => $video->getId()])
 
                     @include('comment.show', $data = ['comments' => $comments])
 

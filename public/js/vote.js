@@ -1,6 +1,6 @@
 window.onVoteClickEvent = function () {
     $('.vote').on('click', function () {
-        if ($(this).data('url').length) {
+        if ($(this).data('url')) {
             let data = {
                 value: $(this).data('value'),
                 id: $(this).data('id')

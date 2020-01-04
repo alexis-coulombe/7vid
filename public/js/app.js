@@ -102428,7 +102428,7 @@ window.onVoteClickEvent = function () {
   $('.vote').on('click', function () {
     var _this = this;
 
-    if ($(this).data('url').length) {
+    if ($(this).data('url')) {
       var data = {
         value: $(this).data('value'),
         id: $(this).data('id')

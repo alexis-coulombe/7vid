@@ -33,7 +33,7 @@
                     <i class="fas fa-search"></i>
                 </button> &nbsp;&nbsp;&nbsp;
             </form>
-            @if(Auth::check() && $author->getId() !== Auth::user()->getId())
+            @if((Auth::check() && $author->getId() !== Auth::user()->getId()) || !Auth::check())
                 @include('shared.video.subscribe-small')
             @endif
         </div>

@@ -5,7 +5,7 @@
         <a href="{{ route('channel.index', ['userId' => $channel->getId()]) }}">
             <img src="{{ getImage(route('cdn.img.avatar'), $channel->getAvatar()) }}" alt="Avatar">
         </a>
-        @if(Auth::check() && Auth::user()->getId() !== $channel->getId())
+        @if((Auth::check() && Auth::user()->getId() !== $channel->getId()) || !Auth::check())
             @include('shared.video.subscribe')
         @endif
     </div>

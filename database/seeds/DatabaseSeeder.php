@@ -22,15 +22,15 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $faker = Faker\Factory::create();
 
-        $maxVideosCount = 5000;
+        $maxVideosCount = 1000;
         $maxCategoryCount = 10;
-        $maxUserCount = 5000;
-        $maxCommentsCount = 8000;
-        $maxVotesCount = 20000;
+        $maxUserCount = 1000;
+        $maxCommentsCount = 1000;
+        $maxVotesCount = 1000;
         $maxSubCount = $faker->numberBetween($maxUserCount / 2, $maxUserCount);
 
         $user = new \App\User();
@@ -56,6 +56,7 @@ class DatabaseSeeder extends Seeder
             $setting->setPrivate($faker->boolean);
             $setting->setAllowComments($faker->boolean);
             $setting->setAllowVotes($faker->boolean);
+            $setting->save();
         }
 
         echo 'Comments'. PHP_EOL;
