@@ -102329,8 +102329,8 @@ Version: 1.0
 
   function generateAbstractBackground(element) {
     var pattern = Trianglify({
-      width: 512,
-      height: 512,
+      width: element.width() * 2,
+      height: element.height() * 2,
       seed: Math.random() + 1
     });
     var image = pattern.canvas().toDataURL('image/png');
