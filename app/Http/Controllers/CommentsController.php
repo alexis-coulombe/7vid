@@ -26,10 +26,13 @@ class CommentsController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $this->validate($request, [
-            'video_id' => 'required|min:1',
-            'comment' => 'required|min:1|max:255'
-        ]);
+        $this->validate(
+            $request,
+            [
+                'video_id' => 'required|min:1',
+                'comment' => 'required|min:1|max:255'
+            ]
+        );
 
         /** @var Comment $comment */
         $comment = new Comment();

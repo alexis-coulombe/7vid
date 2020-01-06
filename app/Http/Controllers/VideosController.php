@@ -52,8 +52,9 @@ class VideosController extends Controller
     {
         $search = request('search');
 
-        $videos = Video::where('title', 'like', '%' . $search . '%')->orWhere('description', 'like',
-            '% ' . $search . ' %')->paginate(20, ['*'], 'video_page');
+        $videos = Video::where('title', 'like', '%' . $search . '%')
+            ->orWhere('description', 'like', '% ' . $search . ' %')
+            ->paginate(20, ['*'], 'video_page');
         $authors = User::where('name', 'like', '%' . $search . '%')->paginate(12, ['*'], 'author_page');
 
 
@@ -116,7 +117,7 @@ class VideosController extends Controller
         $this->validateVideoInputs($request);
 
         /** @var Video $video */
-        $video = new Video;
+        $video = new Video();
         $video->setAuthorId(Auth::user()->id);
 
         if (trim(request('description')) === '') {
@@ -188,15 +189,19 @@ class VideosController extends Controller
         if (count($subscribers) > 0) {
             /** @var User $subscriber */
             foreach ($subscribers as $subscriber) {
-                $subscriber->notify(new _Notification([
-                    'desc' => $author->getName() . ' uploaded a video',
-                    'link' => route('video.show', ['video' => $video->getId()])
-                ]));
+                $subscriber->notify(
+                    new _Notification(
+                        [
+                            'desc' => $author->getName() . ' uploaded a video',
+                            'link' => route('video.show', ['video' => $video->getId()])
+                        ]
+                    )
+                );
             }
         }
 
-        return redirect(route('video.show', ['video' => $video->getId()]))->with('success',
-            'Your video as been shared.');
+        return redirect(route('video.show', ['video' => $video->getId()]))
+            ->with('success', 'Your video as been shared.');
     }
 
     /**
@@ -332,16 +337,20 @@ class VideosController extends Controller
      */
     public function validateVideoInputs($request, $imageRequired = 'required', $uploadRequired = 'required'): void
     {
-        $this->validate($request, [
-            'title' => 'required|max:64',
-            'upload' => 'file|' . $uploadRequired,
-            'image' => 'file|' . $imageRequired,
-            'description' => 'max:255',
-            'recaptcha' => 'required|recaptcha'
-        ], [
-            'title.required' => 'A title is required for your video.',
-            'upload.required' => 'You must choose your video to upload.',
-            'upload.file' => 'Your uploaded file must be a video.'
-        ]);
+        $this->validate(
+            $request,
+            [
+                'title' => 'required|max:64',
+                'upload' => 'file|' . $uploadRequired,
+                'image' => 'file|' . $imageRequired,
+                'description' => 'max:255',
+                'recaptcha' => 'required|recaptcha'
+            ],
+            [
+                'title.required' => 'A title is required for your video.',
+                'upload.required' => 'You must choose your video to upload.',
+                'upload.file' => 'Your uploaded file must be a video.'
+            ]
+        );
     }
 }

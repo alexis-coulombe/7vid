@@ -28,14 +28,16 @@ class ImageController extends Controller
             exit(1);
         }
 
-        $server = ServerFactory::create([
-            'response' => new LaravelResponseFactory(app('request')),
-            'source' => storage_path($this->BASE_URL),
-            'cache' => storage_path($this->BASE_CACHE_URL),
-            'cache_path_prefix' => '.cache',
-            'base_url' => 'img',
-            'max_image_size' => 2000*2000
-        ]);
+        $server = ServerFactory::create(
+            [
+                'response' => new LaravelResponseFactory(app('request')),
+                'source' => storage_path($this->BASE_URL),
+                'cache' => storage_path($this->BASE_CACHE_URL),
+                'cache_path_prefix' => '.cache',
+                'base_url' => 'img',
+                'max_image_size' => 2000 * 2000
+            ]
+        );
 
         return $server->getImageResponse($path, request()->all());
     }
@@ -51,14 +53,16 @@ class ImageController extends Controller
             exit();
         }
 
-        $server = ServerFactory::create([
-            'response' => new LaravelResponseFactory(app('request')),
-            'source' => storage_path($this->BASE_AVATAR_URL),
-            'cache' => storage_path($this->BASE_AVATAR_CACHE_URL),
-            'cache_path_prefix' => '.cache',
-            'base_url' => 'img',
-            'max_image_size' => 2000*2000
-        ]);
+        $server = ServerFactory::create(
+            [
+                'response' => new LaravelResponseFactory(app('request')),
+                'source' => storage_path($this->BASE_AVATAR_URL),
+                'cache' => storage_path($this->BASE_AVATAR_CACHE_URL),
+                'cache_path_prefix' => '.cache',
+                'base_url' => 'img',
+                'max_image_size' => 2000 * 2000
+            ]
+        );
 
         return $server->getImageResponse($path, request()->all());
     }

@@ -52,7 +52,7 @@ class Category extends Model
      *
      * @param string $title
      */
-    public function setTitle(string$title): void
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }

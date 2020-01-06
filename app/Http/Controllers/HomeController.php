@@ -5,17 +5,17 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Comment;
 use App\Country;
-use App\Notifications\_Notification;
 use App\User;
 use App\Video;
-use App\VideoSetting;
 use App\Views;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -49,19 +49,21 @@ class HomeController extends Controller
      * Account setting page
      *
      * @return View
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function settings(): View
     {
-        if (request()->isMethod('post')) {
-
-            $this->validate(request(), [
-                'email' => 'required|max:255|min:3',
-                'country' => 'required|min:1',
-                'current-password' => 'max:255',
-                'password' => 'max:255',
-                'confirm-password' => 'max:255',
-            ]);
+        if (request()->isMethod('post') && Auth::check()) {
+            $this->validate(
+                request(),
+                [
+                    'email' => 'required|max:255|min:3',
+                    'country' => 'required|min:1',
+                    'current-password' => 'max:255',
+                    'password' => 'max:255',
+                    'confirm-password' => 'max:255',
+                ]
+            );
 
             /** @var User $user */
             $user = Auth::user();
@@ -76,7 +78,8 @@ class HomeController extends Controller
             }
 
             if (request('password')) {
-                if (!Hash::check(request('current-password'), $user->getPassword()) || request('password') !== request('confirm-password')) {
+                if (!Hash::check(request('current-password'), $user->getPassword()) ||
+                    request('password') !== request('confirm-password')) {
                     return view('home.settings')->with('error', 'Your password does not match.');
                 }
 
@@ -126,7 +129,12 @@ class HomeController extends Controller
         return view('channel.history')->with('videos', $videos);
     }
 
-    public function scroll(Request $request)
+    /**
+     * Infinite scroll for home page
+     *
+     * @return Factory|View|string|Response
+     */
+    public function scroll()
     {
         if (request()->ajax()) {
             $exclude = request('exclude') ?: [];
@@ -148,7 +156,10 @@ class HomeController extends Controller
                 $category = Category::find($categoryId);
 
                 if ($category) {
-                    $videos = $category->videos()->orderBy('created_at', 'DESC')->take(16)->whereNotIn('id', $exclude)->get();
+                    $videos = $category->videos()->orderBy('created_at', 'DESC')->take(16)->whereNotIn(
+                        'id',
+                        $exclude
+                    )->get();
 
                     if ((!count($videos)) > 0) {
                         return 'Done';
@@ -180,6 +191,6 @@ class HomeController extends Controller
             }
         }
 
-        App::abort(405);
+        return response(503);
     }
 }
