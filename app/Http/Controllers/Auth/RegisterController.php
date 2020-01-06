@@ -12,6 +12,8 @@ use Laravel\Socialite\Facades\Socialite;
 
 class RegisterController extends Controller
 {
+    use RegistersUsers;
+
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -22,8 +24,6 @@ class RegisterController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
-
-    use RegistersUsers;
 
     /**
      * Where to redirect users after registration.
@@ -45,33 +45,38 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'country' => ['integer'],
-            //'recaptcha' => ['required', 'recaptcha']
-        ]);
+        return Validator::make(
+            $data,
+            [
+                'name' => ['required', 'string', 'max:255', 'unique:users'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:6', 'confirmed'],
+                'country' => ['integer'],
+                'recaptcha' => ['required', 'recaptcha']
+            ]
+        );
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
-     * @return \App\User
+     * @param array $data
+     * @return User
      */
-    protected function create(array $data)
+    protected function create(array $data): User
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'country_id' => 1
-        ]);
+        return User::create(
+            [
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'country_id' => 1
+            ]
+        );
     }
 }

@@ -56,8 +56,10 @@ class CommentsController extends Controller
             $commentId = request('id');
 
             if (!Auth::user()->voteComment((bool)$value, $commentId)) {
-                return \response(403);
+                return response(403);
             }
+        } else {
+            return response(403);
         }
 
         return response(200);
@@ -66,13 +68,12 @@ class CommentsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
      * @param int $id
-     * @return Response
+     * @return void
      */
-    public function update(Request $request, $id): ?Response
+    public function update($id): void
     {
-        //
+        abort(501);
     }
 
     /**
