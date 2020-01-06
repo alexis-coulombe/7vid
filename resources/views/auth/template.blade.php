@@ -10,8 +10,8 @@
 
         <title>{{ config('app.name') }} - @yield('title')</title>
 
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
-        <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('css/app.css') . '?v=' . filemtime(public_path('css/app.css')) }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('css/style.css') . '?v=' . filemtime(public_path('css/style.css')) }}" rel="stylesheet" type="text/css">
         @yield('header')
     </head>
     <body class="login-main-body">
@@ -19,11 +19,6 @@
         @include('shared.message')
         @yield('content')
 
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-        <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/app.js') . '?v=' . filemtime(public_path('js/app.js')) }}"></script>
     </body>
 </html>

@@ -4,14 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Comment;
-use App\CommentVote;
 use App\Notifications\_Notification;
 use App\Subscription;
 use App\User;
 use App\Video;
 use App\VideoSetting;
-use App\VideoVote;
-use Faker\Provider\File;
+use Exception;
 use getid3_exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Database\Query\Builder;
@@ -20,7 +18,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
@@ -35,9 +32,9 @@ class VideosController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return RedirectResponse
      */
-    public function index(): Response
+    public function index(): RedirectResponse
     {
         return redirect(route('home'));
     }
@@ -52,8 +49,9 @@ class VideosController extends Controller
     {
         $search = request('search');
 
-        $videos = Video::where('title', 'like', '%' . $search . '%')->orWhere('description', 'like',
-            '% ' . $search . ' %')->paginate(20, ['*'], 'video_page');
+        $videos = Video::where('title', 'like', '%' . $search . '%')
+            ->orWhere('description', 'like', '% ' . $search . ' %')
+            ->paginate(20, ['*'], 'video_page');
         $authors = User::where('name', 'like', '%' . $search . '%')->paginate(12, ['*'], 'author_page');
 
 
@@ -87,7 +85,7 @@ class VideosController extends Controller
      * Add vote to video
      *
      * @return ResponseFactory|Response
-     * @throws \Exception
+     * @throws Exception
      */
     public static function vote()
     {
@@ -107,16 +105,16 @@ class VideosController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return Response|RedirectResponse
      * @throws ValidationException
      * @throws getid3_exception
      */
-    public function store(Request $request): Response
+    public function store(Request $request)
     {
         $this->validateVideoInputs($request);
 
         /** @var Video $video */
-        $video = new Video;
+        $video = new Video();
         $video->setAuthorId(Auth::user()->id);
 
         if (trim(request('description')) === '') {
@@ -188,15 +186,19 @@ class VideosController extends Controller
         if (count($subscribers) > 0) {
             /** @var User $subscriber */
             foreach ($subscribers as $subscriber) {
-                $subscriber->notify(new _Notification([
-                    'desc' => $author->getName() . ' uploaded a video',
-                    'link' => route('video.show', ['video' => $video->getId()])
-                ]));
+                $subscriber->notify(
+                    new _Notification(
+                        [
+                            'desc' => $author->getName() . ' uploaded a video',
+                            'link' => route('video.show', ['video' => $video->getId()])
+                        ]
+                    )
+                );
             }
         }
 
-        return redirect(route('video.show', ['video' => $video->getId()]))->with('success',
-            'Your video as been shared.');
+        return redirect(route('video.show', ['video' => $video->getId()]))
+            ->with('success', 'Your video as been shared.');
     }
 
     /**
@@ -240,7 +242,7 @@ class VideosController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return Response | View
+     * @return RedirectResponse|Redirector|View
      */
     public function edit($id)
     {
@@ -251,7 +253,11 @@ class VideosController extends Controller
             abort(404);
         }
 
-        if (Auth::user()->getId() !== $video->author->getId()) {
+        if (!Auth::check()) {
+            abort(405);
+        }
+
+        if (Auth::user()->getId() !== $video->author()->first()->getId()) {
             return redirect(route('video.show', ['video' => $video->getId()]));
         }
 
@@ -285,7 +291,7 @@ class VideosController extends Controller
         }
 
         /** @var VideoSetting $setting */
-        $setting = $video->setting;
+        $setting = $video->setting()->first();
 
         $setting->setAllowComments($request->input('allow_comments') ? 1 : 0);
         $setting->setAllowVotes($request->input('allow_votes') ? 1 : 0);
@@ -301,20 +307,20 @@ class VideosController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return void
-     * @throws \Exception
+     * @return RedirectResponse
+     * @throws Exception
      */
-    public function destroy($id): Request
+    public function destroy($id): RedirectResponse
     {
         /** @var Video $video */
         $video = Video::find($id);
 
         if ($video === null) {
-            return back()->with('error', 'There was an error while trying to delete your video!');
+            abort(404);
         }
 
-        if (!Auth::check() || Auth::user()->getId() !== $video->author->getId()) {
-            return redirect(route('video.show', ['video' => $video->getId()]));
+        if (!Auth::check() || Auth::user()->getId() !== $video->author()->first()->getId()) {
+            abort(405);
         }
 
         $video->delete();
@@ -332,16 +338,20 @@ class VideosController extends Controller
      */
     public function validateVideoInputs($request, $imageRequired = 'required', $uploadRequired = 'required'): void
     {
-        $this->validate($request, [
-            'title' => 'required|max:64',
-            'upload' => 'file|' . $uploadRequired,
-            'image' => 'file|' . $imageRequired,
-            'description' => 'max:255',
-            'recaptcha' => 'required|recaptcha'
-        ], [
-            'title.required' => 'A title is required for your video.',
-            'upload.required' => 'You must choose your video to upload.',
-            'upload.file' => 'Your uploaded file must be a video.'
-        ]);
+        $this->validate(
+            $request,
+            [
+                'title' => 'required|max:64',
+                'upload' => 'file|' . $uploadRequired,
+                'image' => 'file|' . $imageRequired,
+                'description' => 'max:255',
+                'recaptcha' => 'required|recaptcha'
+            ],
+            [
+                'title.required' => 'A title is required for your video.',
+                'upload.required' => 'You must choose your video to upload.',
+                'upload.file' => 'Your uploaded file must be a video.'
+            ]
+        );
     }
 }

@@ -226,11 +226,13 @@ class User extends Authenticatable
      */
     public function isSubscribed($author_id): bool
     {
-        if(Auth::check()) {
-            return $this->subscriptions()->where([
-                'author_id' => $author_id,
-                'user_id' => Auth::user()->getId()
-            ])->exists();
+        if (Auth::check()) {
+            return $this->subscriptions()->where(
+                [
+                    'author_id' => $author_id,
+                    'user_id' => Auth::user()->getId()
+                ]
+            )->exists();
         }
     }
 
@@ -242,7 +244,7 @@ class User extends Authenticatable
     public function subscribe($channelId): void
     {
         if (Auth::check()) {
-            if($this->isSubscribed($channelId)){
+            if ($this->isSubscribed($channelId)) {
                 $this->unsubscribe($channelId);
             } else {
                 /** @var Subscription $subscription */
@@ -261,11 +263,13 @@ class User extends Authenticatable
      */
     public function unsubscribe($channelId): void
     {
-        if(Auth::check()) {
-            $this->subscriptions()->where([
-                ['author_id', '=', $channelId],
-                ['user_id', '=', Auth::user()->getId()]
-            ])->delete();
+        if (Auth::check()) {
+            $this->subscriptions()->where(
+                [
+                    ['author_id', '=', $channelId],
+                    ['user_id', '=', Auth::user()->getId()]
+                ]
+            )->delete();
         }
     }
 

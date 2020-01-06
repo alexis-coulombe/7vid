@@ -851,7 +851,6 @@ body.sidebar-toggled footer.sticky-footer {
     background: #1c1c1c none repeat scroll 0 0;
     border-color: #303030;
     border-radius: 2px;
-. sidebar . nav-item . nav-lin font-size: 13 px;
 }
 
 .form-control:disabled, .form-control[readonly] {
@@ -1504,10 +1503,6 @@ a:hover, h1, h2, h3, h4, h5, h6 {
         padding: 8px 14px !important;
     }
 
-    .sidebar-toggled #wrapper #content-wrapper .container-fluid {
-        padding-left: 105px;
-    }
-
     .single-channel-page .container-fluid {
         padding: 30px 15px 15px !important;
     }
@@ -1725,11 +1720,15 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     border-radius: 5px;
 }
 
+.category-item p{
+    color: #e6363d;
+}
+
 /* Progress */
 .progress {
     height: 5px;
     margin-top: 10px;
-    background-color: #be3434;
+    background-color: #DB363D;
 }
 
 .progress-bar {

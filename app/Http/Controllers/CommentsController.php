@@ -6,6 +6,7 @@ use App\Comment;
 use App\CommentVote;
 use App\User;
 use App\Video;
+use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,10 +26,13 @@ class CommentsController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $this->validate($request, [
-            'video_id' => 'required|min:1',
-            'comment' => 'required|min:1|max:255'
-        ]);
+        $this->validate(
+            $request,
+            [
+                'video_id' => 'required|min:1',
+                'comment' => 'required|min:1|max:255'
+            ]
+        );
 
         /** @var Comment $comment */
         $comment = new Comment();
@@ -52,8 +56,10 @@ class CommentsController extends Controller
             $commentId = request('id');
 
             if (!Auth::user()->voteComment((bool)$value, $commentId)) {
-                return \response(403);
+                return response(403);
             }
+        } else {
+            return response(403);
         }
 
         return response(200);
@@ -62,13 +68,12 @@ class CommentsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
      * @param int $id
-     * @return Response
+     * @return void
      */
-    public function update(Request $request, $id): ?Response
+    public function update($id): void
     {
-        //
+        abort(501);
     }
 
     /**
@@ -76,9 +81,11 @@ class CommentsController extends Controller
      *
      * @param int $id
      * @return RedirectResponse
+     * @throws Exception
      */
     public function destroy($id): RedirectResponse
     {
+        /** @var Comment $comment */
         $comment = Comment::find($id);
 
         if ($comment === null) {

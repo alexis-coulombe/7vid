@@ -17,13 +17,7 @@
             <button type="button" class="btn btn-sm btn-{{ $comment->userHasVoted(0) ? 'danger' : 'primary' }} vote" data-value="0" data-id="{{ $comment->getId() }}" @if(Auth::check()) data-url="{{ route('comment.vote') }}" @endif>
                 <i class="fas fa-thumbs-down"></i>
             </button>
-            <div>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: {{ $total > 0 ? ($upVotes / $total)*100 : 100 }}%;"></div>
-                </div>
-                <span class="pull-left">{{ $upVotes }}</span>
-                <span class="pull-right">{{ $downVotes }}</span>
-            </div>
+            @include('shared.vote.progress')
         </div>
         <div class="row vertical-center mb-2">
             <a href="{{ route('channel.index', ['userId' => $comment->getAuthorId()]) }}">

@@ -29,9 +29,11 @@ class Video extends Model
          * Attach to the 'creating' Model Event to provide a UUID
          * for the `id` field (provided by $model->getKeyName())
          */
-        self::creating(static function ($model) {
-            $model->{$model->getKeyName()} = (string)$model->generateNewId();
-        });
+        self::creating(
+            static function ($model) {
+                $model->{$model->getKeyName()} = (string)$model->generateNewId();
+            }
+        );
     }
 
     /**

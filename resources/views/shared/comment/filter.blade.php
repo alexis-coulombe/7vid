@@ -15,7 +15,6 @@
             </a>
         </div>
     </div>
-    <h6>Featured Videos</h6>
 </div>
 
 <form method="GET" id="filter_form">

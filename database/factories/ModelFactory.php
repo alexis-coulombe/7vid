@@ -1,5 +1,7 @@
 <?php
 
+use App\User;
+use App\Video;
 use Faker\Generator as Faker;
 use Webpatser\Uuid\Uuid;
 
@@ -58,11 +60,12 @@ $icons = [
     "fas fa-baby",
 ];
 
-$factory->define(App\User::class, static function (Faker $faker) {
+$factory->define(App\User::class, static function (Faker $faker) use ($images) {
     return [
-        'name' => $faker->name,
+        'name' => $faker->unique()->name,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
+        'avatar' => $images[$faker->numberBetween(0, count($images) - 1)],
         'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
         'remember_token' => \Illuminate\Support\Str::random(10),
     ];
@@ -70,22 +73,22 @@ $factory->define(App\User::class, static function (Faker $faker) {
 
 $factory->define(App\ChannelSetting::class, static function (Faker $faker) {
     return [
-        'channel_id' => \App\User::inRandomOrder()->first()->id,
+        'channel_id' => User::inRandomOrder()->first()->id,
         'about' => $faker->text,
     ];
 });
 
 $factory->define(App\Subscription::class, static function (Faker $faker) {
     return [
-        'author_id' => \App\User::inRandomOrder()->first()->id,
-        'user_id' => \App\User::inRandomOrder()->first()->id,
+        'author_id' => User::inRandomOrder()->first()->id,
+        'user_id' => User::inRandomOrder()->first()->id,
     ];
 });
 
 $factory->define(App\Video::class, static function (Faker $faker) use ($images) {
     return [
         'id' => Uuid::generate()->string,
-        'author_id' => \App\User::inRandomOrder()->first()->id,
+        'author_id' => User::inRandomOrder()->first()->id,
         'category_id' => \App\Category::inRandomOrder()->first()->id,
         'title' => $faker->word,
         'description' => $faker->text,
@@ -109,15 +112,15 @@ $factory->define(App\Category::class, static function (Faker $faker) use ($icons
 
 $factory->define(App\VideoVote::class, static function (Faker $faker) {
     return [
-        'video_id' => \App\Video::inRandomOrder()->first()->id,
-        'author_id' => \App\User::inRandomOrder()->first()->id,
+        'video_id' => Video::inRandomOrder()->first()->id,
+        'author_id' => User::inRandomOrder()->first()->id,
         'value' => $faker->boolean ? 1 : 0,
     ];
 });
 
 $factory->define(App\VideoSetting::class, static function (Faker $faker) {
     return [
-        'video_id' => \App\Video::inRandomOrder()->first()->id,
+        'video_id' => Video::inRandomOrder()->first()->id,
         'private' => $faker->boolean ? 1 : 0,
         'allow_comments' => $faker->boolean ? 1 : 0,
         'allow_votes' => $faker->boolean ? 1 : 0,
@@ -126,8 +129,8 @@ $factory->define(App\VideoSetting::class, static function (Faker $faker) {
 
 $factory->define(App\Comment::class, static function (Faker $faker) {
     return [
-        'video_id' => \App\Video::inRandomOrder()->first()->id,
-        'author_id' => \App\User::inRandomOrder()->first()->id,
+        'video_id' => Video::inRandomOrder()->first()->id,
+        'author_id' => User::inRandomOrder()->first()->id,
         'body' => $faker->text,
     ];
 });
@@ -135,14 +138,14 @@ $factory->define(App\Comment::class, static function (Faker $faker) {
 $factory->define(App\CommentVote::class, static function (Faker $faker) {
     return [
         'comment_id' => \App\Comment::inRandomOrder()->first()->id,
-        'author_id' => \App\User::inRandomOrder()->first()->id,
+        'author_id' => User::inRandomOrder()->first()->id,
         'value' => $faker->boolean ? 1 : 0,
     ];
 });
 
 $factory->define(App\Views::class, static function (Faker $faker) {
     return [
-        'video_id' => \App\Video::inRandomOrder()->first()->id,
-        'author_id' => \App\User::inRandomOrder()->first()->id,
+        'video_id' => Video::inRandomOrder()->first()->id,
+        'author_id' => User::inRandomOrder()->first()->id,
     ];
 });

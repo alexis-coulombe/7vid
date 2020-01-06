@@ -2,10 +2,8 @@
 
 namespace App;
 
-use Cassandra\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use phpDocumentor\Reflection\Types\Integer;
 
 class VideoSetting extends Model
 {

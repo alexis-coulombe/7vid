@@ -23,12 +23,12 @@ class SocialAuthGoogleController extends Controller
      * Return a callback method from google api.
      *
      * @param SocialGoogleAccountService $service
-     * @return callback URL from google
+     * @return RedirectResponse
      */
-    public function callback(SocialGoogleAccountService $service): callable
+    public function callback(SocialGoogleAccountService $service): RedirectResponse
     {
         $user = $service->createOrGetUser(Socialite::driver('google')->user());
         auth()->login($user);
-        return redirect()->to('/home');
+        return redirect()->to('/');
     }
 }

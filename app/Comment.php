@@ -122,7 +122,9 @@ class Comment extends Model
     public function userHasVoted(bool $value): bool
     {
         if (Auth::check()) {
-            return CommentVote::where(['author_id' => Auth::user()->id, 'comment_id' => $this->getId(), 'value' => $value])->exists();
+            return CommentVote::where(
+                ['author_id' => Auth::user()->id, 'comment_id' => $this->getId(), 'value' => $value]
+            )->exists();
         }
 
         return false;
@@ -145,7 +147,8 @@ class Comment extends Model
      */
     public function getDownVotes(): int
     {
-        return $this->comment_votes()->where(['comment_id' => $this->getId(), 'value' => CommentVote::DOWNVOTE])->count();
+        return $this->comment_votes()->where(['comment_id' => $this->getId(), 'value' => CommentVote::DOWNVOTE])->count(
+        );
     }
 
     /**
@@ -179,9 +182,14 @@ class Comment extends Model
             switch ($filter) {
                 case 'rated':
                 {
-                    $comments = $comments->withCount(['comment_votes', 'comment_votes' => static function ($query) {
-                        $query->where(['value' => 1]);
-                    }]);
+                    $comments = $comments->withCount(
+                        [
+                            'comment_votes',
+                            'comment_votes' => static function ($query) {
+                                $query->where(['value' => 1]);
+                            }
+                        ]
+                    );
 
                     break;
                 }
@@ -191,7 +199,6 @@ class Comment extends Model
                     break;
                 }
             }
-
         }
 
         return $comments;
