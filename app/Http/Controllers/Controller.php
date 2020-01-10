@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequest;
+    use AuthorizesRequests;
     use DispatchesJobs;
     use ValidatesRequests;
 }
