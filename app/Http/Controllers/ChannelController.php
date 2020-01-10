@@ -78,8 +78,7 @@ class ChannelController extends Controller
         }
 
         if (request()->isMethod('post')) {
-
-            if(Auth::check() && Auth::user()->getId() === $userId) {
+            if (Auth::check() && Auth::user()->getId() === $userId) {
                 $this->validate(
                     request(),
                     [
@@ -190,11 +189,14 @@ class ChannelController extends Controller
             Auth::logout();
 
             if ($user) {
-                $user->delete();
+                try {
+                    $user->delete();
+                } catch (\Exception $e) {
+                    abort(503);
+                }
             }
         }
 
         return redirect()->back();
     }
-
 }

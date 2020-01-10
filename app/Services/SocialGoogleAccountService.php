@@ -21,11 +21,18 @@ class SocialGoogleAccountService
         $user = User::whereEmail($providerUser->getEmail())->first();
 
         if (!$user) {
-            $user = User::create([
-                'email' => $providerUser->getEmail(),
-                'name' => $providerUser->getName(),
-                'password' => md5(random_int(1,10000)),
-            ]);
+            try {
+                $user = User::create(
+                    [
+                        'email' => $providerUser->getEmail(),
+                        'name' => $providerUser->getName(),
+                        'password' => md5(random_int(1, 10000)),
+                    ]
+                );
+            } catch (\Exception $e) {
+                var_dump($e->getMessage());
+                exit(1);
+            }
         }
         $account->user()->associate($user);
         $account->save();

@@ -234,6 +234,8 @@ class User extends Authenticatable
                 ]
             )->exists();
         }
+
+        return false;
     }
 
     /**

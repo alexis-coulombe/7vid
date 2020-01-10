@@ -62,7 +62,7 @@ class VideosController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return View
      */
     public function create(): View
     {
@@ -269,7 +269,7 @@ class VideosController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return Response
+     * @return RedirectResponse
      * @throws ValidationException
      */
     public function update(Request $request, $id): RedirectResponse

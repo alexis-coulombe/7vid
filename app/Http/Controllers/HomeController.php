@@ -51,7 +51,7 @@ class HomeController extends Controller
      */
     public function settings(): View
     {
-        if (request()->isMethod('post') && Auth::check()) {
+        if (Auth::check() && request()->isMethod('post')) {
             $this->validate(
                 request(),
                 [
@@ -76,8 +76,8 @@ class HomeController extends Controller
             }
 
             if (request('password')) {
-                if (!Hash::check(request('current-password'), $user->getPassword()) ||
-                    request('password') !== request('confirm-password')) {
+                if (request('password') !== request('confirm-password') ||
+                    !Hash::check(request('current-password'), $user->getPassword())) {
                     return view('home.settings')->with('error', 'Your password does not match.');
                 }
 

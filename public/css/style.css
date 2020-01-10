@@ -293,7 +293,6 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
         width: 100%;
         text-align: left;
         padding: 1rem;
-        width: 225px;
     }
 
     .sidebar .nav-item .nav-link span {
@@ -474,7 +473,7 @@ body.sidebar-toggled footer.sticky-footer {
 @media (min-width: 768px) {
     body.sidebar-toggled footer.sticky-footer {
         width: 100%;
-        margin-left: 0px;
+        margin-left: 0;
     }
 }
 
@@ -566,7 +565,7 @@ body.sidebar-toggled footer.sticky-footer {
 .separator {
     border-top: 1px solid #2e2e2e;
     margin: 6px 0 0;
-    padding: 10px 0px 0px 0px;
+    padding: 10px 0 0 0;
 }
 
 .channel-sidebar-list h6 {
@@ -822,7 +821,7 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 .main-title > h6 {
-    margin: 0px 0 16px;
+    margin: 0 0 16px;
 }
 
 .top-category .main-title > h6 {
@@ -939,7 +938,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 }
 
 .alert {
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .pagination .page-item .page-link {
@@ -1248,7 +1247,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 }
 
 /* Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) and (max-width: 767.98px) {
+@media (min-width: 576px) and (max-width: 768px) {
     .top-mobile-search {
         display: block;
     }
@@ -1491,7 +1490,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 }
 
 /* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) and (max-width: 1199.98px) {
+@media (min-width: 992px) and (max-width: 1200px) {
     #wrapper #content-wrapper .container-fluid {
         padding-bottom: 15px !important;
         padding-left: 243px;

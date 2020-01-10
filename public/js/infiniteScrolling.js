@@ -9,13 +9,13 @@ $(window).scroll(function () {
         if ($(window).scrollTop() + $(window).height() >= $('footer').offset().top) {
             let data = {
                 // Exclude already fetched channels
-                exclude: $.map($('.scrolling-prevent'), (n, i) => {
+                exclude: $.map($('.scrolling-prevent'), (n) => {
                     return n.id
                 }),
                 //
                 type: scrollingElement.data('type'),
                 video_id: scrollingElement.data('video-id') ? scrollingElement.data('video-id') : null,
-                category_id:  scrollingElement.data('category-id') ? scrollingElement.data('category-id') : null,
+                category_id: scrollingElement.data('category-id') ? scrollingElement.data('category-id') : null,
             };
 
             loadingSpinner.show();

@@ -12,7 +12,7 @@ window.onVoteClickEvent = function () {
                 },
                 data: data,
                 type: 'POST',
-                success: (result) => {
+                success: () => {
                     $(this).siblings('button').removeClass('btn-danger');
                     $(this).siblings('button').addClass('btn-primary');
                     $(this).addClass('btn-danger');

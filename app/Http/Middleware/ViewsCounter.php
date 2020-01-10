@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use App\Video;
 use App\Views;
-use Cassandra\Date;
 use Closure;
 use Exception;
 use Illuminate\Http\Request;

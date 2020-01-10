@@ -94,7 +94,6 @@
             <button type="submit" class="btn btn-success border-none">Save Changes</button> {{ !(new Mobile_Detect())->isMobile() ? 'or CTRL+S' : '' }}
         </div>
     </form>
-    </div>
 
     @include('shared.modals.delete')
     <form id="delete" action="{{ route('channel.delete') }}" method="POST">
