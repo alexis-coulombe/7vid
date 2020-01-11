@@ -71,10 +71,15 @@ class ChannelController extends Controller
         /** @var User $author */
         $author = User::find($userId);
         /** @var ChannelSetting $setting */
-        $setting = $author->setting;
+        $setting = $author->setting()->first();
 
         if ($author === null) {
             abort(404);
+        }
+
+        if ($setting === null) {
+            $setting = new ChannelSetting();
+            $setting->setChannelId($author->getId());
         }
 
         if (request()->isMethod('post')) {

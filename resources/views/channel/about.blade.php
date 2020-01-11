@@ -17,9 +17,13 @@
                     <div class="col-lg-6">
                         <div class="single-video-title box mb-3">
                             <h1 class="h2">About {{ $author->getName() }}</h1>
-                            <p class="mb-0">
-                                <i class="fas fa-edit"></i> <a href="#" data-toggle="modal" data-target="#editAboutModal">Edit your description</a>
-                            </p>
+                            @auth
+                                @if($author->getId() === Auth::user()->getId())
+                                    <p class="mb-0">
+                                        <i class="fas fa-edit"></i> <a href="#" data-toggle="modal" data-target="#editAboutModal">Edit your description</a>
+                                    </p>
+                                @endif
+                            @endauth
                             <hr>
                             <p>
                                 @if($setting)

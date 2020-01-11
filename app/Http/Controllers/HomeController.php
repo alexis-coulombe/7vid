@@ -21,7 +21,7 @@ class HomeController extends Controller
     public function index()
     {
         $newVideos = Video::orderBy('created_at', 'DESC')->limit(16)->get();
-        $popularCategories = Category::withCount('videos')->latest('videos_count')->take(3)->get();
+        $popularCategories = Category::all();
 
         if (Auth::check()) {
             $randomChannels = User::inRandomOrder()->where('id', '<>', Auth::user()->getId())->limit(4)->get();
@@ -117,7 +117,7 @@ class HomeController extends Controller
      */
     public function history(): View
     {
-        $videos_id = Views::where(['author_id' => Auth::user()->getId()])->select('video_id')->limit(50)->get();
+        $videos_id = Views::where(['author_id' => Auth::user()->getId(), 'show_in_history' => true])->select('video_id')->limit(50)->get();
         $videos = [];
 
         if (count($videos_id) > 0) {
