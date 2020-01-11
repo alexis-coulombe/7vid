@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Alexi
- * Date: 2018-12-22
- * Time: 22:42
- */
 
 namespace App;
 
@@ -39,5 +33,26 @@ class Views extends Model
     public function author(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'author_id');
+    }
+
+    /**
+     * Get show_in_history
+     *
+     * @return bool
+     */
+    public function getShowInHisory(): bool
+    {
+        return $this->show_in_history;
+    }
+
+    /**
+     * Set show_in_history
+     *
+     * @param bool $show
+     * @return bool
+     */
+    public function setShowInHisory(bool $show): bool
+    {
+        $this->show_in_history = $show;
     }
 }

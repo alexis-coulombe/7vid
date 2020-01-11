@@ -20,7 +20,7 @@
                             <div class="item">
                                 <div class="category-item text-center">
                                     <h3>
-                                        <i class="{{ $category->icon }}"></i>
+                                        <i class="fa {{ $category->icon }}"></i>
                                     </h3>
                                     <h6>{{ $category->getTitle() }}</h6>
                                     <p>{{ $category->getVideosCount() }} videos</p>

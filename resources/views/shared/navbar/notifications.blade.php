@@ -13,8 +13,8 @@
     $notifications = Auth::user()->notifications()->where('created_at', '>',$formatted_date)->limit(5)->get();
 @endphp
 
-@if(count($notifications) < 0)
-    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
+<div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
+    @if(count($notifications) < 0)
         @foreach($notifications as $notification)
             @php $notification = json_decode($notification->data['data'], true, 512, JSON_THROW_ON_ERROR); @endphp
             <div class="dropdown-item">
@@ -22,5 +22,9 @@
                 <a href="{{ isset($notification->link) ?? '#' }}">{{ $notification->desc }}</a>
             </div>
         @endforeach
-    </div>
-@endif
+    @else
+        <div class="dropdown-item">
+            <p>Nothing to see here !</p>
+        </div>
+    @endif
+</div>
