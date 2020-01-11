@@ -89,7 +89,7 @@ class VideosController extends Controller
      */
     public static function vote()
     {
-        if (request()->ajax() && Auth::check()) {
+        if (Auth::check() && request()->ajax()) {
             $value = request('value');
             $videoId = request('id');
 
