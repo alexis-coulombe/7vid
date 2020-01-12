@@ -83,8 +83,7 @@ class ChannelController extends Controller
         }
 
         if (request()->isMethod('post')) {
-
-            if(Auth::check() && Auth::user()->getId() === $userId) {
+            if (Auth::check() && Auth::user()->getId() === $userId) {
                 $this->validate(
                     request(),
                     [
@@ -135,7 +134,7 @@ class ChannelController extends Controller
      */
     public function subscribe(): string
     {
-        if (request()->ajax() && Auth::check()) {
+        if (Auth::check() && request()->ajax()) {
             $id = request('id');
 
             if (!isset($id) || $id <= 0 || !is_numeric($id)) {
@@ -181,7 +180,9 @@ class ChannelController extends Controller
         }
 
         /** @var array $videos */
-        $videos = $user->videos()->where('title', 'LIKE', $search)->get();
+        $videos = $user->videos()->whereHas('setting', static function ($query) {
+            $query->where(['private' => 0]);
+        })->where('title', 'LIKE', $search)->get();
 
         return View('channel.search')->with('videos', $videos)
             ->with('search', request('search'))->with('author', $user);
@@ -195,11 +196,14 @@ class ChannelController extends Controller
             Auth::logout();
 
             if ($user) {
-                $user->delete();
+                try {
+                    $user->delete();
+                } catch (\Exception $e) {
+                    abort(503);
+                }
             }
         }
 
         return redirect()->back();
     }
-
 }

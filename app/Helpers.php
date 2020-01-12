@@ -3,7 +3,12 @@
 function time_elapsed_string($datetime, $full = false)
 {
     $now = new DateTime;
-    $ago = new DateTime($datetime);
+    try {
+        $ago = new DateTime($datetime);
+    } catch (Exception $e) {
+        var_dump($e->getMessage());
+        exit(1);
+    }
     $diff = $now->diff($ago);
 
     $diff->w = floor($diff->d / 7);

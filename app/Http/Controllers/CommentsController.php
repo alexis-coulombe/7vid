@@ -51,7 +51,7 @@ class CommentsController extends Controller
      */
     public function vote()
     {
-        if (request()->ajax() && Auth::check()) {
+        if (Auth::check() && request()->ajax()) {
             $value = request('value');
             $commentId = request('id');
 

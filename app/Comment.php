@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Cassandra\Uuid;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -117,13 +115,26 @@ class Comment extends Model
      * Check if the logged user has voted for the video
      *
      * @param bool $value
+     * @param int $userId
      * @return boolean
      */
-    public function userHasVoted(bool $value): bool
+    public function userHasVoted(bool $value, int $userId = null): bool
     {
+        /** @var User $user */
+        $user = null;
+        if ($userId === null && Auth::check()) {
+            $user = Auth::user()->getId();
+        } else {
+            $user = User::find($userId);
+        }
+
+        if ($user === null) {
+            return false;
+        }
+
         if (Auth::check()) {
             return CommentVote::where(
-                ['author_id' => Auth::user()->id, 'comment_id' => $this->getId(), 'value' => $value]
+                ['author_id' => $user->getId(), 'comment_id' => $this->getId(), 'value' => $value]
             )->exists();
         }
 

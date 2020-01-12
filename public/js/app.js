@@ -102123,7 +102123,7 @@ $(window).scroll(function () {
     if ($(window).scrollTop() + $(window).height() >= $('footer').offset().top) {
       var data = {
         // Exclude already fetched channels
-        exclude: $.map($('.scrolling-prevent'), function (n, i) {
+        exclude: $.map($('.scrolling-prevent'), function (n) {
           return n.id;
         }),
         //
@@ -102236,37 +102236,6 @@ Version: 1.0
       autoplayTimeout: 2000,
       autoplayHoverPause: true
     });
-  } // Video cards Owl Carousel
-
-
-  var videoSlider = $('.owl-carousel-video-card');
-
-  if (videoSlider.length > 0) {
-    videoSlider.owlCarousel({
-      responsive: {
-        0: {
-          items: 1
-        },
-        600: {
-          items: 3
-        },
-        1000: {
-          items: 4
-        },
-        1200: {
-          items: 5
-        }
-      },
-      loop: true,
-      margin: 15,
-      lazyLoad: true,
-      autoplay: true,
-      autoplaySpeed: 1000,
-      autoplayTimeout: 4000,
-      autoplayHoverPause: true,
-      nav: true,
-      navText: ["<i class=\"fas fa-arrow-left\"></i>", "<i class=\"fas fa-arrow-right\"></i>"]
-    });
   } // Login Owl Carousel
 
 
@@ -102367,7 +102336,7 @@ Version: 1.0
   } // Comment filter trigger
 
 
-  $('.filter_item').click(function () {
+  $('.filter_item').on('click', function () {
     $('#filter_value').val($(this).data('value'));
     $('#filter_form').submit();
   });
@@ -102440,7 +102409,7 @@ window.onVoteClickEvent = function () {
         },
         data: data,
         type: 'POST',
-        success: function success(result) {
+        success: function success() {
           $(_this).siblings('button').removeClass('btn-danger');
           $(_this).siblings('button').addClass('btn-primary');
           $(_this).addClass('btn-danger');

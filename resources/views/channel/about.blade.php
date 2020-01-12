@@ -26,7 +26,7 @@
                             @endauth
                             <hr>
                             <p>
-                                @if($setting)
+                                @if($setting && $setting->getAbout())
                                     {!! $setting->getAbout() !!}
                                 @else
                                     No description provided.

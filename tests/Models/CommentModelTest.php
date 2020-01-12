@@ -67,6 +67,7 @@ class CommentModelTest extends TestCase
 
     /**
      * Check if user has voted on a comment
+     * @throws Exception
      */
     public function testUserHasVoted(): void
     {

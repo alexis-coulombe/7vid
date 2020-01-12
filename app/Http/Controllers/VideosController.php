@@ -49,9 +49,12 @@ class VideosController extends Controller
     {
         $search = request('search');
 
-        $videos = Video::where('title', 'like', '%' . $search . '%')
+        $videos = Video::whereHas('setting', static function ($query) {
+            $query->where(['private' => 0]);
+        })->where('title', 'like', '%' . $search . '%')
             ->orWhere('description', 'like', '% ' . $search . ' %')
             ->paginate(20, ['*'], 'video_page');
+
         $authors = User::where('name', 'like', '%' . $search . '%')->paginate(12, ['*'], 'author_page');
 
 
@@ -62,7 +65,7 @@ class VideosController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return View
      */
     public function create(): View
     {
@@ -89,7 +92,7 @@ class VideosController extends Controller
      */
     public static function vote()
     {
-        if (request()->ajax() && Auth::check()) {
+        if (Auth::check() && request()->ajax()) {
             $value = request('value');
             $videoId = request('id');
 
@@ -269,7 +272,7 @@ class VideosController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return Response
+     * @return RedirectResponse
      * @throws ValidationException
      */
     public function update(Request $request, $id): RedirectResponse

@@ -52,9 +52,9 @@ class ChannelSetting extends Model
     /**
      * Get about
      *
-     * @return string
+     * @return string|null
      */
-    public function getAbout(): string
+    public function getAbout(): ?string
     {
         return $this->about;
     }

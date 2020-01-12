@@ -345,6 +345,7 @@ class Video extends Model
     /**
      * Return formated title to not exceed limit
      *
+     * @param int $limit
      * @return string
      */
     public function getFormatedTitle(int $limit): string

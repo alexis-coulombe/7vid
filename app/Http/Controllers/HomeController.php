@@ -20,7 +20,10 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $newVideos = Video::orderBy('created_at', 'DESC')->limit(16)->get();
+        $newVideos = Video::whereHas('setting', static function($query){
+            $query->where(['private' => 0]);
+        })->orderBy('created_at', 'DESC')->limit(16)->get();
+
         $popularCategories = Category::all();
 
         if (Auth::check()) {
@@ -51,7 +54,7 @@ class HomeController extends Controller
      */
     public function settings(): View
     {
-        if (request()->isMethod('post') && Auth::check()) {
+        if (Auth::check() && request()->isMethod('post')) {
             $this->validate(
                 request(),
                 [
@@ -76,8 +79,8 @@ class HomeController extends Controller
             }
 
             if (request('password')) {
-                if (!Hash::check(request('current-password'), $user->getPassword()) ||
-                    request('password') !== request('confirm-password')) {
+                if (request('password') !== request('confirm-password') ||
+                    !Hash::check(request('current-password'), $user->getPassword())) {
                     return view('home.settings')->with('error', 'Your password does not match.');
                 }
 
@@ -138,7 +141,9 @@ class HomeController extends Controller
             $exclude = request('exclude') ?: [];
 
             if (request('type') === 'channel-video') {
-                $users = User::withCount('videos')->latest('videos_count')->take(3)->whereNotIn('id', $exclude)->get();
+                $users = User::whereHas('setting', static function($query){
+                    $query->where(['private' => 0]);
+                })->withCount('videos')->latest('videos_count')->take(3)->whereNotIn('id', $exclude)->get();
 
                 foreach ($users as $user) {
                     if ((!count($user->videos)) > 0) {
@@ -154,7 +159,9 @@ class HomeController extends Controller
                 $category = Category::find($categoryId);
 
                 if ($category) {
-                    $videos = $category->videos()->orderBy('created_at', 'DESC')->take(16)->whereNotIn(
+                    $videos = $category->videos()->whereHas('setting', static function ($query) {
+                        $query->where(['private' => 0]);
+                    })->orderBy('created_at', 'DESC')->take(16)->whereNotIn(
                         'id',
                         $exclude
                     )->get();

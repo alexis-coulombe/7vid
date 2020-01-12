@@ -24,7 +24,7 @@ class CreateViewsTable extends Migration
             $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
             $table->index('author_id');
 
-            $table->boolean('show_in_history');
+            $table->boolean('show_in_history')->default(true);
 
             $table->timestamps();
         });

@@ -31,7 +31,7 @@ Version: 1.0
     // Prevent the content wrapper from scrolling when the fixed side navigation hovered over
     $('body.fixed-nav .sidebar').on('mousewheel DOMMouseScroll wheel', function (e) {
         if ($window.width() > 768) {
-            var e0 = e.originalEvent,
+            let e0 = e.originalEvent,
                 delta = e0.wheelDelta || -e0.detail;
             this.scrollTop += (delta < 0 ? 1 : -1) * 30;
             e.preventDefault();
@@ -65,39 +65,6 @@ Version: 1.0
         });
     }
 
-    // Video cards Owl Carousel
-    const videoSlider = $('.owl-carousel-video-card');
-    if (videoSlider.length > 0) {
-        videoSlider.owlCarousel({
-            responsive: {
-                0: {
-                    items: 1,
-                },
-                600: {
-                    items: 3,
-                },
-                1000: {
-                    items: 4,
-                },
-                1200: {
-                    items: 5,
-                },
-            },
-            loop: true,
-            margin: 15,
-            lazyLoad: true,
-            autoplay: true,
-            autoplaySpeed: 1000,
-            autoplayTimeout: 4000,
-            autoplayHoverPause: true,
-            nav: true,
-            navText: [
-                "<i class=\"fas fa-arrow-left\"></i>",
-                "<i class=\"fas fa-arrow-right\"></i>",
-            ],
-        });
-    }
-
     // Login Owl Carousel
     const mainslider = $('.owl-carousel-login');
     if (mainslider.length > 0) {
@@ -117,7 +84,7 @@ Version: 1.0
 
     // Scroll to top button appear
     $(document).on('scroll', function () {
-        var scrollDistance = $(this).scrollTop();
+        let scrollDistance = $(this).scrollTop();
         if (scrollDistance > 100) {
             $('.scroll-to-top').fadeIn();
         } else {
@@ -127,7 +94,7 @@ Version: 1.0
 
     // Smooth scrolling using jQuery easing
     $(document).on('click', 'a.scroll-to-top', function (event) {
-        var $anchor = $(this);
+        let $anchor = $(this);
         $('html, body').stop().animate({
             scrollTop: ($($anchor.attr('href')).offset().top)
         }, 1000, 'easeInOutExpo');
@@ -191,7 +158,7 @@ Version: 1.0
     }
 
     // Comment filter trigger
-    $('.filter_item').click(function () {
+    $('.filter_item').on('click', function () {
         $('#filter_value').val($(this).data('value'));
         $('#filter_form').submit();
     });
