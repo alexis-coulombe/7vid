@@ -30,7 +30,7 @@
                                 <h6>Videos</h6>
                             </div>
                         </div>
-                        @foreach($author->videos as $video)
+                        @foreach($author->videos()->whereHas('setting', static function ($query) { $query->where(['private' => 0]); })->get() as $video)
                             <div class="col-xl-3 col-sm-6 mb-3">
                                 @include('shared.video.card')
                             </div>

@@ -18,7 +18,9 @@ class CategoryController extends Controller
             App::abort(404);
         }
 
-        $videos = $category->videos()->orderBy('created_at', 'DESC')->limit(16)->get();
+        $videos = $category->videos()->whereHas('setting', static function ($query) {
+            $query->where(['private' => 0]);
+        })->orderBy('created_at', 'DESC')->limit(16)->get();
 
         return view('category.index')->with('category', $category)
             ->with('videos', $videos);

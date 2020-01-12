@@ -41,13 +41,11 @@
                 </div>
             </div>
             @if(count($newVideos) > 0)
-                <div class="owl-carousel owl-carousel-video-card">
-                    @foreach($newVideos as $video)
-                        <div class="item">
-                            @include('shared.video.card')
-                        </div>
-                    @endforeach
-                </div>
+                @foreach($newVideos as $video)
+                    <div class="col-xl-3 col-sm-6 mb-3">
+                        @include('shared.video.card')
+                    </div>
+                @endforeach
             @endif
         </div>
     </div>

@@ -65,39 +65,6 @@ Version: 1.0
         });
     }
 
-    // Video cards Owl Carousel
-    const videoSlider = $('.owl-carousel-video-card');
-    if (videoSlider.length > 0) {
-        videoSlider.owlCarousel({
-            responsive: {
-                0: {
-                    items: 1,
-                },
-                600: {
-                    items: 3,
-                },
-                1000: {
-                    items: 4,
-                },
-                1200: {
-                    items: 5,
-                },
-            },
-            loop: true,
-            margin: 15,
-            lazyLoad: true,
-            autoplay: true,
-            autoplaySpeed: 1000,
-            autoplayTimeout: 4000,
-            autoplayHoverPause: true,
-            nav: true,
-            navText: [
-                "<i class=\"fas fa-arrow-left\"></i>",
-                "<i class=\"fas fa-arrow-right\"></i>",
-            ],
-        });
-    }
-
     // Login Owl Carousel
     const mainslider = $('.owl-carousel-login');
     if (mainslider.length > 0) {

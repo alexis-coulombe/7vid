@@ -49,9 +49,12 @@ class VideosController extends Controller
     {
         $search = request('search');
 
-        $videos = Video::where('title', 'like', '%' . $search . '%')
+        $videos = Video::whereHas('setting', static function ($query) {
+            $query->where(['private' => 0]);
+        })->where('title', 'like', '%' . $search . '%')
             ->orWhere('description', 'like', '% ' . $search . ' %')
             ->paginate(20, ['*'], 'video_page');
+
         $authors = User::where('name', 'like', '%' . $search . '%')->paginate(12, ['*'], 'author_page');
 
 
