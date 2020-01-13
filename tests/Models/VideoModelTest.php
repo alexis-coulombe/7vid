@@ -10,6 +10,7 @@ use App\VideoSetting;
 use App\VideoVote;
 use Exception;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use PHPUnit\phpDocumentor\Reflection\Types\Integer;
 use Tests\TestCase;
 
 class VideoModelTest extends TestCase
@@ -101,7 +102,6 @@ class VideoModelTest extends TestCase
     {
         /** @var Video $video */
         $video = Video::first();
-        $vote = $video->votes()->first();
         $user = User::first();
         $this->be($user);
 
@@ -115,6 +115,30 @@ class VideoModelTest extends TestCase
         $user->voteVideo(VideoVote::DOWNVOTE, $video->getId());
         $this->assertFalse($video->userHasVoted(VideoVote::DOWNVOTE, $user->getId()));
         $this->assertFalse($video->userHasVoted(VideoVote::UPVOTE, $user->getId()));
+    }
+
+    /**
+     * Test vote count
+     */
+    public function testUpVoteCount(): void
+    {
+        /** @var Video $video */
+        $video = Video::first();
+
+        $this->assertEquals(1, $video->getUpVotes() + $video->getDownVotes());
+        $this->assertIsInt($video->getUpVotes());
+        $this->assertIsInt($video->getDownVotes());
+    }
+
+    /**
+     * Test formated title
+     */
+    public function testFormatedTitle(): void
+    {
+        /** @var Video $video */
+        $video = Video::first();
+
+        $this->assertSame('...', substr($video->getFormatedTitle(1), -3));
     }
 
     /**
