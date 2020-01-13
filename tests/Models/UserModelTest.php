@@ -138,6 +138,10 @@ class UserModelTest extends TestCase
         $user->unsubscribe(User::first()->getId());
         $this->assertSame(0, $user->getSubscriptionCount());
         $this->assertSame(0, $user->getSubscriptionCount(User::first()->getId()));
+
+        $user->subscribe(User::first()->getId());
+        $this->assertSame(1, $user->getSubscriptionCount());
+        $this->assertSame(1, $user->getSubscriptionCount(User::first()->getId()));
     }
 
     /**
@@ -152,6 +156,8 @@ class UserModelTest extends TestCase
 
         $this->assertTrue($user->delete());
         $this->assertNull(User::first());
+
+        factory(User::class, 1)->create();
     }
 
     /**
@@ -176,5 +182,29 @@ class UserModelTest extends TestCase
         $user->voteVideo(VideoVote::DOWNVOTE, $video->getId());
         $this->assertFalse($video->userHasVoted(VideoVote::DOWNVOTE, $user->getId()));
         $this->assertFalse($video->userHasVoted(VideoVote::UPVOTE, $user->getId()));
+    }
+
+    /**
+     * Test upVoting / downVoting and unVoting of a comment
+     * @throws Exception
+     */
+    public function testVoteComment(): void
+    {
+        /** @var Comment $comment */
+        $comment = Comment::first();
+        /** @var User $user */
+        $user = User::first();
+        $this->be($user);
+
+        $user->voteComment(CommentVote::DOWNVOTE, $comment->getId());
+        $this->assertTrue($comment->userHasVoted(CommentVote::DOWNVOTE, $user->getId()));
+
+        $user->voteComment(CommentVote::UPVOTE, $comment->getId());
+        $this->assertTrue($comment->userHasVoted(CommentVote::UPVOTE, $user->getId()));
+        $this->assertFalse($comment->userHasVoted(CommentVote::DOWNVOTE, $user->getId()));
+
+        $user->voteComment(CommentVote::UPVOTE, $comment->getId());
+        $this->assertFalse($comment->userHasVoted(CommentVote::UPVOTE, $user->getId()));
+        $this->assertFalse($comment->userHasVoted(CommentVote::UPVOTE, $user->getId()));
     }
 }

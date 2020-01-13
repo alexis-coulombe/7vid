@@ -132,13 +132,9 @@ class Comment extends Model
             abort(404);
         }
 
-        if (Auth::check()) {
-            return CommentVote::where(
-                ['author_id' => $user->getId(), 'comment_id' => $this->getId(), 'value' => $value]
-            )->exists();
-        }
-
-        return false;
+        return CommentVote::where(
+            ['author_id' => $user->getId(), 'comment_id' => $this->getId(), 'value' => $value]
+        )->exists();
     }
 
     /**
