@@ -147,5 +147,6 @@ $factory->define(App\Views::class, static function (Faker $faker) {
     return [
         'video_id' => Video::inRandomOrder()->first()->id,
         'author_id' => User::inRandomOrder()->first()->id,
+        'show_in_history' => $faker->boolean,
     ];
 });

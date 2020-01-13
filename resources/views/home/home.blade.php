@@ -20,7 +20,7 @@
                             <div class="item">
                                 <div class="category-item text-center">
                                     <h3>
-                                        <i class="{{ $category->icon }}"></i>
+                                        <i class="fa {{ $category->icon }}"></i>
                                     </h3>
                                     <h6>{{ $category->getTitle() }}</h6>
                                     <p>{{ $category->getVideosCount() }} videos</p>
@@ -41,13 +41,11 @@
                 </div>
             </div>
             @if(count($newVideos) > 0)
-                <div class="owl-carousel owl-carousel-video-card">
-                    @foreach($newVideos as $video)
-                        <div class="item">
-                            @include('shared.video.card')
-                        </div>
-                    @endforeach
-                </div>
+                @foreach($newVideos as $video)
+                    <div class="col-xl-3 col-sm-6 mb-3">
+                        @include('shared.video.card')
+                    </div>
+                @endforeach
             @endif
         </div>
     </div>

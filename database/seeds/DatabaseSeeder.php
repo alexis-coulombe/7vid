@@ -43,8 +43,8 @@ class DatabaseSeeder extends Seeder
 
         echo 'Users' . PHP_EOL;
         factory(User::class, $maxUserCount)->create();
-        echo 'Category'. PHP_EOL;
-        \factory(Category::class, $maxCategoryCount)->create();
+        //echo 'Category'. PHP_EOL;
+        //\factory(Category::class, $maxCategoryCount)->create();
         echo 'Videos'. PHP_EOL;
         \factory(Video::class, $maxVideosCount)->create();
         echo 'Videos settings'. PHP_EOL;

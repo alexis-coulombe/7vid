@@ -109,9 +109,3 @@
         </div>
     </div>
 @endsection
-
-@section('footer')
-    <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
-    <script src='https://vjs.zencdn.net/7.6.5/video.js'></script>
-    <script src='{{ asset('js/vote.js') }}'></script>
-@endsection

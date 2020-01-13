@@ -50,21 +50,11 @@ class ChannelSetting extends Model
     }
 
     /**
-     * Set author id
-     *
-     * @param int $authorId
-     */
-    public function setAuthorId(int $authorId): void
-    {
-        $this->author_id = $authorId;
-    }
-
-    /**
      * Get about
      *
-     * @return string
+     * @return string|null
      */
-    public function getAbout(): string
+    public function getAbout(): ?string
     {
         return $this->about;
     }

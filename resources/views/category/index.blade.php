@@ -5,12 +5,11 @@
 @endsection
 
 @section('content')
-    <h1><i class="{{ $category->getIcon() }}"></i> {{ $category->getTitle() }}</h1>
     <div class="top-category section-padding mb-4">
         <div class="row">
             <div class="col-md-12">
                 <div class="main-title">
-                    <h5>Videos</h5>
+                    <h1 class="h2"><i class="fa {{ $category->getIcon() }}"></i> {{ $category->getTitle() }}</h1>
                 </div>
             </div>
             @foreach($videos as $video)

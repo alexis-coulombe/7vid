@@ -129,7 +129,7 @@ class Comment extends Model
         }
 
         if ($user === null) {
-            abort(404);
+            return false;
         }
 
         return CommentVote::where(

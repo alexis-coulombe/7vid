@@ -20,8 +20,11 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $newVideos = Video::orderBy('created_at', 'DESC')->limit(16)->get();
-        $popularCategories = Category::withCount('videos')->latest('videos_count')->take(3)->get();
+        $newVideos = Video::whereHas('setting', static function($query){
+            $query->where(['private' => 0]);
+        })->orderBy('created_at', 'DESC')->limit(16)->get();
+
+        $popularCategories = Category::all();
 
         if (Auth::check()) {
             $randomChannels = User::inRandomOrder()->where('id', '<>', Auth::user()->getId())->limit(4)->get();
@@ -117,7 +120,7 @@ class HomeController extends Controller
      */
     public function history(): View
     {
-        $videos_id = Views::where(['author_id' => Auth::user()->getId()])->select('video_id')->limit(50)->get();
+        $videos_id = Views::where(['author_id' => Auth::user()->getId(), 'show_in_history' => true])->select('video_id')->limit(50)->get();
         $videos = [];
 
         if (count($videos_id) > 0) {
@@ -138,7 +141,9 @@ class HomeController extends Controller
             $exclude = request('exclude') ?: [];
 
             if (request('type') === 'channel-video') {
-                $users = User::withCount('videos')->latest('videos_count')->take(3)->whereNotIn('id', $exclude)->get();
+                $users = User::whereHas('setting', static function($query){
+                    $query->where(['private' => 0]);
+                })->withCount('videos')->latest('videos_count')->take(3)->whereNotIn('id', $exclude)->get();
 
                 foreach ($users as $user) {
                     if ((!count($user->videos)) > 0) {
@@ -154,7 +159,9 @@ class HomeController extends Controller
                 $category = Category::find($categoryId);
 
                 if ($category) {
-                    $videos = $category->videos()->orderBy('created_at', 'DESC')->take(16)->whereNotIn(
+                    $videos = $category->videos()->whereHas('setting', static function ($query) {
+                        $query->where(['private' => 0]);
+                    })->orderBy('created_at', 'DESC')->take(16)->whereNotIn(
                         'id',
                         $exclude
                     )->get();

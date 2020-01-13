@@ -71,10 +71,15 @@ class ChannelController extends Controller
         /** @var User $author */
         $author = User::find($userId);
         /** @var ChannelSetting $setting */
-        $setting = $author->setting;
+        $setting = $author->setting()->first();
 
         if ($author === null) {
             abort(404);
+        }
+
+        if ($setting === null) {
+            $setting = new ChannelSetting();
+            $setting->setChannelId($author->getId());
         }
 
         if (request()->isMethod('post')) {
@@ -129,7 +134,7 @@ class ChannelController extends Controller
      */
     public function subscribe(): string
     {
-        if (request()->ajax() && Auth::check()) {
+        if (Auth::check() && request()->ajax()) {
             $id = request('id');
 
             if (!isset($id) || $id <= 0 || !is_numeric($id)) {
@@ -175,7 +180,9 @@ class ChannelController extends Controller
         }
 
         /** @var array $videos */
-        $videos = $user->videos()->where('title', 'LIKE', $search)->get();
+        $videos = $user->videos()->whereHas('setting', static function ($query) {
+            $query->where(['private' => 0]);
+        })->where('title', 'LIKE', $search)->get();
 
         return View('channel.search')->with('videos', $videos)
             ->with('search', request('search'))->with('author', $user);

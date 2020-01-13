@@ -96,6 +96,8 @@ class Category extends Model
      */
     public function getVideos(string $order, int $limit = 16): Collection
     {
-        return $this->videos()->where(['category_id' => $this->getId()])->limit($limit)->orderBy($order, 'DESC')->get();
+        return $this->videos()->whereHas('setting', static function ($query) {
+            $query->where(['private' => 0]);
+        })->where(['category_id' => $this->getId()])->limit($limit)->orderBy($order, 'DESC')->get();
     }
 }
