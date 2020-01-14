@@ -5,11 +5,8 @@ namespace Tests\Models;
 use App\Category;
 use App\Comment;
 use App\CommentVote;
-use App\Country;
 use App\User;
 use App\Video;
-use App\VideoSetting;
-use App\VideoVote;
 use Exception;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -111,5 +108,51 @@ class CommentModelTest extends TestCase
 
         $this->assertNotSame($comment->getUpVotes(), $comment->getDownVotes());
         $this->assertSame(1, $comment->getUpVotes() + $comment->getDownVotes());
+        $this->assertIsInt($comment->getUpVotes());
+        $this->assertIsInt($comment->getDownVotes());
+    }
+
+    public function testGetCommentsByFilter(): void
+    {
+        /** @var Comment $firstComment */
+        $firstComment = Comment::first();
+        $firstComment->save();
+
+        /** @var Comment $secondComment */
+        $secondComment = new Comment();
+        $secondComment->setBody('test');
+        $secondComment->setVideoId(Video::first()->getId());
+        $secondComment->setAuthorId(User::first()->getId());
+        $secondComment->save();
+
+        /** @var CommentVote $secondVote */
+        for($i = 0; $i < 2; $i++){
+            $secondVote = new CommentVote();
+            $secondVote->setAuthorId(User::first()->getId());
+            $secondVote->setCommentId($secondComment->getId());
+            $secondVote->setValue(1);
+            $secondVote->save();
+        }
+
+        $comments = Comment::getByFilter(Comment::FILTER_DATE, Video::first()->getId())->get();
+        $this->assertCount(Video::first()->comments()->count(), $comments);
+
+        $comments = Comment::getByFilter(Comment::FILTER_VOTE_COUNT, Video::first()->getId())->get();
+        $this->assertCount(Video::first()->comments()->count(), $comments);
+
+        if($firstComment->comment_votes()->count() > $secondComment->comment_votes()->count()) {
+            $this->assertSame($firstComment->getId(), $comments->first()->getId());
+        } else {
+            $this->assertSame($secondComment->getId(), $comments->first()->getId());
+        }
+
+        $comments = Comment::getByFilter(Comment::FILTER_RATED, Video::first()->getId())->get();
+        $this->assertCount(Video::first()->comments()->count(), $comments);
+
+        if($firstComment->getUpVotes() > $secondComment->getUpVotes()) {
+            $this->assertSame($firstComment->getId(), $comments->first()->getId());
+        } else {
+            $this->assertSame($secondComment->getId(), $comments->first()->getId());
+        }
     }
 }

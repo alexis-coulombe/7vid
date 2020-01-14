@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
-use App\CommentVote;
-use App\User;
-use App\Video;
 use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\RedirectResponse;

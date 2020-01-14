@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class Comment extends Model
 {
+    public const FILTER_DATE = 'date';
+    public const FILTER_RATED = 'rated';
+    public const FILTER_VOTE_COUNT = 'vote_count';
+    public const FILTERS = [self::FILTER_DATE, self::FILTER_RATED, self::FILTER_VOTE_COUNT];
+
     /**
      * Get user relation
      *
@@ -159,6 +164,8 @@ class Comment extends Model
     }
 
     /**
+     * Get comments based on filter
+     *
      * @param string $filter
      * @param string $videoId
      * @return Builder
@@ -169,13 +176,14 @@ class Comment extends Model
 
         if ($filter) {
             switch ($filter) {
-                case 'date':
+                default:
+                case self::FILTER_DATE:
                 {
                     $commentOrder = 'created_at';
                     break;
                 }
-                case 'rated':
-                case 'vote_count':
+                case self::FILTER_RATED:
+                case self::FILTER_VOTE_COUNT:
                 {
                     $commentOrder = 'comment_votes_count';
                     break;
@@ -187,7 +195,7 @@ class Comment extends Model
 
         if ($filter) {
             switch ($filter) {
-                case 'rated':
+                case self::FILTER_RATED:
                 {
                     $comments = $comments->withCount(
                         [
@@ -200,7 +208,7 @@ class Comment extends Model
 
                     break;
                 }
-                case 'vote_count':
+                case self::FILTER_VOTE_COUNT:
                 {
                     $comments = $comments->withCount('comment_votes');
                     break;
