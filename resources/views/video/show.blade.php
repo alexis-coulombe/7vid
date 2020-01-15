@@ -92,11 +92,16 @@
         </div>
         <div class="row">
             @if($video->setting()->first() && $video->setting()->first()->getAllowComments())
-                <div class="col-md-10 mb-2">
-                    @include('shared.comment.filter')
-                </div>
                 <div class="col-lg-10">
                     @include('comment.comment-form', $data = ['video_id' => $video->getId()])
+
+                    @if($comments->count() > 0)
+                        <div class="row">
+                            <div class="col-lg-12">
+                                @include('shared.comment.filter')
+                            </div>
+                        </div>
+                    @endif
 
                     @include('comment.show', $data = ['comments' => $comments])
 
