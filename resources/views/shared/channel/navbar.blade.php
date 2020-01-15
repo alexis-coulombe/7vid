@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-expand-lg navbar-dark">
     <a class="channel-brand" href="#">
         <h1 class="h4">{{ $author->getName() }}</h1>
     </a>
@@ -33,7 +33,7 @@
                     <i class="fas fa-search"></i>
                 </button> &nbsp;&nbsp;&nbsp;
             </form>
-            @if((Auth::check() && $author->getId() !== Auth::user()->getId()) || !Auth::check())
+            @if(!Auth::check() || (Auth::check() && $author->getId() !== Auth::user()->getId()))
                 @include('shared.video.subscribe-small')
             @endif
         </div>
