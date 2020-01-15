@@ -880,7 +880,7 @@ label {
 }
 
 a {
-    color: #d43a3a;
+    color: #db363d;
     text-decoration: none;
 }
 
@@ -1401,14 +1401,11 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) and (max-width: 992px) {
     #wrapper #content-wrapper .container-fluid {
-        padding-bottom: 15px !important;
-        padding-left: 243px;
-        padding-right: 15px !important;
-        padding-top: 1rem !important;
+        padding: 1rem 15px 15px 243px;
     }
 
     .sidebar .nav-item .nav-link {
-        padding: 8px 14px !important;
+        padding: 8px 14px;
     }
 
     .sidebar-toggled #wrapper #content-wrapper .container-fluid {
@@ -1416,7 +1413,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     }
 
     .single-channel-page .container-fluid {
-        padding: 30px 15px 15px !important;
+        padding: 30px 15px 15px;
     }
 
     .video-card-image img {
@@ -1425,7 +1422,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 
     .osahan-right-navbar .nav-link {
         font-size: 0;
-        padding: 22px 5px !important;
+        padding: 22px 5px;
     }
 
     .osahan-right-navbar .nav-link .fas {
@@ -1441,7 +1438,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     }
 
     .owl-theme .owl-controls .owl-buttons div {
-        margin: 4px !important;
+        margin: 4px;
     }
 
     .container {
@@ -1473,11 +1470,11 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     }
 
     .osahan-navbar-search .form-control {
-        width: auto !important;
+        width: auto;
     }
 
     .osahan-navbar-search {
-        margin-right: auto !important;
+        margin-right: auto;
     }
 
     .imgplace {
@@ -1564,11 +1561,11 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     }
 
     .osahan-navbar-search .form-control {
-        width: auto !important;
+        width: auto;
     }
 
     .osahan-navbar-search {
-        margin-right: auto !important;
+        margin-right: auto;
     }
 }
 
@@ -1720,14 +1717,14 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 }
 
 .category-item p{
-    color: #e6363d;
+    color: #db363d;
 }
 
 /* Progress */
 .progress {
     height: 5px;
     margin-top: 10px;
-    background-color: #DB363D;
+    background-color: #db363d;
 }
 
 .progress-bar {
