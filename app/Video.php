@@ -371,7 +371,7 @@ class Video extends Model
         }
 
         if ($user === null) {
-            abort(404);
+            return false;
         }
 
         return $this->votes()->where(['author_id' => $user->getId(), 'value' => $value])->exists();
