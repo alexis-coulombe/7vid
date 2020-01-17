@@ -7,7 +7,7 @@
     <div class="single-video-author box mb-3 scrolling-prevent" id="{{ $comment->getId() }}">
         <div class="float-right" style="padding-bottom: 30px; margin-left: 10px;">
             @if(Auth::check() && Auth::id() === $comment->getAuthorId())
-                <button type="button" class="btn btn-sm btn-primary" onclick="$('.destroy-form-{{ $comment->getId() }}').submit()">
+                <button type="button" class="btn btn-sm btn-primary" onclick="$('#destroy-form-{{ $comment->getId() }}').submit()">
                     <i class="trash fas fa-trash-alt"></i>
                 </button>
             @endif
@@ -35,7 +35,7 @@
     </div>
 
     @if(Auth::check() && Auth::user()->getId() === $comment->getAuthorId())
-        <form action="{{ route('comment.destroy', ['comment' => $comment->getId()]) }}" method="POST" class="destroy-form-{{ $comment->getId() }}">
+        <form action="{{ route('comment.destroy', ['comment' => $comment->getId()]) }}" method="POST" id="destroy-form-{{ $comment->getId() }}">
             {{ csrf_field() }}
             {{ method_field('delete') }}
         </form>

@@ -42,8 +42,12 @@
                     <div class="single-video-title box mb-3">
                         @if($video->setting()->first() && $video->setting()->first()->getAllowVotes())
                             <div class="float-right">
-                                <button type="button" class="btn btn-{{ $video->userHasVoted(\App\VideoVote::UPVOTE) ? 'danger' : 'primary' }} vote" data-value="1" data-id="{{ $video->getId() }}" @if(Auth::check()) data-url="{{ route('video.vote') }}" @endif><i class="fas fa-thumbs-up"></i></button>
-                                <button type="button" class="btn btn-{{ $video->userHasVoted(\App\VideoVote::DOWNVOTE) ? 'danger' : 'primary' }} vote" data-value="0" data-id="{{ $video->getId() }}" @if(Auth::check()) data-url="{{ route('video.vote') }}" @endif><i class="fas fa-thumbs-down"></i></button>
+                                <button type="button" class="btn btn-{{ $video->userHasVoted(\App\VideoVote::UPVOTE) ? 'danger' : 'primary' }} vote" data-value="1" data-id="{{ $video->getId() }}" @auth data-url="{{ route('video.vote') }}" @endauth>
+                                    <i class="fas fa-thumbs-up"></i>
+                                </button>
+                                <button type="button" class="btn btn-{{ $video->userHasVoted(\App\VideoVote::DOWNVOTE) ? 'danger' : 'primary' }} vote" data-value="0" data-id="{{ $video->getId() }}" @auth data-url="{{ route('video.vote') }}" @endauth>
+                                    <i class="fas fa-thumbs-down"></i>
+                                </button>
                                 @include('shared.vote.progress')
                             </div>
                         @endif

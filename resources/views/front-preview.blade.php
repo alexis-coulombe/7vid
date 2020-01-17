@@ -14,6 +14,9 @@
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#category">Category</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#price-cards">Price cards</a>
+        </li>
     </ul>
 
     <div class="tab-content">
@@ -148,6 +151,74 @@
                         @endforeach
                     </div>
                 </div>
+            </div>
+        </div>
+        <div id="price-cards" class="tab-pane fade">
+            <div class="row flex-items-xs-middle flex-items-xs-center">
+
+                <!-- Table #1  -->
+                <div class="col-xs-12 col-lg-4">
+                    <div class="card price-card text-xs-center">
+                        <div class="price-card-header">
+                            <h3 class="display-2"><span class="currency">$</span>19<span class="period">/month</span></h3>
+                        </div>
+                        <div class="price-card-block">
+                            <h4 class="price-card-title">
+                                Basic Plan
+                            </h4>
+                            <ul class="list-group">
+                                <li class="list-group-item">Ultimate Features</li>
+                                <li class="list-group-item">Responsive Ready</li>
+                                <li class="list-group-item">Visual Composer Included</li>
+                                <li class="list-group-item">24/7 Support System</li>
+                            </ul>
+                            <a href="#" class="btn btn-gradient mt-2">Choose Plan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table #1  -->
+                <div class="col-xs-12 col-lg-4">
+                    <div class="card price-card text-xs-center">
+                        <div class="price-card-header">
+                            <h3 class="display-2"><span class="currency">$</span>29.99<span class="period">/month</span></h3>
+                        </div>
+                        <div class="price-card-block">
+                            <h4 class="price-card-title">
+                                Regular Plan
+                            </h4>
+                            <ul class="list-group text-center">
+                                <li class="list-group-item">Ultimate Features</li>
+                                <li class="list-group-item">Responsive Ready</li>
+                                <li class="list-group-item">Visual Composer Included</li>
+                                <li class="list-group-item">24/7 Support System</li>
+                            </ul>
+                            <a href="#" class="btn btn-gradient mt-2">Choose Plan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table #1  -->
+                <div class="col-xs-12 col-lg-4">
+                    <div class="card price-card text-xs-center">
+                        <div class="price-card-header">
+                            <h3 class="display-2"><span class="currency">$</span>39<span class="period">/month</span></h3>
+                        </div>
+                        <div class="price-card-block">
+                            <h4 class="price-card-title">
+                                Premium Plan
+                            </h4>
+                            <ul class="list-group">
+                                <li class="list-group-item">Ultimate Features</li>
+                                <li class="list-group-item">Responsive Ready</li>
+                                <li class="list-group-item">Visual Composer Included</li>
+                                <li class="list-group-item">24/7 Support System</li>
+                            </ul>
+                            <a href="#" class="btn btn-gradient mt-2">Choose Plan</a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

@@ -17,12 +17,12 @@
         "laravel-mix": "^5.0.1",
         "lodash": "^4.17.5",
         "resolve-url-loader": "^3.1.1",
-        "sass": "^1.24.4",
+        "sass": "^1.24.5",
         "sass-loader": "^8.0.2",
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
-        "@sentry/node": "^5.11.0",
+        "@sentry/node": "^5.11.1",
         "bootstrap": "^4.4.1",
         "ckeditor": "^4.12.1",
         "jquery": "latest",
