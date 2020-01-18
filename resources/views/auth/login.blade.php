@@ -60,14 +60,14 @@
                                     </a>
                                 @endif
                             </div>
-                            <div class="text-center mt-2">
-                                <p class="light-gray">Don’t have an account? <a href="{{ route('register') }}" aria-label="Sign up">Sign Up</a></p>
-                            </div>
-                            <div class="form-group text-center">
-                                <p><b>OR</b></p>
-                                <button class="btn btn-danger btn-google" onclick="window.location.href='{{ route('oauth.redirect.google') }}'"><i class="fab fa-google"></i> Sign in with <b>Google</b></button>
-                            </div>
                         </form>
+                        <div class="text-center mt-2">
+                            <p class="light-gray">Don’t have an account? <a href="{{ route('register') }}" aria-label="Sign up">Sign Up</a></p>
+                        </div>
+                        <div class="form-group text-center">
+                            <p><b>OR</b></p>
+                            <button class="btn btn-danger btn-google" onclick="window.location.href='{{ route('oauth.redirect.google') }}'"><i class="fab fa-google"></i> Sign in with <b>Google</b></button>
+                        </div>
                     </div>
                 </div>
                 @include('auth.features')
