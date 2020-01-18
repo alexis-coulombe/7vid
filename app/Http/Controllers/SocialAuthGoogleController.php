@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\SocialGoogleAccountService;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -16,7 +16,7 @@ class SocialAuthGoogleController extends Controller
      */
     public function redirect(): RedirectResponse
     {
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')->stateless()->redirect();
     }
 
     /**
@@ -27,8 +27,8 @@ class SocialAuthGoogleController extends Controller
      */
     public function callback(SocialGoogleAccountService $service): RedirectResponse
     {
-        $user = $service->createOrGetUser(Socialite::driver('google')->user());
-        auth()->login($user);
+        $user = $service->createOrGetUser(Socialite::driver('google')->stateless()->user());
+        Auth::login($user, true);
         return redirect()->to('/');
     }
 }

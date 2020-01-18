@@ -1,8 +1,5 @@
 <?php
 
-use Sentry\Laravel\Facade;
-use Sentry\Laravel\ServiceProvider;
-
 return [
 
     /*
@@ -138,7 +135,6 @@ return [
     */
 
     'providers' => [
-        \SocialiteProviders\Manager\ServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -227,7 +223,6 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Sentry' => Sentry\Laravel\Facade::class
-
     ],
 
 ];
