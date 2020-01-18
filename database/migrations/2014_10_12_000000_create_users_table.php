@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
 
             $table->string('password');
 
-            $table->string('avatar')->default('images/avatars/seed.webp');
+            $table->string('avatar')->default('default-avatar.png');
 
             $table->unsignedInteger('country_id')->default(1);
             $table->foreign('country_id')->references('id')->on('countries');
