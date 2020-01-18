@@ -128,7 +128,7 @@ class Comment extends Model
         /** @var User $user */
         $user = null;
         if ($userId === null && Auth::check()) {
-            $user = Auth::user()->getId();
+            $user = Auth::user();
         } else {
             $user = User::find($userId);
         }

@@ -22,7 +22,6 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('video.create') }}">
                     <i class="fas fa-plus-circle fa-fw"></i>
-                    Upload
                 </a>
             </li>
             <li class="nav-item dropdown no-arrow">
@@ -34,9 +33,8 @@
         @endauth
         <li class="nav-item dropdown mr-3">
             @auth
-                <a class="nav-link dropdown-toggle user-dropdown-link" href="{{ route('channel.index', ['userId' => Auth::user()->id]) }}">
-                    <img alt="Avatar" loading="lazy" src="{{ getImage(route('cdn.img.avatar'), Auth::user()->avatar) }}">
-                    {{ Auth::user()->name }}
+                <a class="nav-link dropdown-toggle user-dropdown-link" href="{{ route('channel.index', ['userId' => Auth::user()->getId()]) }}">
+                    <img alt="Avatar" loading="lazy" src="{{ getImage(route('cdn.img.avatar'), Auth::user()->getAvatar()) }}">
                 </a>
             @endauth
             @guest

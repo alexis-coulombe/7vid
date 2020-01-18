@@ -4,19 +4,23 @@
         $downVotes = $comment->getDownVotes();
         $total = $upVotes + $downVotes;
     @endphp
-    <div class="single-video-author box mb-3 scrolling-prevent" id="{{ $comment->getId() }}">
-        <div class="float-right" style="padding-bottom: 30px; margin-left: 10px;">
+    <div class="single-video-author box mb-2 scrolling-prevent" id="{{ $comment->getId() }}">
+        <div class="float-right" style="margin-left: 10px;">
             @if(Auth::check() && Auth::id() === $comment->getAuthorId())
-                <button type="button" class="btn btn-sm btn-primary" onclick="$('#destroy-form-{{ $comment->getId() }}').submit()">
+                <button type="button" class="btn btn-sm text-white float-right" onclick="$('#destroy-form-{{ $comment->getId() }}').submit()">
                     <i class="trash fas fa-trash-alt"></i>
                 </button>
             @endif
-            <button type="button" class="btn btn-sm btn-{{ $comment->userHasVoted(1) ? 'danger' : 'primary' }} vote" data-value="1" data-id="{{ $comment->getId() }}" @auth data-url="{{ route('comment.vote') }}" @endauth>
-                <i class="fas fa-thumbs-up"></i>
-            </button>
-            <button type="button" class="btn btn-sm btn-{{ $comment->userHasVoted(0) ? 'danger' : 'primary' }} vote" data-value="0" data-id="{{ $comment->getId() }}" @auth data-url="{{ route('comment.vote') }}" @endauth>
-                <i class="fas fa-thumbs-down"></i>
-            </button>
+
+            @if(Auth::check() && Auth::user()->getId() !== $comment->getAuthorId())
+                <button type="button" class="btn btn-sm btn-{{ $comment->userHasVoted(1) ? 'danger' : 'primary' }} vote" data-value="1" data-id="{{ $comment->getId() }}" @auth data-url="{{ route('comment.vote') }}" @endauth>
+                    <i class="fas fa-thumbs-up"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-{{ $comment->userHasVoted(0) ? 'danger' : 'primary' }} vote" data-value="0" data-id="{{ $comment->getId() }}" @auth data-url="{{ route('comment.vote') }}" @endauth>
+                    <i class="fas fa-thumbs-down"></i>
+                </button>
+            @endif
+
             @include('shared.vote.progress')
         </div>
         <div class="row vertical-center mb-2">
@@ -30,7 +34,6 @@
             </p>
         </div>
         <p>{{ $comment->getBody() }}</p>
-        <br>
         <small>Published on {{date('Y-m-d', strtotime($comment->created_at))}}</small>
     </div>
 

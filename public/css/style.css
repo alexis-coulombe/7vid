@@ -63,14 +63,6 @@ svg{
     width: 100%;
 }
 
-#wrapper #content-wrapper .container-fluid {
-    padding: 30px 30px 30px 30px;
-}
-
-.sidebar-toggled #wrapper #content-wrapper .container-fluid {
-    padding: 30px 30px 30px 30px;
-}
-
 .single-channel-page .container-fluid {
     padding: 30px 30px 30px !important;
 }
@@ -1118,7 +1110,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 
     .single-video-author .float-right {
         float: right !important;
-        margin: 0 0 14px;
+        margin: 0 0 5px;
     }
 
     .single-video-author img {
@@ -1721,6 +1713,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 
 /* Progress */
 .progress {
+    min-width: 70px;
     height: 5px;
     margin-top: 10px;
     background-color: #db363d;

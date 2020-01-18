@@ -101,7 +101,7 @@
 
                     @if($comments->count() > 0)
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-12 mb-1">
                                 @include('shared.comment.filter')
                             </div>
                         </div>

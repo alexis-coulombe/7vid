@@ -151,7 +151,7 @@
     opacity: unset;
 }
 .box {
-    padding: 15px;
+    padding: 10px;
     background: #1c1c1c none repeat scroll 0 0;
     border-radius: 2px;
     -webkit-transition-duration: 0.4s;
@@ -377,7 +377,8 @@
 }
 
 .full-height {
-    height: calc(100vh - 0rem);
+    height: 100vh;
+    height: -webkit-calc(100vh - 0rem);
 }
 
 .login-main-left {

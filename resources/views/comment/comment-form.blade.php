@@ -1,4 +1,4 @@
-<div class="single-video-info-content box mb-3">
+<div class="single-video-info-content box mb-2">
     <p>Comment that video</p>
     <form action="/comment" method="POST">
         {{ csrf_field() }}
