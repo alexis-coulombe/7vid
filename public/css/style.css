@@ -512,7 +512,7 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 .osahan-right-navbar .nav-link {
-    padding: 17px 13px !important;
+    padding: 17px 13px;
     position: relative;
 }
 
@@ -537,7 +537,7 @@ body.sidebar-toggled footer.sticky-footer {
 
 .top-mobile-search input {
     border-radius: 0;
-    box-shadow: none !important;
+    box-shadow: none;
 }
 
 .top-mobile-search .btn {
@@ -1158,7 +1158,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 
     .osahan-right-navbar .nav-link {
         font-size: 0;
-        padding: 22px 5px !important;
+        padding: 22px 5px;
     }
 
     .osahan-right-navbar .nav-link .fas {
@@ -1247,7 +1247,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 }
 
 /* Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) and (max-width: 768px) {
+@media (min-width: 576px) and (max-width: 767px) {
     .top-mobile-search {
         display: block;
     }
@@ -1311,7 +1311,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 
     .osahan-right-navbar .nav-link {
         font-size: 0;
-        padding: 22px 5px !important;
+        padding: 22px 5px;
     }
 
     .osahan-right-navbar .nav-link .fas {
@@ -1489,10 +1489,9 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) and (max-width: 1200px) {
     #wrapper #content-wrapper .container-fluid {
-        padding-bottom: 15px !important;
-        padding-left: 243px;
-        padding-right: 15px !important;
-        padding-top: 1rem !important;
+        padding-bottom: 15px;
+        padding-right: 15px;
+        padding-top: 1rem;
     }
 
     .sidebar .nav-item .nav-link {
@@ -1509,7 +1508,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 
     .osahan-right-navbar .nav-link {
         font-size: 0;
-        padding: 22px 5px !important;
+        padding: 22px 5px;
     }
 
     .osahan-right-navbar .nav-link .fas {
