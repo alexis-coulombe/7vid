@@ -8,9 +8,11 @@
                 </div>
             </div>
             @foreach($channel->videos as $video)
-                <div class="col-sm-12 col-md-4 col-lg-2">
-                    @include('shared.video.card')
-                </div>
+                @if($video->setting()->first()->getPrivate() === false)
+                    <div class="col-sm-12 col-md-4 col-lg-2">
+                        @include('shared.video.card')
+                    </div>
+                @endif
             @endforeach
         </div>
     </div>

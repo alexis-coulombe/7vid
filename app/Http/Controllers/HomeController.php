@@ -12,6 +12,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -27,7 +28,8 @@ class HomeController extends Controller
         $popularCategories = Category::all();
 
         if (Auth::check()) {
-            $randomChannels = User::inRandomOrder()->where('id', '<>', Auth::user()->getId())->limit(4)->get();
+            $randomChannels = User::inRandomOrder()->where('id', '<>', Auth::user()->getId())
+                ->withCount('videos')->having('videos_count', '>', 0)->limit(4)->get();
         } else {
             $randomChannels = User::inRandomOrder()->limit(4)->get();
         }
@@ -141,14 +143,24 @@ class HomeController extends Controller
             $exclude = request('exclude') ?: [];
 
             if (request('type') === 'channel-video') {
-                $users = User::whereHas('setting', static function($query){
-                    $query->where(['private' => 0]);
-                })->withCount('videos')->latest('videos_count')->take(3)->whereNotIn('id', $exclude)->get();
+                $query = 'SELECT users.id FROM users users
+                          INNER JOIN videos videos
+                          ON videos.author_id = users.id
+                          inner join video_settings video_settings
+                          on videos.id = video_settings.video_id
+                          where video_settings.private = 0 ';
 
-                foreach ($users as $user) {
-                    if ((!count($user->videos)) > 0) {
-                        return 'Done';
-                    }
+                if (count($exclude) > 0) {
+                    $query .= 'AND users.id NOT IN (?) ';
+                }
+                $query .= 'GROUP BY users.id
+                           ORDER BY COUNT(videos.id) DESC
+                           LIMIT 3 ';
+
+                $usersIds = DB::select($query, [implode(', ', $exclude)]);
+                $users = [];
+                foreach ($usersIds as $userId) {
+                    $users[] = User::find($userId->id);
                 }
 
                 return view('shared.video.scroll.channel-video')->with('channels', $users);

@@ -94,7 +94,7 @@ class Category extends Model
      * @param int $limit
      * @return Collection
      */
-    public function getVideos(string $order, int $limit = 16): Collection
+    public function getVideos(string $order = 'created_at', int $limit = 16): Collection
     {
         return $this->videos()->whereHas('setting', static function ($query) {
             $query->where(['private' => 0]);

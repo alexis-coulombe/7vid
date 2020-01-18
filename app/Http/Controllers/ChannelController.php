@@ -91,7 +91,7 @@ class ChannelController extends Controller
                     ]
                 );
 
-                $about = (new Purify())->clean(request('about'));
+                $about = strip_tags(request('about'));
                 $setting->setAbout($about);
 
                 $setting->save();

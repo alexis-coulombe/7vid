@@ -8,8 +8,7 @@
     <form action="{{ route('video.search') }}" method="GET" class="d-none d-md-inline-block form-inline osahan-navbar-search">
         <div class="input-group">
             {{ csrf_field() }}
-
-            <input type="text" name="search" class="form-control" placeholder="Video id, Author, Category ..." value="{{ request('search') ?? '' }}" required>
+            <input type="text" name="search" id="search" class="form-control" placeholder="Video id, Author, Category ..." value="{{ request('search') ?? '' }}" required>
             <div class="input-group-append">
                 <button class="btn btn-light" aria-label="Search" type="submit">
                     <i class="fas fa-search"></i>
@@ -18,12 +17,11 @@
         </div>
     </form>
     <!-- Navbar -->
-    <ul class="navbar-nav ml-auto ml-md-0 osahan-right-navbar">
+    <ul class="navbar-nav ml-auto ml-md-0 ">
         @auth
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('video.create') }}">
                     <i class="fas fa-plus-circle fa-fw"></i>
-                    Upload
                 </a>
             </li>
             <li class="nav-item dropdown no-arrow">
@@ -33,11 +31,10 @@
                 @include('shared.navbar.parameters')
             </li>
         @endauth
-        <li class="nav-item dropdown no-arrow osahan-right-navbar-user">
+        <li class="nav-item dropdown mr-3">
             @auth
-                <a class="nav-link dropdown-toggle user-dropdown-link" href="{{ route('channel.index', ['userId' => Auth::user()->id]) }}">
-                    <img alt="Avatar" loading="lazy" src="{{ getImage(route('cdn.img.avatar'), Auth::user()->avatar) }}">
-                    {{ Auth::user()->name }}
+                <a class="nav-link dropdown-toggle user-dropdown-link" href="{{ route('channel.index', ['userId' => Auth::user()->getId()]) }}">
+                    <img alt="Avatar" loading="lazy" src="{{ getImage(route('cdn.img.avatar'), Auth::user()->getAvatar()) }}">
                 </a>
             @endauth
             @guest

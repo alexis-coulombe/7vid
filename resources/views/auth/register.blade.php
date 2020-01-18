@@ -86,10 +86,9 @@
                                 </button>
                             </div>
                         </form>
-                        <div class="text-center mt-5">
+                        <div class="text-center mt-2">
                             <p class="light-gray">Already have an account? <a href="{{ route('login') }}" aria-label="Sign In">Sign In</a></p>
                         </div>
-                        <br />
                         <div class="form-group text-center">
                             <p><b>OR</b></p>
                             <button class="btn btn-danger btn-google" onclick="window.location.href='{{ route('oauth.redirect.google') }}'"><i class="fab fa-google"></i> Sign in with <b>Google</b></button>

@@ -13,7 +13,8 @@
 }
 
 .full-height {
-    height: calc(100vh - 0rem);
+    height: 100vh;
+    height: -webkit-calc(100vh - 0rem);
 }
 
 .login-main-left {

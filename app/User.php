@@ -378,7 +378,7 @@ class User extends Authenticatable
             return false;
         }
 
-        /** @var VideoVote $vote */
+        /** @var CommentVote $vote */
         $vote = CommentVote::where(['comment_id' => $comment->getId(), 'author_id' => $user->getId()])->first();
 
         if ($vote) {

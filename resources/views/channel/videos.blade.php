@@ -4,6 +4,10 @@
     channel of {{ $author->getName() }}
 @endsection
 
+@section('description')
+    See all listed videos of {{ $author->getName() }}.
+@endsection
+
 @section('content')
     <div class="single-channel-page">
         @include('shared.channel.image')

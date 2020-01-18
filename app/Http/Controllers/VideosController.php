@@ -229,8 +229,10 @@ class VideosController extends Controller
         $subscriptionCount = Subscription::where('author_id', '=', $video->author->id)->count();
 
         /** @var array $relatedVideos */
-        $relatedVideos = Video::where('title', 'like', '%' . $video->getTitle() . '%')
-            ->orWhere('category_id', '=', $video->getCategoryId())->limit(10)->get();
+        $relatedVideos = Video::where('category_id', '=', $video->getCategoryId())
+            ->whereHas('setting', static function ($query) {
+                $query->where(['private' => 0]);
+            })->limit(10)->get();
 
         return view('video.show')
             ->with('video', $video)

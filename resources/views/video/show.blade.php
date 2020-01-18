@@ -1,7 +1,11 @@
 @extends('shared.template')
 
 @section('title')
-    {{ $video->getTitle() }} | {{ $video->author->getName() }}
+    {{ $video->getTitle() }} | {{ $video->author()->first()->getName() }}
+@endsection
+
+@section('description')
+    {{ $video->getTitle() }} by {{ $video->author()->first()->getName() }}
 @endsection
 
 @section('content')
@@ -22,7 +26,7 @@
                         </video>
                     </div>
                     <div class="single-video-author box mb-3">
-                        @if((Auth::check() && $video->author->getId() !== Auth::user()->getId()) || !Auth::check())
+                        @if((Auth::check() && $video->author()->first()->getId() !== Auth::user()->getId()) || !Auth::check())
                             <div class="float-right mt-2">
                                 @include('shared.video.subscribe')
                             </div>
@@ -30,7 +34,7 @@
                         <div class="row vertical-center">
                             <img class="img-fluid" loading="lazy" src="{{ getImage(route('cdn.img.avatar'), $video->author->getAvatar()) }}" alt="">
                             <p class="ml-2">
-                                <a href="{{ route('channel.index', ['userId' => $video->author->getId()]) }}" aria-label="View channel"><strong>{{ $video->author->getName() }}</strong></a>
+                                <a href="{{ route('channel.index', ['userId' => $video->author()->first()->getId()]) }}" aria-label="View channel"><strong>{{ $video->author->getName() }}</strong></a>
                             </p>
                         </div>
                         <small>Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
@@ -38,8 +42,12 @@
                     <div class="single-video-title box mb-3">
                         @if($video->setting()->first() && $video->setting()->first()->getAllowVotes())
                             <div class="float-right">
-                                <button type="button" class="btn btn-{{ $video->userHasVoted(\App\VideoVote::UPVOTE) ? 'danger' : 'primary' }} vote" data-value="1" data-id="{{ $video->getId() }}" @if(Auth::check()) data-url="{{ route('video.vote') }}" @endif><i class="fas fa-thumbs-up"></i></button>
-                                <button type="button" class="btn btn-{{ $video->userHasVoted(\App\VideoVote::DOWNVOTE) ? 'danger' : 'primary' }} vote" data-value="0" data-id="{{ $video->getId() }}" @if(Auth::check()) data-url="{{ route('video.vote') }}" @endif><i class="fas fa-thumbs-down"></i></button>
+                                <button type="button" class="btn btn-{{ $video->userHasVoted(\App\VideoVote::UPVOTE) ? 'danger' : 'primary' }} vote" data-value="1" data-id="{{ $video->getId() }}" @auth data-url="{{ route('video.vote') }}" @endauth>
+                                    <i class="fas fa-thumbs-up"></i>
+                                </button>
+                                <button type="button" class="btn btn-{{ $video->userHasVoted(\App\VideoVote::DOWNVOTE) ? 'danger' : 'primary' }} vote" data-value="0" data-id="{{ $video->getId() }}" @auth data-url="{{ route('video.vote') }}" @endauth>
+                                    <i class="fas fa-thumbs-down"></i>
+                                </button>
                                 @include('shared.vote.progress')
                             </div>
                         @endif
@@ -88,16 +96,21 @@
         </div>
         <div class="row">
             @if($video->setting()->first() && $video->setting()->first()->getAllowComments())
-                <div class="col-md-10 mb-2">
-                    @include('shared.comment.filter')
-                </div>
                 <div class="col-lg-10">
                     @include('comment.comment-form', $data = ['video_id' => $video->getId()])
+
+                    @if($comments->count() > 0)
+                        <div class="row">
+                            <div class="col-lg-12 mb-1">
+                                @include('shared.comment.filter')
+                            </div>
+                        </div>
+                    @endif
 
                     @include('comment.show', $data = ['comments' => $comments])
 
                     <div id="scrolling" data-url="{{ route('home.scroll') }}" data-type="comment" data-video-id="{{ $video->getId() }}"></div>
-                    <div id="loading-spinner" style="display: none;">
+                    <div class="d-none" id="loading-spinner">
                         <div class="row">
                             <div class="col text-center">
                                 @include('shared.misc.loading-spinner')

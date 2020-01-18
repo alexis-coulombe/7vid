@@ -10,12 +10,12 @@
 
 @auth
     <button class="btn btn-danger subscribe" data-id="{{ $author->getId() }}" data-url="{{ route('channel.subscribe') }}">
-        <span class="subscribe-text">{{ $subscribeText }}</span> | <strong>{{ $author->getSubscribersCount($author->getId()) }}</strong>
+        <span class="subscribe-text">{{ $subscribeText }}</span> | <strong><span class="subscriber-count">{{ $author->getSubscribersCount($author->getId()) }}</span></strong>
     </button>
 @endauth
 
 @guest
     <button class="btn btn-danger subscribe" onclick="window.location.href='{{ route('login') }}'">
-        <span class="subscribe-text">{{ $subscribeText }}</span> | <strong>{{ $author->getSubscribersCount($author->getId()) }}</strong>
+        <span class="subscribe-text">{{ $subscribeText }}</span> | <strong><span class="subscriber-count">{{ $author->getSubscribersCount($author->getId()) }}</span></strong>
     </button>
 @endguest

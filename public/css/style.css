@@ -63,14 +63,6 @@ svg{
     width: 100%;
 }
 
-#wrapper #content-wrapper .container-fluid {
-    padding: 30px 30px 30px 30px;
-}
-
-.sidebar-toggled #wrapper #content-wrapper .container-fluid {
-    padding: 30px 30px 30px 30px;
-}
-
 .single-channel-page .container-fluid {
     padding: 30px 30px 30px !important;
 }
@@ -512,7 +504,7 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 .osahan-right-navbar .nav-link {
-    padding: 17px 13px !important;
+    padding: 17px 13px;
     position: relative;
 }
 
@@ -537,7 +529,7 @@ body.sidebar-toggled footer.sticky-footer {
 
 .top-mobile-search input {
     border-radius: 0;
-    box-shadow: none !important;
+    box-shadow: none;
 }
 
 .top-mobile-search .btn {
@@ -880,7 +872,7 @@ label {
 }
 
 a {
-    color: #d43a3a;
+    color: #db363d;
     text-decoration: none;
 }
 
@@ -1118,7 +1110,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 
     .single-video-author .float-right {
         float: right !important;
-        margin: 0 0 14px;
+        margin: 0 0 5px;
     }
 
     .single-video-author img {
@@ -1158,7 +1150,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 
     .osahan-right-navbar .nav-link {
         font-size: 0;
-        padding: 22px 5px !important;
+        padding: 22px 5px;
     }
 
     .osahan-right-navbar .nav-link .fas {
@@ -1247,7 +1239,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 }
 
 /* Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) and (max-width: 768px) {
+@media (min-width: 576px) and (max-width: 767px) {
     .top-mobile-search {
         display: block;
     }
@@ -1311,7 +1303,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 
     .osahan-right-navbar .nav-link {
         font-size: 0;
-        padding: 22px 5px !important;
+        padding: 22px 5px;
     }
 
     .osahan-right-navbar .nav-link .fas {
@@ -1401,14 +1393,11 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) and (max-width: 992px) {
     #wrapper #content-wrapper .container-fluid {
-        padding-bottom: 15px !important;
-        padding-left: 243px;
-        padding-right: 15px !important;
-        padding-top: 1rem !important;
+        padding: 1rem 15px 15px 243px;
     }
 
     .sidebar .nav-item .nav-link {
-        padding: 8px 14px !important;
+        padding: 8px 14px;
     }
 
     .sidebar-toggled #wrapper #content-wrapper .container-fluid {
@@ -1416,7 +1405,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     }
 
     .single-channel-page .container-fluid {
-        padding: 30px 15px 15px !important;
+        padding: 30px 15px 15px;
     }
 
     .video-card-image img {
@@ -1425,7 +1414,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 
     .osahan-right-navbar .nav-link {
         font-size: 0;
-        padding: 22px 5px !important;
+        padding: 22px 5px;
     }
 
     .osahan-right-navbar .nav-link .fas {
@@ -1441,7 +1430,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     }
 
     .owl-theme .owl-controls .owl-buttons div {
-        margin: 4px !important;
+        margin: 4px;
     }
 
     .container {
@@ -1473,11 +1462,11 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     }
 
     .osahan-navbar-search .form-control {
-        width: auto !important;
+        width: auto;
     }
 
     .osahan-navbar-search {
-        margin-right: auto !important;
+        margin-right: auto;
     }
 
     .imgplace {
@@ -1492,10 +1481,9 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) and (max-width: 1200px) {
     #wrapper #content-wrapper .container-fluid {
-        padding-bottom: 15px !important;
-        padding-left: 243px;
-        padding-right: 15px !important;
-        padding-top: 1rem !important;
+        padding-bottom: 15px;
+        padding-right: 15px;
+        padding-top: 1rem;
     }
 
     .sidebar .nav-item .nav-link {
@@ -1512,7 +1500,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 
     .osahan-right-navbar .nav-link {
         font-size: 0;
-        padding: 22px 5px !important;
+        padding: 22px 5px;
     }
 
     .osahan-right-navbar .nav-link .fas {
@@ -1564,11 +1552,11 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     }
 
     .osahan-navbar-search .form-control {
-        width: auto !important;
+        width: auto;
     }
 
     .osahan-navbar-search {
-        margin-right: auto !important;
+        margin-right: auto;
     }
 }
 
@@ -1720,14 +1708,15 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 }
 
 .category-item p{
-    color: #e6363d;
+    color: #db363d;
 }
 
 /* Progress */
 .progress {
+    min-width: 70px;
     height: 5px;
     margin-top: 10px;
-    background-color: #DB363D;
+    background-color: #db363d;
 }
 
 .progress-bar {

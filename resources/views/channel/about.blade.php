@@ -1,7 +1,11 @@
 @extends('shared.template')
 
 @section('title')
-    about {{ $author->name }}
+    about {{ $author->getName() }}
+@endsection
+
+@section('description')
+    {{ $setting ? $setting->getAbout() : 'No description provided about' . $author->getName() }}
 @endsection
 
 @section('content')
