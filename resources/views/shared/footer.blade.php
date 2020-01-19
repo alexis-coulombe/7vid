@@ -22,7 +22,7 @@
     <div class="container text-center text-md-left mt-5">
         <div class="row mt-3">
             <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                <h6 class="text-uppercase font-weight-bold">7-vid</h6>
+                <h6 class="text-uppercase font-weight-bold">{{ config('APP_NAME') }}</h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
                     A free video-hosting website that allows members to store and serve video content. Share unlimited video all around the world.
@@ -52,7 +52,7 @@
                     <a href="#!">About</a>
                 </p>
                 <p>
-                    <a href="#!">Privacy policy</a>
+                    <a href="{{ route('home.privacy') }}">Privacy policy</a>
                 </p>
             </div>
 
@@ -60,7 +60,7 @@
                 <h6 class="text-uppercase font-weight-bold">Contact</h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
-                    <i class="fas fa-envelope mr-3"></i> info@example.com
+                    <i class="fas fa-envelope mr-3"></i> <a href="mailto:contact@7vid.org" aria-label="Contact by email">contact@7vid.org</a>
                 </p>
             </div>
         </div>
