@@ -3,7 +3,7 @@
 <div class="channels-card generate-background">
     <div class="channels-card-image">
         <a href="{{ route('channel.index', ['userId' => $channel->getId()]) }}">
-            <img src="{{ getImage(route('cdn.img.avatar'), $channel->getAvatar()) }}" alt="Avatar">
+            <img src="{{ getImage(route('cdn.img.avatar'), $channel->getAvatar()) }}" loading="lazy" width="80px" height="80px" alt="Avatar">
         </a>
         <br>
         @if((Auth::check() && Auth::user()->getId() !== $channel->getId()) || !Auth::check())

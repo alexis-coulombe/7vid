@@ -23,7 +23,7 @@
                             </video>
                         </div>
                         <div class="single-video-author box mb-3">
-                            <img class="img-fluid" loading="lazy" src="/{{ $video->author->getAvatar() }}" alt="">
+                            <img class="img-fluid" loading="lazy" src="{{ getImage(route('cdn,img.avatar'), $video->author->getAvatar()) }}" alt="Avatar">
                             <p><a href="{{ route('channel.index', ['userId' => $video->author->getId()]) }}" aria-label="View channel"><strong>{{ $video->author->getName() }}</strong></a></p>
                             <small>Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
                         </div>

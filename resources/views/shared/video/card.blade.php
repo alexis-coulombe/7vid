@@ -4,7 +4,7 @@
             <i class="fas fa-play-circle"></i>
         </a>
         <a href="{{ route('video.show', ['video' => $video->getId()]) }}" aria-label="View video">
-            <img class="img-fluid" loading="lazy" src="{{ getImage(route('cdn.img'), $video->getThumbnail()) }}" alt="Video thumbnail">
+            <img class="img-fluid" loading="lazy" width="300px" height="150px" src="{{ getImage(route('cdn.img'), $video->getThumbnail()) }}" alt="Video thumbnail">
         </a>
         <div class="time">{{ parseVideoDuration($video->getDuration()) }}</div>
     </div>

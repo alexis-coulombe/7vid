@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-lg-5"></div>
             <div class="col-lg-2 text-center">
-                <img class="author-img " src="{{ getImage(route('cdn.img.avatar'), Auth::user()->getAvatar()) }}" alt="Avatar">
+                <img class="author-img " src="{{ getImage(route('cdn.img.avatar'), Auth::user()->getAvatar()) }}" loading="lazy" width="250px" height="250px" alt="Avatar">
                 <h3 style="padding-top: 10px;">{{ Auth::user()->getName() }}</h3>
             </div>
         </div>
