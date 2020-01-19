@@ -32,11 +32,13 @@ class SocialGoogleAccountService
                 $user->setEmail($providerUser->getEmail());
                 $user->setName($providerUser->getName());
                 $user->setPassword(Hash::make(mt_rand()));
+                $user->save();
             } catch (\Exception $e) {
                 var_dump($e->getMessage());
                 exit(1);
             }
         }
+        $account->user_id = $user->getId();
         $account->user()->associate($user);
         $account->save();
 

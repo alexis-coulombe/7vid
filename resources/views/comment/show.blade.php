@@ -33,8 +33,10 @@
                 </a>
             </p>
         </div>
-        <p>{{ $comment->getBody() }}</p>
-        <small>Published on {{date('Y-m-d', strtotime($comment->created_at))}}</small>
+        <div class="ml-15">
+            <p>{{ $comment->getBody() }}</p>
+            <small>Published on {{date('Y-m-d', strtotime($comment->created_at))}}</small>
+        </div>
     </div>
 
     @if(Auth::check() && Auth::user()->getId() === $comment->getAuthorId())
