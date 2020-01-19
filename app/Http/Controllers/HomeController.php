@@ -21,9 +21,12 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $newVideos = Video::whereHas('setting', static function($query){
-            $query->where(['private' => 0]);
-        })->orderBy('created_at', 'DESC')->limit(16)->get();
+        $newVideos = Video::whereHas(
+            'setting',
+            static function ($query) {
+                $query->where(['private' => 0]);
+            }
+        )->orderBy('created_at', 'DESC')->limit(16)->get();
 
         $popularCategories = Category::all();
 
@@ -122,7 +125,9 @@ class HomeController extends Controller
      */
     public function history(): View
     {
-        $videos_id = Views::where(['author_id' => Auth::user()->getId(), 'show_in_history' => true])->select('video_id')->limit(50)->get();
+        $videos_id = Views::where(['author_id' => Auth::user()->getId(), 'show_in_history' => true])->select(
+            'video_id'
+        )->limit(50)->get();
         $videos = [];
 
         if (count($videos_id) > 0) {
@@ -143,21 +148,20 @@ class HomeController extends Controller
             $exclude = request('exclude') ?: [];
 
             if (request('type') === 'channel-video') {
-                $query = 'SELECT users.id FROM users users
-                          INNER JOIN videos videos
-                          ON videos.author_id = users.id
-                          inner join video_settings video_settings
-                          on videos.id = video_settings.video_id
-                          where video_settings.private = 0 ';
+                $query = User::select('users.id')->join('videos', 'users.id', '=', 'videos.author_id')->join(
+                    'video_settings',
+                    'videos.id',
+                    '=',
+                    'video_settings.video_id'
+                )->where('video_settings.private', '=', 0);
 
                 if (count($exclude) > 0) {
-                    $query .= 'AND users.id NOT IN (?) ';
+                    $query->whereNotIn('users.id', $exclude);
                 }
-                $query .= 'GROUP BY users.id
-                           ORDER BY COUNT(videos.id) DESC
-                           LIMIT 3 ';
 
-                $usersIds = DB::select($query, [implode(', ', $exclude)]);
+                $query->groupBy('users.id')->orderBy(DB::raw('COUNT(videos.id)'), 'DESC')->take(3);
+
+                $usersIds = $query->get();
                 $users = [];
                 foreach ($usersIds as $userId) {
                     $users[] = User::find($userId->id);
@@ -171,12 +175,10 @@ class HomeController extends Controller
                 $category = Category::find($categoryId);
 
                 if ($category) {
-                    $videos = $category->videos()->whereHas('setting', static function ($query) {
-                        $query->where(['private' => 0]);
-                    })->orderBy('created_at', 'DESC')->take(16)->whereNotIn(
-                        'id',
-                        $exclude
-                    )->get();
+                    $videos = $category->videos()
+                        ->whereHas('setting', static function ($query) {
+                            $query->where(['private' => 0]);
+                        })->orderBy('created_at', 'DESC')->take(16)->whereNotIn('id', $exclude)->get();
 
                     if ((!count($videos)) > 0) {
                         return 'Done';
