@@ -49,7 +49,10 @@
                 <h6 class="text-uppercase font-weight-bold">Useful links</h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
-                    <a href="#!">About</a>
+                    <a href="{{ route('home.terms') }}">Terms and conditions</a>
+                </p>
+                <p>
+                    <a href="{{ route('home.disclaimer') }}">Disclaimer</a>
                 </p>
                 <p>
                     <a href="{{ route('home.privacy') }}">Privacy policy</a>

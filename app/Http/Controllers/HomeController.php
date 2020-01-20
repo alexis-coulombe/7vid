@@ -52,6 +52,27 @@ class HomeController extends Controller
     }
 
     /**
+     * Disclaimer page
+     *
+     * @return View
+     */
+    public function disclaimer(): View
+    {
+        return view('home.disclaimer');
+    }
+
+    /**
+     * Terms and conditions page
+     *
+     * @return View
+     */
+    public function terms(): View
+    {
+        return view('home.terms');
+    }
+
+
+    /**
      * Account setting page
      *
      * @return View
