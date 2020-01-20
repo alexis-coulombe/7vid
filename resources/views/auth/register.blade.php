@@ -42,7 +42,7 @@
                             </div>
                             <div class="input-group">
                                 <label for="password">Your password
-                                    <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Password" name="password" required>
+                                    <input type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Password" name="password" required>
                                 </label>
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback" role="alert">

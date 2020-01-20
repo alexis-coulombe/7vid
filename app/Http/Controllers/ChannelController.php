@@ -4,21 +4,14 @@ namespace App\Http\Controllers;
 
 use App\ChannelSetting;
 use App\User;
-use App\Video;
-use App\Views;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
-use Stevebauman\Purify\Purify;
-use Webpatser\Uuid\Uuid;
 
 class ChannelController extends Controller
 {
