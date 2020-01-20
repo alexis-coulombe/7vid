@@ -36,7 +36,7 @@ window.ClassicEditor = require('ckeditor');
 window.videojs = require('video.js');
 //window.Sentry = require('@sentry/node');
 
-require('../../public/js/vote');
-require('../../public/js/infiniteScrolling');
-require('../../public/js/subscribe');
-require('../../public/js/script');
+require('../../public_html/js/vote');
+require('../../public_html/js/infiniteScrolling');
+require('../../public_html/js/subscribe');
+require('../../public_html/js/script');
