@@ -25,7 +25,7 @@
         </div>
         <div class="row vertical-center mb-2">
             <a href="{{ route('channel.index', ['userId' => $comment->getAuthorId()]) }}">
-                <img class="img-fluid" loading="lazy" src="{{ getImage(route('cdn.img.avatar'), $comment->author->getAvatar()) }}" alt="{{ $comment->author->getName() }}">
+                <img class="img-fluid" loading="lazy" width="38px" height="38px" src="{{ getImage(route('cdn.img.avatar'), $comment->author->getAvatar()) }}" alt="{{ $comment->author->getName() }}" alt="Avatar">
             </a>
             <p class="ml-2">
                 <a href="{{ route('channel.index', ['userId' => $comment->getAuthorId()]) }}">
@@ -33,8 +33,10 @@
                 </a>
             </p>
         </div>
-        <p>{{ $comment->getBody() }}</p>
-        <small>Published on {{date('Y-m-d', strtotime($comment->created_at))}}</small>
+        <div class="ml-15">
+            <p>{{ $comment->getBody() }}</p>
+            <small>Published on {{date('Y-m-d', strtotime($comment->created_at))}}</small>
+        </div>
     </div>
 
     @if(Auth::check() && Auth::user()->getId() === $comment->getAuthorId())

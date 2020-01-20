@@ -32,7 +32,7 @@
                             </div>
                         @endif
                         <div class="row vertical-center">
-                            <img class="img-fluid" loading="lazy" src="{{ getImage(route('cdn.img.avatar'), $video->author->getAvatar()) }}" alt="">
+                            <img class="img-fluid" loading="lazy" width="38px" height="38px" src="{{ getImage(route('cdn.img.avatar'), $video->author->getAvatar()) }}" alt="Avatar">
                             <p class="ml-2">
                                 <a href="{{ route('channel.index', ['userId' => $video->author()->first()->getId()]) }}" aria-label="View channel"><strong>{{ $video->author->getName() }}</strong></a>
                             </p>

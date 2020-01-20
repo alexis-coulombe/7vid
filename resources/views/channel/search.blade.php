@@ -4,6 +4,10 @@
     Search for {{ $search }}
 @endsection
 
+@section('description')
+    Results for {{ $search }}
+@endsection
+
 @section('content')
     <div class="single-channel-page">
         @include('shared.channel.image')

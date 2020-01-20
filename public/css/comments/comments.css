@@ -26,7 +26,6 @@
     display: inline-block;
     text-align: right;
     width: 60%;
-    padding:
 }
 
 .headind_srch {
@@ -42,7 +41,6 @@
 }
 
 .srch_bar input {
-    border: 1px solid #cdcdcd;
     border-width: 0 0 1px 0;
     width: 80%;
     padding: 2px 0 4px 6px;

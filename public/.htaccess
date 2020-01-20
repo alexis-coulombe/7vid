@@ -3,6 +3,20 @@ RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+# X-XSS-Protection
+# X-Frame-Options
+# X-Content-Type-Options
+# Referrer-Policy
+# Feature-Policy
+<IfModule mod_headers.c>
+	Header set X-Frame-Options "SAMEORIGIN"
+	Header set X-Content-Type-Options "nosniff"
+	Header set X-XSS-Protection "1; mode=block"
+	Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" env=HTTPS
+	Header set Referrer-Policy "same-origin"
+	Header set Feature-Policy "geolocation 'self'; vibrate 'none'"
+</IfModule>
+
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
@@ -44,17 +58,17 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 <IfModule mod_expires.c>
   ExpiresActive on
-  ExpiresByType image/jpg "access 2 month"
-  ExpiresByType image/gif "access 2 month"
-  ExpiresByType image/jpeg "access 2 month"
-  ExpiresByType image/png "access 2 month"
-  ExpiresByType text/css "access 2 month"
-  ExpiresByType application/x-javascript "access plus 2 month"
-  ExpiresByType text/javascript "access plus 2 month"
-  ExpiresByType application/javascript "access plus 2 month"
-  ExpiresByType image/x-icon "access plus 12 month"
-  ExpiresByType image/icon "access plus 12 month"
-  ExpiresByType application/x-ico "access plus 12 month"
+  ExpiresByType image/jpg "access 1 year"
+  ExpiresByType image/gif "access 1 year"
+  ExpiresByType image/jpeg "access 1 year"
+  ExpiresByType image/png "access 1 year"
+  ExpiresByType text/css "access 1 year"
+  ExpiresByType application/x-javascript "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType image/icon "access plus 1 year"
+  ExpiresByType application/x-ico "access plus 1 year"
   ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
 </IfModule>
 
@@ -72,3 +86,5 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
         Header set Cache-Control "max-age=14515200, public"
     </FilesMatch>
 </IfModule>
+
+ServerSignature Off

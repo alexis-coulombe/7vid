@@ -1,6 +1,7 @@
 <?php
 
 use App\Category;
+use App\ChannelSetting;
 use App\Comment;
 use App\CommentVote;
 use App\Subscription;
@@ -27,13 +28,12 @@ class DatabaseSeeder extends Seeder
         $faker = Faker\Factory::create();
 
         $maxVideosCount = 1000;
-        $maxCategoryCount = 10;
         $maxUserCount = 1000;
         $maxCommentsCount = 1000;
         $maxVotesCount = 1000;
         $maxSubCount = $faker->numberBetween($maxUserCount / 2, $maxUserCount);
 
-        $user = new \App\User();
+        $user = new User();
         $user->name = 'test123';
         $user->email = 'test@123.com';
         $user->password = Hash::make('123123');
@@ -43,13 +43,20 @@ class DatabaseSeeder extends Seeder
 
         echo 'Users' . PHP_EOL;
         factory(User::class, $maxUserCount)->create();
-        //echo 'Category'. PHP_EOL;
-        //\factory(Category::class, $maxCategoryCount)->create();
-        echo 'Videos'. PHP_EOL;
-        \factory(Video::class, $maxVideosCount)->create();
-        echo 'Videos settings'. PHP_EOL;
+        echo 'Channel settings' . PHP_EOL;
 
-        foreach(Video::all() as $video){
+        foreach (User::all() as $user) {
+            /** @var ChannelSetting $setting */
+            $setting = new ChannelSetting();
+            $setting->setAbout($faker->realText(200));
+            $setting->setChannelId($user->getId());
+            $setting->save();
+        }
+        echo 'Videos' . PHP_EOL;
+        \factory(Video::class, $maxVideosCount)->create();
+        echo 'Videos settings' . PHP_EOL;
+
+        foreach (Video::all() as $video) {
             /** @var VideoSetting $setting */
             $setting = new VideoSetting();
             $setting->setVideoId($video->getId());
@@ -59,15 +66,15 @@ class DatabaseSeeder extends Seeder
             $setting->save();
         }
 
-        echo 'Comments'. PHP_EOL;
+        echo 'Comments' . PHP_EOL;
         \factory(Comment::class, $maxCommentsCount)->create();
-        echo 'Video Votes'. PHP_EOL;
+        echo 'Video Votes' . PHP_EOL;
         \factory(VideoVote::class, $maxVotesCount)->create();
-        echo 'Comment Votes'. PHP_EOL;
+        echo 'Comment Votes' . PHP_EOL;
         \factory(CommentVote::class, $maxVotesCount)->create();
-        echo 'Subscriptions'. PHP_EOL;
+        echo 'Subscriptions' . PHP_EOL;
         \factory(Subscription::class, $maxSubCount)->create();
-        echo 'Views'. PHP_EOL;
+        echo 'Views' . PHP_EOL;
         \factory(Views::class, $maxVideosCount)->create();
     }
 }

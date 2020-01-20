@@ -27,6 +27,8 @@ Route::any('/liked', 'HomeController@liked')->name('home.liked')->middleware('au
 Route::get('/history', 'HomeController@history')->name('home.history')->middleware('auth');
 Route::get('/privacy', 'HomeController@privacy')->name('home.privacy')->middleware('cache');
 Route::any('/settings', 'HomeController@settings')->name('home.settings')->middleware('auth');
+Route::get('/disclaimer', 'HomeController@disclaimer')->name('home.disclaimer')->middleware('cache');
+Route::get('/terms', 'HomeController@terms')->name('home.terms')->middleware('cache');
 
 // Video routes
 Route::get('video/search', 'VideosController@search')->name('video.search');
