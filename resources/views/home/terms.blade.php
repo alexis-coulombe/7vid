@@ -1,7 +1,11 @@
 @extends('shared.template')
 
 @section('title')
-    privacy
+    Terms and conditions
+@endsection
+
+@section('description')
+    Terms and conditions of {{ config('app.name') }}
 @endsection
 
 @section('content')

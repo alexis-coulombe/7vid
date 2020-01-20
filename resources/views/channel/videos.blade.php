@@ -1,7 +1,7 @@
 @extends('shared.template')
 
 @section('title')
-    channel of {{ $author->getName() }}
+    Channel of {{ $author->getName() }}
 @endsection
 
 @section('description')
@@ -31,7 +31,7 @@
                                         <a class="dropdown-item" href="#"><i class="fas fa-fw fa-times-circle"></i> &nbsp; Close</a>
                                     </div>
                                 </div>
-                                <h6>Videos</h6>
+                                <h1 class="h2">Videos</h1>
                             </div>
                         </div>
                         @foreach($author->videos()->whereHas('setting', static function ($query) { $query->where(['private' => 0]); })->get() as $video)
