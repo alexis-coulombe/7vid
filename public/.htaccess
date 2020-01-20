@@ -3,6 +3,20 @@ RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+# X-XSS-Protection
+# X-Frame-Options
+# X-Content-Type-Options
+# Referrer-Policy
+# Feature-Policy
+<IfModule mod_headers.c>
+	Header set X-Frame-Options "SAMEORIGIN"
+	Header set X-Content-Type-Options "nosniff"
+	Header set X-XSS-Protection "1; mode=block"
+	Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" env=HTTPS
+	Header set Referrer-Policy "same-origin"
+	Header set Feature-Policy "geolocation 'self'; vibrate 'none'"
+</IfModule>
+
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
@@ -72,3 +86,5 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
         Header set Cache-Control "max-age=14515200, public"
     </FilesMatch>
 </IfModule>
+
+ServerSignature Off
