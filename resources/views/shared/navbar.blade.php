@@ -22,7 +22,7 @@
     <ul class="navbar-nav ml-auto ml-md-0 ">
         @auth
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('video.create') }}">
+                <a class="nav-link" href="{{ route('video.create') }}" aria-label="Upload video">
                     <i class="fas fa-plus-circle fa-fw"></i>
                 </a>
             </li>
