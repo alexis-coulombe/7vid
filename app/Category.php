@@ -58,6 +58,26 @@ class Category extends Model
     }
 
     /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     */
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
+    }
+
+    /**
      * Get icon
      *
      * @return string
@@ -84,7 +104,7 @@ class Category extends Model
      */
     public function getVideosCount(): int
     {
-        return $this->videos->count();
+        return $this->videos()->count();
     }
 
     /**

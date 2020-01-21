@@ -38,9 +38,11 @@ class CategoryModelTest extends TestCase
         $category = Category::first();
         $category->setTitle('title');
         $category->setIcon('icon');
+        $category->setSlug('slug-slug');
 
         $this->assertSame('title', $category->getTitle());
         $this->assertSame('icon', $category->getIcon());
+        $this->assertSame('slug-slug', $category->getSlug());
         $this->assertSame(1, $category->getVideosCount());
         $this->assertCount(1, $category->getVideos('views_count'));
     }
@@ -72,6 +74,17 @@ class CategoryModelTest extends TestCase
 
         $this->assertTrue($category->getVideos()->count() > 0);
         $this->assertSame('123123', $category->getVideos('title')->first()->getTitle());
+    }
+
+    /**
+     * Test video count for category
+     */
+    public function testgetVideoCount(): void
+    {
+        /** @var Category $category */
+        $category = Category::first();
+
+        $this->assertSame($category->getVideosCount(), 1);
     }
 
     /**
