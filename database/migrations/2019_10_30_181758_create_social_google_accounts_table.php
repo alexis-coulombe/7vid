@@ -13,9 +13,16 @@ class CreateSocialGoogleAccountsTable extends Migration
     public function up(): void
     {
         Schema::create('social_google_accounts', static function (Blueprint $table) {
-            $table->integer('user_id');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->index('user_id');
+
             $table->string('provider_user_id');
+            $table->index('provider_user_id');
+
             $table->string('provider');
+            $table->index('provider');
+
             $table->timestamps();
         });
     }
