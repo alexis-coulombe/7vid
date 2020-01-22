@@ -81,17 +81,17 @@
         <div class="row">
             <div class="col-lg-8">
                 <hr>
-                    <a href="#" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">More settings</a>
-                    <div class="collapse multi-collapse" id="multiCollapseExample2">
-                        <button type="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#deleteModal">Delete my account</button>
-                        <span title="" data-placement="top" data-toggle="tooltip" data-original-title="We will everything related to your account. This action is not reversible.">
-                            <i class="far fa-question-circle"></i>
-                        </span>
-                    </div>
+                <a href="#" data-toggle="collapse" data-target="#more_settings" aria-expanded="false" aria-controls="more_settings">More settings</a>
+                <div class="collapse multi-collapse" id="more_settings">
+                    <button type="button" class="btn btn-large btn-primary mt-2" data-toggle="modal" data-target="#deleteModal">Delete my account</button>
+                    <span title="" data-placement="top" data-toggle="tooltip" data-original-title="We will delete everything related to your account. This action is not reversible.">
+                        <i class="far fa-question-circle"></i>
+                    </span>
+                </div>
             </div>
         </div>
         <div class="col-lg-12 text-right">
-            <button type="submit" class="btn btn-success border-none">Save Changes</button> {{ !(new Mobile_Detect())->isMobile() ? 'or CTRL+S' : '' }}
+            <button type="submit" class="btn btn-success border-none">Save Changes</button> {{ !isMobile() ? 'or CTRL+S' : '' }}
         </div>
     </form>
 

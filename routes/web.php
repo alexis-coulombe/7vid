@@ -50,7 +50,7 @@ Route::get('channel/{userId}/videos', 'ChannelController@videos')->where('userId
 Route::post('channel/{userId}/search', 'ChannelController@search')->where('userId', '[0-9]+')->name('channel.search');
 
 // category routes
-Route::get('category/{name}', 'CategoryController@index')->name('category.index');
+Route::get('category/{slug}', 'CategoryController@index')->name('category.index');
 
 Auth::routes();
 

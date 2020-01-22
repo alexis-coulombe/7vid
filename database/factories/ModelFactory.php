@@ -119,6 +119,16 @@ $factory->define(
 );
 
 $factory->define(
+    App\Category::class,
+    static function (Faker $faker) use ($icons) {
+        return [
+            'title' => $faker->word,
+            'icon' => $icons[$faker->numberBetween(0, count($icons) - 1)]
+        ];
+    }
+);
+
+$factory->define(
     App\VideoVote::class,
     static function (Faker $faker) {
         return [

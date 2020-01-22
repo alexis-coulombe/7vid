@@ -37,7 +37,7 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception): void
     {
-        if (app()->bound('sentry') && $this->shouldReport($exception)) {
+        if ($this->shouldReport($exception) && app()->bound('sentry')) {
             app('sentry')->captureException($exception);
         }
 
@@ -52,7 +52,7 @@ class Handler extends ExceptionHandler
      * @return Response
      * @throws Exception
      */
-    public function render($request, Exception $exception)
+    public function render($request, Exception $exception): Response
     {
         if ($this->isHttpException($exception) && $exception->getStatusCode() === 404) {
             return response()->view('error.404', [], 404);

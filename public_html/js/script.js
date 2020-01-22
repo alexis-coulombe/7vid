@@ -111,12 +111,10 @@ Version: 1.0
 
     // Detect CTRL+S
     if ($('#save-on-keyboard').length) {
-        $(document).on('keydown', (e) => {
-            if (e.ctrlKey && e.which === 83) {
-                $('#save-on-keyboard').submit();
-                e.preventDefault();
-                return false;
-            }
+        Mousetrap.bind('command+s', function(e){
+            $('#save-on-keyboard').submit();
+            e.preventDefault();
+            return false;
         });
     }
 
