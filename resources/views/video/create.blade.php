@@ -42,6 +42,13 @@
                             <input type="file" name="upload" id="e1" class="form-control-file d-none">
                         </label>
                         <hr>
+
+                        <div id="thumbnail" class="text-center mb-4">
+                            <div id="spinner" class="col text-cente d-none">
+                                @include('shared.misc.loading-spinner')
+                            </div>
+                        </div>
+
                         <h6 class="text-center mb-4">
                             <b>Not happy with the generated thumbnail ?</b>
                         </h6>
@@ -66,8 +73,8 @@
                         </h5>
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="e1">Video Title</label>
-                                <input type="text" name="title" placeholder="Contrary to popular belief, Lorem Ipsum (2019) is not." id="e1" class="form-control">
+                                <label for="e5">Video Title</label>
+                                <input type="text" name="title" placeholder="Contrary to popular belief, Lorem Ipsum (2019) is not." id="e5" class="form-control">
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -146,4 +153,8 @@
             By uploading videos to {{ config('app.name') }}, you agree to the <a href="{{ route('home.terms') }}">Terms of Service</a> and Community Rules.
             Be careful not to infringe the copyright or privacy of others.</p>
     </div>
+@endsection
+
+@section('footer')
+    <script type="text/javascript" src="{{ asset('js/videoUpload.js') }}"></script>
 @endsection
