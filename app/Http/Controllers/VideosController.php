@@ -350,7 +350,7 @@ class VideosController extends Controller
 
         $video->delete();
 
-        return back();
+        return redirect(route('channel.index', ['userId' => Auth::user()->getId()]));
     }
 
     /**

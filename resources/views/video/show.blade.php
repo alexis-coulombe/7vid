@@ -26,17 +26,13 @@
                         </video>
                     </div>
                     <div class="single-video-author box mb-3">
-                        @if((Auth::check() && $video->author()->first()->getId() !== Auth::user()->getId()) || !Auth::check())
+                        @if(true)
                             <div class="float-right mt-2">
                                 @include('shared.video.subscribe')
                             </div>
                         @endif
-                        <div class="row vertical-center">
-                            <img class="img-fluid" loading="lazy" width="38px" height="38px" src="{{ getImage(route('cdn.img.avatar'), $video->author->getAvatar()) }}" alt="Avatar">
-                            <p class="ml-2">
-                                <a href="{{ route('channel.index', ['userId' => $video->author()->first()->getId()]) }}" aria-label="View channel"><strong>{{ $video->author->getName() }}</strong></a>
-                            </p>
-                        </div>
+                        <img class="img-fluid mr-2" loading="lazy" src="{{ getImage(route('cdn.img.avatar'), $video->author->getAvatar()) }}" alt="Avatar">
+                        <p><a href="{{ route('channel.index', ['userId' => $video->author->getId()]) }}" aria-label="View channel"><strong>{{ $video->author->getName() }}</strong></a></p>
                         <small>Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
                     </div>
                     <div class="single-video-title box mb-3">
