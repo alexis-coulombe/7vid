@@ -16,9 +16,9 @@
                      style="text-align: left; line-height: 1.5;">
                     <a name="_4r5vko5di6yg"></a>
                     <strong>
-                        <span style="line-height: 150%; font-size: 26px;">
+                        <h1 style="line-height: 150%; font-size: 26px;">
                             DISCLAIMER
-                        </span>
+                        </h1>
                     </strong>
                 </div>
 
