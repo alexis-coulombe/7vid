@@ -9,12 +9,12 @@
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <form action="{{ route('video.update', ['video' => $video->id]) }}" method="POST" id="save-on-keyboard">
+                <form action="{{ route('video.update', ['video' => $video->getId()]) }}" method="POST" id="save-on-keyboard">
                     {{ csrf_field() }}
                     {{ method_field('put') }}
                     <div class="single-video-left">
                         <div class="single-video">
-                            <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' controls preload='auto' width="100%" poster="{{ getImage(route('cdn.img'), $video->thumbnail) }}" data-setup="{}">
+                            <video id='my-video' class='video-js vjs-big-play-centered vjs-16-9' controls preload='auto' width="100%" poster="{{ getImage(route('cdn.img'), $video->getThumbnail()) }}" data-setup="{}">
                                 <source src="/{{ $video->getLocation() }}" type="{{ $video->getMimeType() }}">
                                 <p class='vjs-no-js'>
                                     To view this video please enable JavaScript, and consider upgrading to a web browser that
@@ -23,7 +23,7 @@
                             </video>
                         </div>
                         <div class="single-video-author box mb-3">
-                            <img class="img-fluid" loading="lazy" src="{{ getImage(route('cdn,img.avatar'), $video->author->getAvatar()) }}" alt="Avatar">
+                            <img class="img-fluid" loading="lazy" src="{{ getImage(route('cdn.img.avatar'), $video->author->getAvatar()) }}" alt="Avatar">
                             <p><a href="{{ route('channel.index', ['userId' => $video->author->getId()]) }}" aria-label="View channel"><strong>{{ $video->author->getName() }}</strong></a></p>
                             <small>Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
                         </div>
@@ -83,7 +83,7 @@
                     </div>
                     @include('shared.captcha.recaptcha')
                     <div class="float-right">
-                        <button type="submit" class="btn btn-success border-none"> Save Changes</button> {{ !(new Mobile_Detect())->isMobile() ? 'or CTRL+S' : '' }}
+                        <button type="submit" class="btn btn-success border-none"> Save Changes</button> {{ isMobile() ? 'or CTRL+S' : '' }}
                     </div>
                 </form>
                 @include('shared.video.delete-button')
@@ -91,9 +91,4 @@
             <div class="col-md-1"></div>
         </div>
     </div>
-@endsection
-
-@section('footer')
-    <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
-    <script src='https://vjs.zencdn.net/7.6.5/video.js'></script>
 @endsection

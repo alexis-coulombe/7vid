@@ -49,9 +49,12 @@ class VideosController extends Controller
     {
         $search = request('search');
 
-        $videos = Video::whereHas('setting', static function ($query) {
-            $query->where(['private' => 0]);
-        })->where('title', 'like', '%' . $search . '%')
+        $videos = Video::whereHas(
+            'setting',
+            static function ($query) {
+                $query->where(['private' => 0]);
+            }
+        )->where('title', 'like', '%' . $search . '%')
             ->orWhere('description', 'like', '% ' . $search . ' %')
             ->paginate(20, ['*'], 'video_page');
 
@@ -114,13 +117,17 @@ class VideosController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::check()) {
+            abort(403);
+        }
+
         $this->validateVideoInputs($request);
 
         /** @var Video $video */
         $video = new Video();
-        $video->setAuthorId(Auth::user()->id);
+        $video->setAuthorId(Auth::user()->getId());
 
-        if (trim(request('description')) === '') {
+        if (empty(request('description'))) {
             $request->merge(['description' => 'No description provided']);
         }
 
@@ -154,7 +161,6 @@ class VideosController extends Controller
         }
 
         if ($request->hasFile('image')) {
-            $destinationPath = 'images';
             $extension = request('image')->getClientOriginalExtension();
             $filename = time() . '_' . uniqid('', true) . '.' . $extension;
             $allowedExtensions = ['jpeg', 'jpg', 'png'];
@@ -167,9 +173,20 @@ class VideosController extends Controller
                 return redirect(route('video.create'))->with('error', 'There was an error when uploading your image.');
             }
 
-            request('image')->move($destinationPath, $filename);
+            request('image')->move(storage_path('app/img/'), $filename);
 
-            $video->setThumbnail($destinationPath . '\\' . $filename);
+            $video->setThumbnail($filename);
+        } elseif (request('generated_image')) {
+            $filename = time() . '_' . uniqid('', true) . '.png';
+
+            $base64  = request('generated_image');
+            $base64 = str_replace(['data:image/png;base64,', ' '], ['', '+'], $base64);
+            $data = base64_decode($base64);
+
+            file_put_contents(storage_path('app/img/') .  $filename, $data);
+            $video->setThumbnail($filename);
+        } else {
+            return redirect()->back()->withErrors(['No thumbnail selected']);
         }
 
         $video->save();
@@ -183,8 +200,8 @@ class VideosController extends Controller
         $setting->save();
 
         /** @var User $author */
-        $author = $video->author;
-        $subscribers = $author->subscribers;
+        $author = $video->author()->first();
+        $subscribers = $author->subscribers();
 
         if (count($subscribers) > 0) {
             /** @var User $subscriber */
@@ -230,9 +247,12 @@ class VideosController extends Controller
 
         /** @var array $relatedVideos */
         $relatedVideos = Video::where('category_id', '=', $video->getCategoryId())
-            ->whereHas('setting', static function ($query) {
-                $query->where(['private' => 0]);
-            })->limit(10)->get();
+            ->whereHas(
+                'setting',
+                static function ($query) {
+                    $query->where(['private' => 0]);
+                }
+            )->limit(10)->get();
 
         return view('video.show')
             ->with('video', $video)
@@ -341,14 +361,14 @@ class VideosController extends Controller
      * @param string $uploadRequired
      * @throws ValidationException
      */
-    public function validateVideoInputs($request, $imageRequired = 'required', $uploadRequired = 'required'): void
+    public function validateVideoInputs($request): void
     {
         $this->validate(
             $request,
             [
                 'title' => 'required|max:64',
-                'upload' => 'file|' . $uploadRequired,
-                'image' => 'file|' . $imageRequired,
+                'upload' => 'file',
+                'image' => 'file',
                 'description' => 'max:255',
                 'recaptcha' => 'required|recaptcha'
             ],

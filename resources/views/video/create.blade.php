@@ -47,6 +47,7 @@
                             <div id="spinner" class="col text-cente d-none">
                                 @include('shared.misc.loading-spinner')
                             </div>
+                            <input type="hidden" name="generated_image" value="">
                         </div>
 
                         <h6 class="text-center mb-4">
@@ -140,8 +141,13 @@
                         </div>
 
                         <div class="text-center">
+                            <div id="spinner_upload" class="col text-center d-none">
+                                @include('shared.misc.loading-spinner')
+                                <p>Uploading ...</p>
+                            </div>
+
                             @include('shared.captcha.recaptcha')
-                            <button type="submit" class="btn btn-outline-primary">Share !</button>
+                            <button type="submit" id="submit_upload" class="btn btn-outline-primary">Share !</button>
                         </div>
                     </div>
                 </div>

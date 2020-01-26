@@ -35,8 +35,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     img.classList.add('mx-auto');
                     img.classList.add('d-block');
                     img.classList.add('img-fluid');
-                    var element = document.getElementById('thumbnail');
-                    element.appendChild(img);
+                    var thumbnail = document.getElementById('thumbnail');
+                    thumbnail.appendChild(img);
+
+                    document.getElementsByName('generated_image')[0].value = image;
+
                     URL.revokeObjectURL(url);
                     document.getElementById('spinner').classList.add('d-none');
                 }
@@ -51,5 +54,10 @@ document.addEventListener('DOMContentLoaded', function () {
             video.play();
         };
         fileReader.readAsArrayBuffer(file);
+    });
+
+    document.getElementById('submit_upload').addEventListener('click', function(){
+        document.getElementById('spinner_upload').classList.remove('d-none');
+        this.classList.add('d-none');
     });
 }, false);

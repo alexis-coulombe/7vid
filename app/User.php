@@ -105,7 +105,7 @@ class User extends Authenticatable
      */
     public function subscribers(): Collection
     {
-        return Subscription::where(['author_id' => $this->id])->get();
+        return Subscription::where(['author_id' => $this->getId()])->get();
     }
 
     /**
