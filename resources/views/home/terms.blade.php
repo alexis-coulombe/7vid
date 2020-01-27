@@ -11,8 +11,8 @@
 @section('content')
     <div class="container">
         <div data-custom-class="body" style="color: #fff">
-            <div style="text-align: justify; line-height: 1.5;"><strong><span style="font-size: 26px;"><span
-                            data-custom-class="title">TERMS AND CONDITIONS</span></span></strong></div>
+            <div style="text-align: justify; line-height: 1.5;"><strong><span style="font-size: 26px;"><h1
+                            data-custom-class="title">TERMS AND CONDITIONS</h1></span></strong></div>
             <div style="text-align: justify; line-height: 1.5;"><br></div>
             <div style="text-align: justify; line-height: 1.5;"><span
                     style="font-size: 15px; color: rgb(127, 127, 127);"><strong><span data-custom-class="subtitle">Last Updated <bdt

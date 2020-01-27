@@ -50,13 +50,12 @@ class VideosController extends Controller
         $search = request('search');
 
         $videos = Video::whereHas('setting', static function ($query) {
-            $query->where(['private' => 0]);
+                $query->where(['private' => 0]);
         })->where('title', 'like', '%' . $search . '%')
-            ->orWhere('description', 'like', '% ' . $search . ' %')
-            ->paginate(20, ['*'], 'video_page');
+          ->orWhere('description', 'like', '% ' . $search . ' %')
+          ->paginate(20, ['*'], 'video_page');
 
         $authors = User::where('name', 'like', '%' . $search . '%')->paginate(12, ['*'], 'author_page');
-
 
         return view('video.search')->with('videos', $videos)
             ->with('authors', $authors);
@@ -69,16 +68,6 @@ class VideosController extends Controller
      */
     public function create(): View
     {
-        /** @var User $author */
-        $author = Auth::user();
-        $subscribers = $author->subscribers();
-
-        /** @var User $subscriber */
-        //foreach($subscribers as $subscriber){
-        //    $user = User::find($subscriber);
-        //    $user->notify(new _Notification('Test'));
-        //}
-
         $categories = Category::all();
 
         return view('video.create')->with('categories', $categories);
@@ -114,13 +103,17 @@ class VideosController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::check()) {
+            abort(403);
+        }
+
         $this->validateVideoInputs($request);
 
         /** @var Video $video */
         $video = new Video();
-        $video->setAuthorId(Auth::user()->id);
+        $video->setAuthorId(Auth::user()->getId());
 
-        if (trim(request('description')) === '') {
+        if (empty(request('description'))) {
             $request->merge(['description' => 'No description provided']);
         }
 
@@ -148,14 +141,18 @@ class VideosController extends Controller
 
             $getID3 = new \getID3();
             $file = $getID3->analyze(public_path() . '/' . $video->getLocation());
+
+            if((int) $file['playtime_seconds'] > 900){
+                return back()->withErrors(['Your video must be 15 minutes or shorter.']);
+            }
+
             $video->setDuration($file['playtime_seconds']);
             $video->setFrameRate($file['frame_rate'] ?? 0);
             $video->setMimeType($file['mime_type']);
         }
 
-        if ($request->hasFile('image')) {
-            $destinationPath = 'images';
-            $extension = request('image')->getClientOriginalExtension();
+        if (request('image') || request('generated_image')) {
+            $extension = request('image') ? request('image')->getClientOriginalExtension() : 'jpg';
             $filename = time() . '_' . uniqid('', true) . '.' . $extension;
             $allowedExtensions = ['jpeg', 'jpg', 'png'];
 
@@ -163,13 +160,19 @@ class VideosController extends Controller
                 return redirect(route('video.create'))->with('error', 'Wrong format. Must be: jpeg, jpg, png');
             }
 
-            if (request('image') === null) {
-                return redirect(route('video.create'))->with('error', 'There was an error when uploading your image.');
+            if (request('image')) {
+                request('image')->move(storage_path('app/img/'), $filename);
+            } else {
+                $base64 = request('generated_image');
+                $base64 = str_replace(['data:image/png;base64,', ' '], ['', '+'], $base64);
+                $data = base64_decode($base64);
+
+                file_put_contents(storage_path('app/img/') . $filename, $data);
             }
 
-            request('image')->move($destinationPath, $filename);
-
-            $video->setThumbnail($destinationPath . '\\' . $filename);
+            $video->setThumbnail($filename);
+        } else {
+            return back()->withErrors(['No thumbnail selected']);
         }
 
         $video->save();
@@ -183,8 +186,8 @@ class VideosController extends Controller
         $setting->save();
 
         /** @var User $author */
-        $author = $video->author;
-        $subscribers = $author->subscribers;
+        $author = $video->author()->first();
+        $subscribers = $author->subscribers();
 
         if (count($subscribers) > 0) {
             /** @var User $subscriber */
@@ -231,7 +234,7 @@ class VideosController extends Controller
         /** @var array $relatedVideos */
         $relatedVideos = Video::where('category_id', '=', $video->getCategoryId())
             ->whereHas('setting', static function ($query) {
-                $query->where(['private' => 0]);
+                    $query->where(['private' => 0]);
             })->limit(10)->get();
 
         return view('video.show')
@@ -279,7 +282,7 @@ class VideosController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
-        $this->validateVideoInputs($request, '', '');
+        $this->validateVideoInputs($request);
 
         /** @var Video $video */
         $video = Video::find($id);
@@ -330,32 +333,31 @@ class VideosController extends Controller
 
         $video->delete();
 
-        return back();
+        return redirect(route('channel.index', ['userId' => Auth::user()->getId()]));
     }
 
     /**
      * Check if form inputs on creating / updating a video are all valid
      *
      * @param $request
-     * @param string $imageRequired
-     * @param string $uploadRequired
      * @throws ValidationException
      */
-    public function validateVideoInputs($request, $imageRequired = 'required', $uploadRequired = 'required'): void
+    public function validateVideoInputs($request): void
     {
         $this->validate(
             $request,
             [
                 'title' => 'required|max:64',
-                'upload' => 'file|' . $uploadRequired,
-                'image' => 'file|' . $imageRequired,
+                'upload' => 'file',
+                'image' => 'file|max:1000',
                 'description' => 'max:255',
                 'recaptcha' => 'required|recaptcha'
             ],
             [
                 'title.required' => 'A title is required for your video.',
                 'upload.required' => 'You must choose your video to upload.',
-                'upload.file' => 'Your uploaded file must be a video.'
+                'upload.file' => 'Your uploaded file must be a video.',
+                'image.max' => 'Your thumbnail size must be lower than 1Mb'
             ]
         );
     }
