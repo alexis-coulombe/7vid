@@ -47,7 +47,7 @@ body {
     height: 100%;
 }
 
-svg{
+svg {
     max-height: 400px;
 }
 
@@ -635,29 +635,29 @@ body.sidebar-toggled footer.sticky-footer {
 
 .bg-primary, .btn-primary, .btn-outline-primary:hover, .badge-primary {
     border-color: transparent !important;
-    background: #ff0000;
+    background: #ff5943;
     /* Old browsers */
-    background: -moz-linear-gradient(-45deg, #ff0000 0%, #e41e1d 100%);
+    background: -moz-linear-gradient(-45deg, #ff5943 0%, #e41e1d 100%);
     /* FF3.6-15 */
-    background: -webkit-linear-gradient(-45deg, #ff0000 0%, #e41e1d 100%);
+    background: -webkit-linear-gradient(-45deg, #ff5943 0%, #e41e1d 100%);
     /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(135deg, #ff0000 0%, #e41e1d 100%);
+    background: linear-gradient(135deg, #ff5943 0%, #e41e1d 100%);
     /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0000', endColorstr='#e41e1d', GradientType=1);
     /* IE6-9 fallback on horizontal gradient */
 }
 
 .btn-outline-primary {
-    border-color: #ff0000;
-    color: #ff0000;
+    border-color: #ff5943;
+    color: #ff5943;
 }
 
 .text-primary {
-    color: #ff0000 !important;
+    color: #ff5943;
 }
 
 .progress-bar {
-    background-color: #ff0000;
+    background-color: #ff5943;
 }
 
 .bg-success, .btn-success, .btn-outline-success:hover, .badge-success {
@@ -710,19 +710,19 @@ body.sidebar-toggled footer.sticky-footer {
     border-color: transparent !important;
     background: #ff253a;
     /* Old browsers */
-    background: -moz-linear-gradient(-45deg, #ff253a 0%, #ff8453 100%);
+    background: -moz-linear-gradient(-45deg, #ff5943 0%, #ff8453 100%);
     /* FF3.6-15 */
-    background: -webkit-linear-gradient(-45deg, #ff253a 0%, #ff8453 100%);
+    background: -webkit-linear-gradient(-45deg, #ff5943 0%, #ff8453 100%);
     /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(135deg, #ff253a 0%, #ff8453 100%);
+    background: linear-gradient(135deg, #ff5943 0%, #ff8453 100%);
     /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff253a', endColorstr='#ff8453', GradientType=1);
     /* IE6-9 fallback on horizontal gradient */
 }
 
 .btn-outline-danger {
-    border-color: #ff253a;
-    color: #ff253a;
+    border-color: #ff5943;
+    color: #ff5943;
 }
 
 .text-danger {
@@ -871,7 +871,7 @@ label {
 }
 
 a {
-    color: #db363d;
+    color: #ff5943;
     text-decoration: none;
 }
 
@@ -940,7 +940,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 }
 
 .pagination .page-item.active .page-link {
-    background: #ff0000 none repeat scroll 0 0;
+    background: #ff5943 none repeat scroll 0 0;
     border-radius: 2px;
     color: #fff;
     height: 30px;
@@ -1630,7 +1630,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    background: #ff0000;
+    background: #ff5943;
     animation: lds-grid 1.2s linear infinite;
 }
 
@@ -1705,8 +1705,8 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     border-radius: 5px;
 }
 
-.category-item p{
-    color: #db363d;
+.category-item p {
+    color: #ff5943;
 }
 
 /* Progress */
@@ -1714,7 +1714,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     min-width: 70px;
     height: 5px;
     margin-top: 10px;
-    background-color: #db363d;
+    background-color: #ff5943;
 }
 
 .progress-bar {
@@ -1795,7 +1795,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 2;
     cursor: pointer;
 }
