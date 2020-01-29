@@ -36,7 +36,7 @@
                     @foreach($subscriptions as $subscription)
                         <li>
                             <a href="{{ route('channel.index', ['userId' => $subscription->channel->getId()]) }}">
-                                <img class="img-fluid" alt="Avatar" loading="lazy" width="28px" height="28px" src="{{ getImage(route('cdn.img.avatar'), $subscription->channel->getAvatar()) }}">
+                                <img class="lazyload img-fluid" alt="Avatar" loading="lazy" width="28px" height="28px" data-src="{{ getImage(route('cdn.img.avatar'), $subscription->channel->getAvatar()) }}">
                                 {{ $subscription->channel->getName() }}
                             </a>
                         </li>

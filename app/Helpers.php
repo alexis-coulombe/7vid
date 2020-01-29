@@ -56,7 +56,7 @@ function getImage($route, $image, $params = [])
     $signKey = config('app.key');
 
     $urlBuilder = \League\Glide\Urls\UrlBuilderFactory::create($route, $signKey);
-    return $urlBuilder->getUrl($image, ['q' => '50']);
+    return $urlBuilder->getUrl($image, $params);
 }
 
 function isMobile(): bool

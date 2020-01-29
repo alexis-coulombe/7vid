@@ -12,11 +12,11 @@
     <section class="login-main-wrapper">
         <div class="container-fluid pl-0 pr-0">
             <div class="row no-gutters">
-                <div class="col-md-5 p-5 bg-white full-height">
+                <div class="col-md-5 p-5 bg-black full-height">
                     <div class="login-main-left">
                         <div class="text-center mb-5 login-main-left-header pt-4">
                             <a href="{{ route('home') }}" aria-label="Home">
-                                <img src="{{ asset('assets/img/logo.svg') }}" loading="lazy" width="50px" height="50px" class="img-fluid" alt="Logo">
+                                <img data-src="{{ asset('assets/img/logo.svg') }}" loading="lazy" width="50px" height="50px" class="lazyload img-fluid" alt="Logo">
                             </a>
                             <h1 class="h4 mt-3 mb-3">Sign In</h1>
                         </div>
