@@ -42,10 +42,9 @@ class VideosController extends Controller
     /**
      * Search for videos that fits filters
      *
-     * @param Request $request
      * @return View
      */
-    public function search(Request $request): View
+    public function search(): View
     {
         $search = request('search');
 
@@ -76,10 +75,10 @@ class VideosController extends Controller
     /**
      * Add vote to video
      *
-     * @return ResponseFactory|Response
+     * @return Response
      * @throws Exception
      */
-    public static function vote()
+    public static function vote(): Response
     {
         if (Auth::check() && request()->ajax()) {
             $value = request('value');
@@ -97,11 +96,11 @@ class VideosController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response|RedirectResponse
+     * @return RedirectResponse
      * @throws ValidationException
      * @throws getid3_exception
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         if (!Auth::check()) {
             abort(403);

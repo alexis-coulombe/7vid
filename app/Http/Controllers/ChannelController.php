@@ -8,9 +8,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class ChannelController extends Controller
@@ -57,7 +55,6 @@ class ChannelController extends Controller
      *
      * @param int $userId
      * @return Factory|View|Response
-     * @throws ValidationException
      */
     public function about(int $userId)
     {
@@ -77,17 +74,15 @@ class ChannelController extends Controller
 
         if (request()->isMethod('post')) {
             if (Auth::check() && Auth::user()->getId() === $userId) {
-                $this->validate(
-                    request(),
-                    [
-                        'about' => 'required|min:1',
-                    ]
-                );
 
-                $about = strip_tags(request('about'));
-                $setting->setAbout($about);
+                if (empty(request('about'))) {
+                    request()->merge(['about' => 'No description provided']);
+                } else {
+                    $about = strip_tags(request('about'));
+                    $setting->setAbout($about);
 
-                $setting->save();
+                    $setting->save();
+                }
             } else {
                 return response(401);
             }
@@ -181,7 +176,12 @@ class ChannelController extends Controller
             ->with('search', request('search'))->with('author', $user);
     }
 
-    public function delete()
+    /**
+     * Delete user
+     *
+     * @return RedirectResponse
+     */
+    public function delete(): RedirectResponse
     {
         if (Auth::check()) {
             /** @var User $user */
@@ -197,6 +197,6 @@ class ChannelController extends Controller
             }
         }
 
-        return redirect()->back();
+        return redirect(route('home'));
     }
 }

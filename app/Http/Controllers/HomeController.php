@@ -10,6 +10,7 @@ use App\Video;
 use App\Views;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -21,12 +22,9 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $newVideos = Video::whereHas(
-            'setting',
-            static function ($query) {
+        $newVideos = Video::whereHas('setting', static function ($query) {
                 $query->where(['private' => 0]);
-            }
-        )->orderBy('created_at', 'DESC')->limit(16)->get();
+        })->orderBy('created_at', 'DESC')->limit(16)->get();
 
         $popularCategories = Category::all();
 
@@ -75,10 +73,10 @@ class HomeController extends Controller
     /**
      * Account setting page
      *
-     * @return View
+     * @return View|RedirectResponse
      * @throws ValidationException
      */
-    public function settings(): View
+    public function settings()
     {
         if (Auth::check() && request()->isMethod('post')) {
             $this->validate(
@@ -129,7 +127,7 @@ class HomeController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-        $likedVideos = $user->videoVotes->where('value', 1);
+        $likedVideos = $user->videoVotes()->where('value', 1);
         $videos = [];
 
         foreach ($likedVideos as $like) {
@@ -196,10 +194,9 @@ class HomeController extends Controller
                 $category = Category::find($categoryId);
 
                 if ($category) {
-                    $videos = $category->videos()
-                        ->whereHas('setting', static function ($query) {
+                    $videos = $category->videos()->whereHas('setting', static function ($query) {
                             $query->where(['private' => 0]);
-                        })->orderBy('created_at', 'DESC')->take(16)->whereNotIn('id', $exclude)->get();
+                    })->orderBy('created_at', 'DESC')->take(16)->whereNotIn('id', $exclude)->get();
 
                     if ((!count($videos)) > 0) {
                         return 'Done';
