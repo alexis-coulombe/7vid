@@ -22,8 +22,8 @@
     <div class="container text-center text-md-left mt-5">
         <div class="row mt-3">
             <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                <h6 class="text-uppercase font-weight-bold">{{ env('APP_NAME') }}</h6>
-                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <h6 class="text-uppercase font-weight-bold">{{ config('app.name') }}</h6>
+                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto w-60">
                 <p>
                     A free video-hosting website that allows members to store and serve video content. Share unlimited video all around the world.
                 </p>
@@ -31,7 +31,7 @@
 
             <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                 <h6 class="text-uppercase font-weight-bold">Products</h6>
-                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto w-60">
                 <p>
                     <a href="#!">MDBootstrap</a>
                 </p>
@@ -47,7 +47,7 @@
             </div>
             <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
                 <h6 class="text-uppercase font-weight-bold">Useful links</h6>
-                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto w-60">
                 <p>
                     <a href="{{ route('home.terms') }}">Terms and conditions</a>
                 </p>
@@ -61,7 +61,7 @@
 
             <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                 <h6 class="text-uppercase font-weight-bold">Contact</h6>
-                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto w-60">
                 <p>
                     <i class="fas fa-envelope mr-3"></i> <a href="mailto:contact@7vid.org" aria-label="Contact by email">contact@7vid.org</a>
                 </p>
@@ -74,6 +74,5 @@
     </div>
 </footer>
 
-<a class="scroll-to-top" aria-label="Scroll to top" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
+@include('shared.footer.scroll-to-top')
+@include('shared.footer.cookie-consent')

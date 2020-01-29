@@ -1805,3 +1805,7 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 .ml-15 {
     margin-left: 15px;
 }
+
+.w-60 {
+    width: 60px;
+}
