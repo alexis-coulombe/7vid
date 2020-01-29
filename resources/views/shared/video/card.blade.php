@@ -4,14 +4,14 @@
             <i class="fas fa-play-circle"></i>
         </a>
         <a href="{{ route('video.show', ['video' => $video->getId()]) }}" aria-label="View video">
-            <img class="img-fluid" loading="lazy" width="300px" height="150px" src="{{ getImage(route('cdn.img'), $video->getThumbnail()) }}" alt="Video thumbnail">
+            <img class="lazyload img-fluid" loading="lazy" width="600px" height="300px" data-src="{{ getImage(route('cdn.img'), $video->getThumbnail(), ['q' => '90', 'w' => '600', 'h' => '300']) }}" alt="Video thumbnail">
         </a>
         <div class="time">{{ parseVideoDuration($video->getDuration()) }}</div>
     </div>
     <div class="video-card-body">
         <div class="video-title">
             <a href="{{ route('video.show', ['video' => $video->getId()]) }}" aria-label="{{ $video->getFormatedTitle(50) }}">
-                <h3 class="h4">{{ $video->getFormatedTitle(50) }}</h3>
+                <h3 class="h6">{{ $video->getFormatedTitle(50) }}</h3>
             </a>
         </div>
         <div class="video-page">

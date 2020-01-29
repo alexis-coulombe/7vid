@@ -23,6 +23,10 @@ class CommentsController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        if(!Auth::check()){
+            return back();
+        }
+
         $this->validate(
             $request,
             [

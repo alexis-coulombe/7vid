@@ -2,7 +2,6 @@
 @import 'variables';
 
 @import "~bootstrap/scss/bootstrap.scss";
-@import "~@fortawesome/fontawesome-free/css/all.min.css";
 @import "~owl.carousel/dist/assets/owl.carousel.min.css";
 @import "~owl.carousel/dist/assets/owl.theme.default.min.css";
 @import "~video.js/dist/video-js.min.css";
@@ -16,6 +15,7 @@
 @import "../../public_html/css/404.css";
 @import "../../public_html/css/comments/comments.css";
 @import "../../public_html/css/video/upload.css";
+@import "../../public_html/css/style.css";
 
 .navbar-laravel {
   background-color: #fff;

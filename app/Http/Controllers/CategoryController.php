@@ -3,15 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
-    public function index($slug)
+    /**
+     * See category page
+     *
+     * @param $slug
+     * @return View
+     */
+    public function index($slug): View
     {
         /** @var Category $category */
         $category = Category::where(['slug' => $slug])->first();
 
-        if (!$category) {
+        if ($category === null) {
             abort(404);
         }
 

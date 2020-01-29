@@ -24,7 +24,7 @@
                 {{ csrf_field() }}
 
                 <div class="form-group col-lg-12 mx-auto">
-                    <div class="p-5 bg-white shadow rounded-lg">
+                    <div class="p-5 bg-black shadow rounded-lg">
                         <h1 class="text-center">
                             <i class="fas fa-cloud-upload-alt"></i>
                         </h1>
@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <div class="form-group col-lg-12 mx-auto">
-                    <div class="p-5 bg-white shadow rounded-lg">
+                    <div class="p-5 bg-black shadow rounded-lg">
                         <h1 class="text-center">
                             <i class="fas fa-clipboard"></i>
                         </h1>
@@ -98,7 +98,7 @@
                     </div>
                 </div>
                 <div class="form-group col-lg-12 mx-auto">
-                    <div class="p-5 bg-white shadow rounded-lg">
+                    <div class="p-5 bg-black shadow rounded-lg">
                         <h1 class="text-center">
                             <i class="fas fa-filter"></i>
                         </h1>
