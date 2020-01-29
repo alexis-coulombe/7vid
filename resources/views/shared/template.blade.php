@@ -12,19 +12,36 @@
         <title>{{ config('app.name') }} - @yield('title')</title>
 
         <link href="{{ asset('css/app.css') . '?v=' . filemtime(public_path('css/app.css')) }}" rel="stylesheet" type="text/css">
-        <link href="{{ asset('css/style.css') . '?v=' . filemtime(public_path('css/style.css')) }}" rel="stylesheet" type="text/css">
         @yield('head')
 
-        <script data-ad-client="ca-pub-4650782712352720" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script data-ad-client="ca-pub-4650782712352720" defer src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-156333900-1"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
+        <link href="https://www.google-analytics.com" rel="dns-prefetch preconnect" crossorigin>
+        <script defer src="https://www.googletagmanager.com/gtag/js?id=UA-156333900-1"></script>
+        <script type="text/javascript">
+            (function () {
+                window.dataLayer = window.dataLayer || [];
 
-            gtag('config', 'UA-156333900-1');
+                function gtag() {
+                    dataLayer.push(arguments);
+                }
+
+                gtag('js', new Date());
+
+                gtag('config', 'UA-156333900-1');
+            })();
         </script>
+
+        <script type="text/javascript">
+            (function () {
+                let css = document.createElement('link');
+                css.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css';
+                css.rel = 'stylesheet';
+                css.type = 'text/css';
+                document.getElementsByTagName('head')[0].appendChild(css);
+            })();
+        </script>
+
     </head>
     <body id="page-top" class="sidebar-toggled">
         <div id="overlay"></div>
@@ -47,9 +64,13 @@
 
         @if(env('SENTRY_LARAVEL_DSN'))
             <script src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js"></script>
-            <script> Sentry.init({ dsn:  '{{ env('SENTRY_LARAVEL_DSN') }}' });</script>
+            <script>
+                (function () {
+                    Sentry.init({dsn: '{{ env('SENTRY_LARAVEL_DSN') }}'})
+                })();
+            </script>
         @endif
-        <script type="text/javascript" src="{{ asset('js/app.js') . '?v=' . filemtime(public_path('js/app.js')) }}"></script>
+        <script type="text/javascript" defer src="{{ asset('js/app.js') . '?v=' . filemtime(public_path('js/app.js')) }}"></script>
         @yield('footer')
     </body>
 </html>

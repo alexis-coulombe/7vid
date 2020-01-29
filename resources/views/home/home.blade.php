@@ -4,6 +4,10 @@
     home
 @endsection
 
+@section('description')
+    A free video-hosting website that allows members to store and serve video content. Share unlimited video all around the world.
+@endsection
+
 @section('content')
     <h1 style="display: none">Home</h1>
     <div class="top-category section-padding mb-4">

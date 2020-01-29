@@ -25,7 +25,7 @@
         </div>
         <div class="row vertical-center mb-2">
             <a href="{{ route('channel.index', ['userId' => $comment->getAuthorId()]) }}">
-                <img class="img-fluid" loading="lazy" width="38px" height="38px" src="{{ getImage(route('cdn.img.avatar'), $comment->author->getAvatar()) }}" alt="{{ $comment->author->getName() }}" alt="Avatar">
+                <img class="lazyload img-fluid" loading="lazy" width="38px" height="38px" data-src="{{ getImage(route('cdn.img.avatar'), $comment->author->getAvatar()) }}" alt="{{ $comment->author->getName() }}" alt="Avatar">
             </a>
             <p class="ml-2">
                 <a href="{{ route('channel.index', ['userId' => $comment->getAuthorId()]) }}">

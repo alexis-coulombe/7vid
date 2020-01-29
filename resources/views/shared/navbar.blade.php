@@ -1,10 +1,10 @@
-<nav class="navbar navbar-expand navbar-light bg-white static-top osahan-nav sticky-top">
+<nav class="navbar navbar-expand navbar-light bg-black static-top osahan-nav sticky-top">
     &nbsp;&nbsp;
     <button aria-label="Minimize sidebar" class="btn btn-link btn-sm text-secondary order-1 order-sm-0" id="sidebarToggle">
         <i class="fas fa-bars"></i>
     </button> &nbsp;&nbsp;
     <a class="navbar-brand mr-1" aria-label="homepage" href="{{ route('home') }}">
-        <img class="img-fluid" loading="lazy" alt="logo" width="50px" height="50px" src="{{ asset('assets/img/logo.svg') }}">
+        <img class="lazyload img-fluid" loading="lazy" alt="logo" width="50px" height="50px" data-src="{{ asset('assets/img/logo.svg') }}">
     </a>
     <!-- Navbar Search -->
     <form action="{{ route('video.search') }}" method="GET" class="d-none d-md-inline-block form-inline osahan-navbar-search">
@@ -36,7 +36,7 @@
         <li class="nav-item dropdown mr-3">
             @auth
                 <a class="nav-link dropdown-toggle user-dropdown-link" href="{{ route('channel.index', ['userId' => Auth::user()->getId()]) }}">
-                    <img alt="Avatar" loading="lazy" width="30px" height="30px" src="{{ getImage(route('cdn.img.avatar'), Auth::user()->getAvatar()) }}" alt="Avatar">
+                    <img alt="Avatar" loading="lazy" width="30px" height="30px" class="lazyload" data-src="{{ getImage(route('cdn.img.avatar'), Auth::user()->getAvatar()) }}" alt="Avatar">
                 </a>
             @endauth
             @guest

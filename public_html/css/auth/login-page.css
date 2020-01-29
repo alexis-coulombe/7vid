@@ -1,11 +1,11 @@
 .login-main-wrapper {
-    background: #ff5943;
+    background: #ff2f33;
     /* Old browsers */
-    background: -moz-linear-gradient(-45deg, #ff5943 0%, #ff6f6d 100%);
+    background: -moz-linear-gradient(-45deg, #ff2f33 0%, #ff6f6d 100%);
     /* FF3.6-15 */
-    background: -webkit-linear-gradient(-45deg, #ff5943 0%, #ff6f6d 100%);
+    background: -webkit-linear-gradient(-45deg, #ff2f33 0%, #ff6f6d 100%);
     /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(135deg, #ff5943 0%, #ff6f6d 100%);
+    background: linear-gradient(135deg, #ff2f33 0%, #ff6f6d 100%);
     /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff516b', endColorstr='#826cfd', GradientType=1);
     /* IE6-9 fallback on horizontal gradient */
@@ -22,7 +22,7 @@
     max-width: 335px;
 }
 
-.login-main-right.bg-white {
+.login-main-right.bg-black {
     border-radius: 2px;
     margin: auto;
     max-width: 561px;
@@ -47,13 +47,13 @@
 
 .login-main-right .owl-carousel .owl-dots .owl-dot.active,
 .login-main-right .owl-carousel .owl-dots .owl-dot:hover {
-    background: #ff0000;
+    background: #ff2f33;
     /* Old browsers */
-    background: -moz-linear-gradient(-45deg, #ff0000 0%, #e41e1d 100%);
+    background: -moz-linear-gradient(-45deg, #ff2f33 0%, #e41e1d 100%);
     /* FF3.6-15 */
-    background: -webkit-linear-gradient(-45deg, #ff0000 0%, #e41e1d 100%);
+    background: -webkit-linear-gradient(-45deg, #ff2f33 0%, #e41e1d 100%);
     /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(135deg, #ff0000 0%, #e41e1d 100%);
+    background: linear-gradient(135deg, #ff2f33 0%, #e41e1d 100%);
     /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0000', endColorstr='#e41e1d', GradientType=1);
     /* IE6-9 fallback on horizontal gradient */

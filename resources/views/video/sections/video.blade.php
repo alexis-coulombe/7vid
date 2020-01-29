@@ -14,7 +14,7 @@
                 @include('shared.video.subscribe')
             </div>
         @endif
-        <img class="img-fluid mr-2" loading="lazy" src="{{ getImage(route('cdn.img.avatar'), $video->author->getAvatar()) }}" alt="Avatar">
+        <img class="lazyload img-fluid mr-2" loading="lazy" data-src="{{ getImage(route('cdn.img.avatar'), $video->author->getAvatar()) }}" alt="Avatar">
         <p><a href="{{ route('channel.index', ['userId' => $video->author->getId()]) }}" aria-label="View channel"><strong>{{ $video->author->getName() }}</strong></a></p>
         <small>Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
     </div>

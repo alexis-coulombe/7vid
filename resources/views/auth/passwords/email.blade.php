@@ -8,11 +8,11 @@
     <section class="login-main-wrapper">
         <div class="container-fluid pl-0 pr-0">
             <div class="row no-gutters">
-                <div class="col-md-5 p-5 bg-white full-height">
+                <div class="col-md-5 p-5 bg-black full-height">
                     <div class="login-main-left">
                         <div class="text-center mb-5 login-main-left-header pt-4">
                             <a href="{{ route('home') }}">
-                                <img src="{{ asset('assets/img/logo.svg') }}" class="img-fluid" alt="LOGO">
+                                <img data-src="{{ asset('assets/img/logo.svg') }}" class="lazyload img-fluid" alt="LOGO">
                             </a>
                             <h1 class="h3 mt-3 mb-3">{{ __('Reset Password') }}</h1>
                         </div>
