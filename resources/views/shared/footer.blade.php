@@ -7,7 +7,7 @@
                         <h6 class="mb-0">Share video and get access to all features by creating an account!</h6>
                     </div>
                     <div class="col-md-6 col-lg-7 text-center text-md-right">
-                        <a href="{{ route('login') }}" style="color: #fff">
+                        <a href="{{ route('login') }}" class="text-white">
                             <i class="fas fa-sign-in-alt"></i>
                             <span>Create an account / Login</span>
                         </a>
