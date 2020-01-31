@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class SubscriptionModelTest extends TestCase implements \BaseModelTest
+class SubscriptionModelTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -26,7 +26,13 @@ class SubscriptionModelTest extends TestCase implements \BaseModelTest
      */
     public function testGettersSetters(): void
     {
-        $this->assertTrue(true);
+        /** @var Subscription $subscription */
+        $subscription  = Subscription::first();
+        $subscription->setAuthorId(User::first()->getId());
+        $subscription->setUserId(User::first()->getId());
+
+        $this->assertSame($subscription->getAuthorId(), User::first()->getId());
+        $this->assertSame($subscription->getUserId(), User::first()->getId());
     }
 
     /**

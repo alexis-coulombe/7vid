@@ -2,18 +2,12 @@
 
 namespace Tests\Models;
 
-use App\Category;
-use App\Comment;
 use App\Country;
-use App\User;
-use App\Video;
-use App\VideoSetting;
-use App\VideoVote;
 use Exception;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class CountryModelTest extends TestCase implements \BaseModelTest
+class CountryModelTest extends TestCase
 {
     use DatabaseTransactions;
 

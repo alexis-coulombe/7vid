@@ -2,19 +2,13 @@
 
 namespace Tests\Models;
 
-use App\Category;
 use App\ChannelSetting;
-use App\Comment;
-use App\Country;
 use App\User;
-use App\Video;
-use App\VideoSetting;
-use App\VideoVote;
 use Exception;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class ChannelSettingModelTest extends TestCase implements \BaseModelTest
+class ChannelSettingModelTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -60,6 +54,8 @@ class ChannelSettingModelTest extends TestCase implements \BaseModelTest
      */
     public function testDelete(): void
     {
-        $this->assertTrue(true);
+        /** @var ChannelSetting $setting */
+        $setting = ChannelSetting::first();
+        $this->assertTrue($setting->delete());
     }
 }

@@ -11,7 +11,7 @@ class _Notification extends Notification
 {
     use Queueable;
 
-    protected $description;
+    protected string $description;
 
     /**
      * Create a new notification instance.
@@ -29,7 +29,7 @@ class _Notification extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['database'];
     }

@@ -4,7 +4,7 @@ namespace App;
 
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Country extends Model
 {
@@ -14,6 +14,16 @@ class Country extends Model
         'name',
         'code'
     ];
+
+    /**
+     * Get user relation
+     *
+     * @return BelongsTo
+     */
+    public function users(): BelongsTo
+    {
+        $this->belongsTo(User::class, 'id', 'country_id');
+    }
 
     /**
      * Get id

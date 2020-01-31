@@ -12,7 +12,7 @@ use Exception;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class VideoSettingModelTest extends TestCase implements \BaseModelTest
+class VideoSettingModelTest extends TestCase
 {
     use DatabaseTransactions;
 
