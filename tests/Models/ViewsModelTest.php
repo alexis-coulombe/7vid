@@ -1,5 +1,6 @@
 <?php
 
+use App\Category;
 use App\Subscription;
 use App\User;
 use App\Views;
@@ -7,7 +8,7 @@ use App\Video;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class ViewsModelTest extends TestCase implements \BaseModelTest
+class ViewsModelTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -16,7 +17,7 @@ class ViewsModelTest extends TestCase implements \BaseModelTest
         parent::setUp();
         factory(User::class, 1)->create();
         factory(Subscription::class, 1)->create();
-        factory(\App\Category::class, 1)->create();
+        factory(Category::class, 1)->create();
         factory(Video::class, 1)->create();
         factory(Views::class, 1)->create();
     }
@@ -28,7 +29,11 @@ class ViewsModelTest extends TestCase implements \BaseModelTest
      */
     public function testGettersSetters(): void
     {
-        $this->assertTrue(true);
+        /** @var Views $view */
+        $view = Views::first();
+        $view->setShowInHisory(true);
+
+        $this->assertTrue($view->getShowInHisory());
     }
 
     /**

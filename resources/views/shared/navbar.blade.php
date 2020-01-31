@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand navbar-light bg-black static-top osahan-nav sticky-top">
+<nav class="navbar navbar-expand navbar-light bg-white static-top osahan-nav sticky-top">
     &nbsp;&nbsp;
     <button aria-label="Minimize sidebar" class="btn btn-link btn-sm text-secondary order-1 order-sm-0" id="sidebarToggle">
         <i class="fas fa-bars"></i>

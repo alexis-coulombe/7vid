@@ -20,7 +20,8 @@ class CreateChannelSettingsTable extends Migration
             $table->foreign('channel_id')->references('id')->on('users')->onDelete('cascade');
             $table->index('channel_id');
 
-            $table->text('about');
+            $table->text('about')->default('No about provided');
+            $table->index('about');
         });
     }
 

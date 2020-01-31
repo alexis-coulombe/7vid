@@ -12,6 +12,7 @@
         <title>{{ config('app.name') }} - @yield('title')</title>
 
         <link href="{{ asset('css/app.css') . '?v=' . filemtime(public_path('css/app.css')) }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('css/style.css') . '?v=' . filemtime(public_path('css/app.css')) }}" rel="stylesheet" type="text/css">
         @yield('head')
 
         <script data-ad-client="ca-pub-4650782712352720" defer src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>

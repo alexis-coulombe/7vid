@@ -20,9 +20,9 @@ class CreateVideoSettingsTable extends Migration
             $table->foreign('video_id')->references('id')->on('videos')->onDelete('cascade');
             $table->index('video_id');
 
-            $table->boolean('private');
-            $table->boolean('allow_comments');
-            $table->boolean('allow_votes');
+            $table->boolean('private')->default(false);
+            $table->boolean('allow_comments')->default(true);
+            $table->boolean('allow_votes')->default(true);
         });
     }
 

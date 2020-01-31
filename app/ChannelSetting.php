@@ -9,6 +9,11 @@ class ChannelSetting extends Model
 {
     public $timestamps = false;
 
+    public $fillable = [
+        'channel_id',
+        'about'
+    ];
+
     /**
      * Get user relation
      *

@@ -12,7 +12,7 @@
     <section class="login-main-wrapper">
         <div class="container-fluid pl-0 pr-0">
             <div class="row no-gutters">
-                <div class="col-md-5 p-5 bg-black full-height">
+                <div class="col-md-5 p-5 bg-white full-height">
                     <div class="login-main-left">
                         <div class="text-center mb-5 login-main-left-header pt-4">
                             <a href="{{ route('home') }}" aria-label="Home">

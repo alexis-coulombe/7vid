@@ -9,6 +9,13 @@ class VideoSetting extends Model
 {
     public $timestamps = false;
 
+    public $fillable = [
+        'video_id',
+        'private',
+        'allow_comments',
+        'allow_votes'
+    ];
+
     /**
      * Get video relation
      *

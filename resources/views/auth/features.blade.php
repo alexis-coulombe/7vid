@@ -1,6 +1,6 @@
 @if(!isMobile())
     <div class="col-md-7">
-        <div class="login-main-right bg-black p-5 mt-5 mb-5">
+        <div class="login-main-right bg-white p-5 mt-5 mb-5">
             <div class="owl-carousel owl-carousel-login">
                 <div class="item">
                     <div class="carousel-login-card text-center">
