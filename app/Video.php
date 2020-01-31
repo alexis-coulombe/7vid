@@ -7,12 +7,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Webpatser\Uuid\Uuid;
 
 class Video extends Model
 {
     // Using UUID instead
     public $incrementing = false;
+
+    public const CACHE_PREFIX = 'vid-';
 
     public $fillable = [
         'category_id',
@@ -384,15 +387,21 @@ class Video extends Model
      */
     public function getUpVotes(): int
     {
-        $upVotes = 0;
+        $cacheKey = self::CACHE_PREFIX.$this->getId().__FUNCTION__;
 
-        foreach ($this->votes as $vote) {
-            if ($vote->value) {
-                $upVotes++;
+        if(!Cache::get($cacheKey)) {
+            $upVotes = 0;
+
+            foreach ($this->votes as $vote) {
+                if ($vote->value) {
+                    $upVotes++;
+                }
             }
+
+            Cache::put($cacheKey, $upVotes, 5);
         }
 
-        return $upVotes;
+        return Cache::get($cacheKey);
     }
 
     /**
@@ -402,14 +411,20 @@ class Video extends Model
      */
     public function getDownVotes(): int
     {
-        $downVotes = 0;
+        $cacheKey = self::CACHE_PREFIX.$this->getId().__FUNCTION__;
 
-        foreach ($this->votes as $vote) {
-            if (!$vote->value) {
-                $downVotes++;
+        if(!Cache::get($cacheKey)) {
+            $downVotes = 0;
+
+            foreach ($this->votes as $vote) {
+                if (!$vote->value) {
+                    $downVotes++;
+                }
             }
+
+            Cache::put($cacheKey, $downVotes, 5);
         }
 
-        return $downVotes;
+        return Cache::get($cacheKey);
     }
 }

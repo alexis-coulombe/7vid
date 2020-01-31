@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
@@ -27,6 +28,8 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public const CACHE_PREFIX = 'usr-';
 
     /**
      * Get video relation
@@ -289,7 +292,13 @@ class User extends Authenticatable
             return 0;
         }
 
-        return $this->subscriptions()->where(['author_id' => $user->getId()])->count();
+        $cacheKey = self::CACHE_PREFIX.$this->getId().__FUNCTION__;
+
+        if(!Cache::get($cacheKey)){
+            Cache::put($cacheKey, $this->subscriptions()->where(['author_id' => $user->getId()])->count(), 5);
+        }
+
+        return Cache::get($cacheKey);
     }
 
     /**
@@ -306,7 +315,13 @@ class User extends Authenticatable
             return 0;
         }
 
-        return Subscription::where(['author_id' => $user->getId()])->count();
+        $cacheKey = self::CACHE_PREFIX.$this->getId().__FUNCTION__;
+
+        if(!Cache::get($cacheKey)){
+            Cache::put($cacheKey, Subscription::where(['author_id' => $user->getId()])->count(), 5);
+        }
+
+        return Cache::get($cacheKey);
     }
 
     /**

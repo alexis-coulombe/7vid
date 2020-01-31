@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class Comment extends Model
 {
@@ -15,6 +16,8 @@ class Comment extends Model
     public const FILTER_RATED = 'rated';
     public const FILTER_VOTE_COUNT = 'vote_count';
     public const FILTERS = [self::FILTER_DATE, self::FILTER_RATED, self::FILTER_VOTE_COUNT];
+
+    public const CACHE_PREFIX = 'com-';
 
     /**
      * Get user relation
@@ -149,7 +152,15 @@ class Comment extends Model
      */
     public function getUpVotes(): int
     {
-        return $this->comment_votes()->where(['comment_id' => $this->getId(), 'value' => CommentVote::UPVOTE])->count();
+        $cacheKey = self::CACHE_PREFIX.$this->getId().__FUNCTION__;
+
+        if(!Cache::get($cacheKey)) {
+            Cache::put($cacheKey, $this->comment_votes()
+                ->where(['comment_id' => $this->getId(), 'value' => CommentVote::UPVOTE])
+                ->count(), 5);
+        }
+
+        return Cache::get($cacheKey);
     }
 
     /**
@@ -159,8 +170,15 @@ class Comment extends Model
      */
     public function getDownVotes(): int
     {
-        return $this->comment_votes()->where(['comment_id' => $this->getId(), 'value' => CommentVote::DOWNVOTE])->count(
-        );
+        $cacheKey = self::CACHE_PREFIX.$this->getId().__FUNCTION__;
+
+        if(!Cache::get($cacheKey)) {
+            Cache::put($cacheKey, $this->comment_votes()
+                ->where(['comment_id' => $this->getId(), 'value' => CommentVote::DOWNVOTE])
+                ->count(), 5);
+        }
+
+        return Cache::get($cacheKey);
     }
 
     /**

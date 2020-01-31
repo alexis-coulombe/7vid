@@ -12,10 +12,13 @@ namespace App;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Cache;
 
 class Category extends Model
 {
     public $timestamps = false;
+
+    public const CACHE_PREFIX = 'cat-';
 
     /**
      * Get videos relation
@@ -104,7 +107,13 @@ class Category extends Model
      */
     public function getVideosCount(): int
     {
-        return $this->videos()->count();
+        $cacheKey = self::CACHE_PREFIX.$this->getId().__FUNCTION__;
+
+        if(!Cache::get($cacheKey)){
+            Cache::put($cacheKey, $this->videos()->count(), 5);
+        }
+
+        return Cache::get($cacheKey);
     }
 
     /**
