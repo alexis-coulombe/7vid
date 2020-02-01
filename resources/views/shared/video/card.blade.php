@@ -11,11 +11,11 @@
     <div class="video-card-body">
         <div class="video-title">
             <a href="{{ route('video.show', ['video' => $video->getId()]) }}" aria-label="{{ $video->getFormatedTitle(50) }}">
-                <h3 class="h6">{{ $video->getFormatedTitle(50) }}</h3>
+                <h3 class="h3">{{ $video->getFormatedTitle(50) }}</h3>
             </a>
         </div>
         <div class="video-page">
-            By <a href="{{ route('channel.index', ['userId' => $video->author->getId()]) }}" aria-label="{{ $video->author->getName() }}">{{ $video->author->getName() }}</a>
+            By <a href="{{ route('channel.index', ['userId' => $video->author()->first()->getId()]) }}" aria-label="{{ $video->author()->first()->getName() }}">{{ $video->author()->first()->getName() }}</a>
         </div>
         <div class="video-view">
             <i class="fas fa-eye"></i> {{ $video->getFormatedViewsCount() }} - <i class="far fa-clock"></i> {{ time_elapsed_string($video->created_at) }}

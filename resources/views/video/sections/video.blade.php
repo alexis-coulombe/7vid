@@ -10,7 +10,7 @@
     </div>
     <div class="single-video-author box mb-2">
         @if(!Auth::check() || (Auth::check() && $video->author()->first()->getId() !== Auth::user()->getId()))
-            <div class="float-right mt-2">
+            <div class="float-right mt-1">
                 @include('shared.video.subscribe')
             </div>
         @endif
