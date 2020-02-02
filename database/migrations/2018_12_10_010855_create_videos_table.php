@@ -28,8 +28,7 @@ class CreateVideosTable extends Migration
             $table->string('title');
             $table->index('title');
 
-            $table->mediumText('description')->default('No description provided');
-            $table->index('description');
+            $table->mediumText('description');
 
             $table->string('extension');
             $table->unsignedBigInteger('duration');

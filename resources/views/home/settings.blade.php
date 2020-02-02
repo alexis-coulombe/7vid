@@ -17,10 +17,10 @@
         {{ csrf_field() }}
 
         <div class="row">
-            <div class="col-lg-5"></div>
-            <div class="col-lg-2 text-center">
-                <img class="lazyload author-img" data-src="{{ getImage(route('cdn.img.avatar'), Auth::user()->getAvatar()) }}" loading="lazy" width="250px" height="250px" alt="Avatar">
-                <h3 style="padding-top: 10px;">{{ Auth::user()->getName() }}</h3>
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4 text-center">
+                <img class="lazyload author-img" data-src="{{ getImage(route('cdn.img.avatar'), Auth::user()->getAvatar(), ['q' => '90', 'w' => '250', 'h' => '250']) }}" loading="lazy" width="250px" height="250px" alt="Avatar">
+                <h3 class="mt-2">{{ Auth::user()->getName() }}</h3>
             </div>
         </div>
 
@@ -32,6 +32,26 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <hr>
+                <h6>Channel</h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="email" class="control-label">Background image</label>
+                    <label for="e1" class="file-upload btn btn-primary btn-block rounded-pill shadow">
+                        <i class="fa fa-upload mr-2"></i>
+                        Browse for file ...
+                        <input type="file" name="upload" id="e1" class="form-control-file d-none">
+                    </label>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-lg-12">
                 <hr>
@@ -100,22 +120,4 @@
         {{ csrf_field() }}
         {{ method_field('DELETE') }}
     </form>
-@endsection
-
-@section('footer')
-    <script src="https://cdn.jsdelivr.net/npm/password-strength-meter@1.2.2/dist/password.min.js"></script>
-    <script>
-        if($('.password').length){
-            $('.password').password({
-                shortPass: 'This is really short...',
-                badPass: 'Looks weak! Try combining letters & numbers',
-                goodPass: 'Could be better! Try using special charecters',
-                strongPass: 'You got it!',
-                showText: true, // shows the text tips
-                animate: true, // whether or not to animate the progress bar on input blur/focus
-                animateSpeed: 'fast', // the above animation speed
-                minimumLength: 3 // minimum password length (below this threshold, the score is 0)
-            });
-        }
-    </script>
 @endsection

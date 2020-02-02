@@ -25,7 +25,6 @@ class CreateCommentsTable extends Migration
             $table->index('author_id');
 
             $table->text('body');
-            $table->index('body');
 
             $table->timestamps();
         });
