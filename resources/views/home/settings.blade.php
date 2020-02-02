@@ -36,25 +36,6 @@
         <div class="row">
             <div class="col-lg-12">
                 <hr>
-                <h6>Channel</h6>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label for="email" class="control-label">Background image</label>
-                    <label for="e1" class="file-upload btn btn-primary btn-block rounded-pill shadow">
-                        <i class="fa fa-upload mr-2"></i>
-                        Browse for file ...
-                        <input type="file" name="upload" id="e1" class="form-control-file d-none">
-                    </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-12">
-                <hr>
                 <h6>Change password</h6>
             </div>
         </div>
