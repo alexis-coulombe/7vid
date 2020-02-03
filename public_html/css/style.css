@@ -43,7 +43,7 @@ html {
 
 body {
     background-color: #121212;
-    color: #888;
+    color: #ababab;
     font-size: 13px;
     height: 100%;
 }
@@ -1792,4 +1792,8 @@ a:hover, h1, h2, h3, h4, h5, h6 {
 
 .w-60 {
     width: 60px;
+}
+
+.h-200 {
+    height: 200px;
 }

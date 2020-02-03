@@ -15,7 +15,7 @@
             </a>
         </div>
         <div class="video-page">
-            By <a href="{{ route('channel.index', ['userId' => $video->author()->first()->getId()]) }}" aria-label="{{ $video->author()->first()->getName() }}">{{ $video->author()->first()->getName() }}</a>
+            By <a href="{{ route('channel.index', ['userId' => $video->author()->first()->getId()]) }}" aria-label="{{ $video->author()->first()->getName() }}"><b>{{ $video->author()->first()->getName() }}</b></a>
         </div>
         <div class="video-view">
             <i class="fas fa-eye"></i> {{ $video->getFormatedViewsCount() }} - <i class="far fa-clock"></i> {{ time_elapsed_string($video->created_at) }}

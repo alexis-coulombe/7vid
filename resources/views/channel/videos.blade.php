@@ -19,7 +19,7 @@
             <div class="video-block section-padding">
                 <div class="row">
                     @if(count($author->videos) > 0)
-                        <div class="col-md-12">
+                        <div class="col-md-10 mx-auto">
                             <div class="main-title">
                                 <div class="btn-group float-right right-action">
                                     <a href="#" class="right-action-link text-gray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -34,11 +34,15 @@
                                 <h1 class="h2">Videos</h1>
                             </div>
                         </div>
-                        @foreach($author->videos()->whereHas('setting', static function ($query) { $query->where(['private' => 0]); })->get() as $video)
-                            <div class="col-xl-3 col-sm-6 mb-3">
-                                @include('shared.video.card')
+                        <div class="col-lg-10 mx-auto">
+                            <div class="row">
+                                @foreach($author->videos()->whereHas('setting', static function ($query) { $query->where(['private' => 0]); })->get() as $video)
+                                    <div class="col-xl-3 col-sm-6 mb-3">
+                                        @include('shared.video.card')
+                                    </div>
+                                @endforeach
                             </div>
-                        @endforeach
+                        </div>
                     @else
                         <div class="col-sm-3 col-md-3 col-lg-12 text-center">
                             <h2>Empty !</h2>

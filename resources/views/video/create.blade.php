@@ -10,16 +10,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-12">
-            <div class="main-title">
-                <h1 class="h2">Upload a video in 3 step.</h1>
-            </div>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="col-lg-4"></div>
-        <div class="col-lg-4">
+        <div class="col-lg-6 mx-auto mt-3">
             <form action="{{ route('video.store') }}" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
 
@@ -32,7 +23,7 @@
                         <h5 class="text-center mb-4">
                             <b>1. Upload your video</b>
                         </h5>
-                        <p class="text-center text-muted">
+                        <p class="text-center">
                             A thumbnail will be generated once you have selected your video
                         </p>
 
@@ -53,7 +44,7 @@
                         <h6 class="text-center mb-4">
                             <b>Not happy with the generated thumbnail ?</b>
                         </h6>
-                        <p class="text-center text-muted">
+                        <p class="text-center">
                             Upload your own
                         </p>
                         <label for="e4" class="file-upload btn btn-primary btn-block rounded-pill shadow">
@@ -156,7 +147,8 @@
     </div>
     <div class="terms text-center mt-2">
         <p class="mb-0">
-            By uploading videos to {{ config('app.name') }}, you agree to the <a href="{{ route('home.terms') }}">Terms of Service</a> and Community Rules.
+            By uploading videos to {{ config('app.name') }}, you agree to the <a href="{{ route('home.terms') }}">Terms of Service</a>.
+            <br>
             Be careful not to infringe the copyright or privacy of others.</p>
     </div>
 @endsection

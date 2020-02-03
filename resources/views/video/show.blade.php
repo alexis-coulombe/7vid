@@ -14,10 +14,10 @@
     @endphp
     <div class="video-block section-padding">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-lg-8 mx-auto">
                 @include('video.sections.video')
             </div>
-            <div class="col-md-12 mb-2">
+            <div class="col-lg-8 mx-auto">
                 <div class="single-video-right">
                     <div class="row">
                         @include('video.sections.recommended-videos')
@@ -25,7 +25,7 @@
                 </div>
             </div>
             @if($video->setting()->first() && $video->setting()->first()->getAllowComments())
-                <div class="col-lg-12">
+                <div class="col-lg-8 mx-auto">
                     @include('video.sections.comment')
                 </div>
             @endif
