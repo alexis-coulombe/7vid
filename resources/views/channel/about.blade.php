@@ -18,7 +18,7 @@
         <div class="container-fluid">
             <div class="video-block section-padding">
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-10 mx-auto">
                         <div class="single-video-title box mb-3">
                             <h1 class="h2">About {{ $author->getName() }}</h1>
                             @auth

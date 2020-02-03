@@ -2,7 +2,7 @@
     &nbsp;&nbsp;
     <button aria-label="Minimize sidebar" class="btn btn-link btn-sm text-secondary order-1 order-sm-0" id="sidebarToggle">
         <i class="fas fa-bars"></i>
-    </button> &nbsp;&nbsp;
+    </button>
     <a class="navbar-brand mr-1" aria-label="homepage" href="{{ route('home') }}">
         <img class="lazyload img-fluid" loading="lazy" alt="logo" width="50px" height="50px" data-src="{{ asset('assets/img/logo.svg') }}">
     </a>
@@ -41,7 +41,7 @@
             @endauth
             @guest
                 <a class="nav-link dropdown-toggle user-dropdown-link" aria-label="dropdown" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Create an account / Login
+                    Create account / Login
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                     <a class="dropdown-item" href="{{ route('register') }}"><i class="fas fa-fw fa-user-circle"></i> &nbsp; Create an account</a>

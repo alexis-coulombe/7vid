@@ -84,6 +84,7 @@ $factory->define(
         return [
             'channel_id' => User::inRandomOrder()->first()->id,
             'about' => $faker->realText(200),
+            'background_image' => storage_path('app/img/') . 'channel-banner.png'
         ];
     }
 );

@@ -12,12 +12,12 @@
     <h1 style="display: none">Home</h1>
     <div class="top-category section-padding mb-4">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-lg-12 mx-auto">
                 <div class="main-title">
                     <h6>Categories</h6>
                 </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-lg-12 mx-auto">
                 <div class="owl-carousel owl-carousel-category">
                     @foreach($categories as $category)
                         <a href="{{ route('category.index', ['slug' => $category->getSlug()]) }}">
@@ -39,35 +39,43 @@
     <hr>
     <div class="video-block section-padding">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-lg-10 mx-auto">
                 <div class="main-title">
                     <h6>Recently uploaded</h6>
                 </div>
             </div>
-            @if(count($newVideos) > 0)
-                @foreach($newVideos as $video)
-                    <div class="col-xl-3 col-sm-6 mb-3">
-                        @include('shared.video.card')
-                    </div>
-                @endforeach
-            @endif
+            <div class="col-lg-10 mx-auto">
+                <div class="row">
+                    @if(count($newVideos) > 0)
+                        @foreach($newVideos as $video)
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                @include('shared.video.card')
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
     <hr>
     <div class="video-block section-padding">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-lg-10 mx-auto">
                 <div class="main-title">
                     <h6>Random channels</h6>
                 </div>
             </div>
-            @if(count($randomChannels) > 0)
-                @foreach($randomChannels as $channel)
-                    <div class="col-xl-3 col-sm-6 mb-3">
-                        @include('shared.channel.card')
-                    </div>
-                @endforeach
-            @endif
+            <div class="col-lg-10 mx-auto">
+                <div class="row">
+                    @if(count($randomChannels) > 0)
+                        @foreach($randomChannels as $channel)
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                @include('shared.channel.card')
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
     @if(count($categories) > 0)
@@ -75,18 +83,22 @@
             <hr>
             <div class="video-block section-padding">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-lg-10 mx-auto">
                         <div class="main-title">
                             <h6>
                                 Most popular videos for <b>{{ $category->getTitle() }}</b> - <a href="{{ route('category.index', ['slug' => $category->getSlug()]) }}">View all</a>
                             </h6>
                         </div>
                     </div>
-                    @foreach($category->getVideos('views_count', 12) as $video)
-                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                            @include('shared.video.card')
+                    <div class="col-lg-10 mx-auto">
+                        <div class="row">
+                            @foreach($category->getVideos('views_count', 12) as $video)
+                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                    @include('shared.video.card')
+                                </div>
+                            @endforeach
                         </div>
-                    @endforeach
+                    </div>
                 </div>
             </div>
         @endforeach
