@@ -23,16 +23,16 @@ function getCookie(cookieName) {
     return '';
 }
 
-function showLaw(cookieName) {
-    let x = getCookie(cookieName);
-    if (x !== '') {
-        $("#lawmsg").remove();
-    } else {
-        setCookie(cookieName, true);
-    }
-}
-
 $(function() {
-    // Show or hide cookie consent
-    showLaw('cookie-consent');
+    if(getCookie('consent-cookie') !== 'true'){
+        $('#lawmsg').removeClass('d-none');
+    } else {
+        $("#lawmsg").remove();
+    }
+
+    if($('#consent-cookie').length){
+        $('#consent-cookie').on('click', function(){
+            setCookie('consent-cookie', 'true');
+        });
+    }
 });

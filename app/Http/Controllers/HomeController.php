@@ -121,13 +121,17 @@ class HomeController extends Controller
     /**
      * Show liked video of current user
      *
-     * @return View
+     * @return View | RedirectResponse
      */
-    public function liked(): View
+    public function liked()
     {
+        if(!Auth::check()){
+            return back();
+        }
+
         /** @var User $user */
         $user = Auth::user();
-        $likedVideos = $user->videoVotes()->where('value', 1);
+        $likedVideos = $user->videoVotes()->where('value', 1)->get();
         $videos = [];
 
         foreach ($likedVideos as $like) {

@@ -7,7 +7,7 @@
 @section('content')
     <div class="video-block section-padding">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10 mx-auto">
                 <div class="main-title">
                     <div class="btn-group float-right right-action">
                         <a href="#" class="right-action-link text-gray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -22,19 +22,23 @@
                     <h1 class="h2">Watch History</h1>
                 </div>
             </div>
-            @if(count($videos) > 0)
-                @foreach($videos as $video)
-                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                        @include('shared.video.card')
-                    </div>
-                @endforeach
-            @else
-                <div class="col-sm-3 col-md-3 col-lg-12">
-                    <h2>Empty!</h2>
-                    <p>You have not watched any video yet !</p>
+            <div class="col-lg-10 mx-auto">
+                <div class="row">
+                    @if(count($videos) > 0)
+                        @foreach($videos as $video)
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                @include('shared.video.card')
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="col-sm-3 col-md-3 col-lg-12">
+                            <h2>Empty!</h2>
+                            <p>You have not watched any video yet !</p>
+                        </div>
+                        @include('shared.misc.floating-hex')
+                    @endif
                 </div>
-                @include('shared.misc.floating-hex')
-            @endif
+            </div>
         </div>
     </div>
 @endsection

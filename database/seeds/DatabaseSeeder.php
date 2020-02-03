@@ -49,6 +49,7 @@ class DatabaseSeeder extends Seeder
             /** @var ChannelSetting $setting */
             $setting = new ChannelSetting();
             $setting->setAbout($faker->realText(200));
+            $setting->setBackgroundImage('channel-banner.png');
             $setting->setChannelId($user->getId());
             $setting->save();
         }
@@ -342,11 +343,11 @@ class DatabaseSeeder extends Seeder
         /** @var array $country */
         foreach($countries as $country){
             /** @var Country $country */
-            $country = new Country();
-            $country->setCountryCode($country[0]);
-            $country->setCountryName($country[1]);
-            $country->setCode($country[2]);
-            $country->save();
+            $c = new Country();
+            $c->setCountryCode($country[0]);
+            $c->setCountryName($country[1]);
+            $c->setCode($country[2]);
+            $c->save();
         }
     }
 
@@ -373,11 +374,11 @@ class DatabaseSeeder extends Seeder
         /** @var array $category */
         foreach($categories as $category){
             /** @var Category $category */
-            $category = new Category();
-            $category->setTitle($category[0]);
-            $category->setSlug($category[1]);
-            $category->setIcon($category[2]);
-            $category->save();
+            $c = new Category();
+            $c->setTitle($category[0]);
+            $c->setSlug($category[1]);
+            $c->setIcon($category[2]);
+            $c->save();
         }
     }
 }

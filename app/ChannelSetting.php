@@ -73,4 +73,24 @@ class ChannelSetting extends Model
     {
         $this->about = $about;
     }
+
+    /**
+     * Get background image
+     *
+     * @return string|null
+     */
+    public function getBackgroundImage(): ?string
+    {
+        return $this->background_image;
+    }
+
+    /**
+     * Set background image
+     *
+     * @param string $image
+     */
+    public function setBackgroundImage(string $image): void
+    {
+        $this->background_image = $image;
+    }
 }

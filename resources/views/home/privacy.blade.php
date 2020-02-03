@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="container text-white">
         <h1>Privacy Policy</h1>
         <p>Your privacy is important to us. It is 7-Vid's policy to respect your privacy regarding any information we may collect from you across our website, https://www.7vid.org, and other sites we own and operate.</p>
 

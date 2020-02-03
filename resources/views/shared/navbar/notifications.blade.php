@@ -23,7 +23,7 @@
             </div>
         @endforeach
     @else
-        <div class="dropdown-item">
+        <div class="text-center mt-3 text-white">
             <p>Nothing to see here !</p>
         </div>
     @endif

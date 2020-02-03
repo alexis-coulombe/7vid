@@ -234,7 +234,7 @@ class VideosController extends Controller
         $relatedVideos = Video::where('category_id', '=', $video->getCategoryId())
             ->whereHas('setting', static function ($query) {
                     $query->where(['private' => 0]);
-            })->limit(10)->get();
+            })->limit(9)->get();
 
         return view('video.show')
             ->with('video', $video)

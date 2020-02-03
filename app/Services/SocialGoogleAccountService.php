@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\ChannelSetting;
 use App\SocialGoogleAccount;
 use App\User;
 use Illuminate\Support\Facades\Hash;
@@ -51,6 +52,12 @@ class SocialGoogleAccountService
         $account->user_id = $user->getId();
         $account->user()->associate($user);
         $account->save();
+
+        $setting = new ChannelSetting();
+        $setting->setBackgroundImage('channel-banner.npg');
+        $setting->setAbout('No about provided');
+        $setting->setChannelId($user->getId());
+        $setting->save();
 
         return $user;
     }

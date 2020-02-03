@@ -10,13 +10,15 @@
     </div>
     <div class="single-video-author box mb-2">
         @if(!Auth::check() || (Auth::check() && $video->author()->first()->getId() !== Auth::user()->getId()))
-            <div class="float-right mt-2">
+            <div class="float-right mt-1">
                 @include('shared.video.subscribe')
             </div>
         @endif
-        <img class="lazyload img-fluid mr-2" loading="lazy" data-src="{{ getImage(route('cdn.img.avatar'), $video->author->getAvatar()) }}" alt="Avatar">
-        <p><a href="{{ route('channel.index', ['userId' => $video->author->getId()]) }}" aria-label="View channel"><strong>{{ $video->author->getName() }}</strong></a></p>
-        <small>Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
+        <a href="{{ route('channel.index', ['userId' => $video->author->getId()]) }}" aria-label="View channel">
+            <img class="lazyload img-fluid mr-2" loading="lazy" data-src="{{ getImage(route('cdn.img.avatar'), $video->author->getAvatar()) }}" alt="Avatar">
+            <p><strong>{{ $video->author->getName() }}</strong></p>
+            <small class="text-white">Published on {{ date('Y-m-d', strtotime($video->created_at)) }}</small>
+        </a>
     </div>
     <div class="single-video-title box mb-3">
         @if($video->setting()->first() && $video->setting()->first()->getAllowVotes())
@@ -34,8 +36,8 @@
         <p class="mb-0">
             <i class="fas fa-eye"></i> {{ $video->getFormatedViewsCount() }} views
             <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Views are based on unique active users that landed on this page">
-                                <i class="far fa-question-circle"></i>
-                            </span>
+                <i class="far fa-question-circle"></i>
+            </span>
         </p>
         <hr>
         @include('shared.video.edit-button')

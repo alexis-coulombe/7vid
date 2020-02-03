@@ -1,6 +1,6 @@
 @php if(isset($author)) { $channel = $author; } @endphp
 
-<div class="channels-card generate-background">
+<div class="channels-card generate-background h-200">
     <div class="channels-card-image">
         <a href="{{ route('channel.index', ['userId' => $channel->getId()]) }}">
             <img data-src="{{ getImage(route('cdn.img.avatar'), $channel->getAvatar(), ['q' => '50', 'w' => '80', 'h' => '80']) }}" class="lazyload" loading="lazy" width="80px" height="80px" alt="Avatar">
