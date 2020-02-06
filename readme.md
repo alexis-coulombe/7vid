@@ -1,5 +1,3 @@
-<h3>Built using : <img src="https://laravel.com/assets/img/components/logo-laravel.svg"></h3>
-
-## License
-
-VidMock is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+[![Build Status](https://scrutinizer-ci.com/g/Chargnn/7vid/badges/build.png?b=master&s=c965d987c7b1f9e0072edad036f31077c49167a7)](https://scrutinizer-ci.com/g/Chargnn/7vid/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Chargnn/7vid/badges/quality-score.png?b=master&s=ab912159a2737f1a8438154b86a1ef91cd3658c7)](https://scrutinizer-ci.com/g/Chargnn/7vid/?branch=master)
+[![Code Intelligence Status](https://scrutinizer-ci.com/g/Chargnn/7vid/badges/code-intelligence.svg?b=master&s=c07f4d3de5029325c19c7b63008ac7d1ebcaa972)](https://scrutinizer-ci.com/code-intelligence)
