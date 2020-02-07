@@ -63,3 +63,17 @@ function isMobile(): bool
 {
     return (new Mobile_Detect())->isMobile();
 }
+
+function getVersion(): string
+{
+    if ($hash = file_get_contents(sprintf(public_path().'/../.git/refs/heads/%s', 'master'))) {
+
+        if(strlen($hash) > 5) {
+            $hash = substr($hash, 0, 5);
+        }
+
+        return trim($hash);
+    }
+
+    return false;
+}

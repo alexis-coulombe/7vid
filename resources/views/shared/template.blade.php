@@ -15,7 +15,6 @@
         <link href="{{ asset('css/style.css') . '?v=' . filemtime(public_path('css/app.css')) }}" rel="stylesheet" type="text/css">
         @yield('head')
 
-        <script data-ad-client="ca-pub-4650782712352720" defer src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <link href="https://www.google-analytics.com" rel="dns-prefetch preconnect" crossorigin>
         <script defer src="https://www.googletagmanager.com/gtag/js?id=UA-156333900-1"></script>
@@ -72,6 +71,8 @@
             </script>
         @endif
         <script type="text/javascript" defer src="{{ asset('js/app.js') . '?v=' . filemtime(public_path('js/app.js')) }}"></script>
+        <script type="text/javascript"> var infolinks_pid = 3234886; var infolinks_wsid = 0; </script>
+        <script type="text/javascript" src="//resources.infolinks.com/js/infolinks_main.js"></script>
         @yield('footer')
     </body>
 </html>
