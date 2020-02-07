@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\_Notification;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -364,6 +365,17 @@ class User extends Authenticatable
             $vote->setAuthorId($user->getId());
             $vote->setValue($value);
             $vote->save();
+        }
+
+        if($vote->getValue() === VideoVote::UPVOTE) {
+            $user->notify(
+                new _Notification(
+                    [
+                        'desc' => $user->getName() . ' liked your video',
+                        'link' => route('video.show', ['video' => $video->getId()])
+                    ]
+                )
+            );
         }
 
         return true;
