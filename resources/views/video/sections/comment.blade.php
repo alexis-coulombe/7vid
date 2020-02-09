@@ -8,6 +8,10 @@
     </div>
 @endif
 
+@if(isset($getComment))
+    @include('comment.show', $data = ['comments' => $getComment, 'highlight' => true])
+@endif
+
 @include('comment.show', $data = ['comments' => $comments])
 
 <div id="scrolling" data-url="{{ route('home.scroll') }}" data-type="comment" data-video-id="{{ $video->getId() }}"></div>
