@@ -424,6 +424,8 @@ class User extends Authenticatable
             $vote->save();
         }
 
+        $comment->notifyUserOnCommentVote($vote, $comment->author()->first());
+
         return true;
     }
 
