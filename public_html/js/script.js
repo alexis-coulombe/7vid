@@ -86,15 +86,6 @@
         }
     });
 
-    // Smooth scrolling using jQuery easing
-    $(document).on('click', 'a.scroll-to-top', function (event) {
-        let $anchor = $(this);
-        $('html, body').stop().animate({
-            scrollTop: ($($anchor.attr('href')).offset().top)
-        }, 1000, 'easeInOutExpo');
-        event.preventDefault();
-    });
-
     // Add aria-label to carousel buttons
     // https://stackoverflow.com/questions/41818880/owl-carousel-2-2-dots-with-aria-label
     $('.owl-carousel').each(function () {
