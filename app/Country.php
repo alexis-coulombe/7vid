@@ -20,7 +20,7 @@ class Country extends Model
      *
      * @return BelongsTo
      */
-    public function users(): BelongsTo
+    public function users(): ?BelongsTo
     {
         $this->belongsTo(User::class, 'id', 'country_id');
     }

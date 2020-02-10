@@ -24,7 +24,7 @@ class CommentVote extends Model
      *
      * @return HasOne
      */
-    public function author(): HasOne
+    public function author(): ?HasOne
     {
         return $this->hasOne(User::class, 'id', 'author_id');
     }
@@ -34,7 +34,7 @@ class CommentVote extends Model
      *
      * @return HasOne
      */
-    public function comment(): HasOne
+    public function comment(): ?HasOne
     {
         return $this->hasOne(Comment::class, 'id', 'comment_id');
     }

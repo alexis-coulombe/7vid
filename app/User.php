@@ -37,7 +37,7 @@ class User extends Authenticatable
      *
      * @return HasMany
      */
-    public function videos(): HasMany
+    public function videos(): ?HasMany
     {
         return $this->hasMany(Video::class, 'author_id', 'id');
     }
@@ -47,7 +47,7 @@ class User extends Authenticatable
      *
      * @return HasOne
      */
-    public function country(): HasOne
+    public function country(): ?HasOne
     {
         return $this->hasOne(Country::class, 'id', 'country_id');
     }
@@ -57,7 +57,7 @@ class User extends Authenticatable
      *
      * @return HasOne
      */
-    public function setting(): HasOne
+    public function setting(): ?HasOne
     {
         return $this->hasOne(ChannelSetting::class, 'channel_id', 'id');
     }
@@ -67,7 +67,7 @@ class User extends Authenticatable
      *
      * @return HasMany
      */
-    public function comments(): HasMany
+    public function comments(): ?HasMany
     {
         return $this->hasMany(Comment::class, 'author_id', 'id');
     }
@@ -77,7 +77,7 @@ class User extends Authenticatable
      *
      * @return HasMany
      */
-    public function videoVotes(): HasMany
+    public function videoVotes(): ?HasMany
     {
         return $this->hasMany(VideoVote::class, 'author_id');
     }
@@ -87,7 +87,7 @@ class User extends Authenticatable
      *
      * @return HasMany
      */
-    public function commentVotes(): HasMany
+    public function commentVotes(): ?HasMany
     {
         return $this->hasMany(CommentVote::class, 'author_id');
     }
@@ -97,7 +97,7 @@ class User extends Authenticatable
      *
      * @return HasMany
      */
-    public function subscriptions(): HasMany
+    public function subscriptions(): ?HasMany
     {
         return $this->hasMany(Subscription::class, 'user_id', 'id');
     }
@@ -107,7 +107,7 @@ class User extends Authenticatable
      *
      * @return Collection
      */
-    public function subscribers(): Collection
+    public function subscribers(): ?Collection
     {
         return Subscription::where(['author_id' => $this->getId()])->get();
     }
@@ -293,9 +293,9 @@ class User extends Authenticatable
             return 0;
         }
 
-        $cacheKey = self::CACHE_PREFIX.$this->getId().__FUNCTION__;
+        $cacheKey = self::CACHE_PREFIX . $this->getId() . __FUNCTION__;
 
-        if(!Cache::get($cacheKey)){
+        if (!Cache::get($cacheKey)) {
             Cache::put($cacheKey, $this->subscriptions()->where(['author_id' => $user->getId()])->count(), 5);
         }
 
@@ -316,9 +316,9 @@ class User extends Authenticatable
             return 0;
         }
 
-        $cacheKey = self::CACHE_PREFIX.$this->getId().__FUNCTION__;
+        $cacheKey = self::CACHE_PREFIX . $this->getId() . __FUNCTION__;
 
-        if(!Cache::get($cacheKey)){
+        if (!Cache::get($cacheKey)) {
             Cache::put($cacheKey, Subscription::where(['author_id' => $user->getId()])->count(), 5);
         }
 

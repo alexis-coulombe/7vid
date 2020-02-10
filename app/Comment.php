@@ -25,7 +25,7 @@ class Comment extends Model
      *
      * @return BelongsTo
      */
-    public function author(): BelongsTo
+    public function author(): ?BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id', 'id');
     }
@@ -35,7 +35,7 @@ class Comment extends Model
      *
      * @return HasOne
      */
-    public function video(): HasOne
+    public function video(): ?HasOne
     {
         return $this->hasOne(Video::class, 'id', 'video_id');
     }
@@ -45,7 +45,7 @@ class Comment extends Model
      *
      * @return HasMany
      */
-    public function comment_votes(): HasMany
+    public function comment_votes(): ?HasMany
     {
         return $this->hasMany(CommentVote::class, 'comment_id');
     }
@@ -153,12 +153,16 @@ class Comment extends Model
      */
     public function getUpVotes(): int
     {
-        $cacheKey = self::CACHE_PREFIX.$this->getId().__FUNCTION__;
+        $cacheKey = self::CACHE_PREFIX . $this->getId() . __FUNCTION__;
 
-        if(!Cache::get($cacheKey)) {
-            Cache::put($cacheKey, $this->comment_votes()
-                ->where(['comment_id' => $this->getId(), 'value' => CommentVote::UPVOTE])
-                ->count(), 5);
+        if (!Cache::get($cacheKey)) {
+            Cache::put(
+                $cacheKey,
+                $this->comment_votes()
+                    ->where(['comment_id' => $this->getId(), 'value' => CommentVote::UPVOTE])
+                    ->count(),
+                5
+            );
         }
 
         return Cache::get($cacheKey);
@@ -171,12 +175,16 @@ class Comment extends Model
      */
     public function getDownVotes(): int
     {
-        $cacheKey = self::CACHE_PREFIX.$this->getId().__FUNCTION__;
+        $cacheKey = self::CACHE_PREFIX . $this->getId() . __FUNCTION__;
 
-        if(!Cache::get($cacheKey)) {
-            Cache::put($cacheKey, $this->comment_votes()
-                ->where(['comment_id' => $this->getId(), 'value' => CommentVote::DOWNVOTE])
-                ->count(), 5);
+        if (!Cache::get($cacheKey)) {
+            Cache::put(
+                $cacheKey,
+                $this->comment_votes()
+                    ->where(['comment_id' => $this->getId(), 'value' => CommentVote::DOWNVOTE])
+                    ->count(),
+                5
+            );
         }
 
         return Cache::get($cacheKey);
@@ -248,12 +256,15 @@ class Comment extends Model
         /** @var Comment $comment */
         $comment = $vote->comment()->first();
 
-        if($vote->getValue() === CommentVote::UPVOTE) {
+        if ($vote->getValue() === CommentVote::UPVOTE) {
             $user->notify(
                 new _Notification(
                     [
                         'desc' => $user->getName() . ' liked your comment',
-                        'link' => route('video.show', ['video' => $comment->getVideoId()]) . '?get_comment=' . $comment->getId() . '#' . $comment->getId()
+                        'link' => route(
+                                'video.show',
+                                ['video' => $comment->getVideoId()]
+                            ) . '?get_comment=' . $comment->getId() . '#' . $comment->getId()
                     ]
                 )
             );

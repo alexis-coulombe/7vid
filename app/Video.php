@@ -61,7 +61,7 @@ class Video extends Model
      *
      * @return HasMany
      */
-    public function comments(): HasMany
+    public function comments(): ?HasMany
     {
         return $this->hasMany(Comment::class, 'video_id');
     }
@@ -71,7 +71,7 @@ class Video extends Model
      *
      * @return BelongsTo
      */
-    public function category(): BelongsTo
+    public function category(): ?BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
@@ -81,7 +81,7 @@ class Video extends Model
      *
      * @return BelongsTo
      */
-    public function author(): BelongsTo
+    public function author(): ?BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
     }
@@ -91,7 +91,7 @@ class Video extends Model
      *
      * @return HasMany
      */
-    public function votes(): HasMany
+    public function votes(): ?HasMany
     {
         return $this->hasMany(VideoVote::class, 'video_id');
     }
@@ -101,7 +101,7 @@ class Video extends Model
      *
      * @return HasOne
      */
-    public function setting(): HasOne
+    public function setting(): ?HasOne
     {
         return $this->hasOne(VideoSetting::class, 'video_id');
     }
@@ -388,9 +388,9 @@ class Video extends Model
      */
     public function getUpVotes(): int
     {
-        $cacheKey = self::CACHE_PREFIX.$this->getId().__FUNCTION__;
+        $cacheKey = self::CACHE_PREFIX . $this->getId() . __FUNCTION__;
 
-        if(!Cache::get($cacheKey)) {
+        if (!Cache::get($cacheKey)) {
             $upVotes = 0;
 
             foreach ($this->votes as $vote) {
@@ -412,9 +412,9 @@ class Video extends Model
      */
     public function getDownVotes(): int
     {
-        $cacheKey = self::CACHE_PREFIX.$this->getId().__FUNCTION__;
+        $cacheKey = self::CACHE_PREFIX . $this->getId() . __FUNCTION__;
 
-        if(!Cache::get($cacheKey)) {
+        if (!Cache::get($cacheKey)) {
             $downVotes = 0;
 
             foreach ($this->votes as $vote) {
@@ -439,7 +439,7 @@ class Video extends Model
         /** @var Video $video */
         $video = $vote->video()->first();
 
-        if($vote->getValue() === VideoVote::UPVOTE) {
+        if ($vote->getValue() === VideoVote::UPVOTE) {
             $user->notify(
                 new _Notification(
                     [

@@ -20,7 +20,7 @@ class Views extends Model
      *
      * @return HasOne
      */
-    public function video(): HasOne
+    public function video(): ?HasOne
     {
         return $this->hasOne(Video::class, 'id', 'video_id');
     }
@@ -30,7 +30,7 @@ class Views extends Model
      *
      * @return HasOne
      */
-    public function author(): HasOne
+    public function author(): ?HasOne
     {
         return $this->hasOne(User::class, 'id', 'author_id');
     }
