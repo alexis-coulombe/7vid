@@ -25,7 +25,7 @@ class Category extends Model
      *
      * @return HasMany
      */
-    public function videos(): HasMany
+    public function videos(): ?HasMany
     {
         return $this->hasMany(Video::class, 'category_id', 'id');
     }
@@ -107,9 +107,9 @@ class Category extends Model
      */
     public function getVideosCount(): int
     {
-        $cacheKey = self::CACHE_PREFIX.$this->getId().__FUNCTION__;
+        $cacheKey = self::CACHE_PREFIX . $this->getId() . __FUNCTION__;
 
-        if(!Cache::get($cacheKey)){
+        if (!Cache::get($cacheKey)) {
             Cache::put($cacheKey, $this->videos()->count(), 5);
         }
 
@@ -125,8 +125,11 @@ class Category extends Model
      */
     public function getVideos(string $order = 'created_at', int $limit = 16): Collection
     {
-        return $this->videos()->whereHas('setting', static function ($query) {
-            $query->where(['private' => 0]);
-        })->where(['category_id' => $this->getId()])->limit($limit)->orderBy($order, 'DESC')->get();
+        return $this->videos()->whereHas(
+            'setting',
+            static function ($query) {
+                $query->where(['private' => 0]);
+            }
+        )->where(['category_id' => $this->getId()])->limit($limit)->orderBy($order, 'DESC')->get();
     }
 }

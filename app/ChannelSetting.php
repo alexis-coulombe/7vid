@@ -19,7 +19,7 @@ class ChannelSetting extends Model
      *
      * @return BelongsTo
      */
-    public function channel(): BelongsTo
+    public function channel(): ?BelongsTo
     {
         return $this->belongsTo(User::class, 'channel_id', 'id');
     }

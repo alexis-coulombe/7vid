@@ -19,7 +19,7 @@ class Subscription extends Model
      *
      * @return BelongsTo
      */
-    public function channel(): BelongsTo
+    public function channel(): ?BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id', 'id');
     }
@@ -29,7 +29,7 @@ class Subscription extends Model
      *
      * @return HasMany
      */
-    public function subscribers(): HasMany
+    public function subscribers(): ?HasMany
     {
         return $this->hasMany(User::class, 'id', 'user_id');
     }

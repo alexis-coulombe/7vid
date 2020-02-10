@@ -21,7 +21,7 @@ class VideoSetting extends Model
      *
      * @return BelongsTo
      */
-    public function video(): BelongsTo
+    public function video(): ?BelongsTo
     {
         return $this->belongsTo(Video::class, 'video_id', 'id');
     }

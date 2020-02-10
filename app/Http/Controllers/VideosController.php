@@ -225,7 +225,20 @@ class VideosController extends Controller
         $comments = Comment::getByFilter(request('filter_comments') ?: '', $video->getId());
 
         /** @var array $comments */
-        $comments = $comments->limit(5)->get();
+        $comments = $comments->limit(5);
+        /** @var Comment $getComment */
+        $getComment = [];
+
+        if(request('get_comment') && is_numeric(request('get_comment'))){
+            $id = (int) \request('get_comment');
+            $getComment[] = Comment::find($id);
+
+            if($getComment !== null){
+                $comments = $comments->whereNotIn('id', [$id]);
+            }
+        }
+
+        $comments = $comments->get();
 
         /** @var int $subscriptionCount */
         $subscriptionCount = Subscription::where('author_id', '=', $video->author->id)->count();
@@ -239,6 +252,7 @@ class VideosController extends Controller
         return view('video.show')
             ->with('video', $video)
             ->with('comments', $comments)
+            ->with('getComment', $getComment)
             ->with('subscriptionCount', $subscriptionCount)
             ->with('relatedVideos', $relatedVideos)
             ->with('upVotes', $video->getUpVotes())

@@ -197,10 +197,17 @@
 .messaging {
     padding: 0 0 50px 0;
 }
+
 .messaging img {
-    max-width:100%;
+    max-width: 100%;
 }
+
 .msg_history {
     height: 516px;
     overflow-y: auto;
+}
+
+.highlight {
+    border: solid 2px #ff2621;
+    background-color: #2f2f2f;
 }

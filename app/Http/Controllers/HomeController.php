@@ -212,7 +212,12 @@ class HomeController extends Controller
 
             if (request('type') === 'comment') {
                 $videoId = request('video_id');
+                $getComment = request('get_comment');
                 $video = Video::find($videoId);
+
+                if($getComment){
+                    $exclude[] = $getComment;
+                }
 
                 if ($video) {
                     /** @var Builder $comments */

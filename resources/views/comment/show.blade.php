@@ -3,8 +3,9 @@
         $upVotes = $comment->getUpVotes();
         $downVotes = $comment->getDownVotes();
         $total = $upVotes + $downVotes;
+        $highlight = isset($highlight) && $highlight;
     @endphp
-    <div class="single-video-author box mb-2 scrolling-prevent" id="{{ $comment->getId() }}">
+    <div class="single-video-author box mb-2 scrolling-prevent {{ $highlight  ? 'highlight' : '' }}" id="{{ $comment->getId() }}">
         <div class="float-right" style="margin-left: 10px;">
             @if(Auth::check() && Auth::id() === $comment->getAuthorId())
                 <button type="button" class="btn btn-sm text-white float-right" onclick="$('#destroy-form-{{ $comment->getId() }}').submit()">
