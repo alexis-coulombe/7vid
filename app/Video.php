@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\_Notification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -426,5 +427,27 @@ class Video extends Model
         }
 
         return Cache::get($cacheKey);
+    }
+
+    /**
+     * Notify author of video when another user liked it
+     * @param VideoVote $vote
+     * @param User $user
+     */
+    public function notifyUserOnVideoVote(VideoVote $vote, User $user): void
+    {
+        /** @var Video $video */
+        $video = $vote->video()->first();
+
+        if($vote->getValue() === VideoVote::UPVOTE) {
+            $user->notify(
+                new _Notification(
+                    [
+                        'desc' => $user->getName() . ' liked your video',
+                        'link' => route('video.show', ['video' => $video->getId()])
+                    ]
+                )
+            );
+        }
     }
 }

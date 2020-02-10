@@ -248,7 +248,7 @@ class Comment extends Model
         /** @var Comment $comment */
         $comment = $vote->comment()->first();
 
-        if($vote->getValue() === VideoVote::UPVOTE) {
+        if($vote->getValue() === CommentVote::UPVOTE) {
             $user->notify(
                 new _Notification(
                     [

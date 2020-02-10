@@ -367,16 +367,7 @@ class User extends Authenticatable
             $vote->save();
         }
 
-        if($vote->getValue() === VideoVote::UPVOTE) {
-            $user->notify(
-                new _Notification(
-                    [
-                        'desc' => $user->getName() . ' liked your video',
-                        'link' => route('video.show', ['video' => $video->getId()])
-                    ]
-                )
-            );
-        }
+        $video->notifyUserOnVideoVote($vote, $video->author()->first());
 
         return true;
     }
