@@ -1,12 +1,19 @@
 <?php
 
+/**
+ * Get time elapsed from now and datetime
+ * @param $datetime
+ * @param bool $full
+ * @return string
+ * @throws Exception
+ */
 function time_elapsed_string($datetime, $full = false)
 {
     $now = new DateTime;
     try {
         $ago = new DateTime($datetime);
     } catch (Exception $e) {
-        var_dump($e->getMessage());
+        echo $e->getMessage();
         exit(1);
     }
     $diff = $now->diff($ago);
@@ -37,6 +44,11 @@ function time_elapsed_string($datetime, $full = false)
     return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
 
+/**
+ * Parse seconds to HH:MM:SS
+ * @param $seconds
+ * @return string
+ */
 function parseVideoDuration($seconds): string
 {
     $hours = floor($seconds / 3600);
@@ -59,21 +71,28 @@ function getImage($route, $image, $params = [])
     return $urlBuilder->getUrl($image, $params);
 }
 
+/**
+ * Check if current user_agent is mobile
+ * @return bool
+ */
 function isMobile(): bool
 {
     return (new Mobile_Detect())->isMobile();
 }
 
+/**
+ * Get master branch hash code
+ * @return string
+ */
 function getVersion(): string
 {
-    if ($hash = file_get_contents(sprintf(public_path().'/../.git/refs/heads/%s', 'master'))) {
-
-        if(strlen($hash) > 5) {
+    if ($hash = file_get_contents(sprintf(public_path() . '/../.git/refs/heads/%s', 'master'))) {
+        if (strlen($hash) > 5) {
             $hash = substr($hash, 0, 5);
         }
 
         return trim($hash);
     }
 
-    return false;
+    return 'Invalid version';
 }
