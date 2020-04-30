@@ -21,7 +21,7 @@
         "@sentry/node": "^5.12.3",
         "bootstrap": "^4.4.1",
         "ckeditor": "^4.12.1",
-        "jquery": "^3.4.1",
+        "jquery": "^3.5.0",
         "lazysizes": "^5.2.0",
         "mousetrap": "^1.6.5",
         "owl.carousel": "^2.3.4",
